@@ -1,0 +1,26 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "incremental": true,
+    "target": "es2018",
+    "module": "commonjs",
+    "lib": ["es2018","dom"],
+    "noImplicitAny": false,
+    "inlineSourceMap": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "preserveSymlinks": false,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "*.d.ts",
+    "*.js",
+    "publish",
+    "**/types/index.js",
+    "**/protos",
+    "**/dist"
+  ]
+}
