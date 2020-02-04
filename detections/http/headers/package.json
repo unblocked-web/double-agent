@@ -1,11 +1,10 @@
 {
-  "name": "@double-agent/tls-clienthello",
+  "name": "@double-agent/tcp-ttl",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "prod": "LETSENCRYPT=1 PORT=443 node index.js"
+    "develop": "node index.js"
   },
   "dependencies": {
     "useragent": "^2.3.0"
