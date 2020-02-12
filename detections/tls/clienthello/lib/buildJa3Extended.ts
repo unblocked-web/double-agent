@@ -1,6 +1,8 @@
-import { cleanGrease, IJa3, IJa3Package } from './buildJa3';
+import { cleanGrease  } from './buildJa3';
 import { IClientHello } from './parseHelloMessage';
 import crypto from 'crypto';
+import IJa3Details from '../interfaces/IJa3Details';
+import IJa3 from '../interfaces/IJa3';
 
 /**
  * The Ulixee extension aims to identify when fields are left out for specifically identifying
@@ -17,10 +19,10 @@ import crypto from 'crypto';
  *
  * Original Ja3: SSLVersion,Cipher,SSLExtension,EllipticCurve,EllipticCurvePointFormat
  * Extended Ja3: SSLVersion,Cipher,SSLExtension,EllipticCurve,EllipticCurvePointFormat,SignatureAlgorithms,TlsVersions,Alpn,IsGreased
- * @param ja3Package
+ * @param ja3Details
  * @param clientHello
  */
-export default function buildJa3Extended(ja3Package: IJa3Package, clientHello: IClientHello) {
+export default function buildJa3Extended(ja3Details: IJa3Details, clientHello: IClientHello) {
   const tlsVersions = clientHello.extensions
     .find(x => x.type === 'supported_versions')
     ?.values.map(x =>
@@ -32,7 +34,7 @@ export default function buildJa3Extended(ja3Package: IJa3Package, clientHello: I
       ),
     );
 
-  const isGreased = ja3Package.ja3.value !== ja3Package.combined ? 1 : 0;
+  const isGreased = ja3Details.value !== ja3Details.uncleaned ? 1 : 0;
   const alpn =
     clientHello.extensions
       .find(x => x.type === 'application_layer_protocol_negotiation')
@@ -49,7 +51,7 @@ export default function buildJa3Extended(ja3Package: IJa3Package, clientHello: I
       ),
     );
 
-  const ja3Extended = `${ja3Package.ja3.value},${cleanGrease(signatureAlgos)},${cleanGrease(
+  const ja3Extended = `${ja3Details.value},${cleanGrease(signatureAlgos)},${cleanGrease(
     tlsVersions,
   )},${alpn},${isGreased}`;
 

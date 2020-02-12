@@ -1,5 +1,6 @@
 import { IClientHello } from './parseHelloMessage';
 import crypto from 'crypto';
+import IJa3Details from '../interfaces/IJa3Details';
 
 /**
  * SSLVersion,Cipher,SSLExtension,EllipticCurve,EllipticCurvePointFormat
@@ -35,11 +36,9 @@ export default function buildJa3(clientHello: IClientHello) {
 
   if (!clientHello.extensions) {
     return {
-      combined: "Couldn't read",
-      ja3: {
-        value: "couldn't read",
-        md5: '',
-      },
+      uncleaned: "Couldn't read",
+      value: "couldn't read",
+      md5: '',
       raw: {
         sslVersion: 0,
         ciphers: [],
@@ -66,16 +65,14 @@ export default function buildJa3(clientHello: IClientHello) {
     curve,
   )},${cleanGrease(pointFormats)}`;
   return {
-    combined: `${sslVersion},${ciphers.join('-')},${extensions.join('-')},${curve.join(
+    uncleaned: `${sslVersion},${ciphers.join('-')},${extensions.join('-')},${curve.join(
       '-',
     )},${pointFormats.join('-')}`,
-    ja3: {
-      value: cleaned,
-      md5: crypto
-        .createHash('md5')
-        .update(cleaned)
-        .digest('hex'),
-    },
+    value: cleaned,
+    md5: crypto
+      .createHash('md5')
+      .update(cleaned)
+      .digest('hex'),
     raw: {
       sslVersion,
       ciphers,
@@ -83,7 +80,7 @@ export default function buildJa3(clientHello: IClientHello) {
       curve,
       pointFormats,
     },
-  } as IJa3Package;
+  } as IJa3Details;
 }
 
 export function cleanGrease(nums: number[]): string {
@@ -91,21 +88,6 @@ export function cleanGrease(nums: number[]): string {
   return nums.filter(x => !greaseCiphers.includes(x)).join('-');
 }
 
-export interface IJa3 {
-  value: string;
-  md5: string;
-}
-export interface IJa3Package {
-  combined: string;
-  ja3: IJa3;
-  raw: {
-    sslVersion: number;
-    ciphers: number[];
-    extensions: number[];
-    curve: number[];
-    pointFormats: number[];
-  };
-}
 const greaseCiphers = [
   0x0a0a,
   0x1a1a,

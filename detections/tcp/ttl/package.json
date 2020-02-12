@@ -2,6 +2,7 @@
   "name": "@double-agent/tcp-ttl",
   "version": "1.0.0",
   "main": "index.js",
+  "description": "Compares tcp packet values to the user agent OS",
   "license": "MIT",
   "scripts": {
     "develop": "node index.js",
@@ -9,7 +10,9 @@
   },
   "dependencies": {
     "useragent": "^2.3.0",
-    "pcap": "https://github.com/jonahharris/node_pcap#with-v12-fixes"
+    "pcap": "https://github.com/jonahharris/node_pcap#with-v12-fixes",
+    "source-map-support": "^0.5.16",
+    "@double-agent/runner": "1.0.0"
   },
   "devDependencies": {
     "typescript": "^3.7.2",

@@ -3,15 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "description": "Looks at the tls handshake and compares to the proposed user agent OS",
   "scripts": {
+    "genprofiles": "export $(cat .env | xargs) && node profiles/generateProfiles.js",
     "start": "node index.js",
-    "prod": "LETSENCRYPT=1 PORT=443 node index.js"
+    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 PORT=443 DOMAIN=tls.ulixee.org node index.js"
   },
   "dependencies": {
-    "useragent": "^2.3.0"
+    "useragent": "^2.3.0",
+    "source-map-support": "^0.5.16",
+    "@double-agent/runner": "1.0.0"
   },
   "devDependencies": {
     "typescript": "^3.7.2",
-    "@types/node": "^12.7.11"
+    "@types/node": "^12.7.11",
+    "@types/useragent": "^2.1.1",
+    "selenium-webdriver": "^3.6.0",
+    "@types/selenium-webdriver": "^3.0.16",
+    "p-queue": "^6.2.1"
   }
 }

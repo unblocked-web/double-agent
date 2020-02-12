@@ -1,5 +1,9 @@
 import pcap from 'pcap';
 import { EventEmitter } from 'events';
+import * as os from 'os';
+
+let device = process.env.NETWORK_DEVICE ?? 'lo0';
+if (os.platform() === 'linux') device = 'eth0';
 
 export default function trackRemoteTcpVars(port: string | number) {
   const packets: {
@@ -9,9 +13,11 @@ export default function trackRemoteTcpVars(port: string | number) {
     };
   } = {};
   const emitter = new EventEmitter();
+  let pcapSession: pcap.PcapSession;
   try {
     const tcpTracker = new pcap.TCPTracker();
-    const pcapSession = new pcap.PcapSession(true, 'eth0', `ip proto \\tcp and tcp port ${port}`);
+
+    pcapSession = new pcap.PcapSession(true, device, `ip proto \\tcp and tcp port ${port}`);
 
     tcpTracker.on('session', function(session) {
       console.log('Start of session between ' + session.src_name + ' and ' + session.dst_name);
@@ -51,5 +57,10 @@ export default function trackRemoteTcpVars(port: string | number) {
 
     return packet;
   }
-  return getPacket;
+  return {
+    getPacket,
+    stop: () => {
+      pcapSession.close();
+    },
+  };
 }

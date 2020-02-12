@@ -3,7 +3,8 @@
 - Grease TLS cipher (not possible to send in some stacks)
 - BoringSSL error responses
 
-NOTE: Preliminary implementation to examine ClientHello just uses output from OpenSSL. Future version should implement tls spec like one of these:
+NOTE: Preliminary implementation to examine ClientHello just uses output from OpenSSL. Future version should parse actual client hello packets
+https://github.com/seladb/PcapPlusPlus
 https://github.com/LeeBrotherston/tls-fingerprinting
 https://github.com/ctz/rustls
 

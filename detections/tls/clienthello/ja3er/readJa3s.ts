@@ -9,15 +9,22 @@ import sslSupportedGroups from '../spec/supportedGroups.json';
 import decimalExtensionCodes from '../spec/extensions.json';
 import cipherHexCodes from '../spec/ciphers.json';
 import { greaseCodes } from '../lib/parseHelloMessage';
+import IJa3erClientHello from '../interfaces/IJa3erClientHello';
 
 /**
+ * Format of files
  * {"User-Agent": "Slack", "Count": 3, "md5": "3d72e4827837391cd5b6f5c6b2d5b1e1", "Last_seen": "2019-10-12 07:29:02"}
  */
 export default function readJa3s() {
   const ja3s = readAllJa3s();
   const details = readAllJa3Hashes();
   const byMd5: {
-    [hash: string]: IJa3Details & { count: number; userAgents: IUserAgentCount[] };
+    [hash: string]: {
+      clientHello: IJa3erClientHello;
+      firstReported: Date;
+      count: number;
+      userAgents: IUserAgentCount[];
+    };
   } = {};
 
   const scraperFingerprints = [];
@@ -78,7 +85,7 @@ export default function readJa3s() {
 }
 
 function readAllJa3s(): IEntry[] {
-  return ja3s.map(
+  return (ja3s as any[]).map(
     x =>
       ({
         userAgent: x['User-Agent'],
@@ -90,13 +97,13 @@ function readAllJa3s(): IEntry[] {
 }
 
 function readAllJa3Hashes() {
-  const ja3Details: { [key: string]: IJa3Details } = {};
+  const ja3Details: { [key: string]: { clientHello: IJa3erClientHello; firstReported: Date } } = {};
   for (const x of ja3Hashes) {
     const [SSLVersion, Cipher, SSLExtension, EllipticCurve, EllipticCurvePointFormat] = x.ja3.split(
       ',',
     );
     ja3Details[x.md5] = {
-      ja3: {
+      clientHello: {
         sslVersion:
           '0x' +
           Number(SSLVersion)
@@ -155,18 +162,5 @@ interface IEntry {
   count: number;
   md5: string;
   lastSeen: Date;
-  ja3?: IJa3Details;
-}
-
-interface IJa3 {
-  sslVersion: string;
-  ciphers: string[];
-  extensions: string[];
-  supportedGroups: string[];
-  curvePointFormats: string[];
-}
-
-export interface IJa3Details {
-  ja3: IJa3;
-  firstReported: Date;
+  ja3?: { clientHello: IJa3erClientHello; firstReported: Date };
 }
