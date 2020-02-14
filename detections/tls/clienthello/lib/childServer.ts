@@ -10,6 +10,7 @@ import {
   isConfirmedJa3,
 } from '../profiles';
 import ITlsResult from '../interfaces/ITlsResult';
+import { isGreased } from './buildJa3Extended';
 import IClientHelloMessage from '../interfaces/IClientHelloMessage';
 
 const messages: IClientHelloMessage[] = [];
@@ -81,6 +82,7 @@ try {
         const responseMessage: ITlsResult = {
           match: !!isConfirmed,
           useragent: userAgent,
+          hasGrease: isGreased(message.ja3Extended.value),
           ja3: message.ja3Details.value,
           ja3Md5: message.ja3Details.md5,
           ja3Extended: message.ja3Extended.value,

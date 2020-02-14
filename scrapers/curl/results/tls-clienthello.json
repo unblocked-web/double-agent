@@ -2,109 +2,235 @@
   {
     "success": false,
     "directive": {
-      "url": "http://ulixee-test.org:3001",
+      "url": "http://ulixee-test.org:3004",
       "clickItemSelector": "#start",
       "browser": "Chrome",
       "browserMajorVersion": "70",
       "os": "Mac OS X",
       "osVersion": "10.10",
       "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36",
-      "clickDestinationUrl": "https://ulixee-test.org:3002",
-      "module": "tls - clienthello"
-    },
-    "name": "ja3Extended",
-    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36",
-    "value": "771,4866-4867-4865-49196-49200-159-52393-52392-52394-49195-49199-158-49188-49192-107-49187-49191-103-49162-49172-57-49161-49171-51-157-156-61-60-53-47-255,0-11-10-13172-16-22-23-49-13-43-45-51-21,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771-770-769,h2-http/1.1,0",
-    "reason": "This signature matches: []"
-  },
-  {
-    "success": false,
-    "directive": {
-      "url": "http://ulixee-test.org:3001",
-      "clickItemSelector": "#start",
-      "browser": "Chrome",
-      "browserMajorVersion": "71",
-      "os": "Windows",
-      "osVersion": "7.0",
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36",
-      "clickDestinationUrl": "https://ulixee-test.org:3003",
-      "module": "tls - clienthello"
-    },
-    "name": "ja3Extended",
-    "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36",
-    "value": "771,4866-4867-4865-49196-49200-159-52393-52392-52394-49195-49199-158-49188-49192-107-49187-49191-103-49162-49172-57-49161-49171-51-157-156-61-60-53-47-255,0-11-10-13172-16-22-23-49-13-43-45-51-21,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771-770-769,h2-http/1.1,0",
-    "reason": "This signature matches: []"
-  },
-  {
-    "success": false,
-    "directive": {
-      "url": "http://ulixee-test.org:3001",
-      "clickItemSelector": "#start",
-      "browser": "Chrome",
-      "browserMajorVersion": "76",
-      "os": "Windows",
-      "osVersion": "10.0",
-      "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-      "clickDestinationUrl": "https://ulixee-test.org:3004",
-      "module": "tls - clienthello"
-    },
-    "name": "ja3Extended",
-    "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-    "value": "771,4866-4867-4865-49196-49200-159-52393-52392-52394-49195-49199-158-49188-49192-107-49187-49191-103-49162-49172-57-49161-49171-51-157-156-61-60-53-47-255,0-11-10-13172-16-22-23-49-13-43-45-51-21,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771-770-769,h2-http/1.1,0",
-    "reason": "This signature matches: []"
-  },
-  {
-    "success": false,
-    "directive": {
-      "url": "http://ulixee-test.org:3001",
-      "clickItemSelector": "#start",
-      "browser": "Firefox",
-      "browserMajorVersion": "65",
-      "os": "Windows",
-      "osVersion": "7.0",
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:65.0) Gecko/20100101 Firefox/65.0",
       "clickDestinationUrl": "https://ulixee-test.org:3005",
       "module": "tls - clienthello"
     },
-    "name": "ja3Extended",
-    "useragent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:65.0) Gecko/20100101 Firefox/65.0",
-    "value": "771,4866-4867-4865-49196-49200-159-52393-52392-52394-49195-49199-158-49188-49192-107-49187-49191-103-49162-49172-57-49161-49171-51-157-156-61-60-53-47-255,0-11-10-13172-16-22-23-49-13-43-45-51-21,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771-770-769,h2-http/1.1,0",
-    "reason": "This signature matches: []"
+    "category": "Tls Initial Handshake",
+    "name": "Tls Fingerprint Match",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36",
+    "value": "196f8452b321beaf9ad9ba01b5787fe9",
+    "expected": "4a85db1ae1947a55b9b39ebc10fef644",
+    "reason": "Tls fingerprint seen 1 times on Ja3er crowdsourced tool, but no confirmations ()"
   },
   {
     "success": false,
     "directive": {
-      "url": "http://ulixee-test.org:3001",
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Chrome",
+      "browserMajorVersion": "70",
+      "os": "Mac OS X",
+      "osVersion": "10.10",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36",
+      "clickDestinationUrl": "https://ulixee-test.org:3005",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Grease Used",
+    "name": "Tls Grease in ClientHello",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36",
+    "value": "false",
+    "expected": "true"
+  },
+  {
+    "success": false,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Chrome",
+      "browserMajorVersion": "71",
+      "os": "Mac OS X",
+      "osVersion": "10.10",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36",
+      "clickDestinationUrl": "https://ulixee-test.org:3006",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Initial Handshake",
+    "name": "Tls Fingerprint Match",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36",
+    "value": "196f8452b321beaf9ad9ba01b5787fe9",
+    "expected": "df14570b3a1d09c874f1611677d71e2f",
+    "reason": "Tls fingerprint seen 1 times on Ja3er crowdsourced tool, but no confirmations ()"
+  },
+  {
+    "success": false,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Chrome",
+      "browserMajorVersion": "71",
+      "os": "Mac OS X",
+      "osVersion": "10.10",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36",
+      "clickDestinationUrl": "https://ulixee-test.org:3006",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Grease Used",
+    "name": "Tls Grease in ClientHello",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36",
+    "value": "false",
+    "expected": "true"
+  },
+  {
+    "success": false,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Chrome",
+      "browserMajorVersion": "80",
+      "os": "Mac OS X",
+      "osVersion": "10.10",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
+      "clickDestinationUrl": "https://ulixee-test.org:3007",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Initial Handshake",
+    "name": "Tls Fingerprint Match",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
+    "value": "196f8452b321beaf9ad9ba01b5787fe9",
+    "expected": "47ee0ad9c86cdaaf29cf72dd35d29231",
+    "reason": "Tls fingerprint seen 1 times on Ja3er crowdsourced tool, but no confirmations ()"
+  },
+  {
+    "success": false,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Chrome",
+      "browserMajorVersion": "80",
+      "os": "Mac OS X",
+      "osVersion": "10.10",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
+      "clickDestinationUrl": "https://ulixee-test.org:3007",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Grease Used",
+    "name": "Tls Grease in ClientHello",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
+    "value": "false",
+    "expected": "true"
+  },
+  {
+    "success": false,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Firefox",
+      "browserMajorVersion": "72",
+      "os": "Mac OS X",
+      "osVersion": "10.10",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:72.0) Gecko/20100101 Firefox/72.0",
+      "clickDestinationUrl": "https://ulixee-test.org:3008",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Initial Handshake",
+    "name": "Tls Fingerprint Match",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:72.0) Gecko/20100101 Firefox/72.0",
+    "value": "196f8452b321beaf9ad9ba01b5787fe9",
+    "expected": "2f450c122ebb1fccec8ea821a032520b",
+    "reason": "Tls fingerprint seen 1 times on Ja3er crowdsourced tool, but no confirmations ()"
+  },
+  {
+    "success": true,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Firefox",
+      "browserMajorVersion": "72",
+      "os": "Mac OS X",
+      "osVersion": "10.10",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:72.0) Gecko/20100101 Firefox/72.0",
+      "clickDestinationUrl": "https://ulixee-test.org:3008",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Grease Used",
+    "name": "Tls Grease in ClientHello",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:72.0) Gecko/20100101 Firefox/72.0",
+    "value": "false",
+    "expected": "false"
+  },
+  {
+    "success": false,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
       "clickItemSelector": "#start",
       "browser": "Firefox",
       "browserMajorVersion": "72",
       "os": "Mac OS X",
       "osVersion": "10.14",
       "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:72.0) Gecko/20100101 Firefox/72.0",
-      "clickDestinationUrl": "https://ulixee-test.org:3006",
+      "clickDestinationUrl": "https://ulixee-test.org:3009",
       "module": "tls - clienthello"
     },
-    "name": "ja3Extended",
+    "category": "Tls Initial Handshake",
+    "name": "Tls Fingerprint Match",
     "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:72.0) Gecko/20100101 Firefox/72.0",
-    "value": "771,4866-4867-4865-49196-49200-159-52393-52392-52394-49195-49199-158-49188-49192-107-49187-49191-103-49162-49172-57-49161-49171-51-157-156-61-60-53-47-255,0-11-10-13172-16-22-23-49-13-43-45-51-21,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771-770-769,h2-http/1.1,0",
-    "reason": "This signature matches: []"
+    "value": "196f8452b321beaf9ad9ba01b5787fe9",
+    "expected": "2f450c122ebb1fccec8ea821a032520b",
+    "reason": "Tls fingerprint seen 1 times on Ja3er crowdsourced tool, but no confirmations ()"
+  },
+  {
+    "success": true,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Firefox",
+      "browserMajorVersion": "72",
+      "os": "Mac OS X",
+      "osVersion": "10.14",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:72.0) Gecko/20100101 Firefox/72.0",
+      "clickDestinationUrl": "https://ulixee-test.org:3009",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Grease Used",
+    "name": "Tls Grease in ClientHello",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:72.0) Gecko/20100101 Firefox/72.0",
+    "value": "false",
+    "expected": "false"
   },
   {
     "success": false,
     "directive": {
-      "url": "http://ulixee-test.org:3001",
+      "url": "http://ulixee-test.org:3004",
       "clickItemSelector": "#start",
       "browser": "Edge",
-      "browserMajorVersion": "17",
+      "browserMajorVersion": "18",
       "os": "Windows",
       "osVersion": "10.0",
-      "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134",
-      "clickDestinationUrl": "https://ulixee-test.org:3007",
+      "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18363",
+      "clickDestinationUrl": "https://ulixee-test.org:3010",
       "module": "tls - clienthello"
     },
-    "name": "ja3Extended",
-    "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134",
-    "value": "771,4866-4867-4865-49196-49200-159-52393-52392-52394-49195-49199-158-49188-49192-107-49187-49191-103-49162-49172-57-49161-49171-51-157-156-61-60-53-47-255,0-11-10-13172-16-22-23-49-13-43-45-51-21,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771-770-769,h2-http/1.1,0",
-    "reason": "This signature matches: []"
+    "category": "Tls Initial Handshake",
+    "name": "Tls Fingerprint Match",
+    "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18363",
+    "value": "196f8452b321beaf9ad9ba01b5787fe9",
+    "expected": "76cd5f745703090fbc3a20b9706d0a96",
+    "reason": "Tls fingerprint seen 1 times on Ja3er crowdsourced tool, but no confirmations ()"
+  },
+  {
+    "success": true,
+    "directive": {
+      "url": "http://ulixee-test.org:3004",
+      "clickItemSelector": "#start",
+      "browser": "Edge",
+      "browserMajorVersion": "18",
+      "os": "Windows",
+      "osVersion": "10.0",
+      "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18363",
+      "clickDestinationUrl": "https://ulixee-test.org:3010",
+      "module": "tls - clienthello"
+    },
+    "category": "Tls Grease Used",
+    "name": "Tls Grease in ClientHello",
+    "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18363",
+    "value": "false",
+    "expected": "false"
   }
 ]

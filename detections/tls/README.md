@@ -1,6 +1,6 @@
 ## Detections using TLS conversation:
 - ClientHello ciphers, compressions and fingerprints
-- Grease TLS cipher (not possible to send in some stacks)
+- TLS Grease (currently only supported in BoringSSL). Part of fingerprinting
 - BoringSSL error responses
 
 NOTE: Preliminary implementation to examine ClientHello just uses output from OpenSSL. Future version should parse actual client hello packets

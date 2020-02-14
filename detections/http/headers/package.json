@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "test-categories": [
+    "Websocket Headers",
+    "Asset Headers",
+    "Xhr Headers",
+    "Standard Https Headers",
+    "Standard Http Headers",
+    "Cross Domain Headers",
+    "Same Site Headers"
+  ],
   "description": "Compares header order, capitalization and default values to normal (recorded) user agent values",
   "scripts": {
     "genprofiles": "export $(cat .env | xargs) && node lib/generateProfiles.js",

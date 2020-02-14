@@ -3,9 +3,9 @@ import IDirective from './IDirective';
 export default interface IDetectionResult {
   directive: IDirective;
   success: boolean;
-  name: string;
-  useragent: string;
-  category?: string;
+  category: string;
+  name?: string;
+  useragent?: string;
   value?: string | number;
   expected?: string | number;
   omitted?: boolean;

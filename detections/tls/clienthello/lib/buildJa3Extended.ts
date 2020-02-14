@@ -1,4 +1,4 @@
-import { cleanGrease  } from './buildJa3';
+import { cleanGrease } from './buildJa3';
 import { IClientHello } from './parseHelloMessage';
 import crypto from 'crypto';
 import IJa3Details from '../interfaces/IJa3Details';
@@ -62,4 +62,8 @@ export default function buildJa3Extended(ja3Details: IJa3Details, clientHello: I
       .update(ja3Extended)
       .digest('hex'),
   } as IJa3;
+}
+
+export function isGreased(ja3Value: string) {
+  return ja3Value.endsWith(',1');
 }

@@ -8,26 +8,14 @@ export default function testProfile(
 ) {
   const results: IDetectorResult[] = [];
 
-  const userAgent = profile.userAgent;
-
-  for (const request of profile.entries) {
-    results.push({
-      passed: request.userAgent === userAgent,
-      resourceType: request.type,
-      testName: 'User Agent consistency',
-      value: request.userAgent,
-      expected: userAgent,
-    });
-  }
-
+  const httpName = profile.domains.isSsl ? 'Https' : 'Http';
   /**
    * Rules not yet tested for different use cases:
    * TODO:
    *  Cache-Control: sent on second request
    *  Sec-Fetch-User - will only show up user performed an activity to get to this page
    */
-
-  checkResourceType('Document', null, true, false, [
+  checkResourceType(`Standard ${httpName} Headers`, 'Document', null, true, false, [
     'Connection',
     'Upgrade-Insecure-Requests',
     'Sec-Fetch-User',
@@ -38,7 +26,7 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Websocket - Upgrade', null, true, false, [
+  checkResourceType('Websocket Headers', 'Websocket - Upgrade', null, true, false, [
     'Connection',
     'Upgrade',
     'Sec-WebSocket-Version',
@@ -47,7 +35,7 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Stylesheet', null, true, false, [
+  checkResourceType('Asset Headers', 'Stylesheet', null, true, false, [
     'Connection',
     'Accept',
     'Sec-Fetch-Site',
@@ -56,7 +44,7 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Script', null, true, false, [
+  checkResourceType('Asset Headers', 'Script', null, true, false, [
     'Connection',
     'Accept',
     'Sec-Fetch-Site',
@@ -65,7 +53,7 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Image', null, false, true, [
+  checkResourceType('Asset Headers', 'Image', null, false, true, [
     'Connection',
     'Accept',
     'Sec-Fetch-Site',
@@ -74,7 +62,7 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Xhr', 'mainSite/axios-noheaders', false, true, [
+  checkResourceType('Xhr Headers', 'Xhr', 'mainSite/axios-noheaders', false, true, [
     'Connection',
     'Accept',
     'Accept-Encoding',
@@ -83,7 +71,7 @@ export default function testProfile(
     'Sec-Fetch-Mode',
   ]);
 
-  checkResourceType('Xhr', 'mainSite/fetch-noheaders', false, true, [
+  checkResourceType('Xhr Headers', 'Xhr', 'mainSite/fetch-noheaders', false, true, [
     'Connection',
     'Accept',
     'Accept-Encoding',
@@ -92,7 +80,7 @@ export default function testProfile(
     'Sec-Fetch-Mode',
   ]);
 
-  checkResourceType('Xhr - Post', 'mainSite/fetch-post-noheaders', false, true, [
+  checkResourceType('Xhr Headers', 'Xhr - Post', 'mainSite/fetch-post-noheaders', false, true, [
     'Connection',
     'Accept',
     'Accept-Encoding',
@@ -103,7 +91,7 @@ export default function testProfile(
 
   /////// CROSS SITE //////
 
-  checkResourceType('Cross Domain Websocket - Upgrade', null, true, false, [
+  checkResourceType('Cross Domain Headers', 'Cross Domain Websocket - Upgrade', null, true, false, [
     'Connection',
     'Upgrade',
     'Sec-WebSocket-Version',
@@ -112,14 +100,14 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Cross Domain Stylesheet', null, true, false, [
+  checkResourceType('Cross Domain Headers', 'Cross Domain Stylesheet', null, true, false, [
     'Connection',
     'Accept',
     'Accept-Encoding',
     'Accept-Language',
   ]);
 
-  checkResourceType('Cross Domain Image', null, false, true, [
+  checkResourceType('Cross Domain Headers', 'Cross Domain Image', null, false, true, [
     'Connection',
     'Accept',
     'Sec-Fetch-Site',
@@ -128,21 +116,21 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Cross Domain Script', null, true, false, [
+  checkResourceType('Cross Domain Headers', 'Cross Domain Script', null, true, false, [
     'Connection',
     'Accept',
     'Accept-Encoding',
     'Accept-Language',
   ]);
 
-  checkResourceType('Cross Domain Preflight', null, true, false, [
+  checkResourceType('Cross Domain Headers', 'Cross Domain Preflight', null, true, false, [
     'Connection',
     'Accept',
     'Accept-Encoding',
     'Accept-Language',
   ]);
 
-  checkResourceType('Cross Domain Xhr', 'fetch-noheaders', false, true, [
+  checkResourceType('Cross Domain Headers', 'Cross Domain Xhr', 'fetch-noheaders', false, true, [
     'Connection',
     'Accept',
     'Accept-Encoding',
@@ -151,18 +139,25 @@ export default function testProfile(
     'Sec-Fetch-Mode',
   ]);
 
-  checkResourceType('Cross Domain Xhr - Post', 'fetch-post-noheaders', false, true, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-  ]);
+  checkResourceType(
+    'Cross Domain Headers',
+    'Cross Domain Xhr - Post',
+    'fetch-post-noheaders',
+    false,
+    true,
+    [
+      'Connection',
+      'Accept',
+      'Accept-Encoding',
+      'Accept-Language',
+      'Sec-Fetch-Site',
+      'Sec-Fetch-Mode',
+    ],
+  );
 
   /////// SAME SITE //////
 
-  checkResourceType('Same Site Websocket - Upgrade', null, true, false, [
+  checkResourceType('Same Site Headers', 'Same Site Websocket - Upgrade', null, true, false, [
     'Connection',
     'Upgrade',
     'Sec-WebSocket-Version',
@@ -171,21 +166,21 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Same Site Stylesheet', null, true, false, [
+  checkResourceType('Same Site Headers', 'Same Site Stylesheet', null, true, false, [
     'Connection',
     'Accept',
     'Accept-Encoding',
     'Accept-Language',
   ]);
 
-  checkResourceType('Same Site Script', null, true, false, [
+  checkResourceType('Same Site Headers', 'Same Site Script', null, true, false, [
     'Connection',
     'Accept',
     'Accept-Encoding',
     'Accept-Language',
   ]);
 
-  checkResourceType('Same Site Image', null, false, true, [
+  checkResourceType('Same Site Headers', 'Same Site Image', null, false, true, [
     'Connection',
     'Accept',
     'Sec-Fetch-Site',
@@ -194,14 +189,14 @@ export default function testProfile(
     'Accept-Language',
   ]);
 
-  checkResourceType('Same Site Preflight', null, true, false, [
+  checkResourceType('Same Site Headers', 'Same Site Preflight', null, true, false, [
     'Connection',
     'Accept',
     'Accept-Encoding',
     'Accept-Language',
   ]);
 
-  checkResourceType('Same Site Xhr', 'fetch-noheaders', false, true, [
+  checkResourceType('Same Site Headers', 'Same Site Xhr', 'fetch-noheaders', false, true, [
     'Connection',
     'Accept',
     'Accept-Encoding',
@@ -210,16 +205,24 @@ export default function testProfile(
     'Sec-Fetch-Mode',
   ]);
 
-  checkResourceType('Same Site Xhr - Post', 'fetch-post-noheaders', false, true, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-  ]);
+  checkResourceType(
+    'Same Site Headers',
+    'Same Site Xhr - Post',
+    'fetch-post-noheaders',
+    false,
+    true,
+    [
+      'Connection',
+      'Accept',
+      'Accept-Encoding',
+      'Accept-Language',
+      'Sec-Fetch-Site',
+      'Sec-Fetch-Mode',
+    ],
+  );
 
   function checkResourceType(
+    category: string,
     type: string,
     urlFilter: string = null,
     checkOrder = true,
@@ -230,6 +233,20 @@ export default function testProfile(
       const typeStats = browserStats[type];
       let requests = profile.cleanedEntries.filter(x => x.type === type);
       if (urlFilter) requests = requests.filter(x => x.path.includes(urlFilter));
+
+      for (const request of requests) {
+        results.push({
+          category,
+          passed: request.sameAgent,
+          resourceType: type,
+          testName: 'User Agent Consistent',
+          value: request.rawHeaders
+            .find(x => x.toLowerCase().startsWith('user-agent'))
+            ?.split('=')
+            .slice(1)
+            .join('='),
+        });
+      }
 
       let failedReason = '';
       let omitted = false;
@@ -244,24 +261,27 @@ export default function testProfile(
       if (failedReason) {
         results.push(
           {
+            category,
             passed: false,
             omitted,
             resourceType: type,
-            testName: 'Header Included',
+            testName: 'Header Included + Casing',
             reason: failedReason,
           },
           {
+            category,
             passed: false,
             omitted,
             resourceType: type,
-            testName: 'Header Order',
+            testName: 'Default Headers in Order + Casing',
             reason: failedReason,
           },
           {
+            category,
             passed: false,
             omitted,
             resourceType: type,
-            testName: 'Default Order',
+            testName: 'Header has a Browser Default Value',
             reason: failedReason,
           },
         );
@@ -270,41 +290,44 @@ export default function testProfile(
 
       const [request] = requests;
       if (checkOrder) {
-        checkHeaderOrder(request, typeStats.defaultHeaderOrders[0]);
+        checkHeaderOrder(category, request, typeStats.defaultHeaderOrders[0]);
       } else if (checkCase) {
-        checkHeaderCase(request, typeStats.defaultHeaderOrders[0]);
+        checkHeaderCase(category, request, typeStats.defaultHeaderOrders[0]);
       }
-      checkDefaultValues(request, typeStats.defaults, ...defaultValues);
+      checkDefaultValues(category, request, typeStats.defaults, ...defaultValues);
     } catch (err) {
       console.log('Error for %s ---> ', [type, urlFilter].filter(Boolean).join('  '), err);
     }
   }
 
-  function checkHeaderCase(item: ICleanedRequestInfo, expectedOrder: string) {
+  function checkHeaderCase(category: string, item: ICleanedRequestInfo, expectedOrder: string) {
     const order = getDefaultHeaderOrder(item.headers);
     for (const key of order.defaultKeys) {
       results.push({
+        category,
         passed: expectedOrder.includes(key),
         resourceType: item.type,
-        testName: 'Header Included',
+        testName: 'Header Included + Casing',
         value: key,
         expected: expectedOrder,
       });
     }
   }
 
-  function checkHeaderOrder(item: ICleanedRequestInfo, expectedOrder: string) {
+  function checkHeaderOrder(category: string, item: ICleanedRequestInfo, expectedOrder: string) {
     const order = getDefaultHeaderOrder(item.headers);
     results.push({
-      passed: expectedOrder !== order.defaultKeys.join(','),
+      category,
+      passed: expectedOrder === order.defaultKeys.join(','),
       resourceType: item.type,
-      testName: 'Header Order',
+      testName: 'Default Headers in Order + Casing',
       value: order.defaultKeys.join(),
       expected: expectedOrder,
     });
   }
 
   function checkDefaultValues(
+    category: string,
     item: { type: string; rawHeaders: string[] },
     defaults: { [header: string]: string[] },
     ...headers: string[]
@@ -324,9 +347,10 @@ export default function testProfile(
       }
 
       results.push({
+        category,
         passed: passing,
         resourceType: item.type,
-        testName: 'Default header: ' + header,
+        testName: 'Header has a Browser Default Value for: ' + header,
         value,
         expected: defaultValues?.join(', '),
       });
@@ -338,6 +362,7 @@ export default function testProfile(
 
 interface IDetectorResult {
   passed: boolean;
+  category: string;
   resourceType: string;
   testName: string;
   omitted?: boolean;

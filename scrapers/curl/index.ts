@@ -1,13 +1,10 @@
 import { Curl, curly } from 'node-libcurl';
-import { inspect } from 'util';
 import IDirective from '@double-agent/runner/lib/IDirective';
-import { writeFileSync } from 'fs';
-import IDetectionResultset from '@double-agent/runner/lib/IDetectionResultset';
 
 (async function() {
   let hasNext = true;
   while (hasNext) {
-    const { data } = await curly.get('http://localhost:3000');
+    const { data } = await curly.get('http://localhost:3000?scraper=curl');
     const json = JSON.parse(data);
     if (json.directive) {
       console.log(
@@ -43,13 +40,7 @@ import IDetectionResultset from '@double-agent/runner/lib/IDetectionResultset';
       }
       curl.close();
     } else {
-      console.log('\n\n--------------------\n\nResults', inspect(json, false, null, true));
-      for (const test of json.output as IDetectionResultset[]) {
-        writeFileSync(
-          `results/${test.category}-${test.testName}.json`,
-          JSON.stringify(test.results, null, 2),
-        );
-      }
+      console.log('------ Test Complete --------');
       break;
     }
   }

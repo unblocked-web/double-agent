@@ -6,6 +6,7 @@ import { agentToDirective, isDirectiveMatch } from '@double-agent/runner/lib/age
 import * as http from 'http';
 import ForkedServerRunner from './lib/ForkedServerRunner';
 import Useragent from 'useragent';
+import { isGreased } from './lib/buildJa3Extended';
 
 const domain = process.env.DOMAIN ?? 'ulixee-test.org';
 /**
@@ -34,6 +35,7 @@ export default class Detector extends AbstractDetectorDriver {
 
   protected directives: IDirective[] = [];
 
+  protected dirname = __dirname;
   public etcHostEntries = [domain];
 
   public async nextDirective() {
@@ -83,6 +85,7 @@ export default class Detector extends AbstractDetectorDriver {
         serverStarted();
       });
 
+    console.log(uniqueConfirmedJa3s)
     for (const [, entry] of Object.entries(uniqueConfirmedJa3s)) {
       const browser = entry.browsers
         .sort()
@@ -120,14 +123,6 @@ export default class Detector extends AbstractDetectorDriver {
     this.startServer.close();
   }
 
-  protected recordFailure(message: string, useragent?: string) {
-    this.recordResult(false, {
-      reason: message,
-      name: 'ja3Extended',
-      useragent,
-    });
-  }
-
   private onTlsResult(message: ITlsResult) {
     saveJa3Profile({
       useragent: message.useragent,
@@ -148,16 +143,28 @@ export default class Detector extends AbstractDetectorDriver {
         }
       }
 
+      const expected = confirmedJa3s.find(x => x.useragent === message.useragent);
       this.recordResult(message.match, {
-        name: 'ja3Extended',
+        category: 'Tls Initial Handshake',
+        name: 'Tls Fingerprint Match',
         useragent: message.useragent,
         value: message.ja3ExtendedMd5,
-        expected: confirmedJa3s.find(x => x.useragent === message.useragent).ja3ExtendedMd5,
+        expected: expected.ja3ExtendedMd5,
         reason:
           message.reason ??
           (message.ja3MatchFor?.length
             ? `Provided ja3 signature matches: [${message.ja3MatchFor.join(', ')}]`
             : message.ja3erMatchFor ?? 'Not a match for known browser signatures'),
+      });
+
+      const shouldBeGreased = isGreased(expected.ja3Extended);
+      this.recordResult(shouldBeGreased === message.hasGrease, {
+        category: 'Tls Grease Used',
+        name: 'Tls Grease in ClientHello',
+        useragent: message.useragent,
+        value: String(message.hasGrease),
+        expected: String(shouldBeGreased),
+        reason: message.reason,
       });
     }
   }

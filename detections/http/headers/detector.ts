@@ -20,6 +20,7 @@ const domains = {
 };
 
 export default class Detector extends AbstractDetectorDriver {
+  protected dirname = __dirname;
   protected directives: IDirective[] = [];
 
   private httpServer: http.Server;
@@ -31,7 +32,7 @@ export default class Detector extends AbstractDetectorDriver {
     const httpPort = getPort();
     const httpsPort = getPort();
 
-    const httpsMainsite = cleanDomain(domains.main, httpsPort);
+    const secureMainsite = cleanDomain(domains.main, httpsPort);
     const httpMainsite = cleanDomain(domains.main, httpPort);
 
     const allprofiles = Profile.getAllProfiles('http').concat(Profile.getAllProfiles('https'));
@@ -49,19 +50,18 @@ export default class Detector extends AbstractDetectorDriver {
       this.directives.push(
         {
           ...args,
-          url: `https://${httpsMainsite}`,
-          clickDestinationUrl: `https://${httpsMainsite}/run`,
-          requiredFinalUrl: `https://${httpsMainsite}/headers`,
+          url: `https://${secureMainsite}`,
+          clickDestinationUrl: `https://${secureMainsite}/run`,
+          requiredFinalUrl: `https://${secureMainsite}/headers`,
         },
         {
           ...args,
           url: `http://${httpMainsite}`,
           clickDestinationUrl: `http://${httpMainsite}/run`,
-          requiredFinalUrl: `https://${httpsMainsite}/headers`,
+          requiredFinalUrl: `http://${httpMainsite}/headers`,
         },
       );
     }
-    console.log(seen);
 
     this.httpServer = this.buildServer({
       ...domains,
@@ -76,14 +76,6 @@ export default class Detector extends AbstractDetectorDriver {
     }) as https.Server;
   }
 
-  protected recordFailure(message: string, useragent?: string) {
-    this.recordResult(false, {
-      reason: message,
-      name: 'header',
-      useragent,
-    });
-  }
-
   private onResult(profile: Profile) {
     if (!this.activeDirective) return;
     try {
@@ -93,17 +85,18 @@ export default class Detector extends AbstractDetectorDriver {
           const isUa = isDirectiveMatch(this.activeDirective, profile.userAgent);
 
           if (isUa === false) {
-            console.log('Directive mismatch', profile.userAgent, result, this.activeDirective)
+            console.log('Directive mismatch', profile.userAgent, result, this.activeDirective);
             result.passed = false;
             result.reason = [result.reason, 'Incorrect User Agent provided']
               .filter(Boolean)
               .join(', ');
           }
         }
+
         this.recordResult(result.passed, {
           useragent: this.activeDirective.useragent,
           name: [result.resourceType, result.testName].filter(Boolean).join(' - '),
-          category: profile.domains.isSsl ? 'https' : 'http',
+          category: result.category,
           reason: result.reason,
           omitted: result.omitted,
           value: result.value,

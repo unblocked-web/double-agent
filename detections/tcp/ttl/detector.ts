@@ -17,6 +17,7 @@ export default class Detector extends AbstractDetectorDriver {
   private closeTracker: () => void;
 
   protected directives: IDirective[];
+  protected dirname = __dirname;
 
   public etcHostEntries = ['ulixee-test.org'];
 
@@ -67,26 +68,13 @@ export default class Detector extends AbstractDetectorDriver {
     this.server.close();
   }
 
-  protected recordFailure(reason: string, useragent?: string) {
-    this.recordResult(false, {
-      name: 'ttl',
-      useragent,
-      reason,
-    });
-    this.recordResult(false, {
-      name: 'windowSize',
-      useragent,
-      reason,
-    });
-  }
-
   private async serverListener(req: http.IncomingMessage, res: ServerResponse) {
     const userAgent = req.headers['user-agent'];
     const addr = req.connection.remoteAddress.split(':').pop() + ':' + req.connection.remotePort;
 
     const packet = await this.getRemoteTcpVarsForAddress(addr);
     if (!userAgent) {
-      this.recordFailure('No user agent provided');
+      this.directiveNotRun('No user agent provided');
       res.writeHead(400, {
         'content-type': 'text/html',
       });
@@ -95,7 +83,7 @@ export default class Detector extends AbstractDetectorDriver {
     }
     if (this.activeDirective) {
       if (!isDirectiveMatch(this.activeDirective, userAgent)) {
-        this.recordFailure('Wrong user agent provided', userAgent);
+        this.directiveNotRun('Wrong user agent provided');
         res.writeHead(400, {
           'content-type': 'text/html',
         });
@@ -123,13 +111,15 @@ export default class Detector extends AbstractDetectorDriver {
     const ttlDiff = ttl - packet.ttl;
 
     this.recordResult(ttlDiff < hops && ttlDiff >= 0, {
-      name: 'ttl',
+      category: 'Tcp Layer',
+      name: 'Packet Ttl',
       value: packet.ttl,
       expected: ttl,
       useragent: userAgent,
     });
     this.recordResult(windowSizes.includes(packet.windowSize), {
-      name: 'windowSize',
+      category: 'Tcp Layer',
+      name: 'Packet WindowSize',
       value: packet.windowSize,
       expected: windowSizes.join(','),
       useragent: userAgent,

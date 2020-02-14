@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "test-categories": [
+    "Tls Initial Handshake",
+    "Tls Grease Used"
+  ],
   "description": "Looks at the tls handshake and compares to the proposed user agent OS",
   "scripts": {
     "genprofiles": "export $(cat .env | xargs) && node profiles/generateProfiles.js",

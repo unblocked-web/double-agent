@@ -1,26 +1,34 @@
 import 'source-map-support/register';
-import fs from 'fs';
+import fs, { writeFileSync } from 'fs';
 import { Server } from 'http';
 import IDetectorModule from './lib/IDetectorModule';
 import IDetectionResultset from './lib/IDetectionResultset';
+import * as url from 'url';
 
 let port = Number(process.env.PORT ?? 3000);
 (async function() {
-  const detectors = getAllDetectors();
   const results: IDetectionResultset[] = [];
   let activeDetector: IDetectorModule;
+  const agentDetectors: { [name: string]: IDetectorModule[] } = {};
 
   function getPort() {
     return (port += 1);
   }
-  async function nextDirective() {
+  async function nextDirective(agent: string) {
+    if (!agentDetectors[agent]) {
+      agentDetectors[agent] = getAllDetectors();
+    }
     if (!activeDetector) {
-      activeDetector = detectors.shift();
-      if (!activeDetector) return null;
+      activeDetector = agentDetectors[agent].shift();
+      // if no more detectors, return
+      if (!activeDetector) {
+        delete agentDetectors[agent];
+        return null;
+      }
       // not implemented yet
       if (!activeDetector.module) {
         activeDetector = null;
-        return nextDirective();
+        return nextDirective(agent);
       }
 
       const module = activeDetector.module;
@@ -33,17 +41,23 @@ let port = Number(process.env.PORT ?? 3000);
       directive.module = [activeDetector.category, activeDetector.testName].join(' - ');
       return directive;
     }
-    results.push({
+    const test = {
       category: activeDetector.category,
       testName: activeDetector.testName,
       results: activeDetector.module.getResults(),
-    });
+    };
+    results.push(test);
+
+    writeFileSync(
+      `../scrapers/${agent}/results/${test.category}-${test.testName}.json`,
+      JSON.stringify(test.results, null, 2),
+    );
     activeDetector = null;
-    return nextDirective();
+    return nextDirective(agent);
   }
 
   const etcHostEntries: string[] = [];
-  for (const detector of detectors) {
+  for (const detector of getAllDetectors()) {
     for (const host of detector.module?.etcHostEntries ?? []) {
       if (!etcHostEntries.includes(host)) etcHostEntries.push(host);
     }
@@ -51,16 +65,29 @@ let port = Number(process.env.PORT ?? 3000);
   const etcHostEntry = etcHostEntries.map(x => `127.0.0.1      ${x}`).join('\n');
 
   new Server(async (req, res) => {
-    if (req.url !== '/') {
+    const requestUrl = url.parse(req.url);
+    if (requestUrl.pathname !== '/') {
       res.writeHead(200);
       return res.end('OK');
     }
-    const directive = await nextDirective();
+    const agent = req.headers.scraper ?? requestUrl.query?.split('scraper=').pop();
+    if (!agent) {
+      return res
+        .writeHead(500, {
+          'content-type': 'application/json',
+        })
+        .end(JSON.stringify({ message: 'Please provide a scraper header or query param' }));
+    }
+    const directive = await nextDirective(agent as string);
     res.writeHead(200, {
       'content-type': 'application/json',
     });
     if (!directive) {
-      res.end(JSON.stringify({ output: results }, null, 2));
+      console.log(
+        '\n\n--------------------  Results Complete for "%s"  -------------------\n\n',
+        agent,
+      );
+      res.end(JSON.stringify({ results }));
     } else {
       res.end(JSON.stringify({ directive }));
     }
@@ -91,7 +118,7 @@ function getAllDetectors() {
     if (!fs.statSync(`../detections/${category}`).isDirectory()) continue;
     for (const testName of fs.readdirSync(`../detections/${category}`)) {
       if (!fs.statSync(`../detections/${category}/${testName}`).isDirectory()) continue;
-      if (testName !== 'headers') continue;
+      // if (testName !== 'clienthello') continue
       const entry = {
         category,
         testName,
@@ -107,6 +134,6 @@ function getAllDetectors() {
       } catch (err) {}
     }
   }
-  console.log(detectors);
+  console.log('Test Suites Activated', detectors.map(x => `${x.module ? '✓':'x'} ${x.category}-${x.testName} - ${x.summary}`).sort().reverse());
   return detectors;
 }
