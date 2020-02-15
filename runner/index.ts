@@ -4,6 +4,7 @@ import { Server } from 'http';
 import IDetectorModule from './lib/IDetectorModule';
 import IDetectionResultset from './lib/IDetectionResultset';
 import * as url from 'url';
+import getAllDetectors from './lib/getAllDetectors';
 
 let port = Number(process.env.PORT ?? 3000);
 (async function() {
@@ -111,29 +112,3 @@ Run the suite:
     })
     .on('error', err => console.log(err));
 })();
-
-function getAllDetectors() {
-  const detectors: IDetectorModule[] = [];
-  for (const category of fs.readdirSync('../detections')) {
-    if (!fs.statSync(`../detections/${category}`).isDirectory()) continue;
-    for (const testName of fs.readdirSync(`../detections/${category}`)) {
-      if (!fs.statSync(`../detections/${category}/${testName}`).isDirectory()) continue;
-      // if (testName !== 'clienthello') continue
-      const entry = {
-        category,
-        testName,
-      } as IDetectorModule;
-      try {
-        const Module = require(`../detections/${category}/${testName}/detector`)?.default;
-        if (Module) entry.module = new Module();
-      } catch (err) {}
-
-      try {
-        entry.summary = require(`../detections/${category}/${testName}/package.json`)?.description;
-        detectors.push(entry);
-      } catch (err) {}
-    }
-  }
-  console.log('Test Suites Activated', detectors.map(x => `${x.module ? '✓':'x'} ${x.category}-${x.testName} - ${x.summary}`).sort().reverse());
-  return detectors;
-}

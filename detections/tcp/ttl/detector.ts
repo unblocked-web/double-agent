@@ -57,7 +57,7 @@ export default class Detector extends AbstractDetectorDriver {
     this.closeTracker = tracker.stop;
     return new Promise<void>(resolve => {
       this.server = http.createServer(this.serverListener.bind(this)).listen(this.port, () => {
-        console.log('Tcp->Ttl test started on %s', this.server.address());
+        console.log('TCP->Ttl test started on %s', this.server.address());
         resolve();
       });
     });
@@ -111,14 +111,14 @@ export default class Detector extends AbstractDetectorDriver {
     const ttlDiff = ttl - packet.ttl;
 
     this.recordResult(ttlDiff < hops && ttlDiff >= 0, {
-      category: 'Tcp Layer',
-      name: 'Packet Ttl',
+      category: 'TCP Layer',
+      name: 'Packet TTL',
       value: packet.ttl,
       expected: ttl,
       useragent: userAgent,
     });
     this.recordResult(windowSizes.includes(packet.windowSize), {
-      category: 'Tcp Layer',
+      category: 'TCP Layer',
       name: 'Packet WindowSize',
       value: packet.windowSize,
       expected: windowSizes.join(','),
@@ -132,7 +132,7 @@ export default class Detector extends AbstractDetectorDriver {
       'content-type': 'text/html',
     });
     res.write(`<html><body id="results">
-<h1>Tcp Packet Analysis</h1>
+<h1>TCP Packet Analysis</h1>
 <h2 ${isConfirmed ? `style='color:green'>C` : "style='color:orange'>Unc"}onfirmed</h2>
 <h3>Os: ${ua.os.family}</h2>
 <p>Ttl: ${packet.ttl}. Expected: ${ttl} within ${hops} hops.</p>

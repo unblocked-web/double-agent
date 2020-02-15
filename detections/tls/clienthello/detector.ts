@@ -81,7 +81,7 @@ export default class Detector extends AbstractDetectorDriver {
 </html>`);
       })
       .listen(this.port, () => {
-        console.log('Tls clienthello start server started at http://%s:%s', domain, this.port);
+        console.log('TLS clienthello start server started at http://%s:%s', domain, this.port);
         serverStarted();
       });
 
@@ -145,8 +145,8 @@ export default class Detector extends AbstractDetectorDriver {
 
       const expected = confirmedJa3s.find(x => x.useragent === message.useragent);
       this.recordResult(message.match, {
-        category: 'Tls Initial Handshake',
-        name: 'Tls Fingerprint Match',
+        category: 'TLS Initial Handshake',
+        name: 'TLS Fingerprint Match',
         useragent: message.useragent,
         value: message.ja3ExtendedMd5,
         expected: expected.ja3ExtendedMd5,
@@ -159,8 +159,8 @@ export default class Detector extends AbstractDetectorDriver {
 
       const shouldBeGreased = isGreased(expected.ja3Extended);
       this.recordResult(shouldBeGreased === message.hasGrease, {
-        category: 'Tls Grease Used',
-        name: 'Tls Grease in ClientHello',
+        category: 'TLS Grease Used',
+        name: 'TLS Grease in ClientHello',
         useragent: message.useragent,
         value: String(message.hasGrease),
         expected: String(shouldBeGreased),

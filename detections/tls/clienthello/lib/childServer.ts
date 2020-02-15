@@ -32,7 +32,7 @@ try {
     async (req, res) => {
       res.connection.setKeepAlive(false);
       console.log(
-        'Tls child server request received on port %s. %s from %s:%s',
+        'TLS child server request received on port %s. %s from %s:%s',
         port,
         req.url,
         req.connection.remoteAddress,
@@ -73,7 +73,7 @@ try {
 
         const ja3erStats = ja3er(message.ja3Details.md5);
 
-        const alsoSeenOn = `Tls fingerprint seen ${ja3erStats.count} times on Ja3er crowdsourced tool, but no confirmations`;
+        const alsoSeenOn = `TLS fingerprint seen ${ja3erStats.count} times on Ja3er crowdsourced tool, but no confirmations`;
         const alsoSeenOnBrowsers = [...ja3erStats.browsers.entries()].map(
           ([key, val]) => `${key}: ${val.join(', ')}`,
         );
@@ -138,11 +138,11 @@ margin: 20px 0;
 <body>
     <p><strong>User Agent</strong> ${userAgent}</p>
 
-    <h2>Connection Tls Settings</h2>
+    <h2>Connection TLS Settings</h2>
     <p><strong>Alpn</strong> ${secureSocket.alpnProtocol}</p>
     <p><strong>Cipher</strong> ${secureSocket.getCipher()?.name ?? 'na'}</p>
-    <p><strong>Tls</strong> ${secureSocket.getProtocol()}</p>
-    <h2>Client Tls Proposal</h2>
+    <p><strong>TLS</strong> ${secureSocket.getProtocol()}</p>
+    <h2>Client TLS Proposal</h2>
     ${
       isConfirmed
         ? '<h3 style="color:green">Confirmed Browser Signature</h3>'
@@ -191,7 +191,7 @@ margin: 20px 0;
       })
       .join('\n')}
     </ul>
-    <h4>Tls ClientHello Message (friendly formatted)</h4>
+    <h4>TLS ClientHello Message (friendly formatted)</h4>
     <pre>${JSON.stringify(message.clienthello, null, 2)}</pre>
 </body>
 </html>`,
@@ -207,7 +207,7 @@ margin: 20px 0;
   });
 
   childServer.listen(port, () => {
-    console.log('Tls -> clienthello started on %s', (childServer.address() as any).port);
+    console.log('TLS -> clienthello started on %s', (childServer.address() as any).port);
     process.send({ serverStarted: true });
   });
 

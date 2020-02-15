@@ -9,217 +9,81 @@ export default function testProfile(
   const results: IDetectorResult[] = [];
 
   const httpName = profile.domains.isSsl ? 'Https' : 'Http';
-  /**
-   * Rules not yet tested for different use cases:
-   * TODO:
-   *  Cache-Control: sent on second request
-   *  Sec-Fetch-User - will only show up user performed an activity to get to this page
-   */
-  checkResourceType(`Standard ${httpName} Headers`, 'Document', null, true, false, [
+
+  const headerDefaultsToCheck = [
     'Connection',
+    'Accept',
+    'Sec-Fetch-Site',
+    'Sec-Fetch-Mode',
+    'Accept-Encoding',
+    'Accept-Language', // Chrome headless will send en-US, while headfull will send en-US,en;q=0.9 or en-US,en;q=0.9,und;q=0.8
+  ];
+
+  checkResourceType(`Standard ${httpName} Headers`, 'Document', null, true, false, [
     'Upgrade-Insecure-Requests',
     'Sec-Fetch-User',
-    'Accept',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-    'Accept-Encoding',
-    'Accept-Language',
+    ...headerDefaultsToCheck,
   ]);
 
-  checkResourceType('Websocket Headers', 'Websocket - Upgrade', null, true, false, [
-    'Connection',
-    'Upgrade',
-    'Sec-WebSocket-Version',
-    'Sec-WebSocket-Extensions',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
+  for (const domain of ['', 'Cross Domain ', 'Same Site ']) {
+    checkResourceType('Websocket Headers', domain + 'Websocket - Upgrade', null, true, false, [
+      'Upgrade',
+      'Sec-WebSocket-Version',
+      'Sec-WebSocket-Extensions',
+      ...headerDefaultsToCheck,
+    ]);
 
-  checkResourceType('Asset Headers', 'Stylesheet', null, true, false, [
-    'Connection',
-    'Accept',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
+    checkResourceType(
+      'Asset Headers',
+      domain + 'Stylesheet',
+      null,
+      true,
+      false,
+      headerDefaultsToCheck,
+    );
+    checkResourceType('Asset Headers', domain + 'Script', null, true, false, headerDefaultsToCheck);
+    checkResourceType('Asset Headers', domain + 'Image', null, false, true, headerDefaultsToCheck);
 
-  checkResourceType('Asset Headers', 'Script', null, true, false, [
-    'Connection',
-    'Accept',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
+    if (!domain) {
+      checkResourceType(
+        'Xhr Headers',
+        domain + 'Xhr',
+        'axios-noheaders',
+        false,
+        true,
+        headerDefaultsToCheck,
+      );
+    }
 
-  checkResourceType('Asset Headers', 'Image', null, false, true, [
-    'Connection',
-    'Accept',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
+    checkResourceType(
+      'Xhr Headers',
+      domain + 'Xhr',
+      'fetch-noheaders',
+      false,
+      true,
+      headerDefaultsToCheck,
+    );
 
-  checkResourceType('Xhr Headers', 'Xhr', 'mainSite/axios-noheaders', false, true, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-  ]);
+    checkResourceType(
+      'Xhr Headers',
+      domain + 'Xhr - Post',
+      'fetch-post-noheaders',
+      false,
+      true,
+      headerDefaultsToCheck,
+    );
 
-  checkResourceType('Xhr Headers', 'Xhr', 'mainSite/fetch-noheaders', false, true, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-  ]);
-
-  checkResourceType('Xhr Headers', 'Xhr - Post', 'mainSite/fetch-post-noheaders', false, true, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-  ]);
-
-  /////// CROSS SITE //////
-
-  checkResourceType('Cross Domain Headers', 'Cross Domain Websocket - Upgrade', null, true, false, [
-    'Connection',
-    'Upgrade',
-    'Sec-WebSocket-Version',
-    'Sec-WebSocket-Extensions',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Cross Domain Headers', 'Cross Domain Stylesheet', null, true, false, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Cross Domain Headers', 'Cross Domain Image', null, false, true, [
-    'Connection',
-    'Accept',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Cross Domain Headers', 'Cross Domain Script', null, true, false, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Cross Domain Headers', 'Cross Domain Preflight', null, true, false, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Cross Domain Headers', 'Cross Domain Xhr', 'fetch-noheaders', false, true, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-  ]);
-
-  checkResourceType(
-    'Cross Domain Headers',
-    'Cross Domain Xhr - Post',
-    'fetch-post-noheaders',
-    false,
-    true,
-    [
-      'Connection',
-      'Accept',
-      'Accept-Encoding',
-      'Accept-Language',
-      'Sec-Fetch-Site',
-      'Sec-Fetch-Mode',
-    ],
-  );
-
-  /////// SAME SITE //////
-
-  checkResourceType('Same Site Headers', 'Same Site Websocket - Upgrade', null, true, false, [
-    'Connection',
-    'Upgrade',
-    'Sec-WebSocket-Version',
-    'Sec-WebSocket-Extensions',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Same Site Headers', 'Same Site Stylesheet', null, true, false, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Same Site Headers', 'Same Site Script', null, true, false, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Same Site Headers', 'Same Site Image', null, false, true, [
-    'Connection',
-    'Accept',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Same Site Headers', 'Same Site Preflight', null, true, false, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-  ]);
-
-  checkResourceType('Same Site Headers', 'Same Site Xhr', 'fetch-noheaders', false, true, [
-    'Connection',
-    'Accept',
-    'Accept-Encoding',
-    'Accept-Language',
-    'Sec-Fetch-Site',
-    'Sec-Fetch-Mode',
-  ]);
-
-  checkResourceType(
-    'Same Site Headers',
-    'Same Site Xhr - Post',
-    'fetch-post-noheaders',
-    false,
-    true,
-    [
-      'Connection',
-      'Accept',
-      'Accept-Encoding',
-      'Accept-Language',
-      'Sec-Fetch-Site',
-      'Sec-Fetch-Mode',
-    ],
-  );
+    if (domain) {
+      checkResourceType(
+        'Cors Preflight Headers',
+        domain + 'Preflight',
+        null,
+        true,
+        false,
+        headerDefaultsToCheck,
+      );
+    }
+  }
 
   function checkResourceType(
     category: string,

@@ -41,7 +41,7 @@ export default function httpRequestHandler(
         );
       }
       if (requestUrl.pathname === '/') {
-        return sendStartPage(res, domains);
+        return sendStartPage(res, domains, requestUrl.query);
       }
 
       // favicon is retrieved before anything is set for cookies or keys. eventually we should capture this too
@@ -49,7 +49,9 @@ export default function httpRequestHandler(
         res.writeHead(200, {
           'Content-Type': serveFiles[requestUrl.pathname],
         });
-        fs.createReadStream(__dirname + '/../public' + requestUrl.pathname).pipe(res, { end: true });
+        fs.createReadStream(__dirname + '/../public' + requestUrl.pathname).pipe(res, {
+          end: true,
+        });
         return;
       }
 
@@ -116,7 +118,9 @@ export default function httpRequestHandler(
         res.writeHead(200, {
           'Content-Type': serveFiles[requestUrl.pathname],
         });
-        fs.createReadStream(__dirname + '/../public' + requestUrl.pathname).pipe(res, { end: true });
+        fs.createReadStream(__dirname + '/../public' + requestUrl.pathname).pipe(res, {
+          end: true,
+        });
       } else {
         res.writeHead(200, {
           'Access-Control-Allow-Origin': fullOrigin,
@@ -163,8 +167,8 @@ function buildIndexHtml(key: string, addr: string, agent: string, domains: IDoma
 </tbody>
 </table>
 <img src="icon-wildcard.svg" width="5" />
-<img src="//${fullSameSite}/icon-wildcard.svg" width="5" />
-<img src="//${fullCrossSite}/icon-wildcard.svg" width="5" />
+<img src="//${fullSameSite}/icon-wildcard.svg?hkey=${key}" width="5" />
+<img src="//${fullCrossSite}/icon-wildcard.svg?hkey=${key}" width="5" />
 Ulixee.org
 </body>
 <script>
@@ -201,7 +205,7 @@ Ulixee.org
 </html>`;
 }
 
-function sendStartPage(res: ServerResponse, domains: IDomainset) {
+function sendStartPage(res: ServerResponse, domains: IDomainset, query: string) {
   res.writeHead(200, {
     'content-type': 'text/html',
     'cache-control': 'no-cache, no-store, must-revalidate',
@@ -221,7 +225,7 @@ function sendStartPage(res: ServerResponse, domains: IDomainset) {
 </pre>
 ${domains.isSsl ? '<p>You need to run Chrome with self-signed certs allowed</p>' : ''}
 <h3>Then click start to begin</h3>
-<a id="start" href="/run">start</a>
+<a id="start" href="/run${query ? `?${query}` : ''}">start</a>
 <hr/> 
 </div>
 </body>

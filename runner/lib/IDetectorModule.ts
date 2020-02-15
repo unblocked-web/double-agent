@@ -5,4 +5,5 @@ export default interface IDetectorModule {
   testName: string;
   summary: string;
   module?: IDetectionDriver;
+  testCategories: string[];
 }

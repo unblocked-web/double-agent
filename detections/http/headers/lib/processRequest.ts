@@ -35,7 +35,7 @@ export default async function processRequest(
   const query = querystring.parse(requestUrl.query);
 
   let key = query.hkey ?? bodyJson.hkey ?? cookies.key;
-  if (!overrideUrl && requestUrl.pathname === '/run') {
+  if (!overrideUrl && !key && requestUrl.pathname === '/run') {
     key = String((counter += 1));
     remotes[key] = [];
   }

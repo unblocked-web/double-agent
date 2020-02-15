@@ -58,10 +58,10 @@ export default function analyzeResults() {
           if (record.success) resultsBreakdown[key].passed += 1;
           else if (record.omitted) {
             resultsBreakdown[key].omitted += 1;
-            resultsBreakdown[key].omissions.push(record.name);
+            if (!resultsBreakdown[key].omissions.includes(record.name))
+              resultsBreakdown[key].omissions.push(record.name);
             resultsBreakdown[key].omissions.sort();
-          }
-          else if (!resultsBreakdown[key].failures.includes(record.name)) {
+          } else if (!resultsBreakdown[key].failures.includes(record.name)) {
             resultsBreakdown[key].failures.push(record.name);
             resultsBreakdown[key].failures.sort();
           }
@@ -83,35 +83,40 @@ export default function analyzeResults() {
 
   const finalStats: {
     [scraper: string]: {
-      [category: string]: { passed: number; omitted: number };
-      overall: { passed: number; omitted: number };
+      [category: string]: { passedPct: number; suspiciousOmissions: number; waysToDetect: number };
+      overall: { passedPct: number; suspiciousOmissions: number; waysToDetect: number };
     };
   } = {};
   for (const [key, entry] of Object.entries(scrapers)) {
     finalStats[key] = {
       overall: {
-        passed: Number(((entry.passed / entry.tests) * 100).toFixed(1)),
-        omitted: Number(((entry.omitted / entry.tests) * 100).toFixed(1)),
+        passedPct: Number(((entry.passed / entry.tests) * 100).toFixed(1)),
+        suspiciousOmissions: entry.omitted,
+        waysToDetect: entry.tests - entry.passed - entry.omitted,
       },
     };
     for (const [category, metrics] of Object.entries(entry.categories)) {
       finalStats[key][category] = {
-        passed: Number(((metrics.passed / metrics.tests) * 100).toFixed(1)),
-        omitted: Number(((metrics.omitted / metrics.tests) * 100).toFixed(1)),
+        passedPct: Number(((metrics.passed / metrics.tests) * 100).toFixed(1)),
+        suspiciousOmissions: metrics.omitted,
+        waysToDetect: metrics.tests - metrics.passed - metrics.omitted,
       };
     }
   }
 
   console.log(inspect(scrapers, false, null, true));
   console.log(inspect(finalStats, false, null, true));
+  return {
+    scrapers,
+    finalStats,
+  };
 }
-
-analyzeResults();
 
 interface IResultsByCategory {
   [browser: string]: IResult & {
     failures: string[];
     omissions: string[];
+    resultsBreakdown?: IResultsByCategory;
   };
 }
 

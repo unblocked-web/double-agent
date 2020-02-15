@@ -6,4 +6,5 @@ export default interface IDetectionDriver {
   nextDirective: () => Promise<IDirective | null>;
   getResults: () => IDetectionResult[];
   etcHostEntries: string[];
+  readonly testCategories: string[];
 }
