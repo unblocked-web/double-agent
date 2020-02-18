@@ -66,7 +66,6 @@ export default function getAllDetectors(print = false) {
     else if (b.module && !a.module) return 1;
 
     const stackDiff = stackOrder.indexOf(a.category) - stackOrder.indexOf(b.category);
-    console.log(stackDiff);
     if (stackDiff !== 0) return stackDiff;
 
     return a.category.localeCompare(b.category);

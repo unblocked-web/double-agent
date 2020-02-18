@@ -158,13 +158,50 @@ Firefox 72 | 66 | 0 | 66 |
 Edge 17 | 66 | 0 | 66 | 
 Edge 18 | 66 | 0 | 66 | 
 
-## Audio Codecs Supported
-Test that the audio codecs match the given user agent
+## Browser Codecs
+Test that the audio, video and WebRTC codecs match the given user agent
+
+### Audio Codecs Supported
 
 User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 12 | 0 | 12 |
-Chrome 70 | 3 | 0 | 3 | 
-Firefox 65 | 3 | 0 | 3 | 
-Edge 17 | 3 | 0 | 3 | 
-Firefox 68 | 3 | 0 | 3 | 
+Overall | 18 | 0 | 18 |
+Chrome 72 | 3 | 0 | 3 | 
+Chrome 80 | 3 | 0 | 3 | 
+Firefox 70 | 3 | 0 | 3 | 
+Firefox 72 | 3 | 0 | 3 | 
+Edge 18 | 3 | 0 | 3 | 
+Firefox 69 | 3 | 0 | 3 | 
+### Video Codecs Supported
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 18 | 0 | 18 |
+Chrome 72 | 3 | 0 | 3 | 
+Chrome 80 | 3 | 0 | 3 | 
+Firefox 70 | 3 | 0 | 3 | 
+Firefox 72 | 3 | 0 | 3 | 
+Edge 18 | 3 | 0 | 3 | 
+Firefox 69 | 3 | 0 | 3 | 
+### WebRTC Audio Codecs Supported
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 6 | 0 | 6 |
+Chrome 72 | 1 | 0 | 1 | 
+Chrome 80 | 1 | 0 | 1 | 
+Firefox 70 | 1 | 0 | 1 | 
+Firefox 72 | 1 | 0 | 1 | 
+Edge 18 | 1 | 0 | 1 | 
+Firefox 69 | 1 | 0 | 1 | 
+### WebRTC Video Codecs Supported
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 6 | 0 | 6 |
+Chrome 72 | 1 | 0 | 1 | 
+Chrome 80 | 1 | 0 | 1 | 
+Firefox 70 | 1 | 0 | 1 | 
+Firefox 72 | 1 | 0 | 1 | 
+Edge 18 | 1 | 0 | 1 | 
+Firefox 69 | 1 | 0 | 1 | 

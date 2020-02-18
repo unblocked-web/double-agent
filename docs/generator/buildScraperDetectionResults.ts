@@ -33,7 +33,6 @@ export default function buildScraperDetectionResults() {
   let md = `${cols.join(' | ')}
 --- | :---: |${scrapers.map(() => ' :---: ').join('|')}`;
 
-
   for (const detector of allDetectors) {
     for (const category of detector.testCategories ?? []) {
       let row = `\n${category} | `;
@@ -42,10 +41,12 @@ export default function buildScraperDetectionResults() {
         const detections: string[] = [];
         for (const scraper of scrapers) {
           const catResults = results.scrapers[scraper].categories[category];
+          if (!catResults) continue;
           if (catResults.tests > categoryTests) categoryTests = catResults.tests;
         }
         for (const scraper of scrapers) {
           const catResults = results.scrapers[scraper].categories[category];
+          if (!catResults) continue;
           let detectionCount = `${numberWithCommas(catResults.tests - catResults.passed)}`;
           detections.push(
             `[${detectionCount}](docs/scraper-detections/${scraper}.md#${category
@@ -61,7 +62,6 @@ export default function buildScraperDetectionResults() {
   }
 
   fs.writeFileSync(outputFile, md);
-
 
   /////////// SCRAPER RESULT PAGES /////////////////////////////////////////////////////////////////
 

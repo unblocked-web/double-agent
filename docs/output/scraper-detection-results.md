@@ -9,7 +9,10 @@ Asset Headers | 2,805 | [2,805](docs/scraper-detections/curl.md#asset-headers) |
 Xhr Headers | 3,465 | [3,465](docs/scraper-detections/curl.md#xhr-headers) | [3,465](docs/scraper-detections/scrapy.md#xhr-headers) | [624](docs/scraper-detections/puppeteer.md#xhr-headers)
 Cors Preflight Headers | 540 | [540](docs/scraper-detections/curl.md#cors-preflight-headers) | [540](docs/scraper-detections/scrapy.md#cors-preflight-headers) | [184](docs/scraper-detections/puppeteer.md#cors-preflight-headers)
 Websocket Headers | 990 | [990](docs/scraper-detections/curl.md#websocket-headers) | [990](docs/scraper-detections/scrapy.md#websocket-headers) | [306](docs/scraper-detections/puppeteer.md#websocket-headers)
-Audio Codecs Supported | 12 | [12](docs/scraper-detections/curl.md#audio-codecs-supported) | [12](docs/scraper-detections/scrapy.md#audio-codecs-supported) | [11](docs/scraper-detections/puppeteer.md#audio-codecs-supported)
+Audio Codecs Supported | 18 | [18](docs/scraper-detections/curl.md#audio-codecs-supported) | [18](docs/scraper-detections/scrapy.md#audio-codecs-supported) | [16](docs/scraper-detections/puppeteer.md#audio-codecs-supported)
+Video Codecs Supported | 18 | [18](docs/scraper-detections/curl.md#video-codecs-supported) | [18](docs/scraper-detections/scrapy.md#video-codecs-supported) | [18](docs/scraper-detections/puppeteer.md#video-codecs-supported)
+WebRTC Audio Codecs Supported | 6 | [6](docs/scraper-detections/curl.md#webrtc-audio-codecs-supported) | [6](docs/scraper-detections/scrapy.md#webrtc-audio-codecs-supported) | [4](docs/scraper-detections/puppeteer.md#webrtc-audio-codecs-supported)
+WebRTC Video Codecs Supported | 6 | [6](docs/scraper-detections/curl.md#webrtc-video-codecs-supported) | [6](docs/scraper-detections/scrapy.md#webrtc-video-codecs-supported) | [6](docs/scraper-detections/puppeteer.md#webrtc-video-codecs-supported)
 Cache Headers | 
 Can Set Cookies | 
 Same Site Cookies | 
@@ -24,7 +27,6 @@ Fonts Fingerprint |
 Is Javascript Enabled? | 
 EMCA Support Matches Browser | 
 Dom Features Tampered With | 
-Video Codecs Supported | 
 Virtual Machine Used | 
 Repeated Interaction Steps | 
 Time to Interact with Page | 

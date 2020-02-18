@@ -17,7 +17,7 @@ let port = Number(process.env.PORT ?? 3000);
   }
   async function nextDirective(agent: string) {
     if (!agentDetectors[agent]) {
-      agentDetectors[agent] = getAllDetectors(true);
+      agentDetectors[agent] = getAllDetectors();
     }
     if (!activeDetector) {
       activeDetector = agentDetectors[agent].shift();
@@ -58,7 +58,7 @@ let port = Number(process.env.PORT ?? 3000);
   }
 
   const etcHostEntries: string[] = [];
-  for (const detector of getAllDetectors()) {
+  for (const detector of getAllDetectors(true)) {
     for (const host of detector.module?.etcHostEntries ?? []) {
       if (!etcHostEntries.includes(host)) etcHostEntries.push(host);
     }

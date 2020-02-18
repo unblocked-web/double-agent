@@ -1,4 +1,4 @@
-import Useragent from 'useragent';
+import Useragent, { lookup } from 'useragent';
 import fs from 'fs';
 
 export function getUseragentPath(useragent: string) {
@@ -22,4 +22,15 @@ export function saveUseragentProfile(useragent: string, data: any, profilesDir: 
   } catch (err) {
     console.log(err);
   }
+}
+
+export function getNewestBrowser(agents: string[]) {
+  // pick max version
+  return agents
+    .map(x => ({
+      agent: lookup(x),
+      str: x,
+    }))
+    .sort((a, b) => b.agent.major.localeCompare(a.agent.major))
+    .shift().str;
 }

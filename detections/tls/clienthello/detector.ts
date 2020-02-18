@@ -85,7 +85,6 @@ export default class Detector extends AbstractDetectorDriver {
         serverStarted();
       });
 
-    console.log(uniqueConfirmedJa3s)
     for (const [, entry] of Object.entries(uniqueConfirmedJa3s)) {
       const browser = entry.browsers
         .sort()

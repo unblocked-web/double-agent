@@ -158,13 +158,50 @@ Firefox 72 | 66 | 30 | 0 | - Cross Domain Websocket - Upgrade - Default Headers 
 Edge 17 | 66 | 24 | 0 | - Cross Domain Websocket - Upgrade - Default Headers in Order + Casing<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value for: Accept<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value for: Accept-Encoding<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value for: Sec-WebSocket-Extensions<br/>- Same Site Websocket - Upgrade - Default Headers in Order + Casing<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value for: Accept<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value for: Accept-Encoding<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value for: Sec-WebSocket-Extensions<br/>- Websocket - Upgrade - Default Headers in Order + Casing<br/>- Websocket - Upgrade - Header has a Browser Default Value for: Accept<br/>- Websocket - Upgrade - Header has a Browser Default Value for: Accept-Encoding<br/>- Websocket - Upgrade - Header has a Browser Default Value for: Sec-WebSocket-Extensions<br/>
 Edge 18 | 66 | 24 | 0 | - Cross Domain Websocket - Upgrade - Default Headers in Order + Casing<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value for: Accept<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value for: Accept-Encoding<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value for: Sec-WebSocket-Extensions<br/>- Same Site Websocket - Upgrade - Default Headers in Order + Casing<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value for: Accept<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value for: Accept-Encoding<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value for: Sec-WebSocket-Extensions<br/>- Websocket - Upgrade - Default Headers in Order + Casing<br/>- Websocket - Upgrade - Header has a Browser Default Value for: Accept<br/>- Websocket - Upgrade - Header has a Browser Default Value for: Accept-Encoding<br/>- Websocket - Upgrade - Header has a Browser Default Value for: Sec-WebSocket-Extensions<br/>
 
-## Audio Codecs Supported
-Test that the audio codecs match the given user agent
+## Browser Codecs
+Test that the audio, video and WebRTC codecs match the given user agent
+
+### Audio Codecs Supported
 
 User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 12 | 11 | 0 |
-Chrome 70 | 3 | 2 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>
-Firefox 65 | 3 | 3 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>- Audio Recording Codecs<br/>
-Edge 17 | 3 | 3 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>- Audio Recording Codecs<br/>
-Firefox 68 | 3 | 3 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>- Audio Recording Codecs<br/>
+Overall | 18 | 16 | 0 |
+Chrome 72 | 3 | 2 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>
+Chrome 80 | 3 | 2 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>
+Firefox 70 | 3 | 3 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>- Audio Recording Codecs<br/>
+Firefox 72 | 3 | 3 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>- Audio Recording Codecs<br/>
+Edge 18 | 3 | 3 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>- Audio Recording Codecs<br/>
+Firefox 69 | 3 | 3 | 0 | - Audio "Maybe" Playback Codecs<br/>- Audio "Probably" Playback Codecs<br/>- Audio Recording Codecs<br/>
+### Video Codecs Supported
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 18 | 18 | 0 |
+Chrome 72 | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video "Probably" Playback Codecs<br/>- Video Recording Codecs<br/>
+Chrome 80 | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video "Probably" Playback Codecs<br/>- Video Recording Codecs<br/>
+Firefox 70 | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video "Probably" Playback Codecs<br/>- Video Recording Codecs<br/>
+Firefox 72 | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video "Probably" Playback Codecs<br/>- Video Recording Codecs<br/>
+Edge 18 | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video "Probably" Playback Codecs<br/>- Video Recording Codecs<br/>
+Firefox 69 | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video "Probably" Playback Codecs<br/>- Video Recording Codecs<br/>
+### WebRTC Audio Codecs Supported
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 6 | 4 | 0 |
+Chrome 72 | 1 | 0 | 0 | 
+Chrome 80 | 1 | 0 | 0 | 
+Firefox 70 | 1 | 1 | 0 | - WebRTC Audio MimeTypes and ClockRate Match<br/>
+Firefox 72 | 1 | 1 | 0 | - WebRTC Audio MimeTypes and ClockRate Match<br/>
+Edge 18 | 1 | 1 | 0 | - WebRTC Audio MimeTypes and ClockRate Match<br/>
+Firefox 69 | 1 | 1 | 0 | - WebRTC Audio MimeTypes and ClockRate Match<br/>
+### WebRTC Video Codecs Supported
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 6 | 6 | 0 |
+Chrome 72 | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
+Chrome 80 | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
+Firefox 70 | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
+Firefox 72 | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
+Edge 18 | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
+Firefox 69 | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
