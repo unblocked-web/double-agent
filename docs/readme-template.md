@@ -15,15 +15,14 @@ following browsers and operating systems:
 - Chrome 70 - 80
 - Firefox 65 - 72
 - Edge 17, 18
-- Operating Systems:
-  - Windows 7, 8.1, 10
-  - Mac OS X 10.10 - 10.15
-
+- Operating Systems: Windows 7, 8.1, 10; Mac OS X 10.10 - 10.15
 
 #### Detections
+
 Counts shown are the number of ways to detect each scraper agent per test suite.
 
 {{inject=output/scraper-detection-results.md}}
+
 ## Structure:
 
 This suite is broken into layers of detection. Some of these layers can be used on their own to detect a user agent who

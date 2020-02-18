@@ -14,16 +14,31 @@ function titleCase(str: string) {
     .join(' ');
 }
 
-export default function getAllDetectors() {
+const stackOrder = ['tcp', 'tls', 'ip', 'http', 'browser', 'user', 'end2end'];
+
+export default function getAllDetectors(print = false) {
   const detectors: IDetectorModule[] = [];
   const detectionsDir = __dirname + '/../../detections';
+  let testsFilter;
+
+  if (process.argv.length > 2) {
+    testsFilter = process.argv
+      .slice(2)
+      .map(x => x.trim().split(','))
+      .reduce((tot, x) => {
+        tot.push(...x);
+        return tot;
+      }, [])
+      .filter(Boolean);
+  }
   for (const category of fs.readdirSync(detectionsDir)) {
     if (category === '.DS_Store') continue;
     if (!fs.statSync(`${detectionsDir}/${category}`).isDirectory()) continue;
     for (const testName of fs.readdirSync(`${detectionsDir}/${category}`)) {
       if (testName === '.DS_Store') continue;
       if (!fs.statSync(`${detectionsDir}/${category}/${testName}`).isDirectory()) continue;
-      // if (testName !== 'headers') continue
+      if (testsFilter && !testsFilter.includes(testName)) continue;
+
       const entry = {
         category,
         testName,
@@ -45,14 +60,24 @@ export default function getAllDetectors() {
       } catch (err) {}
     }
   }
+
   detectors.sort((a, b) => {
     if (a.module && !b.module) return -1;
-    else if (b.module) return 1;
+    else if (b.module && !a.module) return 1;
+
+    const stackDiff = stackOrder.indexOf(a.category) - stackOrder.indexOf(b.category);
+    console.log(stackDiff);
+    if (stackDiff !== 0) return stackDiff;
+
     return a.category.localeCompare(b.category);
   });
-  console.log(
-    'Test Suites Activated',
-    detectors.map(x => `${x.module ? '✓' : 'x'} ${x.category}-${x.testName} - ${x.summary}`),
-  );
+
+  if (print) {
+    console.log(
+      'Test Suites Activated',
+      detectors.map(x => `${x.module ? '✓' : 'x'} ${x.category}-${x.testName} - ${x.summary}`),
+    );
+  }
+
   return detectors;
 }

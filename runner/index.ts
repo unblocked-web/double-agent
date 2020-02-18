@@ -17,7 +17,7 @@ let port = Number(process.env.PORT ?? 3000);
   }
   async function nextDirective(agent: string) {
     if (!agentDetectors[agent]) {
-      agentDetectors[agent] = getAllDetectors();
+      agentDetectors[agent] = getAllDetectors(true);
     }
     if (!activeDetector) {
       activeDetector = agentDetectors[agent].shift();

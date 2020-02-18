@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc --build",
     "watch": "tsc -w",
-    "clean": "tsc --build --clean",
-    "clean-logger": "tsc --build --clean ./shared/logger"
+    "docs": "node docs/generator",
+    "start": "yarn workspace @double-agent/runner start"
   },
   "author": "Data Liberation Foundation",
   "license": "ISC",

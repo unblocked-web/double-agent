@@ -19,6 +19,8 @@ export default function buildScraperDetectionResults() {
     return failuresA - failuresB;
   });
 
+  /////////// OVERALL RESULTS TABLE ////////////////////////////////////////////////////////////////
+
   const cols = [
     'Detection',
     'Tests',
@@ -31,15 +33,19 @@ export default function buildScraperDetectionResults() {
   let md = `${cols.join(' | ')}
 --- | :---: |${scrapers.map(() => ' :---: ').join('|')}`;
 
+
   for (const detector of allDetectors) {
     for (const category of detector.testCategories ?? []) {
       let row = `\n${category} | `;
       if (detector.module) {
-        let tests = 0;
+        let categoryTests = 0;
         const detections: string[] = [];
         for (const scraper of scrapers) {
           const catResults = results.scrapers[scraper].categories[category];
-          if (catResults.tests > tests) tests = catResults.tests;
+          if (catResults.tests > categoryTests) categoryTests = catResults.tests;
+        }
+        for (const scraper of scrapers) {
+          const catResults = results.scrapers[scraper].categories[category];
           let detectionCount = `${numberWithCommas(catResults.tests - catResults.passed)}`;
           detections.push(
             `[${detectionCount}](docs/scraper-detections/${scraper}.md#${category
@@ -48,13 +54,16 @@ export default function buildScraperDetectionResults() {
           );
         }
 
-        row += `${numberWithCommas(tests)} | ${detections.join(' | ')}`;
+        row += `${numberWithCommas(categoryTests)} | ${detections.join(' | ')}`;
       }
       md += row;
     }
   }
 
   fs.writeFileSync(outputFile, md);
+
+
+  /////////// SCRAPER RESULT PAGES /////////////////////////////////////////////////////////////////
 
   for (const scraper of scrapers) {
     let page = `# ${capitalizeFirstLetter(scraper)} Detections`;
@@ -64,8 +73,8 @@ export default function buildScraperDetectionResults() {
         detector.testCategories.length === 1
           ? detector.testCategories[0]
           : [detector.category, detector.testName].map(capitalizeFirstLetter).join(' ');
-      page += `\n## ${title}
-${detector.summary}\n\n`;
+      page += `\n\n## ${title}
+${detector.summary}\n`;
       for (const category of detector.testCategories ?? []) {
         const categoryResults = results.scrapers[scraper].categories[category];
 
@@ -81,10 +90,9 @@ User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Test
 --- | :---: | :---: | :---: | ---
 Overall | ${numberWithCommas(categoryResults.tests)} | ${numberWithCommas(
           categoryResults.tests - categoryResults.passed - categoryResults.omitted,
-        )} | ${numberWithCommas(categoryResults.omitted)} |
-`;
+        )} | ${numberWithCommas(categoryResults.omitted)} |`;
         for (const [key, value] of Object.entries(categoryResults.resultsBreakdown)) {
-          page += `${key} | ${numberWithCommas(value.tests)} | ${numberWithCommas(
+          page += `\n${key} | ${numberWithCommas(value.tests)} | ${numberWithCommas(
             value.tests - value.passed - value.omitted,
           )} | ${numberWithCommas(value.omitted)} | `;
           for (const failure of value.failures) {
@@ -100,8 +108,8 @@ Overall | ${numberWithCommas(categoryResults.tests)} | ${numberWithCommas(
         }
         if (allOmissions.size && categoryResults.omitted !== categoryResults.tests) {
           page += `
-#### Tests/Resources not Loaded by Scraper
 
+#### Tests/Resources not Loaded by Scraper
 Test | Browsers not Running Test
 --- | ---
 `;

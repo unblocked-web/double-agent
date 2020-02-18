@@ -7,5 +7,15 @@
     "Audio Codecs Supported"
   ],
   "description": "Test that the audio codecs match the given user agent",
-  "scripts": {}
+  "scripts": {
+    "genprofiles": "export $(cat .env | xargs) && node profiles/generateProfiles.js",
+    "start": "node index.js",
+    "prod": "GENERATE_PROFILES=1 PORT=3001 node index.js"
+  },
+  "dependencies": {
+    "useragent": "^2.3.0",
+    "user-agents": "^1.0.536",
+    "csv-parse": "^4.8.5",
+    "source-map-support": "^0.5.16"
+  }
 }
