@@ -1,30 +1,16 @@
-/keys/*
 node_modules
-screenshots
-.ulixee
 *yarn-error.log
 .idea/
 package-lock.json
 npm-debug.log
-lerna-debug.log
-coverage
 .DS_Store
-dist
 
-**/.env
 tsconfig.tsbuildinfo
-
-.cache
-.cache-test
-.http-mitm-proxy
 
 **/.env
 *.js.map
 *.js
-!jest-*.js
-!*.eslintrc.js
-!**/*.config.js
-!/detections/http/headers/public/main.js
-/detections/http/headers/test-profiles/*
+!**/public/*.js
 *.pem
-/scrapers/curl/cookiejar.txt
+**/cookiejar.txt
+**/test-profiles/

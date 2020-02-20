@@ -34,6 +34,51 @@ Chrome 80 | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Firefox 72 | 2 | 0 | 0 | 
 Edge 18 | 1 | 0 | 0 | 
 
+## Http Cookies
+Are cookies enabled? Are same-site, secure and other cookies correctly sent?
+
+### Can Set Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 40 | 20 | 0 |
+Chrome 75 | 8 | 3 | 0 | - Javascript Cookies<br/>- Page<br/>
+Chrome 80 | 12 | 6 | 0 | - Cross Domain Page<br/>- Javascript Cookies<br/>- Page<br/>
+Edge 17 | 12 | 6 | 0 | - Cross Domain Page<br/>- Javascript Cookies<br/>- Page<br/>
+Edge 18 | 8 | 5 | 0 | - Cross Domain Page<br/>- Javascript Cookies<br/>- Page<br/>
+### Same Site Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 12 | 6 | 6 |
+Chrome 75 | 2 | 1 | 1 | - Same Site Page<br/>
+Chrome 80 | 4 | 2 | 2 | - Same Site Page<br/>- Same Site Secure Page<br/>
+Edge 17 | 4 | 2 | 2 | - Same Site Page<br/>- Same Site Secure Page<br/>
+Edge 18 | 2 | 1 | 1 | - Same Site Page<br/>
+
+#### Tests/Resources not Loaded by Scraper
+Test | Browsers not Running Test
+--- | ---
+Same Site Stylesheet | Chrome 75, Chrome 80, Edge 17, Edge 18
+Same Site Secure Stylesheet | Chrome 80, Edge 17
+
+### Secure Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 8 | 8 | 0 |
+Chrome 80 | 4 | 4 | 0 | - Cross Domain Secure Page<br/>- Secure Page<br/>
+Edge 17 | 4 | 4 | 0 | - Cross Domain Secure Page<br/>- Secure Page<br/>
+### Cross Domain Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 16 | 16 | 0 |
+Chrome 75 | 3 | 3 | 0 | - Cross Site Page<br/>- Cross Site Secure Stylesheet<br/>
+Chrome 80 | 5 | 5 | 0 | - Cross Site Page<br/>- Cross Site Secure Page<br/>- Cross Site Secure Stylesheet<br/>
+Edge 17 | 5 | 5 | 0 | - Cross Site Page<br/>- Cross Site Secure Page<br/>- Cross Site Secure Stylesheet<br/>
+Edge 18 | 3 | 3 | 0 | - Cross Site Page<br/>- Cross Site Secure Stylesheet<br/>
+
 ## Http Headers
 Compares header order, capitalization and default values to normal (recorded) user agent values
 

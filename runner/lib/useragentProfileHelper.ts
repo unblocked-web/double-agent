@@ -1,4 +1,4 @@
-import Useragent, { lookup } from 'useragent';
+import Useragent, { Agent, lookup } from 'useragent';
 import fs from 'fs';
 
 export function getUseragentPath(useragent: string) {
@@ -33,4 +33,17 @@ export function getNewestBrowser(agents: string[]) {
     }))
     .sort((a, b) => b.agent.major.localeCompare(a.agent.major))
     .shift().str;
+}
+
+export function matchUserAgent(item: { userAgent: Agent }, thisAgent: Agent) {
+  if (item.userAgent.major !== thisAgent.major) return false;
+  if (item.userAgent.family !== thisAgent.family) return false;
+  if (item.userAgent.os.family !== thisAgent.os.family) return false;
+  if (
+    [item.userAgent.os.major, item.userAgent.os.minor].toString() !==
+    [thisAgent.os.major, thisAgent.os.minor].toString()
+  ) {
+    return false;
+  }
+  return true;
 }

@@ -34,6 +34,69 @@ Chrome 80 | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Firefox 72 | 2 | 0 | 0 | 
 Edge 18 | 1 | 0 | 0 | 
 
+## Http Cookies
+Are cookies enabled? Are same-site, secure and other cookies correctly sent?
+
+### Can Set Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 40 | 20 | 4 |
+Chrome 75 | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
+Chrome 80 | 12 | 6 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
+Edge 17 | 12 | 6 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
+Edge 18 | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
+
+#### Tests/Resources not Loaded by Scraper
+Test | Browsers not Running Test
+--- | ---
+Page | Chrome 75, Chrome 80, Edge 17, Edge 18
+
+### Same Site Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 12 | 6 | 6 |
+Chrome 75 | 2 | 1 | 1 | - Same Site Page<br/>
+Chrome 80 | 4 | 2 | 2 | - Same Site Page<br/>- Same Site Secure Page<br/>
+Edge 17 | 4 | 2 | 2 | - Same Site Page<br/>- Same Site Secure Page<br/>
+Edge 18 | 2 | 1 | 1 | - Same Site Page<br/>
+
+#### Tests/Resources not Loaded by Scraper
+Test | Browsers not Running Test
+--- | ---
+Same Site Stylesheet | Chrome 75, Chrome 80, Edge 17, Edge 18
+Same Site Secure Stylesheet | Chrome 80, Edge 17
+
+### Secure Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 8 | 4 | 2 |
+Chrome 80 | 4 | 2 | 1 | - Secure Page<br/>
+Edge 17 | 4 | 2 | 1 | - Secure Page<br/>
+
+#### Tests/Resources not Loaded by Scraper
+Test | Browsers not Running Test
+--- | ---
+Secure Page | Chrome 80, Edge 17
+
+### Cross Domain Cookies
+
+User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+--- | :---: | :---: | :---: | ---
+Overall | 16 | 12 | 4 |
+Chrome 75 | 3 | 2 | 1 | - Cross Site Page<br/>
+Chrome 80 | 5 | 4 | 1 | - Cross Site Page<br/>- Cross Site Secure Page<br/>
+Edge 17 | 5 | 4 | 1 | - Cross Site Page<br/>- Cross Site Secure Page<br/>
+Edge 18 | 3 | 2 | 1 | - Cross Site Page<br/>
+
+#### Tests/Resources not Loaded by Scraper
+Test | Browsers not Running Test
+--- | ---
+Cross Site Secure Stylesheet | Chrome 75, Chrome 80, Edge 17, Edge 18
+
+
 ## Http Headers
 Compares header order, capitalization and default values to normal (recorded) user agent values
 

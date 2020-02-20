@@ -15,11 +15,13 @@ class DirectivesSpider(scrapy.Spider):
         if "directive" in jsonresponse:
             directive = jsonresponse['directive']
             print(directive)
-            yield response.follow(
-                directive['url'],
+            print ('making request')
+            yield scrapy.Request(
+                url = directive['url'],
                 callback = self.parse_start_page,
                 cb_kwargs = directive,
-                headers = {'User-Agent': directive['useragent']}
+                meta = { "referrer_policy" : 'no-referrer'},
+                headers = {'User-Agent': directive['useragent'] }
               )
 
     def parse_start_page(self, response, **directive):
@@ -37,7 +39,7 @@ class DirectivesSpider(scrapy.Spider):
 
 
     def extract_page(self, response, **directive):
-        if "requiredFinalUrl" in directive:
+        if "requiredFinalUrl" in directive or "requiredFinalClickSelector" in directive:
             for link in response.css('script'):
                 if "src" in link.attrib:
                     print("Following script", link.attrib['src'])
@@ -51,12 +53,20 @@ class DirectivesSpider(scrapy.Spider):
                     print("Following img", link.attrib['src'])
                     yield response.follow(link.attrib['src'], self.no_extract)
 
-            print("Final", directive["requiredFinalUrl"])
-            yield response.follow(
-               directive["requiredFinalUrl"],
-               headers = {'User-Agent': directive["useragent"]},
-               callback = self.next_directive
-             )
+            if "requiredFinalClickSelector" in directive:
+                print("Final click", directive["requiredFinalClickSelector"])
+                yield response.follow(
+                   response.css(directive["requiredFinalClickSelector"] + "::attr(href)")[0].get(),
+                   headers = {'User-Agent': directive["useragent"]},
+                   callback = self.next_directive
+                 )
+            else:
+                print("Final", directive["requiredFinalUrl"])
+                yield response.follow(
+                   directive["requiredFinalUrl"],
+                   headers = {'User-Agent': directive["useragent"]},
+                   callback = self.next_directive
+                 )
         else:
            yield from self.next_directive(response)
 

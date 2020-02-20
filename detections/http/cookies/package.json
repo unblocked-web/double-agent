@@ -9,6 +9,25 @@
     "Secure Cookies",
     "Cross Domain Cookies"
   ],
-  "description": "Are cookies enabled, are same-site, secure and other cookies correctly sent?",
-  "scripts": {}
+  "description": "Are cookies enabled? Are same-site, secure and other cookies correctly sent?",
+  "scripts": {
+    "genprofiles": "export $(cat .env | xargs) && node lib/generateProfiles.js",
+    "start": "MAIN_DOMAIN=ulixee-test.org SAME_SITE_DOMAIN=a1.ulixee-test.org CROSS_SITE_DOMAIN=a1.dlf.org node index.js",
+    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 MAIN_DOMAIN=headers.ulixee.org SAME_SITE_DOMAIN=a1.ulixee.org CROSS_SITE_DOMAIN=headers.dataliberationfoundation.org HTTP_PORT=80 HTTPS_PORT=443 node index.js"
+  },
+  "dependencies": {
+    "useragent": "^2.3.0",
+    "cookie": "^0.4.0",
+    "ws": "^7.2.1",
+    "source-map-support": "^0.5.16"
+  },
+  "devDependencies": {
+    "selenium-webdriver": "^3.6.0",
+    "@types/selenium-webdriver": "^3.0.16",
+    "typescript": "^3.7.2",
+    "@types/node": "^12.7.11",
+    "@types/cookie": "^0.3.3",
+    "@types/useragent": "^2.1.1",
+    "p-queue": "^6.2.1"
+  }
 }

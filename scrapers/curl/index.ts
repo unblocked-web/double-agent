@@ -18,10 +18,11 @@ import IDirective from '@double-agent/runner/lib/IDirective';
       const instruction = json.directive as IDirective;
       const curl = new Curl();
       curl.setOpt('USERAGENT', instruction.useragent);
-      curl.setOpt('SSL_VERIFYPEER', false);
-      curl.setOpt('FOLLOWLOCATION', true);
+      curl.setOpt('SSL_VERIFYPEER', 0);
       curl.setOpt('COOKIEJAR', __dirname + '/cookiejar.txt');
       curl.setOpt('COOKIESESSION', 1);
+      curl.setOpt('FOLLOWLOCATION', 1);
+      curl.setOpt('AUTOREFERER', 1);
       curl.setOpt('URL', instruction.clickDestinationUrl ?? instruction.url);
       const finished = new Promise((resolve, reject) => {
         curl.on('end', resolve);

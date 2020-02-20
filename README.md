@@ -26,6 +26,10 @@ Detection | Tests | [Curl](docs/scraper-detections/curl.md) | [Scrapy](docs/scra
 TCP Layer | 6 | [3](docs/scraper-detections/curl.md#tcp-layer) | [3](docs/scraper-detections/scrapy.md#tcp-layer) | [3](docs/scraper-detections/puppeteer.md#tcp-layer)
 TLS Initial Handshake | 6 | [6](docs/scraper-detections/curl.md#tls-initial-handshake) | [6](docs/scraper-detections/scrapy.md#tls-initial-handshake) | [6](docs/scraper-detections/puppeteer.md#tls-initial-handshake)
 TLS Grease Used | 6 | [3](docs/scraper-detections/curl.md#tls-grease-used) | [3](docs/scraper-detections/scrapy.md#tls-grease-used) | [3](docs/scraper-detections/puppeteer.md#tls-grease-used)
+Can Set Cookies | 40 | [24](docs/scraper-detections/curl.md#can-set-cookies) | [20](docs/scraper-detections/scrapy.md#can-set-cookies) | [0](docs/scraper-detections/puppeteer.md#can-set-cookies)
+Same Site Cookies | 12 | [12](docs/scraper-detections/curl.md#same-site-cookies) | [12](docs/scraper-detections/scrapy.md#same-site-cookies) | [0](docs/scraper-detections/puppeteer.md#same-site-cookies)
+Secure Cookies | 8 | [6](docs/scraper-detections/curl.md#secure-cookies) | [8](docs/scraper-detections/scrapy.md#secure-cookies) | [0](docs/scraper-detections/puppeteer.md#secure-cookies)
+Cross Domain Cookies | 16 | [16](docs/scraper-detections/curl.md#cross-domain-cookies) | [16](docs/scraper-detections/scrapy.md#cross-domain-cookies) | [8](docs/scraper-detections/puppeteer.md#cross-domain-cookies)
 Standard Http Headers | 150 | [90](docs/scraper-detections/curl.md#standard-http-headers) | [88](docs/scraper-detections/scrapy.md#standard-http-headers) | [45](docs/scraper-detections/puppeteer.md#standard-http-headers)
 Standard Https Headers | 150 | [105](docs/scraper-detections/curl.md#standard-https-headers) | [103](docs/scraper-detections/scrapy.md#standard-https-headers) | [75](docs/scraper-detections/puppeteer.md#standard-https-headers)
 Asset Headers | 2,805 | [2,805](docs/scraper-detections/curl.md#asset-headers) | [1,785](docs/scraper-detections/scrapy.md#asset-headers) | [792](docs/scraper-detections/puppeteer.md#asset-headers)
@@ -37,10 +41,6 @@ Video Codecs Supported | 18 | [18](docs/scraper-detections/curl.md#video-codecs-
 WebRTC Audio Codecs Supported | 6 | [6](docs/scraper-detections/curl.md#webrtc-audio-codecs-supported) | [6](docs/scraper-detections/scrapy.md#webrtc-audio-codecs-supported) | [4](docs/scraper-detections/puppeteer.md#webrtc-audio-codecs-supported)
 WebRTC Video Codecs Supported | 6 | [6](docs/scraper-detections/curl.md#webrtc-video-codecs-supported) | [6](docs/scraper-detections/scrapy.md#webrtc-video-codecs-supported) | [6](docs/scraper-detections/puppeteer.md#webrtc-video-codecs-supported)
 Cache Headers | 
-Can Set Cookies | 
-Same Site Cookies | 
-Secure Cookies | 
-Cross Domain Cookies | 
 Loads All Page Assets | 
 Sec Navigate Header | 
 Referrers | 
@@ -73,10 +73,10 @@ Module | Detections | Description | Implemented
 --- | --- | --- | :---:
 tcp/ttl | * TCP Layer | Compares tcp packet values to the user agent OS | :white_check_mark:
 tls/clienthello | * TLS Initial Handshake<br/><br/>* TLS Grease Used | Looks at the tls handshake and compares to the proposed user agent OS | :white_check_mark:
+http/cookies | * Can Set Cookies<br/><br/>* Same Site Cookies<br/><br/>* Secure Cookies<br/><br/>* Cross Domain Cookies | Are cookies enabled? Are same-site, secure and other cookies correctly sent? | :white_check_mark:
 http/headers | * Standard Http Headers<br/><br/>* Standard Https Headers<br/><br/>* Asset Headers<br/><br/>* Xhr Headers<br/><br/>* Cors Preflight Headers<br/><br/>* Websocket Headers | Compares header order, capitalization and default values to normal (recorded) user agent values | :white_check_mark:
 browser/codecs | * Audio Codecs Supported<br/><br/>* Video Codecs Supported<br/><br/>* WebRTC Audio Codecs Supported<br/><br/>* WebRTC Video Codecs Supported | Test that the audio, video and WebRTC codecs match the given user agent | :white_check_mark:
 http/cache | * Cache Headers | Http caching headers sent in different conditions vs default user agent behavior |  
-http/cookies | * Can Set Cookies<br/><br/>* Same Site Cookies<br/><br/>* Secure Cookies<br/><br/>* Cross Domain Cookies | Are cookies enabled, are same-site, secure and other cookies correctly sent? |  
 http/loaded-assets | * Loads All Page Assets | Does a request load expected assets? (css, images, ad networks) |  
 http/navigate | * Sec Navigate Header | Looks at SEC- http headers for user initiated navigation and referrers |  
 http/referrers | * Referrers | Referrer headers indicate browser came from a legitimate source |  

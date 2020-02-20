@@ -5,14 +5,10 @@ import IDirective from '@double-agent/runner/lib/IDirective';
 import { agentToDirective, isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
 import { readFileSync } from 'fs';
 import csv from 'csv-parse/lib/sync';
-import {
-  getNewestBrowser,
-  saveUseragentProfile,
-} from '@double-agent/runner/lib/useragentProfileHelper';
+import { getNewestBrowser, saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
 import ICodecProfile from './interfaces/ICodecProfile';
 import {
   convertWebRtcCodecsToString,
-  equalWebRtcCodecs,
   findUniqueProfiles,
   findUniqueWebRTCProfiles,
   getProfileForUa,

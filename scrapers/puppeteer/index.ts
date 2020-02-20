@@ -35,6 +35,15 @@ import IDirective from '@double-agent/runner/lib/IDirective';
           page.waitForNavigation({ waitUntil: 'networkidle0' }),
         ]);
       }
+
+      if (instruction.requiredFinalClickSelector) {
+        console.log('clicking final selector %s', instruction.requiredFinalClickSelector);
+        await Promise.all([
+          page.click(instruction.requiredFinalClickSelector),
+          page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        ]);
+      }
+
       if (instruction.waitForElementSelector) {
         console.log('waiting for selector %s', instruction.waitForElementSelector);
         await page.waitForSelector(instruction.waitForElementSelector);
