@@ -1,0 +1,20 @@
+{
+  "name": "http-cookies",
+  "concurrency": 5,
+  "directives": [
+    {
+      "profilesDirectory": "http",
+      "url": "http://headers.ulixee.org",
+      "clickItemSelector": "#start.ready",
+      "requiredFinalClickSelector": "#results.ready",
+      "waitForElementSelector": "#final"
+    },
+    {
+      "profilesDirectory": "https",
+      "url": "https://headers.ulixee.org",
+      "clickItemSelector": "#start.ready",
+      "requiredFinalClickSelector": "#results.ready",
+      "waitForElementSelector": "#final"
+    }
+  ]
+}

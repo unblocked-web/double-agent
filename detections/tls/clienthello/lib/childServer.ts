@@ -135,7 +135,7 @@ margin: 20px 0;
 }
 </style>
 </head>
-<body>
+<body id="results">
     <p><strong>User Agent</strong> ${userAgent}</p>
 
     <h2>Connection TLS Settings</h2>

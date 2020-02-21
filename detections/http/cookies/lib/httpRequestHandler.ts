@@ -104,7 +104,7 @@ export default function httpRequestHandler(
 
         const results = testCookieProfile(profile);
         console.log(
-          '%s Cookie Discrepencies',
+          '%s Cookie Discrepancies',
           results.filter(x => !x.success).length,
           results,
         );

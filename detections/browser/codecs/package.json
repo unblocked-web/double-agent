@@ -11,7 +11,7 @@
   ],
   "description": "Test that the audio, video and WebRTC codecs match the given user agent",
   "scripts": {
-    "genprofiles": "export $(cat .env | xargs) && node profiles/generateProfiles.js",
+    "genprofiles": "yarn workspace @double-agent/profiler start",
     "start": "node index.js",
     "prod": "GENERATE_PROFILES=1 PORT=3001 node index.js"
   },

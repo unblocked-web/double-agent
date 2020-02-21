@@ -9,7 +9,7 @@
   ],
   "description": "Looks at the tls handshake and compares to the proposed user agent OS",
   "scripts": {
-    "genprofiles": "export $(cat .env | xargs) && node profiles/generateProfiles.js",
+    "genprofiles": "yarn workspace @double-agent/profiler start",
     "start": "node index.js",
     "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 PORT=443 DOMAIN=tls.ulixee.org node index.js"
   },
@@ -21,9 +21,6 @@
   "devDependencies": {
     "typescript": "^3.7.2",
     "@types/node": "^12.7.11",
-    "@types/useragent": "^2.1.1",
-    "selenium-webdriver": "^3.6.0",
-    "@types/selenium-webdriver": "^3.0.16",
-    "p-queue": "^6.2.1"
+    "@types/useragent": "^2.1.1"
   }
 }

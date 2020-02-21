@@ -3,6 +3,10 @@ import fs from 'fs';
 
 export function getUseragentPath(useragent: string) {
   const userAgent = Useragent.lookup(useragent);
+  return getAgentPath(userAgent);
+}
+
+export function getAgentPath(userAgent: Agent) {
   const os = userAgent.os.family.replace(/\s/g, '_').toLowerCase();
   const osv = userAgent.os.major + '_' + userAgent.os.minor;
 

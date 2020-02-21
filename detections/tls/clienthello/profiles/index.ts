@@ -9,7 +9,7 @@ const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}`;
 function getAllProfiles() {
   let entries: IJa3BrowserProfile[] = [];
   for (const filepath of fs.readdirSync(profilesDir)) {
-    if (!filepath.endsWith('json')) continue;
+    if (!filepath.endsWith('json') && !filepath.startsWith('_')) continue;
     const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
     const json = JSON.parse(file) as IJa3BrowserProfile;
     entries.push(json);

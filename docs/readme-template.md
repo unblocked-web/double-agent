@@ -1,7 +1,4 @@
-Double Agent is a suite of tools for detecting the end to end stack of web interactions in order to detect when a
-user agent is not who they are claiming to be.
-
-A suite of tools written to allow a scraper engine to test if it is detectable. This suite is intended to be able to
+Double Agent is a suite of tools written to allow a scraper engine to test if it is detectable. This suite is intended to be able to
 score the stealth features of a given scraper stack. Most detection techniques presented compare a user agent’s browser
 and operating system to the capabilities detectable in a given page load.
 
