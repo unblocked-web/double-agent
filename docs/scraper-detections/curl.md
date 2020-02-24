@@ -1,270 +1,141 @@
-# Curl Detections
+# Curl
+Runs all requests through libcurl with the following settings: 
+SSL_VERIFYPEER=0, COOKIEJAR=./cookiejar.txt, COOKIESESSION=1, FOLLOWLOCATION=1, AUTOREFERER=1
 
-## TCP Layer
-Compares tcp packet values to the user agent OS
+## Chrome 79
+42.2% market share as of 01/2020
 
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 6 | 3 | 0 |
-Linux | 2 | 1 | 0 | - Packet WindowSize<br/>
-Windows | 2 | 2 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-Mac OS X | 2 | 0 | 0 | 
+Overall | 256 | 27 | 218
+TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
+TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
+Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
+Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
+Cross Domain Cookies | 3 | 2 | 1 | - Cross Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Cross Site Secure Stylesheet<br/>
+Standard Http Headers | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Standard Https Headers | 10 | 9 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Mode<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Site<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-User<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Asset Headers | 92 | 0 | 92 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Image - Default Headers in Order + Casing<br/>- Cross Domain Image - Header Included + Casing<br/>- Cross Domain Image - Header has a Browser Default Value<br/>- Cross Domain Script - Default Headers in Order + Casing<br/>- Cross Domain Script - Header Included + Casing<br/>- Cross Domain Script - Header has a Browser Default Value<br/>- Cross Domain Stylesheet - Default Headers in Order + Casing<br/>- Cross Domain Stylesheet - Header Included + Casing<br/>- Cross Domain Stylesheet - Header has a Browser Default Value<br/>- Image - Default Headers in Order + Casing<br/>- Image - Header Included + Casing<br/>- Image - Header has a Browser Default Value<br/>- Same Site Image - Default Headers in Order + Casing<br/>- Same Site Image - Header Included + Casing<br/>- Same Site Image - Header has a Browser Default Value<br/>- Same Site Script - Default Headers in Order + Casing<br/>- Same Site Script - Header Included + Casing<br/>- Same Site Script - Header has a Browser Default Value<br/>- Same Site Stylesheet - Default Headers in Order + Casing<br/>- Same Site Stylesheet - Header Included + Casing<br/>- Same Site Stylesheet - Header has a Browser Default Value<br/>- Script - Default Headers in Order + Casing<br/>- Script - Header Included + Casing<br/>- Script - Header has a Browser Default Value<br/>- Stylesheet - Default Headers in Order + Casing<br/>- Stylesheet - Header Included + Casing<br/>- Stylesheet - Header has a Browser Default Value<br/>
+Xhr Headers | 61 | 0 | 61 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Xhr - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Header Included + Casing<br/>- Cross Domain Xhr - Header has a Browser Default Value<br/>- Cross Domain Xhr - Post - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Post - Header Included + Casing<br/>- Cross Domain Xhr - Post - Header has a Browser Default Value<br/>- Same Site Xhr - Default Headers in Order + Casing<br/>- Same Site Xhr - Header Included + Casing<br/>- Same Site Xhr - Header has a Browser Default Value<br/>- Same Site Xhr - Post - Default Headers in Order + Casing<br/>- Same Site Xhr - Post - Header Included + Casing<br/>- Same Site Xhr - Post - Header has a Browser Default Value<br/>- Xhr - Default Headers in Order + Casing<br/>- Xhr - Header Included + Casing<br/>- Xhr - Header has a Browser Default Value<br/>- Xhr - Post - Default Headers in Order + Casing<br/>- Xhr - Post - Header Included + Casing<br/>- Xhr - Post - Header has a Browser Default Value<br/>
+Cors Preflight Headers | 20 | 0 | 20 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Preflight - Default Headers in Order + Casing<br/>- Cross Domain Preflight - Header Included + Casing<br/>- Cross Domain Preflight - Header has a Browser Default Value<br/>- Same Site Preflight - Default Headers in Order + Casing<br/>- Same Site Preflight - Header Included + Casing<br/>- Same Site Preflight - Header has a Browser Default Value<br/>
+Websocket Headers | 34 | 0 | 34 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Websocket - Upgrade - Default Headers in Order + Casing<br/>- Cross Domain Websocket - Upgrade - Header Included + Casing<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value<br/>- Same Site Websocket - Upgrade - Default Headers in Order + Casing<br/>- Same Site Websocket - Upgrade - Header Included + Casing<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value<br/>- Websocket - Upgrade - Default Headers in Order + Casing<br/>- Websocket - Upgrade - Header Included + Casing<br/>- Websocket - Upgrade - Header has a Browser Default Value<br/>
+Audio Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-## Tls Clienthello
-Looks at the tls handshake and compares to the proposed user agent OS
+## Safari 13
+11.1% market share as of 01/2020
 
-### TLS Initial Handshake
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 6 | 6 | 0 |
-Chrome 70 | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
-Chrome 71 | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
-Chrome 80 | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
-Firefox 72 | 2 | 2 | 0 | - TLS Fingerprint Match<br/>
-Edge 18 | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
-### TLS Grease Used
+Overall | 252 | 19 | 218
+TCP Layer | 2 | 0 | 0 | 
+TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+TLS Grease Used | 1 | 0 | 0 | 
+Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
+Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
+Cross Domain Cookies | 3 | 2 | 1 | - Cross Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Cross Site Secure Stylesheet<br/>
+Standard Http Headers | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Standard Https Headers | 10 | 5 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>
+Asset Headers | 92 | 0 | 92 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Image - Default Headers in Order + Casing<br/>- Cross Domain Image - Header Included + Casing<br/>- Cross Domain Image - Header has a Browser Default Value<br/>- Cross Domain Script - Default Headers in Order + Casing<br/>- Cross Domain Script - Header Included + Casing<br/>- Cross Domain Script - Header has a Browser Default Value<br/>- Cross Domain Stylesheet - Default Headers in Order + Casing<br/>- Cross Domain Stylesheet - Header Included + Casing<br/>- Cross Domain Stylesheet - Header has a Browser Default Value<br/>- Image - Default Headers in Order + Casing<br/>- Image - Header Included + Casing<br/>- Image - Header has a Browser Default Value<br/>- Same Site Image - Default Headers in Order + Casing<br/>- Same Site Image - Header Included + Casing<br/>- Same Site Image - Header has a Browser Default Value<br/>- Same Site Script - Default Headers in Order + Casing<br/>- Same Site Script - Header Included + Casing<br/>- Same Site Script - Header has a Browser Default Value<br/>- Same Site Stylesheet - Default Headers in Order + Casing<br/>- Same Site Stylesheet - Header Included + Casing<br/>- Same Site Stylesheet - Header has a Browser Default Value<br/>- Script - Default Headers in Order + Casing<br/>- Script - Header Included + Casing<br/>- Script - Header has a Browser Default Value<br/>- Stylesheet - Default Headers in Order + Casing<br/>- Stylesheet - Header Included + Casing<br/>- Stylesheet - Header has a Browser Default Value<br/>
+Xhr Headers | 61 | 0 | 61 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Xhr - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Header Included + Casing<br/>- Cross Domain Xhr - Header has a Browser Default Value<br/>- Cross Domain Xhr - Post - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Post - Header Included + Casing<br/>- Cross Domain Xhr - Post - Header has a Browser Default Value<br/>- Same Site Xhr - Default Headers in Order + Casing<br/>- Same Site Xhr - Header Included + Casing<br/>- Same Site Xhr - Header has a Browser Default Value<br/>- Same Site Xhr - Post - Default Headers in Order + Casing<br/>- Same Site Xhr - Post - Header Included + Casing<br/>- Same Site Xhr - Post - Header has a Browser Default Value<br/>- Xhr - Default Headers in Order + Casing<br/>- Xhr - Header Included + Casing<br/>- Xhr - Header has a Browser Default Value<br/>- Xhr - Post - Default Headers in Order + Casing<br/>- Xhr - Post - Header Included + Casing<br/>- Xhr - Post - Header has a Browser Default Value<br/>
+Cors Preflight Headers | 20 | 0 | 20 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Preflight - Default Headers in Order + Casing<br/>- Cross Domain Preflight - Header Included + Casing<br/>- Cross Domain Preflight - Header has a Browser Default Value<br/>- Same Site Preflight - Default Headers in Order + Casing<br/>- Same Site Preflight - Header Included + Casing<br/>- Same Site Preflight - Header has a Browser Default Value<br/>
+Websocket Headers | 34 | 0 | 34 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Websocket - Upgrade - Default Headers in Order + Casing<br/>- Cross Domain Websocket - Upgrade - Header Included + Casing<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value<br/>- Same Site Websocket - Upgrade - Default Headers in Order + Casing<br/>- Same Site Websocket - Upgrade - Header Included + Casing<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value<br/>- Websocket - Upgrade - Default Headers in Order + Casing<br/>- Websocket - Upgrade - Header Included + Casing<br/>- Websocket - Upgrade - Header has a Browser Default Value<br/>
+Audio Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+## Edge 18
+7.8% market share as of 01/2020
+
+Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 6 | 3 | 0 |
-Chrome 70 | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
-Chrome 71 | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
-Chrome 80 | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
-Firefox 72 | 2 | 0 | 0 | 
-Edge 18 | 1 | 0 | 0 | 
+Overall | 252 | 21 | 218
+TCP Layer | 2 | 1 | 0 | - Packet TTL<br/>
+TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+TLS Grease Used | 1 | 0 | 0 | 
+Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
+Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
+Cross Domain Cookies | 3 | 2 | 1 | - Cross Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Cross Site Secure Stylesheet<br/>
+Standard Http Headers | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Standard Https Headers | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Asset Headers | 92 | 0 | 92 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Image - Default Headers in Order + Casing<br/>- Cross Domain Image - Header Included + Casing<br/>- Cross Domain Image - Header has a Browser Default Value<br/>- Cross Domain Script - Default Headers in Order + Casing<br/>- Cross Domain Script - Header Included + Casing<br/>- Cross Domain Script - Header has a Browser Default Value<br/>- Cross Domain Stylesheet - Default Headers in Order + Casing<br/>- Cross Domain Stylesheet - Header Included + Casing<br/>- Cross Domain Stylesheet - Header has a Browser Default Value<br/>- Image - Default Headers in Order + Casing<br/>- Image - Header Included + Casing<br/>- Image - Header has a Browser Default Value<br/>- Same Site Image - Default Headers in Order + Casing<br/>- Same Site Image - Header Included + Casing<br/>- Same Site Image - Header has a Browser Default Value<br/>- Same Site Script - Default Headers in Order + Casing<br/>- Same Site Script - Header Included + Casing<br/>- Same Site Script - Header has a Browser Default Value<br/>- Same Site Stylesheet - Default Headers in Order + Casing<br/>- Same Site Stylesheet - Header Included + Casing<br/>- Same Site Stylesheet - Header has a Browser Default Value<br/>- Script - Default Headers in Order + Casing<br/>- Script - Header Included + Casing<br/>- Script - Header has a Browser Default Value<br/>- Stylesheet - Default Headers in Order + Casing<br/>- Stylesheet - Header Included + Casing<br/>- Stylesheet - Header has a Browser Default Value<br/>
+Xhr Headers | 61 | 0 | 61 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Xhr - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Header Included + Casing<br/>- Cross Domain Xhr - Header has a Browser Default Value<br/>- Cross Domain Xhr - Post - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Post - Header Included + Casing<br/>- Cross Domain Xhr - Post - Header has a Browser Default Value<br/>- Same Site Xhr - Default Headers in Order + Casing<br/>- Same Site Xhr - Header Included + Casing<br/>- Same Site Xhr - Header has a Browser Default Value<br/>- Same Site Xhr - Post - Default Headers in Order + Casing<br/>- Same Site Xhr - Post - Header Included + Casing<br/>- Same Site Xhr - Post - Header has a Browser Default Value<br/>- Xhr - Default Headers in Order + Casing<br/>- Xhr - Header Included + Casing<br/>- Xhr - Header has a Browser Default Value<br/>- Xhr - Post - Default Headers in Order + Casing<br/>- Xhr - Post - Header Included + Casing<br/>- Xhr - Post - Header has a Browser Default Value<br/>
+Cors Preflight Headers | 20 | 0 | 20 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Preflight - Default Headers in Order + Casing<br/>- Cross Domain Preflight - Header Included + Casing<br/>- Cross Domain Preflight - Header has a Browser Default Value<br/>- Same Site Preflight - Default Headers in Order + Casing<br/>- Same Site Preflight - Header Included + Casing<br/>- Same Site Preflight - Header has a Browser Default Value<br/>
+Websocket Headers | 34 | 0 | 34 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Websocket - Upgrade - Default Headers in Order + Casing<br/>- Cross Domain Websocket - Upgrade - Header Included + Casing<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value<br/>- Same Site Websocket - Upgrade - Default Headers in Order + Casing<br/>- Same Site Websocket - Upgrade - Header Included + Casing<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value<br/>- Websocket - Upgrade - Default Headers in Order + Casing<br/>- Websocket - Upgrade - Header Included + Casing<br/>- Websocket - Upgrade - Header has a Browser Default Value<br/>
+Audio Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-## Http Cookies
-Are cookies enabled? Are same-site, secure and other cookies correctly sent?
+## Chrome 80
+7% market share as of 01/2020
 
-### Can Set Cookies
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 40 | 20 | 4 |
-Chrome 75 | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
-Chrome 80 | 12 | 6 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
-Edge 17 | 12 | 6 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
-Edge 18 | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/>
+Overall | 256 | 27 | 218
+TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
+TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
+Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
+Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
+Cross Domain Cookies | 3 | 2 | 1 | - Cross Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Cross Site Secure Stylesheet<br/>
+Standard Http Headers | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Standard Https Headers | 10 | 9 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Mode<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Site<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-User<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Asset Headers | 92 | 0 | 92 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Image - Default Headers in Order + Casing<br/>- Cross Domain Image - Header Included + Casing<br/>- Cross Domain Image - Header has a Browser Default Value<br/>- Cross Domain Script - Default Headers in Order + Casing<br/>- Cross Domain Script - Header Included + Casing<br/>- Cross Domain Script - Header has a Browser Default Value<br/>- Cross Domain Stylesheet - Default Headers in Order + Casing<br/>- Cross Domain Stylesheet - Header Included + Casing<br/>- Cross Domain Stylesheet - Header has a Browser Default Value<br/>- Image - Default Headers in Order + Casing<br/>- Image - Header Included + Casing<br/>- Image - Header has a Browser Default Value<br/>- Same Site Image - Default Headers in Order + Casing<br/>- Same Site Image - Header Included + Casing<br/>- Same Site Image - Header has a Browser Default Value<br/>- Same Site Script - Default Headers in Order + Casing<br/>- Same Site Script - Header Included + Casing<br/>- Same Site Script - Header has a Browser Default Value<br/>- Same Site Stylesheet - Default Headers in Order + Casing<br/>- Same Site Stylesheet - Header Included + Casing<br/>- Same Site Stylesheet - Header has a Browser Default Value<br/>- Script - Default Headers in Order + Casing<br/>- Script - Header Included + Casing<br/>- Script - Header has a Browser Default Value<br/>- Stylesheet - Default Headers in Order + Casing<br/>- Stylesheet - Header Included + Casing<br/>- Stylesheet - Header has a Browser Default Value<br/>
+Xhr Headers | 61 | 0 | 61 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Xhr - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Header Included + Casing<br/>- Cross Domain Xhr - Header has a Browser Default Value<br/>- Cross Domain Xhr - Post - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Post - Header Included + Casing<br/>- Cross Domain Xhr - Post - Header has a Browser Default Value<br/>- Same Site Xhr - Default Headers in Order + Casing<br/>- Same Site Xhr - Header Included + Casing<br/>- Same Site Xhr - Header has a Browser Default Value<br/>- Same Site Xhr - Post - Default Headers in Order + Casing<br/>- Same Site Xhr - Post - Header Included + Casing<br/>- Same Site Xhr - Post - Header has a Browser Default Value<br/>- Xhr - Default Headers in Order + Casing<br/>- Xhr - Header Included + Casing<br/>- Xhr - Header has a Browser Default Value<br/>- Xhr - Post - Default Headers in Order + Casing<br/>- Xhr - Post - Header Included + Casing<br/>- Xhr - Post - Header has a Browser Default Value<br/>
+Cors Preflight Headers | 20 | 0 | 20 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Preflight - Default Headers in Order + Casing<br/>- Cross Domain Preflight - Header Included + Casing<br/>- Cross Domain Preflight - Header has a Browser Default Value<br/>- Same Site Preflight - Default Headers in Order + Casing<br/>- Same Site Preflight - Header Included + Casing<br/>- Same Site Preflight - Header has a Browser Default Value<br/>
+Websocket Headers | 34 | 0 | 34 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Websocket - Upgrade - Default Headers in Order + Casing<br/>- Cross Domain Websocket - Upgrade - Header Included + Casing<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value<br/>- Same Site Websocket - Upgrade - Default Headers in Order + Casing<br/>- Same Site Websocket - Upgrade - Header Included + Casing<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value<br/>- Websocket - Upgrade - Default Headers in Order + Casing<br/>- Websocket - Upgrade - Header Included + Casing<br/>- Websocket - Upgrade - Header has a Browser Default Value<br/>
+Audio Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-#### Tests/Resources not Loaded by Scraper
-Test | Browsers not Running Test
---- | ---
-Page | Chrome 75, Chrome 80, Edge 17, Edge 18
+## Firefox 72
+5.1% market share as of 01/2020
 
-### Same Site Cookies
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 12 | 6 | 6 |
-Chrome 75 | 2 | 1 | 1 | - Same Site Page<br/>
-Chrome 80 | 4 | 2 | 2 | - Same Site Page<br/>- Same Site Secure Page<br/>
-Edge 17 | 4 | 2 | 2 | - Same Site Page<br/>- Same Site Secure Page<br/>
-Edge 18 | 2 | 1 | 1 | - Same Site Page<br/>
+Overall | 256 | 23 | 218
+TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
+TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+TLS Grease Used | 1 | 0 | 0 | 
+Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
+Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
+Cross Domain Cookies | 3 | 2 | 1 | - Cross Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Cross Site Secure Stylesheet<br/>
+Standard Http Headers | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Standard Https Headers | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
+Asset Headers | 92 | 0 | 92 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Image - Default Headers in Order + Casing<br/>- Cross Domain Image - Header Included + Casing<br/>- Cross Domain Image - Header has a Browser Default Value<br/>- Cross Domain Script - Default Headers in Order + Casing<br/>- Cross Domain Script - Header Included + Casing<br/>- Cross Domain Script - Header has a Browser Default Value<br/>- Cross Domain Stylesheet - Default Headers in Order + Casing<br/>- Cross Domain Stylesheet - Header Included + Casing<br/>- Cross Domain Stylesheet - Header has a Browser Default Value<br/>- Image - Default Headers in Order + Casing<br/>- Image - Header Included + Casing<br/>- Image - Header has a Browser Default Value<br/>- Same Site Image - Default Headers in Order + Casing<br/>- Same Site Image - Header Included + Casing<br/>- Same Site Image - Header has a Browser Default Value<br/>- Same Site Script - Default Headers in Order + Casing<br/>- Same Site Script - Header Included + Casing<br/>- Same Site Script - Header has a Browser Default Value<br/>- Same Site Stylesheet - Default Headers in Order + Casing<br/>- Same Site Stylesheet - Header Included + Casing<br/>- Same Site Stylesheet - Header has a Browser Default Value<br/>- Script - Default Headers in Order + Casing<br/>- Script - Header Included + Casing<br/>- Script - Header has a Browser Default Value<br/>- Stylesheet - Default Headers in Order + Casing<br/>- Stylesheet - Header Included + Casing<br/>- Stylesheet - Header has a Browser Default Value<br/>
+Xhr Headers | 61 | 0 | 61 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Xhr - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Header Included + Casing<br/>- Cross Domain Xhr - Header has a Browser Default Value<br/>- Cross Domain Xhr - Post - Default Headers in Order + Casing<br/>- Cross Domain Xhr - Post - Header Included + Casing<br/>- Cross Domain Xhr - Post - Header has a Browser Default Value<br/>- Same Site Xhr - Default Headers in Order + Casing<br/>- Same Site Xhr - Header Included + Casing<br/>- Same Site Xhr - Header has a Browser Default Value<br/>- Same Site Xhr - Post - Default Headers in Order + Casing<br/>- Same Site Xhr - Post - Header Included + Casing<br/>- Same Site Xhr - Post - Header has a Browser Default Value<br/>- Xhr - Default Headers in Order + Casing<br/>- Xhr - Header Included + Casing<br/>- Xhr - Header has a Browser Default Value<br/>- Xhr - Post - Default Headers in Order + Casing<br/>- Xhr - Post - Header Included + Casing<br/>- Xhr - Post - Header has a Browser Default Value<br/>
+Cors Preflight Headers | 20 | 0 | 20 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Preflight - Default Headers in Order + Casing<br/>- Cross Domain Preflight - Header Included + Casing<br/>- Cross Domain Preflight - Header has a Browser Default Value<br/>- Same Site Preflight - Default Headers in Order + Casing<br/>- Same Site Preflight - Header Included + Casing<br/>- Same Site Preflight - Header has a Browser Default Value<br/>
+Websocket Headers | 34 | 0 | 34 | <br/>--------------- Not Called -----------<br/><br/>- Cross Domain Websocket - Upgrade - Default Headers in Order + Casing<br/>- Cross Domain Websocket - Upgrade - Header Included + Casing<br/>- Cross Domain Websocket - Upgrade - Header has a Browser Default Value<br/>- Same Site Websocket - Upgrade - Default Headers in Order + Casing<br/>- Same Site Websocket - Upgrade - Header Included + Casing<br/>- Same Site Websocket - Upgrade - Header has a Browser Default Value<br/>- Websocket - Upgrade - Default Headers in Order + Casing<br/>- Websocket - Upgrade - Header Included + Casing<br/>- Websocket - Upgrade - Header has a Browser Default Value<br/>
+Audio Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
+WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-#### Tests/Resources not Loaded by Scraper
-Test | Browsers not Running Test
---- | ---
-Same Site Stylesheet | Chrome 75, Chrome 80, Edge 17, Edge 18
-Same Site Secure Stylesheet | Chrome 80, Edge 17
+## IE 11
+5% market share as of 01/2020
 
-### Secure Cookies
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
+Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
-Overall | 8 | 4 | 2 |
-Chrome 80 | 4 | 2 | 1 | - Secure Page<br/>
-Edge 17 | 4 | 2 | 1 | - Secure Page<br/>
-
-#### Tests/Resources not Loaded by Scraper
-Test | Browsers not Running Test
---- | ---
-Secure Page | Chrome 80, Edge 17
-
-### Cross Domain Cookies
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 16 | 12 | 4 |
-Chrome 75 | 3 | 2 | 1 | - Cross Site Page<br/>
-Chrome 80 | 5 | 4 | 1 | - Cross Site Page<br/>- Cross Site Secure Page<br/>
-Edge 17 | 5 | 4 | 1 | - Cross Site Page<br/>- Cross Site Secure Page<br/>
-Edge 18 | 3 | 2 | 1 | - Cross Site Page<br/>
-
-#### Tests/Resources not Loaded by Scraper
-Test | Browsers not Running Test
---- | ---
-Cross Site Secure Stylesheet | Chrome 75, Chrome 80, Edge 17, Edge 18
-
-
-## Http Headers
-Compares header order, capitalization and default values to normal (recorded) user agent values
-
-### Standard Http Headers
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 150 | 90 | 0 |
-Chrome 70 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 71 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 72 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 73 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 74 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 75 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 76 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 77 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 78 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 79 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 80 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Firefox 65 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Firefox 72 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Edge 17 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Edge 18 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-### Standard Https Headers
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 150 | 105 | 0 |
-Chrome 70 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 71 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 72 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 73 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 74 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 75 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 76 | 10 | 9 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Mode<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Site<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-User<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 77 | 10 | 9 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Mode<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Site<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-User<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 78 | 10 | 9 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Mode<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Site<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-User<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 79 | 10 | 9 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Mode<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Site<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-User<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Chrome 80 | 10 | 9 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Mode<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-Site<br/>- Document - Header has a Browser Default Value for: Sec-Fetch-User<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Firefox 65 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Firefox 72 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Edge 17 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-Edge 18 | 10 | 6 | 0 | - Document - Default Headers in Order + Casing<br/>- Document - Header has a Browser Default Value for: Accept<br/>- Document - Header has a Browser Default Value for: Accept-Encoding<br/>- Document - Header has a Browser Default Value for: Accept-Language<br/>- Document - Header has a Browser Default Value for: Connection<br/>- Document - Header has a Browser Default Value for: Upgrade-Insecure-Requests<br/>
-### Asset Headers
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 2,805 | 0 | 2,805 |
-Chrome 70 | 187 | 0 | 187 | 
-Chrome 71 | 187 | 0 | 187 | 
-Chrome 72 | 187 | 0 | 187 | 
-Chrome 73 | 187 | 0 | 187 | 
-Chrome 74 | 187 | 0 | 187 | 
-Chrome 75 | 187 | 0 | 187 | 
-Chrome 76 | 187 | 0 | 187 | 
-Chrome 77 | 187 | 0 | 187 | 
-Chrome 78 | 187 | 0 | 187 | 
-Chrome 79 | 187 | 0 | 187 | 
-Chrome 80 | 187 | 0 | 187 | 
-Firefox 65 | 187 | 0 | 187 | 
-Firefox 72 | 187 | 0 | 187 | 
-Edge 17 | 187 | 0 | 187 | 
-Edge 18 | 187 | 0 | 187 | 
-### Xhr Headers
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 3,465 | 0 | 3,465 |
-Chrome 70 | 231 | 0 | 231 | 
-Chrome 71 | 231 | 0 | 231 | 
-Chrome 72 | 231 | 0 | 231 | 
-Chrome 73 | 231 | 0 | 231 | 
-Chrome 74 | 231 | 0 | 231 | 
-Chrome 75 | 231 | 0 | 231 | 
-Chrome 76 | 231 | 0 | 231 | 
-Chrome 77 | 231 | 0 | 231 | 
-Chrome 78 | 231 | 0 | 231 | 
-Chrome 79 | 231 | 0 | 231 | 
-Chrome 80 | 231 | 0 | 231 | 
-Firefox 65 | 231 | 0 | 231 | 
-Firefox 72 | 231 | 0 | 231 | 
-Edge 17 | 231 | 0 | 231 | 
-Edge 18 | 231 | 0 | 231 | 
-### Cors Preflight Headers
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 540 | 0 | 540 |
-Chrome 70 | 36 | 0 | 36 | 
-Chrome 71 | 36 | 0 | 36 | 
-Chrome 72 | 36 | 0 | 36 | 
-Chrome 73 | 36 | 0 | 36 | 
-Chrome 74 | 36 | 0 | 36 | 
-Chrome 75 | 36 | 0 | 36 | 
-Chrome 76 | 36 | 0 | 36 | 
-Chrome 77 | 36 | 0 | 36 | 
-Chrome 78 | 36 | 0 | 36 | 
-Chrome 79 | 36 | 0 | 36 | 
-Chrome 80 | 36 | 0 | 36 | 
-Firefox 65 | 36 | 0 | 36 | 
-Firefox 72 | 36 | 0 | 36 | 
-Edge 17 | 36 | 0 | 36 | 
-Edge 18 | 36 | 0 | 36 | 
-### Websocket Headers
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 990 | 0 | 990 |
-Chrome 70 | 66 | 0 | 66 | 
-Chrome 71 | 66 | 0 | 66 | 
-Chrome 72 | 66 | 0 | 66 | 
-Chrome 73 | 66 | 0 | 66 | 
-Chrome 74 | 66 | 0 | 66 | 
-Chrome 75 | 66 | 0 | 66 | 
-Chrome 76 | 66 | 0 | 66 | 
-Chrome 77 | 66 | 0 | 66 | 
-Chrome 78 | 66 | 0 | 66 | 
-Chrome 79 | 66 | 0 | 66 | 
-Chrome 80 | 66 | 0 | 66 | 
-Firefox 65 | 66 | 0 | 66 | 
-Firefox 72 | 66 | 0 | 66 | 
-Edge 17 | 66 | 0 | 66 | 
-Edge 18 | 66 | 0 | 66 | 
-
-## Browser Codecs
-Test that the audio, video and WebRTC codecs match the given user agent
-
-### Audio Codecs Supported
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 18 | 0 | 18 |
-Chrome 72 | 3 | 0 | 3 | 
-Chrome 80 | 3 | 0 | 3 | 
-Firefox 70 | 3 | 0 | 3 | 
-Firefox 72 | 3 | 0 | 3 | 
-Edge 18 | 3 | 0 | 3 | 
-Firefox 69 | 3 | 0 | 3 | 
-### Video Codecs Supported
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 18 | 0 | 18 |
-Chrome 72 | 3 | 0 | 3 | 
-Chrome 80 | 3 | 0 | 3 | 
-Firefox 70 | 3 | 0 | 3 | 
-Firefox 72 | 3 | 0 | 3 | 
-Edge 18 | 3 | 0 | 3 | 
-Firefox 69 | 3 | 0 | 3 | 
-### WebRTC Audio Codecs Supported
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 6 | 0 | 6 |
-Chrome 72 | 1 | 0 | 1 | 
-Chrome 80 | 1 | 0 | 1 | 
-Firefox 70 | 1 | 0 | 1 | 
-Firefox 72 | 1 | 0 | 1 | 
-Edge 18 | 1 | 0 | 1 | 
-Firefox 69 | 1 | 0 | 1 | 
-### WebRTC Video Codecs Supported
-
-User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
---- | :---: | :---: | :---: | ---
-Overall | 6 | 0 | 6 |
-Chrome 72 | 1 | 0 | 1 | 
-Chrome 80 | 1 | 0 | 1 | 
-Firefox 70 | 1 | 0 | 1 | 
-Firefox 72 | 1 | 0 | 1 | 
-Edge 18 | 1 | 0 | 1 | 
-Firefox 69 | 1 | 0 | 1 | 
+Overall | 4 | 2 | 0
+TCP Layer | 0 | 0 | 0 | 
+TLS Initial Handshake | 2 | 2 | 0 | - TLS Fingerprint Match<br/>
+TLS Grease Used | 2 | 0 | 0 | 
+Can Set Cookies | 0 | 0 | 0 | 
+Same Site Cookies | 0 | 0 | 0 | 
+Cross Domain Cookies | 0 | 0 | 0 | 
+Standard Http Headers | 0 | 0 | 0 | 
+Standard Https Headers | 0 | 0 | 0 | 
+Asset Headers | 0 | 0 | 0 | 
+Xhr Headers | 0 | 0 | 0 | 
+Cors Preflight Headers | 0 | 0 | 0 | 
+Websocket Headers | 0 | 0 | 0 | 
+Audio Codecs Supported | 0 | 0 | 0 | 
+Video Codecs Supported | 0 | 0 | 0 | 
+WebRTC Audio Codecs Supported | 0 | 0 | 0 | 
+WebRTC Video Codecs Supported | 0 | 0 | 0 | 

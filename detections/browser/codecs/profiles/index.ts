@@ -12,7 +12,7 @@ export default function getAllProfiles() {
   if (Object.keys(entries).length) return entries;
 
   for (const filepath of fs.readdirSync(profilesDir)) {
-    if (!filepath.endsWith('json') && !filepath.startsWith('_')) continue;
+    if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
     const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
     const json = JSON.parse(file) as ICodecProfile;
     const browserName = filepath.split('--').shift();

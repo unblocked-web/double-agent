@@ -1,16 +1,21 @@
-import { existsSync, readdirSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import IDetectionResult from './IDetectionResult';
 import * as path from 'path';
 import { inspect } from 'util';
 
 const scraperDir = path.resolve(__dirname, '../../scrapers');
 
-export default function analyzeResults() {
+export default async function analyzeResults() {
   const scrapers: IScraperResults = {};
 
   const testsPerCategory: { [category: string]: number } = {};
   for (const scraper of readdirSync(scraperDir)) {
-    if (scraper === '.DS_Store') continue;
+    if (
+      scraper === '.DS_Store' ||
+      scraper === 'lib' ||
+      !statSync(scraperDir + '/' + scraper).isDirectory()
+    )
+      continue;
     const scraperResults = (scrapers[scraper.replace('.json', '')] = {
       passed: 0,
       omitted: 0,
@@ -19,59 +24,66 @@ export default function analyzeResults() {
     });
     if (!existsSync(`${scraperDir}/${scraper}/results`)) continue;
 
-    for (const result of readdirSync(`${scraperDir}/${scraper}/results`)) {
-      if (!result.endsWith('.json')) continue;
-      const records = JSON.parse(
-        readFileSync(`${scraperDir}/${scraper}/results/${result}`, 'utf8'),
-      ) as IDetectionResult[];
+    for (const categoryDir of readdirSync(`${scraperDir}/${scraper}/results`)) {
+      if (categoryDir === '.DS_Store') continue;
+      const resultFiles = readdirSync(`${scraperDir}/${scraper}/results/${categoryDir}`);
 
-      const isOsTest =
-        records
-          .filter(x => x.directive.browser)
-          .reduce((tot, entry) => {
-            tot.add(
-              [entry.directive.browser, entry.directive.browserMajorVersion]
-                .filter(Boolean)
-                .join(' '),
-            );
-            return tot;
-          }, new Set<string>()).size === 1;
-
+      const records: IDetectionResult[] = [];
       const categories = new Set<string>();
-      for (const record of records) {
-        categories.add(record.category);
+      for (const categoryResults of resultFiles.map(
+        result =>
+          JSON.parse(
+            readFileSync(`${scraperDir}/${scraper}/results/${categoryDir}/${result}`, 'utf8'),
+          ) as IDetectionResult[],
+      )) {
+        records.push(...categoryResults);
+        for (const record of categoryResults) {
+          categories.add(record.category);
+        }
       }
+
       for (const category of categories) {
         if (!testsPerCategory[category]) testsPerCategory[category] = 0;
 
-        const resultsBreakdown: IResultsByCategory = {};
-        const categoryRecords = records.filter(x => x.category === category);
+        const resultsByBrowser: IResultsByGrouping = {};
+        const testsRun = new Set<string>();
+        const categoryRecords = records.filter(x => {
+          if (x.category !== category) return false;
+          // NOTE: only take one run per browser grouping - need this for normalization (below) to make any sense
+          if (testsRun.has(x.directive.browserGrouping + x.category + x.name + x.expected))
+            return false;
+          testsRun.add(x.directive.browserGrouping + x.category + x.name + x.expected);
+          return true;
+        });
+
         if (categoryRecords.length > testsPerCategory[category]) {
           testsPerCategory[category] = categoryRecords.length;
         }
         for (const record of categoryRecords) {
-          const key = isOsTest
-            ? record.directive.os
-            : record.directive.browser + ' ' + record.directive.browserMajorVersion;
-          if (!resultsBreakdown[key])
-            resultsBreakdown[key] = {
+          const key = record.directive.browserGrouping;
+          if (!resultsByBrowser[key]) {
+            resultsByBrowser[key] = {
               passed: 0,
               tests: 0,
               omitted: 0,
               failures: [],
               omissions: [],
             };
-          resultsBreakdown[key].tests += 1;
-          if (record.success) resultsBreakdown[key].passed += 1;
-          else if (record.omitted) {
+          }
+          const browserResults = resultsByBrowser[key];
+
+          browserResults.tests += 1;
+          if (record.success) {
+            browserResults.passed += 1;
+          } else if (record.omitted) {
             const omission = record.name ?? 'Entire Test';
-            resultsBreakdown[key].omitted += 1;
-            if (!resultsBreakdown[key].omissions.includes(omission))
-              resultsBreakdown[key].omissions.push(omission);
-            resultsBreakdown[key].omissions.sort();
-          } else if (!resultsBreakdown[key].failures.includes(record.name)) {
-            resultsBreakdown[key].failures.push(record.name);
-            resultsBreakdown[key].failures.sort();
+            browserResults.omitted += 1;
+            if (!browserResults.omissions.includes(omission))
+              browserResults.omissions.push(omission);
+            browserResults.omissions.sort();
+          } else if (!browserResults.failures.includes(record.name)) {
+            browserResults.failures.push(record.name);
+            browserResults.failures.sort();
           }
         }
 
@@ -83,12 +95,13 @@ export default function analyzeResults() {
           passed,
           omitted: categoryRecords.filter(x => x.omitted === true).length,
           tests: categoryRecords.length,
-          resultsBreakdown,
+          resultsByBrowser,
         };
       }
     }
   }
-  // normalize results - some scrapers don't trigger the full suite, so we need to set to same number of tests
+
+  // NOTE: normalize results - some scrapers don't trigger the full suite, so we need to set to same number of tests
   const allTests = Object.values(testsPerCategory).reduce((a, b) => a + b, 0);
   for (const [, overallResults] of Object.entries(scrapers)) {
     if (overallResults.tests < allTests) {
@@ -101,10 +114,10 @@ export default function analyzeResults() {
         const missedTests = testsPerCategory[category] - categoryResults.tests;
         categoryResults.tests += missedTests;
         categoryResults.omitted += missedTests;
-        const breakdowns = Object.values(categoryResults.resultsBreakdown).length;
+        const breakdowns = Object.values(categoryResults.resultsByBrowser).length;
         const breakdownAddon = Math.floor(missedTests / breakdowns);
 
-        for (const breakdown of Object.values(categoryResults.resultsBreakdown)) {
+        for (const breakdown of Object.values(categoryResults.resultsByBrowser)) {
           breakdown.tests += breakdownAddon;
           breakdown.omitted += breakdownAddon;
         }
@@ -146,17 +159,17 @@ export default function analyzeResults() {
   };
 }
 
-interface IResultsByCategory {
-  [category: string]: IResult & {
+interface IResultsByGrouping {
+  [grouping: string]: IResult & {
     failures: string[];
     omissions: string[];
-    resultsBreakdown?: IResultsByCategory;
+    resultsByBrowser?: IResultsByGrouping;
   };
 }
 
 interface IScraperResults {
   [scraper: string]: IResult & {
-    categories: IResultsByCategory;
+    categories: IResultsByGrouping;
   };
 }
 

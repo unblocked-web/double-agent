@@ -6,13 +6,14 @@ import http from 'http';
 import httpRequestHandler from './lib/httpRequestHandler';
 import IDomainset, { cleanDomain } from './interfaces/IDomainset';
 import CookieProfile from './lib/CookieProfile';
-import { agentToDirective, isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
-import { getNewestBrowser } from '@double-agent/runner/lib/useragentProfileHelper';
+import { isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
 import testCookieProfile from './lib/testCookieProfile';
+import getBrowserDirectives from '@double-agent/profiler/lib/getBrowserDirectives';
+import { dirname } from 'path';
 
 const certPath = process.env.LETSENCRYPT
   ? '/etc/letsencrypt/live/headers.ulixee.org'
-  : __dirname + '/../../../runner/certs';
+  : dirname(require.resolve('@double-agent/runner')) + '/certs';
 
 const domains = {
   sameSite: process.env.SAME_SITE_DOMAIN ?? 'a1.ulixee-test.org',
@@ -47,23 +48,19 @@ export default class Detector extends AbstractDetectorDriver {
     // CookieProfile.analyzeUniquePropertiesByBrowserGroup('http');
     // CookieProfile.analyzeUniquePropertiesByBrowserGroup('https');
 
-    for (const profile of allprofiles) {
-      const hkey = (counter += 1);
-      const newest = getNewestBrowser(profile.useragents);
-      const args = {
-        ...agentToDirective(newest),
-        clickItemSelector: '#start',
-        requiredFinalClickSelector: '#results',
-        waitForElementSelector: '#final',
-      };
-
+    const directives = await getBrowserDirectives(allprofiles);
+    for (const { directive, profile } of directives) {
       const baseUrl =
         profile.type === 'https' ? `https://${secureMainsite}` : `http://${httpMainsite}`;
       const crossSiteUrl =
         profile.type === 'https' ? `https://${secureCrosssite}` : `http://${httpCrosssite}`;
 
+      const hkey = (counter += 1);
       this.directives.push({
-        ...args,
+        ...directive,
+        clickItemSelector: '#start',
+        requiredFinalClickSelector: '#results',
+        waitForElementSelector: '#final',
         url: baseUrl + '/?hkey=' + hkey,
         clickDestinationUrl: `${baseUrl}/run?hkey=${hkey}`,
         requiredFinalUrl: `${crossSiteUrl}/results?hkey=${hkey}`,
@@ -126,7 +123,7 @@ export default class Detector extends AbstractDetectorDriver {
         } as https.ServerOptions)
       : ({} as http.ServerOptions);
 
-    console.log('launching server on ', domainset)
+    console.log('launching server on ', domainset);
     return (domainset.isSsl ? https : http)
       .createServer(options, httpRequestHandler(domainset, otherDomains, this.onResult.bind(this)))
       .listen(domainset.port, () => {

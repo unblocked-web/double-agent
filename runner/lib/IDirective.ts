@@ -1,9 +1,7 @@
 export default interface IDirective {
   module?: string;
-  browser: 'Chrome' | 'Firefox' | 'Edge' | string;
-  browserMajorVersion?: string;
-  os: 'Linux' | 'Mac OS X' | 'Windows' | string;
-  osVersion?: string;
+  browserGrouping: string;
+  isOsTest: boolean;
   useragent: string;
   url: string;
   clickItemSelector?: string;

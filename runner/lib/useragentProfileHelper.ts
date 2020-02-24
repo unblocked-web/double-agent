@@ -14,6 +14,8 @@ export function getAgentPath(userAgent: Agent) {
 }
 
 export function saveUseragentProfile(useragent: string, data: any, profilesDir: string) {
+  // http requests from webdriver sometimes have ruby profiles
+  if (useragent.startsWith('Ruby')) return;
   const browserPath = getUseragentPath(useragent);
   try {
     let counter = 0;

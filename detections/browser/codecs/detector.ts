@@ -2,10 +2,10 @@ import * as http from 'http';
 import { Server, ServerResponse } from 'http';
 import AbstractDetectorDriver from '@double-agent/runner/lib/AbstractDetectorDriver';
 import IDirective from '@double-agent/runner/lib/IDirective';
-import { agentToDirective, isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
+import { isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
 import { readFileSync } from 'fs';
 import csv from 'csv-parse/lib/sync';
-import { getNewestBrowser, saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
+import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
 import ICodecProfile from './interfaces/ICodecProfile';
 import {
   convertWebRtcCodecsToString,
@@ -16,6 +16,7 @@ import {
 import IWebRTCCodec from './interfaces/IWebRTCCodec';
 import ICodecSupport from './interfaces/ICodecSupport';
 import { inspect } from 'util';
+import getBrowserDirectives from '@double-agent/profiler/lib/getBrowserDirectives';
 
 export default class Detector extends AbstractDetectorDriver {
   private server: Server;
@@ -32,28 +33,15 @@ export default class Detector extends AbstractDetectorDriver {
 
     const profiles = findUniqueProfiles();
     const loadedProfiles = new Set<string>();
-    for (const profile of profiles) {
-      const useragent = getNewestBrowser(profile.useragents);
-      loadedProfiles.add(useragent);
-
-      const directive = agentToDirective(useragent);
+    const directives = await getBrowserDirectives([...profiles, ...findUniqueWebRTCProfiles()]);
+    for (const { directive } of directives) {
+      if (loadedProfiles.has(directive.useragent)) continue;
+      loadedProfiles.add(directive.useragent);
       this.directives.push({
         ...directive,
         url,
         waitForElementSelector: 'body.complete',
       });
-    }
-    for (const profile of findUniqueWebRTCProfiles()) {
-      const isLoaded = profile.useragents.some(x => loadedProfiles.has(x));
-      if (isLoaded === false) {
-        const useragent = getNewestBrowser(profile.useragents);
-        const directive = agentToDirective(useragent);
-        this.directives.push({
-          ...directive,
-          url,
-          waitForElementSelector: 'body.complete',
-        });
-      }
     }
 
     console.log(inspect(this.directives, false, 4, true));

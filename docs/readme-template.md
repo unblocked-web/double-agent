@@ -1,22 +1,26 @@
-Double Agent is a suite of tools written to allow a scraper engine to test if it is detectable. This suite is intended to be able to
-score the stealth features of a given scraper stack. Most detection techniques presented compare a user agent’s browser
-and operating system to the capabilities detectable in a given page load.
+Double Agent is a suite of tools written to allow a scraper engine to test if it is detectable when trying to blend into the most common web traffic.
+
+Each test suite measures ways to detect a specific part of a scraper stack. Most detection techniques presented compare a user agent’s browser and operating system to the capabilities detectable in a given page load.
 
 Mostly, these tests detect when a user agent is not who it claims to be.
 
 ## Mainstream Scraper Detections:
 
-The following table shows our test results of how many ways popular scraping frameworks can be detected when emulating the
-following browsers and operating systems:
+This version of Double Agent tests how many ways popular scrapers can be detected when emulating the most common browser/OS desktop combos. Future versions will integrate mobile browsers.
 
-- Chrome 70 - 80
-- Firefox 65 - 72
-- Edge 17, 18
-- Operating Systems: Windows 7, 8.1, 10; Mac OS X 10.10 - 10.15
+As of January, 2020 [^1], the most popular US desktop browsers are (limited to > 5% share):
+
+{{inject=output/browser-market-share.md}}
+
+US Operating System market share is (limited to > 3% share):
+
+{{inject=output/os-market-share.md}}
+
+[^1]: stats from [StatCounter.com](https://gs.statcounter.com/)
 
 #### Detections
 
-Counts shown are the number of ways to detect each scraper agent per test suite.
+Counts shown are the number of ways to detect each scraper agent per test suite emulating browsers with the Operating Systems shown above.
 
 {{inject=output/scraper-detection-results.md}}
 

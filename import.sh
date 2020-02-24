@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rsync -avzh --include "profiles/*.json" root@$REMOTE:~/double-agent .
+rsync -rvmh --exclude-from '.importignore' --include '/detections/***/profiles/*.json' root@$REMOTE:~/double-agent/ ./

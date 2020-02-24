@@ -16,9 +16,10 @@ function titleCase(str: string) {
 
 const stackOrder = ['tcp', 'tls', 'ip', 'http', 'browser', 'user', 'end2end'];
 
+export const detectionsDir = __dirname + '/../../detections';
+
 export default function getAllDetectors(print = false) {
   const detectors: IDetectorModule[] = [];
-  const detectionsDir = __dirname + '/../../detections';
   let testsFilter;
 
   if (process.argv.length > 2) {

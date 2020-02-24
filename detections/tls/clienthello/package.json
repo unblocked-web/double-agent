@@ -9,7 +9,7 @@
   ],
   "description": "Looks at the tls handshake and compares to the proposed user agent OS",
   "scripts": {
-    "genprofiles": "yarn workspace @double-agent/profiler start",
+    "profile": "yarn workspace @double-agent/profiler start",
     "start": "node index.js",
     "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 PORT=443 DOMAIN=tls.ulixee.org node index.js"
   },

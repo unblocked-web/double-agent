@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { IRequestInfo } from './processCookieRequest';
-import { json } from '../../../../../ulixee/shared/types';
 import IDomainset, { cleanDomain } from '../interfaces/IDomainset';
 import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
 import { inspect } from 'util';
@@ -143,7 +142,7 @@ export default class CookieProfile {
     const profilesDir = type === 'https' ? httpsProfilesDir : httpProfilesDir;
     const entries: (ICookieProfile & { userAgent: Useragent.Agent })[] = [];
     for (const filepath of fs.readdirSync(profilesDir)) {
-      if (!filepath.endsWith('json') && !filepath.startsWith('_')) continue;
+      if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
       const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
       const json = JSON.parse(file) as ICookieProfile & { userAgent: Useragent.Agent };
       json.userAgent = lookup(json.useragent);

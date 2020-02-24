@@ -43,9 +43,7 @@ export default abstract class AbstractDetectorDriver implements IDetectionDriver
     console.log(
       `Result ${success ? 'passed' : result.omitted ? 'omitted' : 'failed'} for test '${
         result.name
-      }': ${this.activeDirective.browser} ${this.activeDirective.browserMajorVersion ?? ''} on ${
-        this.activeDirective.os
-      } ${this.activeDirective.osVersion ?? ''} => ${result.reason}`,
+      }': ${this.activeDirective.browserGrouping} => ${result.reason}`,
     );
 
     if (!this.testCategories.includes(result.category)) {

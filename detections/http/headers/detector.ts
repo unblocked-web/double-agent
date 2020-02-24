@@ -8,10 +8,12 @@ import webServicesHandler from './lib/webServicesHandler';
 import IDomainset, { cleanDomain } from './interfaces/IDomainset';
 import Profile from './lib/Profile';
 import { isDirectiveMatch, agentToDirective } from '@double-agent/runner/lib/agentHelper';
+import { shouldProfileUseragent } from '@double-agent/profiler/lib/getBrowserDirectives';
+import { dirname } from "path";
 
 const certPath = process.env.LETSENCRYPT
   ? '/etc/letsencrypt/live/headers.ulixee.org'
-  : __dirname + '/../../../runner/certs';
+  : dirname(require.resolve('@double-agent/runner')) + '/certs';
 
 const domains = {
   sameSite: process.env.SAME_SITE_DOMAIN ?? 'a1.ulixee-test.org',
@@ -36,9 +38,13 @@ export default class Detector extends AbstractDetectorDriver {
     const httpMainsite = cleanDomain(domains.main, httpPort);
 
     const allprofiles = Profile.getAllProfiles('http').concat(Profile.getAllProfiles('https'));
+
     // only get each browser once - same results across os
     const seen = new Set<string>();
     for (const profile of allprofiles) {
+      const shouldProfile = await shouldProfileUseragent(profile.userAgent);
+      if (!shouldProfile) continue;
+
       if (seen.has(profile.browserAndVersion)) continue;
       seen.add(profile.browserAndVersion);
 

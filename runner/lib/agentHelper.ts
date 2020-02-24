@@ -1,15 +1,12 @@
-import Useragent from 'useragent';
 import IDirective from './IDirective';
+import { getUseragentPath } from './useragentProfileHelper';
 
 export function agentToDirective(
   useragent: string,
-): Pick<IDirective, 'browser' | 'browserMajorVersion' | 'os' | 'osVersion' | 'useragent'> {
-  const ua = Useragent.lookup(useragent);
+): Pick<IDirective, 'isOsTest' | 'browserGrouping' | 'useragent'> {
   return {
-    browser: ua.family,
-    browserMajorVersion: ua.major,
-    os: ua.os.family,
-    osVersion: [ua.os.major, ua.os.minor].join('.'),
+    isOsTest: false,
+    browserGrouping: getUseragentPath(useragent),
     useragent,
   };
 }
@@ -17,13 +14,6 @@ export function agentToDirective(
 export function isDirectiveMatch(directive: IDirective, useragent: string) {
   if (useragent === directive.useragent) return true;
 
-  const ua = Useragent.lookup(useragent);
-  if (ua.os.family !== directive.os) return false;
-  if (directive.osVersion && [ua.os.major, ua.os.minor].join('.') !== directive.osVersion)
-    return false;
-
-  if (directive.browserMajorVersion && ua.major !== directive.browserMajorVersion) return false;
-  if (ua.family !== directive.browser) return false;
-
-  return true;
+  const grouping = getUseragentPath(useragent);
+  return grouping === directive.browserGrouping;
 }

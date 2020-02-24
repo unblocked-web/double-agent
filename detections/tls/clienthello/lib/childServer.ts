@@ -12,13 +12,14 @@ import {
 import ITlsResult from '../interfaces/ITlsResult';
 import { isGreased } from './buildJa3Extended';
 import IClientHelloMessage from '../interfaces/IClientHelloMessage';
+import { dirname } from 'path';
 
 const messages: IClientHelloMessage[] = [];
 process.on('message', m => messages.push(m));
 
 const certPath = process.env.LETSENCRYPT
   ? '/etc/letsencrypt/live/tls.ulixee.org'
-  : __dirname + '/../../../../runner/certs';
+  : dirname(require.resolve('@double-agent/runner')) + '/certs';
 
 try {
   const port = process.env.PORT ?? 3007;
@@ -52,7 +53,7 @@ try {
             'content-type': 'text/html',
           });
           return res.end(
-            '<html><body><bold style="color:red">No user agent provided</bold></body></html>',
+            '<html lang="en"><body><bold style="color:red">No user agent provided</bold></body></html>',
           );
         }
 
@@ -117,7 +118,7 @@ try {
           'content-type': 'text/html',
         });
         res.write(
-          `<html>
+          `<html lang="en">
 <head>
 <style>
 strong {
@@ -134,20 +135,21 @@ table {
 margin: 20px 0;
 }
 </style>
+<title>Tls Settings</title>
 </head>
 <body id="results">
     <p><strong>User Agent</strong> ${userAgent}</p>
 
     <h2>Connection TLS Settings</h2>
     <p><strong>Alpn</strong> ${secureSocket.alpnProtocol}</p>
-    <p><strong>Cipher</strong> ${secureSocket.getCipher()?.name ?? 'na'}</p>
+    <p><strong>Cipher</strong> ${secureSocket.getCipher()?.name}</p>
     <p><strong>TLS</strong> ${secureSocket.getProtocol()}</p>
     <h2>Client TLS Proposal</h2>
-    ${
-      isConfirmed
-        ? '<h3 style="color:green">Confirmed Browser Signature</h3>'
-        : '<h3 style="color:orange">Unknown Browser Signature</h3>'
-    }
+${
+  isConfirmed
+    ? '<h3 style="color:green">Confirmed Browser Signature</h3>'
+    : '<h3 style="color:orange">Unknown Browser Signature</h3>'
+}
     <p><strong>Ja3 (Degreased)</strong> ${message.ja3Details.value}</p>
     <p><strong>Ja3 Fingerprint (Degreased)</strong> ${message.ja3Details.md5}</p>
     <p><strong>Ja3 Extended</strong> ${message.ja3Extended.value}</p>

@@ -1,10 +1,11 @@
 import 'source-map-support/register';
-import fs, { writeFileSync } from 'fs';
+import fs, { chmodSync, existsSync, mkdirSync, writeFileSync } from 'fs';
 import { Server } from 'http';
 import IDetectorModule from './lib/IDetectorModule';
 import IDetectionResultset from './lib/IDetectionResultset';
 import * as url from 'url';
 import getAllDetectors from './lib/getAllDetectors';
+import IDetectionResult from './lib/IDetectionResult';
 
 let port = Number(process.env.PORT ?? 3000);
 (async function() {
@@ -49,10 +50,21 @@ let port = Number(process.env.PORT ?? 3000);
     };
     results.push(test);
 
-    writeFileSync(
-      `../scrapers/${agent}/results/${test.category}-${test.testName}.json`,
-      JSON.stringify(test.results, null, 2),
-    );
+    // break down results by browser version
+    const breakdown = test.results.reduce((grouped, test) => {
+      if (!grouped[test.directive.browserGrouping]) grouped[test.directive.browserGrouping] = [];
+      grouped[test.directive.browserGrouping].push(test);
+      return grouped;
+    }, {} as { [browserGrouping: string]: IDetectionResult[] });
+
+    for (const [group, results] of Object.entries(breakdown)) {
+      const dirname = `${__dirname}/../scrapers/${agent}/results/${test.category}-${test.testName}`;
+      if (!existsSync(dirname)) {
+        mkdirSync(dirname, { recursive: true });
+      }
+      writeFileSync(`${dirname}/${group}.json`, JSON.stringify(results, null, 2));
+      chmodSync(`${dirname}/${group}.json`, '666');
+    }
     activeDetector = null;
     return nextDirective(agent);
   }

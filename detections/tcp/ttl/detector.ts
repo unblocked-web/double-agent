@@ -1,14 +1,20 @@
 import http, { ServerResponse } from 'http';
-import useragent from 'useragent';
-import trackRemoteTcpVars from './trackRemoteTcpVars';
+import https from 'https';
+import trackRemoteTcpVars from './lib/trackRemoteTcpVars';
 import AbstractDetectorDriver from '@double-agent/runner/lib/AbstractDetectorDriver';
 import IDirective from '@double-agent/runner/lib/IDirective';
 import { isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
+import TcpProfile from './lib/TcpProfile';
+import fs from 'fs';
+import getBrowserDirectives from '@double-agent/profiler/lib/getBrowserDirectives';
+import { dirname } from 'path';
 
-const hops = 20;
+const certPath = process.env.LETSENCRYPT
+  ? '/etc/letsencrypt/live/tls.ulixee.org'
+  : dirname(require.resolve('@double-agent/runner')) + '/certs';
 
 export default class Detector extends AbstractDetectorDriver {
-  private server: http.Server;
+  private server: https.Server;
   private port: number;
 
   private getRemoteTcpVarsForAddress: (
@@ -16,50 +22,40 @@ export default class Detector extends AbstractDetectorDriver {
   ) => Promise<{ windowSize: number; ttl: number }>;
   private closeTracker: () => void;
 
-  protected directives: IDirective[];
+  protected directives: IDirective[] = [];
   protected dirname = __dirname;
 
   public etcHostEntries = ['ulixee-test.org'];
 
   public async start(getPort: () => number) {
     this.port = getPort();
-    const url = `http://ulixee-test.org:${this.port}`;
-    const browser = 'Chrome';
-    this.directives = [
-      {
-        os: 'Linux',
-        browser,
+    const url = `https://ulixee-test.org:${this.port}`;
+    const uniqueProfiles = TcpProfile.findUniqueProfiles();
+    const directives = await getBrowserDirectives(Object.values(uniqueProfiles));
+    for (const { directive } of directives) {
+      this.directives.push({
+        ...directive,
         url,
-        waitForElementSelector: '#results',
-        useragent:
-          'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36',
-      },
-      {
-        os: 'Windows',
-        browser,
-        url,
-        waitForElementSelector: '#results',
-        useragent:
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.16 Safari/537.36',
-      },
-      {
-        os: 'Mac OS X',
-        browser,
-        url,
-        waitForElementSelector: '#results',
-        useragent:
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36',
-      },
-    ];
+        isOsTest: true,
+      });
+    }
 
     const tracker = trackRemoteTcpVars(this.port);
     this.getRemoteTcpVarsForAddress = tracker.getPacket;
     this.closeTracker = tracker.stop;
     return new Promise<void>(resolve => {
-      this.server = http.createServer(this.serverListener.bind(this)).listen(this.port, () => {
-        console.log('TCP->Ttl test started on %s', this.server.address());
-        resolve();
-      });
+      this.server = https
+        .createServer(
+          {
+            key: fs.readFileSync(certPath + '/privkey.pem'),
+            cert: fs.readFileSync(certPath + '/fullchain.pem'),
+          },
+          this.serverListener.bind(this),
+        )
+        .listen(this.port, () => {
+          console.log('TCP->Ttl test started on %s', this.server.address());
+          resolve();
+        });
     });
   }
 
@@ -71,6 +67,10 @@ export default class Detector extends AbstractDetectorDriver {
   private async serverListener(req: http.IncomingMessage, res: ServerResponse) {
     const userAgent = req.headers['user-agent'];
     const addr = req.connection.remoteAddress.split(':').pop() + ':' + req.connection.remotePort;
+
+    if (req.url !== '/') {
+      return res.writeHead(200).end();
+    }
 
     const packet = await this.getRemoteTcpVarsForAddress(addr);
     if (!userAgent) {
@@ -94,39 +94,20 @@ export default class Detector extends AbstractDetectorDriver {
       }
     }
 
-    let windowSizes: number[];
-    let ttl: number;
-    const ua = useragent.lookup(userAgent);
-    if (ua.os.family === 'Mac OS X') {
-      [ttl, ...windowSizes] = ttlWindowValues['Mac OS X'];
-    } else if (ua.os.family === 'Windows' && Number(ua.os.major) >= 7) {
-      [ttl, ...windowSizes] = ttlWindowValues.Windows;
-    } else if (ua.os.family === 'Windows') {
-      [ttl, ...windowSizes] = ttlWindowValues.WindowsXp;
-    } else {
-      [ttl, ...windowSizes] = ttlWindowValues.Linux;
+    const profile = new TcpProfile(userAgent, packet.ttl, packet.windowSize);
+    await profile.save();
+
+    const results = profile.test();
+    for (const result of results) {
+      if (this.activeDirective) {
+        this.recordResult(result.success, result);
+      }
     }
 
-    // allow some leeway for router hops that decrement ttls
-    const ttlDiff = ttl - packet.ttl;
-
-    this.recordResult(ttlDiff < hops && ttlDiff >= 0, {
-      category: 'TCP Layer',
-      name: 'Packet TTL',
-      value: packet.ttl,
-      expected: ttl,
-      useragent: userAgent,
-    });
-    this.recordResult(windowSizes.includes(packet.windowSize), {
-      category: 'TCP Layer',
-      name: 'Packet WindowSize',
-      value: packet.windowSize,
-      expected: windowSizes.join(','),
-      useragent: userAgent,
-    });
-
-    const isConfirmed = ttlDiff >= 0 && ttlDiff < hops && windowSizes.includes(packet.windowSize);
-    console.log('Session for %s. Confirmed?: %s', addr, isConfirmed, packet);
+    const isConfirmed = results.filter(x => x.success).length === results.length;
+    console.log('Session for %s at %s. Confirmed?: %s', userAgent, addr, isConfirmed, packet);
+    const ttlResult = results.find(x => x.name === 'Packet TTL');
+    const winsizeResult = results.find(x => x.name === 'Packet WindowSize');
 
     res.writeHead(200, {
       'content-type': 'text/html',
@@ -134,17 +115,10 @@ export default class Detector extends AbstractDetectorDriver {
     res.write(`<html><body id="results">
 <h1>TCP Packet Analysis</h1>
 <h2 ${isConfirmed ? `style='color:green'>C` : "style='color:orange'>Unc"}onfirmed</h2>
-<h3>Os: ${ua.os.family}</h2>
-<p>Ttl: ${packet.ttl}. Expected: ${ttl} within ${hops} hops.</p>
-<p>Window Size: ${packet.windowSize}. Expected: ${windowSizes.join(', ')}</p>
+
+<p>Ttl: ${packet.ttl}. Expected: ${ttlResult?.expected} within ${TcpProfile.allowedHops} hops.</p>
+<p>Window Size: ${packet.windowSize}. Expected: ${winsizeResult?.expected}</p>
 </body></html>`);
     res.end();
   }
 }
-
-const ttlWindowValues = {
-  'Mac OS X': [64, 65535],
-  Linux: [64, 5840, 29200, 5720],
-  WindowsXp: [128, 65535],
-  Windows: [128, 8192],
-};

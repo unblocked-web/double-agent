@@ -8,8 +8,9 @@
   "description": "Compares tcp packet values to the user agent OS",
   "license": "MIT",
   "scripts": {
-    "develop": "node index.js",
-    "prod": "LETSENCRYPT=1 PORT=443 node index.js"
+    "start": "node index.js",
+    "profile": "yarn workspace @double-agent/profiler start",
+    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 PORT=443 node index.js"
   },
   "dependencies": {
     "useragent": "^2.3.0",

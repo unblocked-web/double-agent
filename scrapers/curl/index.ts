@@ -1,48 +1,30 @@
-import { Curl, curly } from 'node-libcurl';
-import IDirective from '@double-agent/runner/lib/IDirective';
+import { Curl } from 'node-libcurl';
+import forEachDirective from '../lib/forEachDirective';
+import { basename } from 'path';
 
-(async function() {
-  let hasNext = true;
-  while (hasNext) {
-    const { data } = await curly.get('http://localhost:3000?scraper=curl');
-    const json = JSON.parse(data);
-    if (json.directive) {
-      console.log(
-        'Next directive %s (%s %s on %s %s)',
-        json.directive.url,
-        json.directive.browser,
-        json.directive.browserMajorVersion ?? '',
-        json.directive.os,
-        json.directive.osVersion ?? '',
-      );
-      const instruction = json.directive as IDirective;
-      const curl = new Curl();
-      curl.setOpt('USERAGENT', instruction.useragent);
-      curl.setOpt('SSL_VERIFYPEER', 0);
-      curl.setOpt('COOKIEJAR', __dirname + '/cookiejar.txt');
-      curl.setOpt('COOKIESESSION', 1);
-      curl.setOpt('FOLLOWLOCATION', 1);
-      curl.setOpt('AUTOREFERER', 1);
-      curl.setOpt('URL', instruction.clickDestinationUrl ?? instruction.url);
-      const finished = new Promise((resolve, reject) => {
-        curl.on('end', resolve);
-        curl.on('error', reject);
-      });
-      curl.perform();
-      await finished;
-      if (instruction.requiredFinalUrl) {
-        curl.setOpt('URL', instruction.requiredFinalUrl);
-        const promise = new Promise((resolve, reject) => {
-          curl.on('end', resolve);
-          curl.on('error', reject);
-        });
-        curl.perform();
-        await promise;
-      }
-      curl.close();
-    } else {
-      console.log('------ Test Complete --------');
-      break;
-    }
+forEachDirective(basename(__dirname), async directive => {
+  const curl = new Curl();
+  curl.setOpt('USERAGENT', directive.useragent);
+  curl.setOpt('SSL_VERIFYPEER', 0);
+  curl.setOpt('COOKIEJAR', __dirname + '/cookiejar.txt');
+  curl.setOpt('COOKIESESSION', 1);
+  curl.setOpt('FOLLOWLOCATION', 1);
+  curl.setOpt('AUTOREFERER', 1);
+  curl.setOpt('URL', directive.clickDestinationUrl ?? directive.url);
+  const finished = new Promise((resolve, reject) => {
+    curl.on('end', resolve);
+    curl.on('error', reject);
+  });
+  curl.perform();
+  await finished;
+  if (directive.requiredFinalUrl) {
+    curl.setOpt('URL', directive.requiredFinalUrl);
+    const promise = new Promise((resolve, reject) => {
+      curl.on('end', resolve);
+      curl.on('error', reject);
+    });
+    curl.perform();
+    await promise;
   }
-})().catch(console.log);
+  curl.close();
+}).catch(console.log);

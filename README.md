@@ -1,59 +1,50 @@
-Double Agent is a suite of tools for detecting the end to end stack of web interactions in order to detect when a
-user agent is not who they are claiming to be.
+Double Agent is a suite of tools written to allow a scraper engine to test if it is detectable when trying to blend into the most common web traffic.
 
-A suite of tools written to allow a scraper engine to test if it is detectable. This suite is intended to be able to
-score the stealth features of a given scraper stack. Most detection techniques presented compare a user agent’s browser
-and operating system to the capabilities detectable in a given page load.
+Each test suite measures ways to detect a specific part of a scraper stack. Most detection techniques presented compare a user agent’s browser and operating system to the capabilities detectable in a given page load.
 
 Mostly, these tests detect when a user agent is not who it claims to be.
 
 ## Mainstream Scraper Detections:
 
-The following table shows our test results of how many ways popular scraping frameworks can be detected when emulating the
-following browsers and operating systems:
+This version of Double Agent tests how many ways popular scrapers can be detected when emulating the most common browser/OS desktop combos. Future versions will integrate mobile browsers.
 
-- Chrome 70 - 80
-- Firefox 65 - 72
-- Edge 17, 18
-- Operating Systems: Windows 7, 8.1, 10; Mac OS X 10.10 - 10.15
+As of January, 2020 [^1], the most popular US desktop browsers are (limited to > 5% share):
+
+Browser | Market Share
+--- | :---:
+Chrome 79 | 42.2%
+Safari 13 | 11.1%
+Edge 18 | 7.8%
+Chrome 80 | 7%
+Firefox 72 | 5.1%
+Total | 73.2%
+
+US Operating System market share is (limited to > 3% share):
+
+OS | Market Share
+---  | :---:
+Windows 10 | 50.2%
+OS X Catalina | 11.7%
+Windows 7 | 10.4%
+OS X Mojave | 6.2%
+OS X High Sierra | 3.2%
+Total | 81.7%
+
+[^1]: stats from [StatCounter.com](https://gs.statcounter.com/)
 
 #### Detections
 
-Counts shown are the number of ways to detect each scraper agent per test suite.
+Counts shown are the number of ways to detect each scraper agent per test suite emulating browsers with the Operating Systems shown above.
 
-Detection | Tests | [Curl](docs/scraper-detections/curl.md) | [Scrapy](docs/scraper-detections/scrapy.md) | [Puppeteer](docs/scraper-detections/puppeteer.md)
---- | :---: | :---: | :---: | :---: 
-TCP Layer | 6 | [3](docs/scraper-detections/curl.md#tcp-layer) | [3](docs/scraper-detections/scrapy.md#tcp-layer) | [3](docs/scraper-detections/puppeteer.md#tcp-layer)
-TLS Initial Handshake | 6 | [6](docs/scraper-detections/curl.md#tls-initial-handshake) | [6](docs/scraper-detections/scrapy.md#tls-initial-handshake) | [6](docs/scraper-detections/puppeteer.md#tls-initial-handshake)
-TLS Grease Used | 6 | [3](docs/scraper-detections/curl.md#tls-grease-used) | [3](docs/scraper-detections/scrapy.md#tls-grease-used) | [3](docs/scraper-detections/puppeteer.md#tls-grease-used)
-Can Set Cookies | 40 | [24](docs/scraper-detections/curl.md#can-set-cookies) | [20](docs/scraper-detections/scrapy.md#can-set-cookies) | [0](docs/scraper-detections/puppeteer.md#can-set-cookies)
-Same Site Cookies | 12 | [12](docs/scraper-detections/curl.md#same-site-cookies) | [12](docs/scraper-detections/scrapy.md#same-site-cookies) | [0](docs/scraper-detections/puppeteer.md#same-site-cookies)
-Secure Cookies | 8 | [6](docs/scraper-detections/curl.md#secure-cookies) | [8](docs/scraper-detections/scrapy.md#secure-cookies) | [0](docs/scraper-detections/puppeteer.md#secure-cookies)
-Cross Domain Cookies | 16 | [16](docs/scraper-detections/curl.md#cross-domain-cookies) | [16](docs/scraper-detections/scrapy.md#cross-domain-cookies) | [8](docs/scraper-detections/puppeteer.md#cross-domain-cookies)
-Standard Http Headers | 150 | [90](docs/scraper-detections/curl.md#standard-http-headers) | [88](docs/scraper-detections/scrapy.md#standard-http-headers) | [45](docs/scraper-detections/puppeteer.md#standard-http-headers)
-Standard Https Headers | 150 | [105](docs/scraper-detections/curl.md#standard-https-headers) | [103](docs/scraper-detections/scrapy.md#standard-https-headers) | [75](docs/scraper-detections/puppeteer.md#standard-https-headers)
-Asset Headers | 2,805 | [2,805](docs/scraper-detections/curl.md#asset-headers) | [1,785](docs/scraper-detections/scrapy.md#asset-headers) | [792](docs/scraper-detections/puppeteer.md#asset-headers)
-Xhr Headers | 3,465 | [3,465](docs/scraper-detections/curl.md#xhr-headers) | [3,465](docs/scraper-detections/scrapy.md#xhr-headers) | [624](docs/scraper-detections/puppeteer.md#xhr-headers)
-Cors Preflight Headers | 540 | [540](docs/scraper-detections/curl.md#cors-preflight-headers) | [540](docs/scraper-detections/scrapy.md#cors-preflight-headers) | [184](docs/scraper-detections/puppeteer.md#cors-preflight-headers)
-Websocket Headers | 990 | [990](docs/scraper-detections/curl.md#websocket-headers) | [990](docs/scraper-detections/scrapy.md#websocket-headers) | [306](docs/scraper-detections/puppeteer.md#websocket-headers)
-Audio Codecs Supported | 18 | [18](docs/scraper-detections/curl.md#audio-codecs-supported) | [18](docs/scraper-detections/scrapy.md#audio-codecs-supported) | [16](docs/scraper-detections/puppeteer.md#audio-codecs-supported)
-Video Codecs Supported | 18 | [18](docs/scraper-detections/curl.md#video-codecs-supported) | [18](docs/scraper-detections/scrapy.md#video-codecs-supported) | [18](docs/scraper-detections/puppeteer.md#video-codecs-supported)
-WebRTC Audio Codecs Supported | 6 | [6](docs/scraper-detections/curl.md#webrtc-audio-codecs-supported) | [6](docs/scraper-detections/scrapy.md#webrtc-audio-codecs-supported) | [4](docs/scraper-detections/puppeteer.md#webrtc-audio-codecs-supported)
-WebRTC Video Codecs Supported | 6 | [6](docs/scraper-detections/curl.md#webrtc-video-codecs-supported) | [6](docs/scraper-detections/scrapy.md#webrtc-video-codecs-supported) | [6](docs/scraper-detections/puppeteer.md#webrtc-video-codecs-supported)
-Cache Headers | 
-Loads All Page Assets | 
-Sec Navigate Header | 
-Referrers | 
-Dom Features Match Version | 
-Browser Fingerprint | 
-Fonts Fingerprint | 
-Is Javascript Enabled? | 
-EMCA Support Matches Browser | 
-Dom Features Tampered With | 
-Virtual Machine Used | 
-Repeated Interaction Steps | 
-Time to Interact with Page | 
-Mouse Movement | 
+Scraper | Chrome 79 | Safari 13 | Edge 18 | Chrome 80 | Firefox 72
+--- |  :---: | :---: | :---: | :---: | :---: 
+[Node.js 12 - http/https](docs/scraper-detections/node_12.md) | [246](docs/scraper-detections/node_12.md#chrome-79)| [247](docs/scraper-detections/node_12.md#safari-13)| [248](docs/scraper-detections/node_12.md#edge-18)| [251](docs/scraper-detections/node_12.md#chrome-80)| [250](docs/scraper-detections/node_12.md#firefox-72)
+[Curl](docs/scraper-detections/curl.md) | [245](docs/scraper-detections/curl.md#chrome-79)| [237](docs/scraper-detections/curl.md#safari-13)| [239](docs/scraper-detections/curl.md#edge-18)| [245](docs/scraper-detections/curl.md#chrome-80)| [241](docs/scraper-detections/curl.md#firefox-72)
+[Scrapy 1.8](docs/scraper-detections/scrapy_1_8.md) | [235](docs/scraper-detections/scrapy_1_8.md#chrome-79)| [203](docs/scraper-detections/scrapy_1_8.md#safari-13)| [207](docs/scraper-detections/scrapy_1_8.md#edge-18)| [237](docs/scraper-detections/scrapy_1_8.md#chrome-80)| [209](docs/scraper-detections/scrapy_1_8.md#firefox-72)
+[Puppeteer 2.0 - Chromium 79](docs/scraper-detections/puppeteer_2_0.md) | [55](docs/scraper-detections/puppeteer_2_0.md#chrome-79)| [95](docs/scraper-detections/puppeteer_2_0.md#safari-13)| [117](docs/scraper-detections/puppeteer_2_0.md#edge-18)| [55](docs/scraper-detections/puppeteer_2_0.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_0.md#firefox-72)
+[Puppeteer 2.0 - Chromium 79 + Incognito Mode](docs/scraper-detections/puppeteer_2_0_incognito.md) | [55](docs/scraper-detections/puppeteer_2_0_incognito.md#chrome-79)| [95](docs/scraper-detections/puppeteer_2_0_incognito.md#safari-13)| [117](docs/scraper-detections/puppeteer_2_0_incognito.md#edge-18)| [55](docs/scraper-detections/puppeteer_2_0_incognito.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_0_incognito.md#firefox-72)
+[Puppeteer 2.1 - Chromium 80](docs/scraper-detections/puppeteer_2_1.md) | [44](docs/scraper-detections/puppeteer_2_1.md#chrome-79)| [98](docs/scraper-detections/puppeteer_2_1.md#safari-13)| [101](docs/scraper-detections/puppeteer_2_1.md#edge-18)| [35](docs/scraper-detections/puppeteer_2_1.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_1.md#firefox-72)
+[Puppeteer 2.1 - Chrome 80](docs/scraper-detections/puppeteer_2_1_chrome.md) | [37](docs/scraper-detections/puppeteer_2_1_chrome.md#chrome-79)| [98](docs/scraper-detections/puppeteer_2_1_chrome.md#safari-13)| [101](docs/scraper-detections/puppeteer_2_1_chrome.md#edge-18)| [28](docs/scraper-detections/puppeteer_2_1_chrome.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_1_chrome.md#firefox-72)
 
 ## Structure:
 

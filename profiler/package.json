@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "export $(cat .env | xargs) && node start.js",
+    "missing": "export $(cat .env | xargs) && node -e 'require(\"./lib/findMissingProfiles.js\")'",
     "intoliStats": "node -e 'require(\"./lib/intoliBrowserStats.js\").default()'",
     "getBrowsers": "node -e 'require(\"./lib/getBrowsersToProfile.js\").default()'",
     "updateStats": "node -e 'require(\"./lib/statcounterStats.js\").default()'"

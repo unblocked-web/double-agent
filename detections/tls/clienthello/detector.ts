@@ -2,11 +2,12 @@ import ITlsResult from './interfaces/ITlsResult';
 import AbstractDetectorDriver from '@double-agent/runner/lib/AbstractDetectorDriver';
 import IDirective from '@double-agent/runner/lib/IDirective';
 import { confirmedJa3s, saveJa3Profile, uniqueConfirmedJa3s } from './profiles';
-import { agentToDirective, isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
+import { isDirectiveMatch } from '@double-agent/runner/lib/agentHelper';
 import * as http from 'http';
 import ForkedServerRunner from './lib/ForkedServerRunner';
-import Useragent from 'useragent';
 import { isGreased } from './lib/buildJa3Extended';
+import getBrowserDirectives from '@double-agent/profiler/lib/getBrowserDirectives';
+import { inspect } from 'util';
 
 const domain = process.env.DOMAIN ?? 'ulixee-test.org';
 /**
@@ -85,24 +86,15 @@ export default class Detector extends AbstractDetectorDriver {
         serverStarted();
       });
 
-    for (const [, entry] of Object.entries(uniqueConfirmedJa3s)) {
-      const browser = entry.browsers
-        .sort()
-        .reverse()
-        .shift();
-
-      const randomAgent = entry.useragents.find(x => {
-        const ua = Useragent.lookup(x);
-        return ua.family + ' ' + ua.major === browser;
-      });
-
+    const directives = await getBrowserDirectives(Object.values(uniqueConfirmedJa3s));
+    for (const { directive } of directives) {
       this.directives.push({
         url: `http://${domain}:${this.port}`,
         clickItemSelector: '#start',
-        ...agentToDirective(randomAgent),
+        ...directive,
       });
     }
-    console.log(this.directives);
+    console.log('Tls ClientHello Directives', this.directives);
 
     await promise;
   }
@@ -147,8 +139,8 @@ export default class Detector extends AbstractDetectorDriver {
         category: 'TLS Initial Handshake',
         name: 'TLS Fingerprint Match',
         useragent: message.useragent,
-        value: message.ja3ExtendedMd5,
-        expected: expected.ja3ExtendedMd5,
+        value: message.ja3Extended,
+        expected: expected.ja3Extended,
         reason:
           message.reason ??
           (message.ja3MatchFor?.length

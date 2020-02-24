@@ -1,0 +1,37 @@
+[
+  {
+    "success": true,
+    "directive": {
+      "url": "http://ulixee-test.org:3026",
+      "clickItemSelector": "#start",
+      "isOsTest": false,
+      "browserGrouping": "mac_os_x_10_15__chrome_79",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
+      "clickDestinationUrl": "https://ulixee-test.org:3027",
+      "module": "tls - clienthello"
+    },
+    "category": "TLS Initial Handshake",
+    "name": "TLS Fingerprint Match",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
+    "value": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0,1027-2052-1025-1283-2053-1281-2054-1537-513,772-771-770-769,h2-http/1.1,1",
+    "expected": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0,1027-2052-1025-1283-2053-1281-2054-1537-513,772-771-770-769,h2-http/1.1,1",
+    "reason": "Provided ja3 signature matches: [Chrome 72 - Mac OS X 10.15, Chrome 73 - Mac OS X 10.15, Chrome 74 - Mac OS X 10.15, Chrome 75 - Mac OS X 10.15, Chrome 76 - Mac OS X 10.15, Chrome 77 - Mac OS X 10.15, Chrome 78 - Mac OS X 10.15, Chrome 79 - Mac OS X 10.15, Chrome 80 - Mac OS X 10.15, Chrome 78 - Mac OS X 10.14, Chrome 79 - Mac OS X 10.14, Chrome 80 - Mac OS X 10.14, Chrome 79 - Mac OS X 10.13, Chrome 80 - Mac OS X 10.13, Chrome 72 - Mac OS X 10.10, Chrome 73 - Mac OS X 10.10, Chrome 74 - Mac OS X 10.10, Chrome 75 - Mac OS X 10.10, Chrome 76 - Mac OS X 10.10, Chrome 77 - Mac OS X 10.10, Chrome 78 - Mac OS X 10.10, Chrome 79 - Mac OS X 10.10, Chrome 80 - Mac OS X 10.10, Chrome 72 - Windows 10.0, Chrome 73 - Windows 10.0, Chrome 74 - Windows 10.0, Chrome 75 - Windows 10.0, Chrome 76 - Windows 10.0, Chrome 77 - Windows 10.0, Chrome 78 - Windows 10.0, Chrome 79 - Windows 10.0, Chrome 80 - Windows 10.0, Chrome 72 - Windows 7.0, Chrome 73 - Windows 7.0, Chrome 74 - Windows 7.0, Chrome 75 - Windows 7.0, Chrome 76 - Windows 7.0, Chrome 77 - Windows 7.0, Chrome 78 - Windows 7.0, Chrome 79 - Windows 7.0, Chrome 80 - Windows 7.0]"
+  },
+  {
+    "success": true,
+    "directive": {
+      "url": "http://ulixee-test.org:3026",
+      "clickItemSelector": "#start",
+      "isOsTest": false,
+      "browserGrouping": "mac_os_x_10_15__chrome_79",
+      "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
+      "clickDestinationUrl": "https://ulixee-test.org:3027",
+      "module": "tls - clienthello"
+    },
+    "category": "TLS Grease Used",
+    "name": "TLS Grease in ClientHello",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
+    "value": "true",
+    "expected": "true"
+  }
+]

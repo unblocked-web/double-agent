@@ -7,6 +7,8 @@
     "build": "tsc --build",
     "watch": "tsc -w",
     "docs": "node docs/generator",
+    "profile": "yarn workspace @double-agent/profiler start",
+    "missingProfiles": "yarn workspace @double-agent/profiler missing",
     "start": "yarn workspace @double-agent/runner start"
   },
   "author": "Data Liberation Foundation",
