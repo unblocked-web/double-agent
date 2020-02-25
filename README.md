@@ -8,18 +8,21 @@ Mostly, these tests detect when a user agent is not who it claims to be.
 
 This version of Double Agent tests how many ways popular scrapers can be detected when emulating the most common browser/OS desktop combos. Future versions will integrate mobile browsers.
 
-As of January, 2020 [^1], the most popular US desktop browsers are (limited to > 5% share):
+Counts shown are the number of ways to detect each scraper agent per test suite emulating browsers with the Operating Systems shown below.
 
-Browser | Market Share
---- | :---:
-Chrome 79 | 42.2%
-Safari 13 | 11.1%
-Edge 18 | 7.8%
-Chrome 80 | 7%
-Firefox 72 | 5.1%
-Total | 73.2%
+[]() | Chrome 79 | Safari 13 | Edge 18 | Chrome 80 | Firefox 72
+--- |  :---: | :---: | :---: | :---: | :---: 
+[Node.js 12 - http/https](docs/scraper-detections/node_12.md) | [246](docs/scraper-detections/node_12.md#emulating-chrome-79)| [247](docs/scraper-detections/node_12.md#emulating-safari-13)| [248](docs/scraper-detections/node_12.md#emulating-edge-18)| [251](docs/scraper-detections/node_12.md#emulating-chrome-80)| [250](docs/scraper-detections/node_12.md#emulating-firefox-72)
+[curl](docs/scraper-detections/curl.md) | [245](docs/scraper-detections/curl.md#emulating-chrome-79)| [237](docs/scraper-detections/curl.md#emulating-safari-13)| [239](docs/scraper-detections/curl.md#emulating-edge-18)| [245](docs/scraper-detections/curl.md#emulating-chrome-80)| [241](docs/scraper-detections/curl.md#emulating-firefox-72)
+[Scrapy 1.8](docs/scraper-detections/scrapy_1_8.md) | [235](docs/scraper-detections/scrapy_1_8.md#emulating-chrome-79)| [203](docs/scraper-detections/scrapy_1_8.md#emulating-safari-13)| [207](docs/scraper-detections/scrapy_1_8.md#emulating-edge-18)| [237](docs/scraper-detections/scrapy_1_8.md#emulating-chrome-80)| [209](docs/scraper-detections/scrapy_1_8.md#emulating-firefox-72)
+[Puppeteer 2.0 - Chromium 79](docs/scraper-detections/puppeteer_2_0.md) | [52](docs/scraper-detections/puppeteer_2_0.md#emulating-chrome-79)| [92](docs/scraper-detections/puppeteer_2_0.md#emulating-safari-13)| [114](docs/scraper-detections/puppeteer_2_0.md#emulating-edge-18)| [52](docs/scraper-detections/puppeteer_2_0.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_0.md#emulating-firefox-72)
+[Puppeteer 2.0 - Chromium 79 + Incognito Mode](docs/scraper-detections/puppeteer_2_0_incognito.md) | [52](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-chrome-79)| [92](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-safari-13)| [114](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-edge-18)| [52](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-firefox-72)
+[Puppeteer 2.1 - Chromium 80](docs/scraper-detections/puppeteer_2_1.md) | [44](docs/scraper-detections/puppeteer_2_1.md#emulating-chrome-79)| [98](docs/scraper-detections/puppeteer_2_1.md#emulating-safari-13)| [101](docs/scraper-detections/puppeteer_2_1.md#emulating-edge-18)| [35](docs/scraper-detections/puppeteer_2_1.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_1.md#emulating-firefox-72)
+[Puppeteer 2.1 - Chrome 80 + Stealth Plugin](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md) | [26](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-chrome-79)| [95](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-safari-13)| [117](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-edge-18)| [26](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-firefox-72)
+[Puppeteer 2.1 - Chrome 80](docs/scraper-detections/puppeteer_2_1_chrome.md) | [34](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-chrome-79)| [95](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-safari-13)| [98](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-edge-18)| [25](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-firefox-72)
+*US desktop browser market share -->* <sup name="browsershare">[1](#statcounter1)</sup> | *42.2%* | *11.1%* | *7.8%* | *7%* | *5.1%*
 
-US Operating System market share is (limited to > 3% share):
+<sup id="statcounter1">[1]</sup> as of January 2020 from [StatCounter.com](https://gs.statcounter.com/)
 
 OS | Market Share
 ---  | :---:
@@ -29,22 +32,6 @@ Windows 7 | 10.4%
 OS X Mojave | 6.2%
 OS X High Sierra | 3.2%
 Total | 81.7%
-
-[^1]: stats from [StatCounter.com](https://gs.statcounter.com/)
-
-#### Detections
-
-Counts shown are the number of ways to detect each scraper agent per test suite emulating browsers with the Operating Systems shown above.
-
-Scraper | Chrome 79 | Safari 13 | Edge 18 | Chrome 80 | Firefox 72
---- |  :---: | :---: | :---: | :---: | :---: 
-[Node.js 12 - http/https](docs/scraper-detections/node_12.md) | [246](docs/scraper-detections/node_12.md#chrome-79)| [247](docs/scraper-detections/node_12.md#safari-13)| [248](docs/scraper-detections/node_12.md#edge-18)| [251](docs/scraper-detections/node_12.md#chrome-80)| [250](docs/scraper-detections/node_12.md#firefox-72)
-[Curl](docs/scraper-detections/curl.md) | [245](docs/scraper-detections/curl.md#chrome-79)| [237](docs/scraper-detections/curl.md#safari-13)| [239](docs/scraper-detections/curl.md#edge-18)| [245](docs/scraper-detections/curl.md#chrome-80)| [241](docs/scraper-detections/curl.md#firefox-72)
-[Scrapy 1.8](docs/scraper-detections/scrapy_1_8.md) | [235](docs/scraper-detections/scrapy_1_8.md#chrome-79)| [203](docs/scraper-detections/scrapy_1_8.md#safari-13)| [207](docs/scraper-detections/scrapy_1_8.md#edge-18)| [237](docs/scraper-detections/scrapy_1_8.md#chrome-80)| [209](docs/scraper-detections/scrapy_1_8.md#firefox-72)
-[Puppeteer 2.0 - Chromium 79](docs/scraper-detections/puppeteer_2_0.md) | [55](docs/scraper-detections/puppeteer_2_0.md#chrome-79)| [95](docs/scraper-detections/puppeteer_2_0.md#safari-13)| [117](docs/scraper-detections/puppeteer_2_0.md#edge-18)| [55](docs/scraper-detections/puppeteer_2_0.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_0.md#firefox-72)
-[Puppeteer 2.0 - Chromium 79 + Incognito Mode](docs/scraper-detections/puppeteer_2_0_incognito.md) | [55](docs/scraper-detections/puppeteer_2_0_incognito.md#chrome-79)| [95](docs/scraper-detections/puppeteer_2_0_incognito.md#safari-13)| [117](docs/scraper-detections/puppeteer_2_0_incognito.md#edge-18)| [55](docs/scraper-detections/puppeteer_2_0_incognito.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_0_incognito.md#firefox-72)
-[Puppeteer 2.1 - Chromium 80](docs/scraper-detections/puppeteer_2_1.md) | [44](docs/scraper-detections/puppeteer_2_1.md#chrome-79)| [98](docs/scraper-detections/puppeteer_2_1.md#safari-13)| [101](docs/scraper-detections/puppeteer_2_1.md#edge-18)| [35](docs/scraper-detections/puppeteer_2_1.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_1.md#firefox-72)
-[Puppeteer 2.1 - Chrome 80](docs/scraper-detections/puppeteer_2_1_chrome.md) | [37](docs/scraper-detections/puppeteer_2_1_chrome.md#chrome-79)| [98](docs/scraper-detections/puppeteer_2_1_chrome.md#safari-13)| [101](docs/scraper-detections/puppeteer_2_1_chrome.md#edge-18)| [28](docs/scraper-detections/puppeteer_2_1_chrome.md#chrome-80)| [99](docs/scraper-detections/puppeteer_2_1_chrome.md#firefox-72)
 
 ## Structure:
 

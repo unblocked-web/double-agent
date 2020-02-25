@@ -135,6 +135,9 @@ export default class Detector extends AbstractDetectorDriver {
       }
 
       const expected = confirmedJa3s.find(x => x.useragent === message.useragent);
+      if (!expected) {
+        console.log('couldnt find j3 for agent', message.useragent)
+      }
       this.recordResult(message.match, {
         category: 'TLS Initial Handshake',
         name: 'TLS Fingerprint Match',

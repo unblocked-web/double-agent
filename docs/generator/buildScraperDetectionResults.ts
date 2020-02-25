@@ -21,13 +21,11 @@ export default async function buildScraperDetectionResults() {
   /////////// OVERALL RESULTS TABLE ////////////////////////////////////////////////////////////////
   const browsersToProfile = await getBrowsersToProfile();
 
-  const cols = ['Scraper', ...browsersToProfile.browsers.map(decodeBrowserName)];
+  const cols = ['[]()', ...browsersToProfile.browsers.map(decodeBrowserName)];
 
   let md = `${cols.join(' | ')}
 --- | ${browsersToProfile.browsers.map(() => ' :---: ').join('|')}`;
-
   for (const scraper of scrapers) {
-    //``;
     const scraperResults = results.scrapers[scraper];
     const title = cleanScraperName(scraper);
 
@@ -44,13 +42,17 @@ export default async function buildScraperDetectionResults() {
         }
       }
       let detectionCount = `${numberWithCommas(detections)}`;
-      row += `| [${detectionCount}](docs/scraper-detections/${scraper}.md#${browserKey.replace(
+      row += `| [${detectionCount}](docs/scraper-detections/${scraper}.md#emulating-${browserKey.replace(
         /_/g,
         '-',
       )})`;
     }
     md += row;
   }
+
+  md += `\n*US desktop browser market share -->* <sup name="browsershare">[1](#statcounter1)</sup> | ${browsersToProfile.browsers
+    .map(x => '*' + x.averagePercent + '%*')
+    .join(' | ')}`;
 
   fs.writeFileSync(outputFile, md);
 
@@ -118,11 +120,11 @@ export default async function buildScraperDetectionResults() {
       }
       if (!totalTests) continue;
 
-      page += `\n\n## ${decodeBrowserName(browser)}
-${browser.averagePercent}% market share as of ${allBrowsers.asOf
+      page += `\n\n## Emulating ${decodeBrowserName(browser)}
+${decodeBrowserName(browser)} has a ${browser.averagePercent}% desktop browser market share in the US as of ${allBrowsers.asOf
         .split('-')
         .reverse()
-        .join('/')}
+        .join('/')}.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---

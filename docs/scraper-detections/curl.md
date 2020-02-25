@@ -1,9 +1,9 @@
-# Curl
+# curl
 Runs all requests through libcurl with the following settings: 
 SSL_VERIFYPEER=0, COOKIEJAR=./cookiejar.txt, COOKIESESSION=1, FOLLOWLOCATION=1, AUTOREFERER=1
 
-## Chrome 79
-42.2% market share as of 01/2020
+## Emulating Chrome 79
+Chrome 79 has a 42.2% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -25,8 +25,8 @@ Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------
 WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-## Safari 13
-11.1% market share as of 01/2020
+## Emulating Safari 13
+Safari 13 has a 11.1% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -48,8 +48,8 @@ Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------
 WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-## Edge 18
-7.8% market share as of 01/2020
+## Emulating Edge 18
+Edge 18 has a 7.8% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -71,8 +71,8 @@ Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------
 WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-## Chrome 80
-7% market share as of 01/2020
+## Emulating Chrome 80
+Chrome 80 has a 7% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -94,8 +94,8 @@ Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------
 WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-## Firefox 72
-5.1% market share as of 01/2020
+## Emulating Firefox 72
+Firefox 72 has a 5.1% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -117,8 +117,8 @@ Video Codecs Supported | 3 | 0 | 3 | <br/>--------------- Not Called -----------
 WebRTC Audio Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 WebRTC Video Codecs Supported | 1 | 0 | 1 | <br/>--------------- Not Called -----------<br/><br/>- Entire Test<br/>
 
-## IE 11
-5% market share as of 01/2020
+## Emulating IE 11
+IE 11 has a 5% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---

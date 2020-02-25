@@ -1,6 +1,6 @@
 {
   "curl": {
-    "title": "Curl",
+    "title": "curl",
     "description": "Runs all requests through libcurl with the following settings: \nSSL_VERIFYPEER=0, COOKIEJAR=./cookiejar.txt, COOKIESESSION=1, FOLLOWLOCATION=1, AUTOREFERER=1"
   },
   "node_12": {
@@ -26,5 +26,9 @@
   "puppeteer_2_1_chrome": {
     "title": "Puppeteer 2.1 - Chrome 80",
     "description": "Runs Puppeteer 2.1 with a custom executable path to Chrome 80."
+  },
+  "puppeteer_2_1_chrome_stealth": {
+    "title": "Puppeteer 2.1 - Chrome 80 + Stealth Plugin",
+    "description": "Runs Puppeteer 2.1 with the Puppeteer Stealth Plugin. Runs Chrome 80 with a custom executable path."
   }
 }

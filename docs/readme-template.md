@@ -8,21 +8,13 @@ Mostly, these tests detect when a user agent is not who it claims to be.
 
 This version of Double Agent tests how many ways popular scrapers can be detected when emulating the most common browser/OS desktop combos. Future versions will integrate mobile browsers.
 
-As of January, 2020 [^1], the most popular US desktop browsers are (limited to > 5% share):
-
-{{inject=output/browser-market-share.md}}
-
-US Operating System market share is (limited to > 3% share):
-
-{{inject=output/os-market-share.md}}
-
-[^1]: stats from [StatCounter.com](https://gs.statcounter.com/)
-
-#### Detections
-
-Counts shown are the number of ways to detect each scraper agent per test suite emulating browsers with the Operating Systems shown above.
+Counts shown are the number of ways to detect each scraper agent per test suite emulating browsers with the Operating Systems shown below.
 
 {{inject=output/scraper-detection-results.md}}
+
+<sup id="statcounter1">[1]</sup> as of January 2020 from [StatCounter.com](https://gs.statcounter.com/)
+
+{{inject=output/os-market-share.md}}
 
 ## Structure:
 

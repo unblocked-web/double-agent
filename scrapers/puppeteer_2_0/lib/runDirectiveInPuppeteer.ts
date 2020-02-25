@@ -1,8 +1,10 @@
 import IDirective from '@double-agent/runner/lib/IDirective';
 import puppeteer from 'puppeteer';
 
-export default async function runDirectiveInPuppeteer(page: puppeteer.Page, instruction: IDirective) {
-  await page.setUserAgent(instruction.useragent);
+export default async function runDirectiveInPuppeteer(page: puppeteer.Page, instruction: IDirective, setUseragent = true) {
+  if (setUseragent === true) {
+    await page.setUserAgent(instruction.useragent);
+  }
   await page.goto(instruction.url, { waitUntil: 'networkidle0' });
   if (instruction.clickItemSelector) {
     console.log('clicking selector %s', instruction.clickItemSelector);

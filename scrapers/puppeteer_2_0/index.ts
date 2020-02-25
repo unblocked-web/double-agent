@@ -6,7 +6,7 @@ import { basename } from 'path';
 
 (async function() {
   const puppBrowser = await puppeteer.launch({
-    ignoreHTTPSErrors: true,
+    ignoreHTTPSErrors: true
   });
 
   await forEachDirective(basename(__dirname), async directive => {

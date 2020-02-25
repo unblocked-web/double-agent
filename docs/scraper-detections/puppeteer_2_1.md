@@ -1,8 +1,8 @@
 # Puppeteer 2.1 - Chromium 80
 Runs Puppeteer 2.1 with default settings, which installs and uses Chromium 80.
 
-## Chrome 79
-42.2% market share as of 01/2020
+## Emulating Chrome 79
+Chrome 79 has a 42.2% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -24,8 +24,8 @@ Video Codecs Supported | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video
 WebRTC Audio Codecs Supported | 1 | 0 | 0 | 
 WebRTC Video Codecs Supported | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
 
-## Safari 13
-11.1% market share as of 01/2020
+## Emulating Safari 13
+Safari 13 has a 11.1% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -47,8 +47,8 @@ Video Codecs Supported | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video
 WebRTC Audio Codecs Supported | 1 | 1 | 0 | - WebRTC Audio MimeTypes and ClockRate Match<br/>
 WebRTC Video Codecs Supported | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
 
-## Edge 18
-7.8% market share as of 01/2020
+## Emulating Edge 18
+Edge 18 has a 7.8% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -70,8 +70,8 @@ Video Codecs Supported | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video
 WebRTC Audio Codecs Supported | 1 | 1 | 0 | - WebRTC Audio MimeTypes and ClockRate Match<br/>
 WebRTC Video Codecs Supported | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
 
-## Chrome 80
-7% market share as of 01/2020
+## Emulating Chrome 80
+Chrome 80 has a 7% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -93,8 +93,8 @@ Video Codecs Supported | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video
 WebRTC Audio Codecs Supported | 1 | 0 | 0 | 
 WebRTC Video Codecs Supported | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
 
-## Firefox 72
-5.1% market share as of 01/2020
+## Emulating Firefox 72
+Firefox 72 has a 5.1% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
@@ -116,8 +116,8 @@ Video Codecs Supported | 3 | 3 | 0 | - Video "Maybe" Playback Codecs<br/>- Video
 WebRTC Audio Codecs Supported | 1 | 1 | 0 | - WebRTC Audio MimeTypes and ClockRate Match<br/>
 WebRTC Video Codecs Supported | 1 | 1 | 0 | - WebRTC Video MimeTypes and ClockRate Match<br/>
 
-## IE 11
-5% market share as of 01/2020
+## Emulating IE 11
+IE 11 has a 5% desktop browser market share in the US as of 01/2020.
 
 Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---

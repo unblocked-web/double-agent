@@ -196,12 +196,14 @@ export default function testProfile(
     defaults: { [header: string]: string[] },
     ...headers: string[]
   ) {
+    console.log('Checking default values for headers', headers, item, defaults);
     for (const header of headers) {
       const value = item.rawHeaders
-        .find(x => x.toLowerCase().startsWith(header.toLowerCase()))
+        .find(x => x.toLowerCase().startsWith(header.toLowerCase() + '='))
         ?.split('=')
         .slice(1)
         .join('=');
+
       const defaultValues = defaults[header] ?? defaults[header.toLowerCase()];
       let passing = false;
       if (defaultValues && defaultValues.length) {
