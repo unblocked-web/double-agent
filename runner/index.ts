@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import fs, { chmodSync, existsSync, mkdirSync, writeFileSync } from 'fs';
+import { chmodSync, existsSync, mkdirSync, writeFileSync } from 'fs';
 import { Server } from 'http';
 import IDetectorModule from './lib/IDetectorModule';
 import IDetectionResultset from './lib/IDetectionResultset';
@@ -47,6 +47,7 @@ let port = Number(process.env.PORT ?? 3000);
       category: activeDetector.category,
       testName: activeDetector.testName,
       results: activeDetector.module.getResults(),
+      fingerprints: activeDetector.module.getFingerprints(),
     };
     results.push(test);
 
@@ -57,14 +58,30 @@ let port = Number(process.env.PORT ?? 3000);
       return grouped;
     }, {} as { [browserGrouping: string]: IDetectionResult[] });
 
+    const dirname = `${__dirname}/../scrapers/${agent}/results/${test.category}-${test.testName}`;
+    if (!existsSync(dirname)) {
+      mkdirSync(dirname, { recursive: true });
+      chmodSync(dirname, '777');
+    }
+
     for (const [group, results] of Object.entries(breakdown)) {
-      const dirname = `${__dirname}/../scrapers/${agent}/results/${test.category}-${test.testName}`;
+      writeFileSync(`${dirname}/${group}.json`, JSON.stringify(results, null, 2));
+      chmodSync(`${dirname}/${group}.json`, '777');
+    }
+
+    if (test.fingerprints.length) {
+      const dirname = `${__dirname}/../scrapers/${agent}/fingerprints`;
       if (!existsSync(dirname)) {
         mkdirSync(dirname, { recursive: true });
+        chmodSync(dirname, '777');
       }
-      writeFileSync(`${dirname}/${group}.json`, JSON.stringify(results, null, 2));
-      chmodSync(`${dirname}/${group}.json`, '666');
+      writeFileSync(
+        `${dirname}/${test.category}-${test.testName}.json`,
+        JSON.stringify(test.fingerprints, null, 2),
+      );
+      chmodSync(`${dirname}/${test.category}-${test.testName}.json`, '777');
     }
+
     activeDetector = null;
     return nextDirective(agent);
   }
@@ -108,7 +125,7 @@ let port = Number(process.env.PORT ?? 3000);
     .listen(port, () => {
       console.log(
         `
-First time only:
+First time only (if browsing individual tests):
 1. Go to the test-suite/certs directory and run generate.sh
 2. To run the https tests, you will need to install trusted certificates onto your machine. 
    --> On a mac, click on certs/fullchain.pem and add to your System certs and then set Trust to "Secure Sockets Layer" -> Always Trust

@@ -7,7 +7,9 @@ import { basename } from 'path';
 (async function() {
   const puppBrowser = await puppeteer.launch({
     ignoreHTTPSErrors: true,
-    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    executablePath:
+      process.env.PUPPETEER_EXECUTABLE_PATH ??
+      '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   });
   await forEachDirective(basename(__dirname), async directive => {
     const page = await puppBrowser.newPage();

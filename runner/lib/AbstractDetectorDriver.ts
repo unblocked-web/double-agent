@@ -2,6 +2,7 @@ import IDetectionDriver from './IDetectionDriver';
 import IDirective from './IDirective';
 import IDetectionResult from './IDetectionResult';
 import fs from 'fs';
+import IFingerprintResult from './IFingerprintResult';
 
 export default abstract class AbstractDetectorDriver implements IDetectionDriver {
   private _testCategories: string[];
@@ -15,14 +16,22 @@ export default abstract class AbstractDetectorDriver implements IDetectionDriver
 
   protected get waitingForResult() {
     if (!this.activeDirective) return false;
-    return this.results.some(x => x.directive === this.activeDirective) === false;
+    return (
+      this.results.some(x => x.directive === this.activeDirective) === false &&
+      this.fingerprintProfiles.some(x => x.directive === this.activeDirective) === false
+    );
   }
   protected activeDirective?: IDirective;
 
   private results: IDetectionResult[] = [];
+  private fingerprintProfiles: IFingerprintResult[] = [];
 
   public getResults() {
     return this.results;
+  }
+
+  public getFingerprints() {
+    return this.fingerprintProfiles;
   }
 
   public async nextDirective() {
@@ -42,8 +51,10 @@ export default abstract class AbstractDetectorDriver implements IDetectionDriver
   ) {
     console.log(
       `Result ${success ? 'passed' : result.omitted ? 'omitted' : 'failed'} for test '${
-        result.name
-      }': ${this.activeDirective.browserGrouping} => ${result.reason}`,
+        result.category
+      } -- ${result.name}': ${this.activeDirective?.browserGrouping || ''}${
+        result.reason ? ' => ' + result.reason : ''
+      }`,
     );
 
     if (!this.testCategories.includes(result.category)) {
@@ -53,6 +64,22 @@ export default abstract class AbstractDetectorDriver implements IDetectionDriver
 
     this.results.push({
       success,
+      directive: this.activeDirective,
+      ...result,
+    });
+  }
+
+  protected recordFingerprint(result: Omit<IFingerprintResult, 'directive'>) {
+    console.log(
+      `Fingerprint frequency of ${result.fingerprintsMaxSeenPct}% for '${result.category} -- ${result.name}'`,
+    );
+
+    if (!this.testCategories.includes(result.category)) {
+      console.log(this.testCategories);
+      throw new Error('Invalid category provided for test result - ' + result.category);
+    }
+
+    this.fingerprintProfiles.push({
       directive: this.activeDirective,
       ...result,
     });

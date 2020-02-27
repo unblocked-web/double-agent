@@ -1,5 +1,5 @@
 {
-  "name": "@double-agent/browser-fingerprints",
+  "name": "@double-agent/browser-fingerprint",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -7,5 +7,12 @@
     "Browser Fingerprint"
   ],
   "description": "Is the browser fingerprint the same on every execution?",
-  "scripts": {}
+  "scripts": {
+    "start": "node index.js",
+    "prod": "GENERATE_PROFILES=1 PORT=3001 DOMAIN=a1.ulixee.org node index.js"
+  },
+  "dependencies": {
+    "fingerprintjs2": "^2.1.0",
+    "cookie": "^0.4.0"
+  }
 }

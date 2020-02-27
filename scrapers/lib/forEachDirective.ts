@@ -1,6 +1,8 @@
 import IDirective from '@double-agent/runner/lib/IDirective';
 import fetch from 'node-fetch';
 
+const runnerDomain = process.env.RUNNER_DOMAIN ?? 'localhost';
+
 export default async function forEachDirective(
   suiteDir: string,
   runDirective: (directive: IDirective) => Promise<void>,
@@ -8,7 +10,7 @@ export default async function forEachDirective(
   let hasNext = true;
 
   while (hasNext) {
-    const response = await fetch('http://localhost:3000', {
+    const response = await fetch(`http://${runnerDomain}:3000`, {
       headers: {
         scraper: suiteDir,
       },

@@ -10,10 +10,7 @@ export default async function profiler(
   name: string,
   concurrency: number,
   shouldGenerateProfile: (agent: IStatcounterAgent, directiveProfileDir?: string) => boolean,
-  ...directives: (Pick<
-    IDirective,
-    'url' | 'clickItemSelector' | 'requiredFinalClickSelector' | 'waitForElementSelector'
-  > & { profilesDirectory?: string })[]
+  ...directives: IProfileDirective[]
 ) {
   const capabilities = await getBrowsersToProfile();
   const queue = new Queue({ concurrency });
@@ -36,7 +33,7 @@ export default async function profiler(
         if (shouldGenerate === false) {
           continue;
         }
-        console.log('needs profile for ', agent.useragentPath);
+
         queue.add(async () => {
           console.log('Running %s %s on %s %s', browser, browser_version, os, os_version);
           // Input capabilities
@@ -70,37 +67,12 @@ export default async function profiler(
             return;
           }
 
+          const needsEnterKey = browser == 'Safari';
+          const times = directive.hits ?? 1;
+
           try {
-            await driver.get(directive.url);
-            if (directive.clickItemSelector) {
-              const elem = await driver.wait(
-                until.elementLocated(webdriver.By.css(directive.clickItemSelector)),
-              );
-              if (browser === 'Safari') {
-                await elem.sendKeys(Key.RETURN);
-              } else {
-                await elem.click();
-              }
-            }
-
-            if (directive.requiredFinalClickSelector) {
-              const elem = await driver.wait(
-                until.elementLocated(webdriver.By.css(directive.requiredFinalClickSelector)),
-              );
-              if (browser === 'Safari') {
-                await elem.sendKeys(Key.RETURN);
-              } else {
-                await elem.click();
-              }
-            }
-
-            if (directive.waitForElementSelector) {
-              await driver.wait(
-                until.elementLocated(webdriver.By.css(directive.waitForElementSelector)),
-              );
-            } else {
-              // just wait a few secs
-              await driver.sleep(3e3);
+            for (let i = 0; i < times; i += 1) {
+              await runDirective(driver, directive, needsEnterKey, times > 1);
             }
           } finally {
             await driver.quit();
@@ -112,6 +84,51 @@ export default async function profiler(
   await queue.onEmpty();
 }
 
+async function runDirective(
+  driver: WebDriver,
+  directive: IProfileDirective,
+  needsEnterKey = false,
+  newWindow = false,
+) {
+  console.log('GET %s', directive.url);
+  await driver.get(directive.url);
+  if (directive.clickItemSelector) {
+    const elem = await driver.wait(
+      until.elementLocated(webdriver.By.css(directive.clickItemSelector)),
+    );
+    if (needsEnterKey) {
+      await elem.sendKeys(Key.RETURN);
+    } else {
+      await elem.click();
+    }
+  }
+
+  if (directive.requiredFinalClickSelector) {
+    const elem = await driver.wait(
+      until.elementLocated(webdriver.By.css(directive.requiredFinalClickSelector)),
+    );
+    if (needsEnterKey) {
+      await elem.sendKeys(Key.RETURN);
+    } else {
+      await elem.click();
+    }
+  }
+
+  if (directive.waitForElementSelector) {
+    await driver.wait(until.elementLocated(webdriver.By.css(directive.waitForElementSelector)));
+  } else {
+    // just wait a few secs
+    await driver.sleep(3e3);
+  }
+  if (newWindow) {
+    console.log('Opening new window');
+    await driver.executeScript('window.open()');
+    await driver.close();
+    const handles = await driver.getAllWindowHandles();
+    await driver.switchTo().window(handles.pop());
+  }
+}
+
 function useragentPath(agent: IStatcounterAgent) {
   const looseAgent = toLooseAgent(
     { browser: agent.browser, version: agent.browserv },
@@ -120,3 +137,8 @@ function useragentPath(agent: IStatcounterAgent) {
 
   return getAgentPath(looseAgent as any);
 }
+
+type IProfileDirective = Pick<
+  IDirective,
+  'url' | 'clickItemSelector' | 'requiredFinalClickSelector' | 'waitForElementSelector'
+> & { profilesDirectory?: string; hits?: number };

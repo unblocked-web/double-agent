@@ -17,7 +17,7 @@ import { lookup } from 'useragent';
   puppeteer.use(ua);
   const puppBrowser = await puppeteer.launch({
     ignoreHTTPSErrors: true,
-    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   });
   await forEachDirective(basename(__dirname), async directive => {
     const useragent = lookup(directive.useragent);

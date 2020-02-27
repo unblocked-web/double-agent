@@ -14,7 +14,7 @@
   "author": "Data Liberation Foundation",
   "license": "ISC",
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   },
   "husky": {
     "hooks": {
@@ -65,7 +65,7 @@
       ]
     },
     "ignore": [
-      "publish/**",
+      "**/fingerprint/profiles/*.json",
       "**/types/*.js",
       "**/types/*.d.ts",
       "**/results/*.json"

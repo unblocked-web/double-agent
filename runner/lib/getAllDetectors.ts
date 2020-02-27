@@ -38,7 +38,7 @@ export default function getAllDetectors(print = false) {
     for (const testName of fs.readdirSync(`${detectionsDir}/${category}`)) {
       if (testName === '.DS_Store') continue;
       if (!fs.statSync(`${detectionsDir}/${category}/${testName}`).isDirectory()) continue;
-      if (testsFilter && !testsFilter.includes(testName)) continue;
+      if (testsFilter && !testsFilter.includes(testName) && !`${category}/${testName}`.includes(testsFilter)) continue;
 
       const entry = {
         category,
