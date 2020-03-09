@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "test-categories": [
+  "checkCategories": [
     "Can Set Cookies",
     "Same Site Cookies",
+    "Same Origin Cookies",
     "Secure Cookies",
     "Cross Domain Cookies"
   ],
@@ -17,11 +18,13 @@
   },
   "dependencies": {
     "useragent": "^2.3.0",
+    "diff": "^4.0.2",
     "cookie": "^0.4.0",
     "ws": "^7.2.1",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
+    "@types/diff": "^4.0.2",
     "typescript": "^3.7.2",
     "@types/node": "^12.7.11",
     "@types/cookie": "^0.3.3",

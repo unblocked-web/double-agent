@@ -1,28 +1,35 @@
-const headerCaseTest = 'X-HeaDer-Key';
+import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
+
+const headerCaseTest = 'X-HeaDer-sessionid';
 export { headerCaseTest };
 
-export default function buildTestXhrs(key: string, fullSameSite: string, fullCrossSite: string) {
+export default function buildTestXhrs(ctx: IRequestContext) {
+  const sessionid = ctx.session.id;
+  const domains = ctx.domains.listeningDomains;
+  const fullSubdomain = domains.subdomain.host;
+  const fullExternal = domains.external.host;
+  const fullMainSite = domains.main.host;
   return [
-    { func: 'ws', url: 'host' },
-    { func: 'ws', url: `${fullSameSite}?hkey=${key}` },
-    { func: 'ws', url: `${fullCrossSite}?hkey=${key}` },
+    { func: 'ws', url: `${fullMainSite}?sessionid=${sessionid}` },
+    { func: 'ws', url: `${fullSubdomain}?sessionid=${sessionid}` },
+    { func: 'ws', url: `${fullExternal}?sessionid=${sessionid}` },
     {
       func: 'axios.get',
       url: `axios-noheaders.json`,
       args: {
         params: {
-          hkey: key,
+          sessionid: sessionid,
         },
       },
     },
-    { func: 'fetch', url: `fetch-noheaders.json?hkey=${key}` },
+    { func: 'fetch', url: `fetch-noheaders.json?sessionid=${sessionid}` },
     {
       func: 'fetch',
-      url: `fetch-post-noheaders.json?hkey=${key}`,
+      url: `fetch-post-noheaders.json?sessionid=${sessionid}`,
       args: {
         method: 'post',
         body: JSON.stringify({
-          hkey: key,
+          sessionid: sessionid,
           [randomText()]: randomText(),
           [randomText()]: randomText(),
           [randomText()]: randomText(),
@@ -31,11 +38,11 @@ export default function buildTestXhrs(key: string, fullSameSite: string, fullCro
     },
     {
       func: 'fetch',
-      url: 'fetch-headers.json?hkey=' + key,
+      url: 'fetch-headers.json?sessionid=' + sessionid,
       args: {
         headers: {
           [headerCaseTest]: randomText(),
-          'x-lower-key': randomText(),
+          'x-lower-sessionid': randomText(),
           [randomText()]: '1',
         },
       },
@@ -45,51 +52,51 @@ export default function buildTestXhrs(key: string, fullSameSite: string, fullCro
       url: 'axios-headers.json',
       args: {
         params: {
-          hkey: key,
+          sessionid: sessionid,
         },
         headers: {
           [headerCaseTest]: randomText(),
-          'x-lower-key': randomText(),
+          'x-lower-sessionid': randomText(),
           [randomText()]: '1',
         },
       },
     },
     {
       func: 'fetch',
-      url: 'fetch-post-headers.json',
+      url: `fetch-post-headers.json?sessionid=${sessionid}`,
       args: {
         method: 'post',
         headers: {
           [headerCaseTest]: randomText(),
-          'x-lower-key': randomText(),
+          'x-lower-sessionid': randomText(),
           [randomText()]: '1',
         },
-        body: JSON.stringify({ hkey: key }),
+        body: JSON.stringify({ sessionid: sessionid }),
       },
     },
     {
       func: 'fetch',
-      url: `//${fullSameSite}/fetch-noheaders?hkey=${key}`,
+      url: `//${fullSubdomain}/fetch-noheaders?sessionid=${sessionid}`,
       args: {
         mode: 'cors',
       },
     },
     {
       func: 'fetch',
-      url: `//${fullSameSite}/fetch-post-noheaders.json`,
+      url: `//${fullSubdomain}/fetch-post-noheaders.json?sessionid=${sessionid}`,
       args: {
         method: 'post',
         mode: 'cors',
-        body: JSON.stringify({ hkey: key }),
+        body: JSON.stringify({ sessionid: sessionid }),
       },
     },
     {
       func: 'fetch',
-      url: `//${fullSameSite}/fetch-headers?hkey=${key}`,
+      url: `//${fullSubdomain}/fetch-headers?sessionid=${sessionid}`,
       args: {
         headers: {
           [headerCaseTest]: randomText(),
-          'x-lower-key': randomText(),
+          'x-lower-sessionid': randomText(),
           [randomText()]: '1',
           accept: 'application/json',
         },
@@ -98,43 +105,43 @@ export default function buildTestXhrs(key: string, fullSameSite: string, fullCro
     },
     {
       func: 'fetch',
-      url: `//${fullSameSite}/fetch-post-headers.json`,
+      url: `//${fullSubdomain}/fetch-post-headers.json?sessionid=${sessionid}`,
       args: {
         method: 'post',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
           [headerCaseTest]: randomText(),
-          'x-lower-key': randomText(),
+          'x-lower-sessionid': randomText(),
           [randomText()]: '1',
         },
-        body: JSON.stringify({ hkey: key }),
+        body: JSON.stringify({ sessionid: sessionid }),
       },
     },
 
     {
       func: 'fetch',
-      url: `//${fullCrossSite}/fetch-noheaders?hkey=${key}`,
+      url: `//${fullExternal}/fetch-noheaders?sessionid=${sessionid}`,
       args: {
         mode: 'cors',
       },
     },
     {
       func: 'fetch',
-      url: `//${fullCrossSite}/fetch-post-noheaders.json`,
+      url: `//${fullExternal}/fetch-post-noheaders.json`,
       args: {
         method: 'post',
         mode: 'cors',
-        body: JSON.stringify({ hkey: key }),
+        body: JSON.stringify({ sessionid: sessionid }),
       },
     },
     {
       func: 'fetch',
-      url: `//${fullCrossSite}/fetch-headers?hkey=${key}`,
+      url: `//${fullExternal}/fetch-headers?sessionid=${sessionid}`,
       args: {
         headers: {
           [headerCaseTest]: randomText(),
-          'x-lower-key': randomText(),
+          'x-lower-sessionid': randomText(),
           [randomText()]: '1',
           accept: 'application/json',
         },
@@ -143,17 +150,17 @@ export default function buildTestXhrs(key: string, fullSameSite: string, fullCro
     },
     {
       func: 'fetch',
-      url: `//${fullCrossSite}/fetch-post-headers.json`,
+      url: `//${fullExternal}/fetch-post-headers.json?sessionid=${sessionid}`,
       args: {
         method: 'post',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
           [headerCaseTest]: randomText(),
-          'x-lower-key': randomText(),
+          'x-lower-sessionid': randomText(),
           [randomText()]: '1',
         },
-        body: JSON.stringify({ hkey: key }),
+        body: JSON.stringify({ sessionid: sessionid }),
       },
     },
   ];

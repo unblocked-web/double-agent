@@ -2,7 +2,7 @@
   "name": "@double-agent/tcp-ttl",
   "version": "1.0.0",
   "main": "index.js",
-  "test-categories": [
+  "checkCategories": [
     "TCP Layer"
   ],
   "description": "Compares tcp packet values to the user agent OS",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "useragent": "^2.3.0",
-    "pcap": "https://github.com/jonahharris/node_pcap#with-v12-fixes",
+    "pcap": "^3.1.0",
     "source-map-support": "^0.5.16",
     "@double-agent/runner": "1.0.0"
   },

@@ -9,9 +9,9 @@ export default function buildDetectionsList() {
   const allDetectors = getAllDetectors();
   let md = header;
   for (const detector of allDetectors) {
-    md += `\n${detector.category}/${detector.testName} | ${detector.testCategories
+    md += `\n${detector.layer}/${detector.name} | ${detector.checkCategories
       .map(x => '* ' + x)
-      .join('<br/><br/>')} | ${detector.summary} | ${!!detector.module ? ':white_check_mark:' : ' '}`;
+      .join('<br/><br/>')} | ${detector.summary} | ${!!detector.plugin ? ':white_check_mark:' : ' '}`;
   }
   fs.writeFileSync(outputFile, md);
 }

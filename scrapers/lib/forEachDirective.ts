@@ -1,4 +1,4 @@
-import IDirective from '@double-agent/runner/lib/IDirective';
+import IDirective from '@double-agent/runner/interfaces/IDirective';
 import fetch from 'node-fetch';
 
 const runnerDomain = process.env.RUNNER_DOMAIN ?? 'localhost';
@@ -19,11 +19,7 @@ export default async function forEachDirective(
     if (json.directive) {
       const instruction = json.directive as IDirective;
 
-      console.log(
-        'Next directive %s [%s]',
-        instruction.module ?? instruction.url,
-        instruction.useragent,
-      );
+      console.log('Next agent [%s]', instruction.useragent);
       await runDirective(instruction);
     } else {
       console.log('------ Test Complete --------');

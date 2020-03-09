@@ -15,14 +15,23 @@ export default class ForkedServerRunner {
     this.child.kill();
   }
 
-  public async start(port, onTlsResult: (message: ITlsResult) => null) {
-    this.port = port;
+  public async start(
+    port,
+    onTlsResult: (message: ITlsResult) => void,
+    redirectAfterLoadHref?: string,
+  ) {
+    this.port = Number(port ?? 443);
+    const env: any = {
+      ...process.env,
+      PORT: String(this.port),
+    };
+    if (redirectAfterLoadHref) {
+      env.REDIRECT_HREF = redirectAfterLoadHref;
+    }
+
     this.child = fork(__dirname + '/childServer', [], {
       stdio: ['ignore', 'inherit', 'pipe', 'ipc'],
-      env: {
-        ...process.env,
-        PORT: String(this.port),
-      },
+      env,
     });
 
     this.child.on('error', err => {

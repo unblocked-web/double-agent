@@ -1,27 +1,16 @@
-import { appendFile, readdirSync, readFileSync } from 'fs';
-import { getUseragentPath } from '@double-agent/runner/lib/useragentProfileHelper';
+import fs from 'fs';
+import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
 import IFingerprintProfile from '../interfaces/IFingerprintProfile';
 
+const profilesDir = `${__dirname}/../profiles`;
 export default class FingerprintProfile {
   public static readAll() {
     const profiles: IFingerprintProfile[] = [];
-    for (const file of readdirSync(`${__dirname}/../profiles`)) {
-      if (!file.endsWith('.json') || file.startsWith('_')) continue;
-      const contents = readFileSync(`${__dirname}/../profiles/${file}`, 'utf8');
-      const entries = contents.split('\n').filter(Boolean).map(x => JSON.parse(x) as IFingerprintProfile);
-      const areAllSame = entries.filter(x => x.fullHash === entries[0].fullHash);
-      if (areAllSame.length !== entries.length) {
-        console.log(
-          'WARN: we were operating under assumption that fingerprint hashes are static across sessions. That changed with at least: ',
-          {
-            profile: file,
-            useragent: entries[0].useragent,
-            diffs: entries.length - areAllSame.length,
-          },
-        );
-        throw new Error('Fingerprints no longer are the same across sessions in the same browser');
-      }
-      profiles.push(entries[0]);
+    for (const filepath of fs.readdirSync(profilesDir)) {
+      if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
+      const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
+      const json = JSON.parse(file) as IFingerprintProfile;
+      profiles.push(json);
     }
     return profiles;
   }
@@ -29,11 +18,7 @@ export default class FingerprintProfile {
   public static save(useragent: string, data: IFingerprintProfile) {
     const profile = { ...data, useragent };
     if (process.env.GENERATE_PROFILES) {
-      appendFile(
-        __dirname + '/../profiles/' + getUseragentPath(useragent) + '.json',
-        JSON.stringify({ ...data, useragent }) + '\n',
-        () => null,
-      );
+      saveUseragentProfile(useragent, profile, profilesDir);
     }
     return profile;
   }

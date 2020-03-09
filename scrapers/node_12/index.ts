@@ -5,10 +5,8 @@ import forEachDirective from '../lib/forEachDirective';
 import { basename } from 'path';
 
 forEachDirective(basename(__dirname), async directive => {
-  await httpGet(directive.clickDestinationUrl ?? directive.url, directive.useragent);
-
-  if (directive.requiredFinalUrl) {
-    await httpGet(directive.requiredFinalUrl, directive.useragent);
+  for (const page of directive.pages) {
+    await httpGet(page.url, directive.useragent);
   }
 }).catch(console.log);
 

@@ -70,9 +70,9 @@ export default async function buildScraperDetectionResults() {
       let totalPassed = 0;
       let totalOmitted = 0;
       for (const detector of allDetectors) {
-        if (!detector.module) continue;
+        if (!detector.plugin) continue;
 
-        for (const category of detector.testCategories ?? []) {
+        for (const category of detector.checkCategories ?? []) {
           const catResults = results.scrapers[scraper].categories[category];
           if (!catResults) continue;
 

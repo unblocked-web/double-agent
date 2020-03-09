@@ -1,73 +1,53 @@
 import fs from 'fs';
-import { IRequestInfo } from './processCookieRequest';
-import IDomainset, { cleanDomain } from '../interfaces/IDomainset';
 import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
 import { inspect } from 'util';
 import Useragent, { lookup } from 'useragent';
+import HostDomain from '@double-agent/runner/interfaces/HostDomain';
+import ResourceType from '@double-agent/runner/interfaces/ResourceType';
+import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
+import SessionTracker from '@double-agent/runner/lib/SessionTracker';
+import OriginType from '@double-agent/runner/interfaces/OriginType';
 
 const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
-const httpsProfilesDir = `${profilesDir}/https`;
-const httpProfilesDir = `${profilesDir}/http`;
-
-if (!fs.existsSync(httpsProfilesDir)) fs.mkdirSync(httpsProfilesDir);
-if (!fs.existsSync(httpProfilesDir)) fs.mkdirSync(httpProfilesDir);
 
 export default class CookieProfile {
-  public readonly cleanedRequests: IRequestInfo[];
-  constructor(
-    readonly requests: IRequestInfo[],
-    readonly domains: IDomainset,
-    readonly otherDomains: IDomainset,
-    readonly useragent: string,
-  ) {
-    this.cleanedRequests = this.parseEntries();
+  public readonly requests: ICookieRequest[];
+  public readonly useragent: string;
+  constructor(readonly ctx: IRequestContext) {
+    this.useragent = ctx.requestDetails.useragent;
+    this.requests = ctx.session.requests.map(x => {
+      return {
+        url: x.url,
+        cookieNames: Object.keys(x.cookies ?? {}),
+        setCookies: x.setCookies?.map(x =>
+          SessionTracker.cleanUrls(
+            x,
+            ctx.session.id,
+            ctx.domains.secureDomains,
+            ctx.domains.httpDomains,
+          ),
+        ),
+        originType: x.originType,
+        secureDomain: x.secureDomain,
+        resourceType: x.resourceType,
+        hostDomain: x.hostDomain,
+      };
+    });
   }
 
   public save() {
     if (!process.env.GENERATE_PROFILES) return;
-    const profilesDir = this.domains.isSsl ? httpsProfilesDir : httpProfilesDir;
 
     const data = {
-      requests: this.cleanedRequests,
+      requests: this.requests,
       useragent: this.useragent,
     } as ICookieProfile;
 
     saveUseragentProfile(this.useragent, data, profilesDir);
   }
 
-  private parseEntries(): IRequestInfo[] {
-    return this.requests.map(x => ({
-      ...x,
-      url: this.cleanUrl(x.url),
-      referer: this.cleanUrl(x.referer),
-    }));
-  }
-
-  private cleanUrl(url: string) {
-    if (!url) return url;
-    const { sameSite, crossSite, main, port } = this.domains;
-    const fullMainSite = cleanDomain(main, port);
-    const fullSameSite = cleanDomain(sameSite, port);
-    const fullCrossSite = cleanDomain(crossSite, port);
-    const fullOtherMainSite = cleanDomain(this.otherDomains.main, this.otherDomains.port);
-    const fullOtherCrossSite = cleanDomain(this.otherDomains.crossSite, this.otherDomains.port);
-    const fullOtherSameSite = cleanDomain(this.otherDomains.sameSite, this.otherDomains.port);
-    return url
-      .replace(fullSameSite, 'sameSite')
-      .replace(fullMainSite, 'mainSite')
-      .replace(fullCrossSite, 'crossSite')
-      .replace(fullOtherSameSite, 'sameSite')
-      .replace(fullOtherMainSite, 'mainSite')
-      .replace(fullOtherCrossSite, 'crossSite')
-      .replace(sameSite, 'sameSite')
-      .replace(main, 'mainSite')
-      .replace(crossSite, 'crossSite')
-      .split('?')
-      .shift();
-  }
-
-  public static findUniqueProfiles(type: 'http' | 'https'): ICookieGrouping[] {
-    const profiles = this.getAllProfiles(type);
+  public static findUniqueProfiles(): ICookieGrouping[] {
+    const profiles = this.getAllProfiles();
     const groups: {
       [json: string]: ICookieGrouping;
     } = {};
@@ -75,12 +55,8 @@ export default class CookieProfile {
     for (const profile of profiles) {
       const requests = profile.requests
         .map(x => {
-          const cookies =
-            x.cookies
-              ?.split('; ')
-              .map(y => y.split('=').shift())
-              .sort() ?? [];
-          return { url: x.referer + ' >> ' + x.url, cookies: cookies };
+          const cookies = x.cookieNames.sort() ?? [];
+          return { url: x.originType.toString() + ' >> ' + x.url, cookies: cookies };
         })
         .sort((a, b) => {
           return a.url.localeCompare(b.url);
@@ -90,7 +66,7 @@ export default class CookieProfile {
         if (!groups[json].useragents.includes(profile.useragent))
           groups[json].useragents.push(profile.useragent);
       } else {
-        groups[json] = { useragents: [profile.useragent], cookies: {}, type };
+        groups[json] = { useragents: [profile.useragent], cookies: {} };
         for (const { url, cookies } of requests) {
           groups[json].cookies[url] = cookies;
         }
@@ -100,8 +76,8 @@ export default class CookieProfile {
     return Object.values(groups);
   }
 
-  public static analyzeUniquePropertiesByBrowserGroup(type: 'http' | 'https') {
-    const groups = this.findUniqueProfiles(type);
+  public static analyzeUniquePropertiesByBrowserGroup() {
+    const groups = this.findUniqueProfiles();
     if (!groups.length) return;
     // cheap clone
     const uniqueGroups: ICookieGrouping[] = JSON.parse(JSON.stringify(Object.values(groups)));
@@ -121,9 +97,7 @@ export default class CookieProfile {
       }
     }
 
-    console.log(
-      ('UNIQUE ' + type + ' COOKIE SETTINGS BY BROWSER').padStart(70, '-').padEnd(150, '-'),
-    );
+    console.log('UNIQUE COOKIE SETTINGS BY BROWSER'.padStart(70, '-').padEnd(150, '-'));
     for (const group of uniqueGroups) {
       const uas = [
         ...new Set(group.useragents.map(x => lookup(x)).map(x => x.family + ' ' + x.major)),
@@ -138,8 +112,7 @@ export default class CookieProfile {
     console.log('\n\n'.padStart(152, '-'));
   }
 
-  public static getAllProfiles(type: 'http' | 'https') {
-    const profilesDir = type === 'https' ? httpsProfilesDir : httpProfilesDir;
+  public static getAllProfiles() {
     const entries: (ICookieProfile & { userAgent: Useragent.Agent })[] = [];
     for (const filepath of fs.readdirSync(profilesDir)) {
       if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
@@ -153,12 +126,21 @@ export default class CookieProfile {
 }
 
 export interface ICookieProfile {
-  requests: IRequestInfo[];
+  requests: ICookieRequest[];
   useragent: string;
 }
 
+export interface ICookieRequest {
+  url: string;
+  cookieNames: string[];
+  setCookies?: string[];
+  secureDomain: boolean;
+  hostDomain: HostDomain;
+  originType: OriginType;
+  resourceType: ResourceType;
+}
+
 interface ICookieGrouping {
-  type: 'http' | 'https';
   useragents: string[];
   cookies: { [url: string]: string[] };
 }

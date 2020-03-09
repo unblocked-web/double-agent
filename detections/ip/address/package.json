@@ -1,0 +1,19 @@
+{
+  "name": "@double-agent/ip-address",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "checkCategories": [
+    "IP Address"
+  ],
+  "scripts": {
+    "analyze": "node -e 'require(\"./lib/IpProfile\").default.analyze()'"
+  },
+  "description": "Checks remote ip addresses and port ranges",
+  "dependencies": {
+    "source-map-support": "^0.5.16"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.11"
+  }
+}

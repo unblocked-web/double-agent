@@ -8,12 +8,12 @@
     "type": "ClientHello",
     "version": "0x303 (TLS 1.2)",
     "random": {
-      "unixTime": "0x7F6597FB",
-      "randomBytes": "011F23E4B62F238FE4A2F6D3BDC8B040AAD587B050B43C3CC5E57AAF"
+      "unixTime": "0x43C0AECE",
+      "randomBytes": "D165EE3E6E3E1CBBEE41D14B2BE69CDEC87AC8B78752B2158063C9E4"
     },
-    "sessionId": "D0C96AB570C02B5CCE3CB76A008E0C1AA83EDB416747451AC5EB63EF10B5E6B7",
+    "sessionId": "83D948AD4062B5595575D6EFD1A1CA395546721AA8A9B3777F4AF6C9768AD2B6",
     "ciphers": [
-      "{0x8A, 0x8A} GREASE",
+      "{0xEA, 0xEA} GREASE",
       "{0x13, 0x01} TLS_AES_128_GCM_SHA256",
       "{0x13, 0x02} TLS_AES_256_GCM_SHA384",
       "{0x13, 0x03} TLS_CHACHA20_POLY1305_SHA256",
@@ -35,7 +35,7 @@
     "extensions": [
       {
         "type": "GREASE",
-        "decimal": 47802,
+        "decimal": 27242,
         "values": []
       },
       {
@@ -60,7 +60,7 @@
         "type": "supported_groups",
         "decimal": 10,
         "values": [
-          "GREASE (27242)",
+          "GREASE (31354)",
           "ecdh_x25519 (29)",
           "secp256r1 (P-256) (23)",
           "secp384r1 (P-384) (24)"
@@ -110,10 +110,10 @@
         "type": "key_share",
         "decimal": 51,
         "values": [
-          "NamedGroup: GREASE (27242)",
+          "NamedGroup: GREASE (31354)",
           "key_exchange:  (len=1): 00",
           "NamedGroup: ecdh_x25519 (29)",
-          "key_exchange:  (len=32): 565BB9A4F218AF67A9718CA4427809444344B21D6A3DB077FDB056CD3E0A9473"
+          "key_exchange:  (len=32): F9088AD14E312E885BF7CD2C42C57EBBF837EC6F87044BACD912C286C0C52B4C"
         ]
       },
       {
@@ -125,7 +125,7 @@
         "type": "supported_versions",
         "decimal": 43,
         "values": [
-          "GREASE (6682)",
+          "GREASE (31354)",
           "TLS 1.3 (772)",
           "TLS 1.2 (771)",
           "TLS 1.1 (770)",
@@ -139,7 +139,7 @@
       },
       {
         "type": "GREASE",
-        "decimal": 43690,
+        "decimal": 23130,
         "values": ["0000 - 00                                             ."]
       },
       {

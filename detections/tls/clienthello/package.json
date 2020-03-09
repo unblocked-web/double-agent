@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "test-categories": [
+  "checkCategories": [
     "TLS Initial Handshake",
     "TLS Grease Used"
   ],
@@ -11,7 +11,7 @@
   "scripts": {
     "profile": "yarn workspace @double-agent/profiler start",
     "start": "node index.js",
-    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 PORT=443 DOMAIN=tls.ulixee.org node index.js"
+    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 PORT=443 TLS_DOMAIN=tls.ulixee.org node index.js"
   },
   "dependencies": {
     "useragent": "^2.3.0",

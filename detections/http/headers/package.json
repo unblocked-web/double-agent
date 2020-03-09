@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "test-categories": [
+  "checkCategories": [
     "Standard Http Headers",
     "Standard Https Headers",
     "Asset Headers",
@@ -14,20 +14,15 @@
   "description": "Compares header order, capitalization and default values to normal (recorded) user agent values",
   "scripts": {
     "profile": "yarn workspace @double-agent/profiler start",
-    "analyze": "PRINT=1 node -e 'require(\"./lib/getBrowserProfileStats\").default()'",
-    "start": "MAIN_DOMAIN=ulixee-test.org SAME_SITE_DOMAIN=a1.ulixee-test.org CROSS_SITE_DOMAIN=a1.dlf.org PROFILES_DIR=./test-profiles node index.js",
-    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 MAIN_DOMAIN=headers.ulixee.org SAME_SITE_DOMAIN=a1.ulixee.org CROSS_SITE_DOMAIN=headers.dataliberationfoundation.org HTTP_PORT=80 HTTPS_PORT=443 node index.js"
+    "analyze": "PRINT=1 node -e 'require(\"./lib/getBrowserProfileStats\").default()'"
   },
   "dependencies": {
     "useragent": "^2.3.0",
-    "cookie": "^0.4.0",
-    "ws": "^7.2.1",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
     "typescript": "^3.7.2",
     "@types/node": "^12.7.11",
-    "@types/cookie": "^0.3.3",
     "@types/useragent": "^2.1.1"
   }
 }

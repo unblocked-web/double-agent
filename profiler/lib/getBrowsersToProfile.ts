@@ -13,7 +13,12 @@ const outputs: {
     asOf: string;
   };
 } = {};
-export default async function getBrowsersToProfile(browserShare = 5, osShare = 3) {
+
+export default async function getBrowsersToProfile(
+  browserShare = 5,
+  osShare = 3,
+  onlyIncludeBrowserstackSupported = true,
+) {
   if (outputs[`${browserShare}_${osShare}`]) return outputs[`${browserShare}_${osShare}`];
   const browsers = getBrowserPercents().filter(x => {
     return x.averagePercent > browserShare;
@@ -37,8 +42,10 @@ export default async function getBrowsersToProfile(browserShare = 5, osShare = 3
     osVersions.results[version] = values.map(x => (Number(x) * winPct) / 100);
   }
 
-  // NOTE: no support yet in browserstack for Chrome OS, so removing
-  delete osVersions.results['Chrome OS'];
+  if (onlyIncludeBrowserstackSupported) {
+    // NOTE: no support yet in browserstack for Chrome OS, so removing
+    delete osVersions.results['Chrome OS'];
+  }
 
   const os = Object.entries(osVersions.results)
     .map(x => {
@@ -117,28 +124,32 @@ const osConversion = {
   Windows: 'Windows',
 };
 
-export function toLooseAgent(
-  browser: Pick<IStatcounterBrowser, 'browser' | 'version'>,
-  os: Pick<IStatcounterOs, 'os' | 'version'>,
-) {
-  const agent = {
-    os: {
-      family: osConversion[os.os],
-      major: '0',
-      minor: '0',
-    },
-    major: browser.version.split('.').shift(),
-    family: browser.browser,
+export function osToAgentOs(os: Pick<IStatcounterOs, 'os' | 'version'>) {
+  const uaOs = {
+    family: osConversion[os.os],
+    major: '0',
+    minor: '0',
   };
 
   let osv = os.version.split('.');
   if (osv.length === 1) osv.push('0');
 
-  if (os.os === 'OS X') osv = macVersionsConversions[os.version].split('_');
+  if (os.os === 'OS X' && macVersionsConversions[os.version]) osv = macVersionsConversions[os.version].split('_');
 
-  agent.os.major = osv[0];
-  agent.os.minor = osv[1];
-  return agent;
+  uaOs.major = osv[0];
+  uaOs.minor = osv[1];
+  return uaOs;
+}
+
+export function toLooseAgent(
+  browser: Pick<IStatcounterBrowser, 'browser' | 'version'>,
+  os: Pick<IStatcounterOs, 'os' | 'version'>,
+) {
+  return {
+    os: osToAgentOs(os),
+    major: browser.version.split('.').shift(),
+    family: browser.browser,
+  };
 }
 
 function averagePercent(counts: string[]) {

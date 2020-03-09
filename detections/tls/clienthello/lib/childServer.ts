@@ -3,16 +3,14 @@ import https from 'https';
 import tls from 'tls';
 import fs from 'fs';
 import ja3er from '../ja3er';
-import {
-  confirmedBrowsers,
-  confirmedOperatingSystems,
-  findByOs,
-  isConfirmedJa3,
-} from '../profiles';
 import ITlsResult from '../interfaces/ITlsResult';
 import { isGreased } from './buildJa3Extended';
 import IClientHelloMessage from '../interfaces/IClientHelloMessage';
 import { dirname } from 'path';
+import resultPage from './resultPage';
+import * as http from 'http';
+import url from 'url';
+import ClienthelloProfile from './ClientHelloProfile';
 
 const messages: IClientHelloMessage[] = [];
 process.on('message', m => messages.push(m));
@@ -23,6 +21,7 @@ const certPath = process.env.LETSENCRYPT
 
 try {
   const port = process.env.PORT ?? 3007;
+  const redirectHref = process.env.REDIRECT_HREF ?? '';
   const childServer = https.createServer(
     {
       enableTrace: true,
@@ -32,44 +31,42 @@ try {
     },
     async (req, res) => {
       res.connection.setKeepAlive(false);
+      const requestUrl = url.parse(req.url, true);
       console.log(
-        'TLS child server request received on port %s. %s from %s:%s',
+        'TLS child server request received on port %s. %s: %s from %s:%s',
         port,
-        req.url,
+        req.method,
+        requestUrl.href,
         req.connection.remoteAddress,
         req.connection.remotePort,
+        req.headers['user-agent'],
       );
       // kill socket after response
-      if (req.url !== '/') return res.end('Hi');
+      if (requestUrl.pathname !== '/') return res.end('Hi');
       try {
-        const userAgent = req.headers['user-agent'];
-        if (!userAgent) {
-          recordResult({
-            match: false,
-            useragent: null,
-            reason: 'No user agent provided',
-          });
-          res.writeHead(400, {
-            'content-type': 'text/html',
-          });
-          return res.end(
-            '<html lang="en"><body><bold style="color:red">No user agent provided</bold></body></html>',
-          );
-        }
-
         const secureSocket = req.connection as tls.TLSSocket;
 
         await new Promise(resolve => setTimeout(resolve, 500));
 
+        let errorMessage = '';
+        const userAgent = req.headers['user-agent'];
         const message = messages.shift();
         messages.length = 0;
+
+        if (!userAgent) {
+          errorMessage = 'No user agent provided';
+        }
         if (!message) {
+          errorMessage = 'No tls ClientHello received';
+        }
+        if (errorMessage) {
           recordResult({
             match: false,
             useragent: null,
-            reason: 'No tls ClientHello received',
+            reason: errorMessage,
           });
-          return res.end('No ClientHello received');
+
+          return sendHtmlMessage(res, errorMessage, 400);
         }
 
         const ja3erStats = ja3er(message.ja3Details.md5);
@@ -79,7 +76,7 @@ try {
           ([key, val]) => `${key}: ${val.join(', ')}`,
         );
 
-        const isConfirmed = isConfirmedJa3(userAgent, message.ja3Extended);
+        const isConfirmed = ClienthelloProfile.isConfirmedJa3(userAgent, message.ja3Extended);
         const responseMessage: ITlsResult = {
           match: !!isConfirmed,
           useragent: userAgent,
@@ -93,112 +90,9 @@ try {
           clientHello: message.clienthello,
         };
 
-        const osBoxes: string[][] = [];
-        for (const os of confirmedOperatingSystems) {
-          const arr: string[] = [];
-          osBoxes.push(arr);
-          for (const browser of confirmedBrowsers) {
-            const ja3 = findByOs(os, browser);
-            if (ja3) {
-              let entry = ja3.ja3ExtendedMd5.substr(0, 10) + '... ';
-              if (ja3.ja3ExtendedMd5 === message.ja3Extended.md5) {
-                responseMessage.ja3MatchFor.push(
-                  `${ja3.userAgent.family} ${ja3.userAgent.major} - ${ja3.userAgent.os.family} ${ja3.userAgent.os.major}.${ja3.userAgent.os.minor}`,
-                );
-                entry = `<b style="color:green">${entry}</b>`;
-              }
-              arr.push(entry);
-            } else {
-              arr.push('-');
-            }
-          }
-        }
         recordResult(responseMessage);
-        res.writeHead(200, {
-          'content-type': 'text/html',
-        });
-        res.write(
-          `<html lang="en">
-<head>
-<style>
-strong {
-  display: inline-block;
-  width: 250px;
-}
-ul {
-  display: inline-block;
-}
-th, td {
-  border: 1px solid #a4a5a6;
-}
-table {
-margin: 20px 0;
-}
-</style>
-<title>Tls Settings</title>
-</head>
-<body id="results">
-    <p><strong>User Agent</strong> ${userAgent}</p>
 
-    <h2>Connection TLS Settings</h2>
-    <p><strong>Alpn</strong> ${secureSocket.alpnProtocol}</p>
-    <p><strong>Cipher</strong> ${secureSocket.getCipher()?.name}</p>
-    <p><strong>TLS</strong> ${secureSocket.getProtocol()}</p>
-    <h2>Client TLS Proposal</h2>
-${
-  isConfirmed
-    ? '<h3 style="color:green">Confirmed Browser Signature</h3>'
-    : '<h3 style="color:orange">Unknown Browser Signature</h3>'
-}
-    <p><strong>Ja3 (Degreased)</strong> ${message.ja3Details.value}</p>
-    <p><strong>Ja3 Fingerprint (Degreased)</strong> ${message.ja3Details.md5}</p>
-    <p><strong>Ja3 Extended</strong> ${message.ja3Extended.value}</p>
-    <p><strong>Ja3 Extended Md5</strong> ${message.ja3Extended.md5}</p>
-    <h4>Confirmed Browser Ja3s</h4>
-    <table>
-      <thead>
-            <th>OS</th>
-          ${confirmedBrowsers.map(x => `<th>${x}</th>`).join('')}
-      </thead>
-    <tbody>
-      ${confirmedOperatingSystems
-        .map(
-          (x, i) =>
-            `<tr><td>${x.family} ${x.major}.${x.minor}</td>${osBoxes[i]
-              .map(y => `<td>${y}</td>`)
-              .join('')}</tr>`,
-        )
-        .join('\n')}
-    </tbody>
-    </table>
-
-    <p><strong>Crowdsourced Fingerprint Seen</strong> ${ja3erStats.count} on ${
-            ja3erStats.browsers.size
-          } browsers and ${ja3erStats.operatingSystems.size} OS's</p>
-    <p><strong>Browsers</strong></p>
-    <ul>${[...ja3erStats.browsers.entries()]
-      .map(([key, values]) => {
-        return `<li>${key} - ${values
-          .map(Number)
-          .sort()
-          .join(', ')}</li>`;
-      })
-      .join('\n')}
-    </ul>
-
-    <p><strong>Operating Systems</strong></p>
-    <ul>${[...ja3erStats.operatingSystems.entries()]
-      .map(([key, values]) => {
-        return `<li>${key} - ${values.sort().join(', ')}</li>`;
-      })
-      .join('\n')}
-    </ul>
-    <h4>TLS ClientHello Message (friendly formatted)</h4>
-    <pre>${JSON.stringify(message.clienthello, null, 2)}</pre>
-</body>
-</html>`,
-        );
-        res.end();
+        sendHtml(res, resultPage(redirectHref, responseMessage, message, secureSocket, ja3erStats));
       } catch (err) {
         console.log('Error servicing request', err);
       }
@@ -209,9 +103,29 @@ ${
   });
 
   childServer.listen(port, () => {
-    console.log('TLS -> clienthello started on %s', (childServer.address() as any).port);
+    console.log(
+      'TLS -> clienthello child server started on %s',
+      (childServer.address() as any).port,
+    );
     process.send({ serverStarted: true });
   });
+
+  function sendHtmlMessage(res: http.ServerResponse, message: string, code: number = 200) {
+    console.log('ERROR loading tls clienthello', message);
+    return sendHtml(
+      res,
+      `<html lang="en"><body><bold style="color:red">message</bold></body></html>`,
+      code,
+    );
+  }
+
+  function sendHtml(res: http.ServerResponse, html: string, code: number = 200) {
+
+    res.writeHead(code, {
+      'content-type': 'text/html',
+    });
+    res.end(html);
+  }
 
   function recordResult(result: ITlsResult) {
     process.send(result);

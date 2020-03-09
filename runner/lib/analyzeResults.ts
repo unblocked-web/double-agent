@@ -1,5 +1,5 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
-import IDetectionResult from './IDetectionResult';
+import IDetectionResult from '../interfaces/IDetectionResult';
 import * as path from 'path';
 import { inspect } from 'util';
 

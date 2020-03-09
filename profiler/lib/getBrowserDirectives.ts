@@ -1,9 +1,9 @@
 import getBrowsersToProfile, { toLooseAgent } from './getBrowsersToProfile';
 import { lookup } from 'useragent';
-import { agentToDirective } from '@double-agent/runner/lib/agentHelper';
-import IDirective from '@double-agent/runner/lib/IDirective';
+import IDirective from '@double-agent/runner/interfaces/IDirective';
 import IStatcounterOs from '../interfaces/IStatcounterOs';
 import IStatcounterBrowser from '../interfaces/IStatcounterBrowser';
+import { getUseragentPath } from '@double-agent/runner/lib/useragentProfileHelper';
 
 let browsersToProfile: { browsers: IStatcounterBrowser[]; os: IStatcounterOs[] };
 export default async function getBrowserDirectives<T extends IAgented>(uniqueProfileGroups: T[]) {
@@ -11,7 +11,7 @@ export default async function getBrowserDirectives<T extends IAgented>(uniquePro
     browsersToProfile = await getBrowsersToProfile();
   }
   const directives: {
-    directive: Pick<IDirective, 'isOsTest' | 'browserGrouping' | 'useragent'>;
+    directive: Pick<IDirective, 'browserGrouping' | 'useragent'>;
     profile: T;
   }[] = [];
 
@@ -32,7 +32,10 @@ export default async function getBrowserDirectives<T extends IAgented>(uniquePro
       if (matchingAgent && !directives.some(x => x.directive.useragent === matchingAgent)) {
         directives.push({
           profile,
-          directive: agentToDirective(matchingAgent),
+          directive: {
+            browserGrouping: getUseragentPath(matchingAgent),
+            useragent: matchingAgent,
+          },
         });
       }
     }

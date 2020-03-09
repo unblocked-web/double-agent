@@ -10,21 +10,14 @@ forEachDirective(basename(__dirname), async directive => {
   curl.setOpt('COOKIESESSION', 1);
   curl.setOpt('FOLLOWLOCATION', 1);
   curl.setOpt('AUTOREFERER', 1);
-  curl.setOpt('URL', directive.clickDestinationUrl ?? directive.url);
-  const finished = new Promise((resolve, reject) => {
-    curl.on('end', resolve);
-    curl.on('error', reject);
-  });
-  curl.perform();
-  await finished;
-  if (directive.requiredFinalUrl) {
-    curl.setOpt('URL', directive.requiredFinalUrl);
-    const promise = new Promise((resolve, reject) => {
+  for (const page of directive.pages) {
+    curl.setOpt('URL', page.url);
+    const finished = new Promise((resolve, reject) => {
       curl.on('end', resolve);
       curl.on('error', reject);
     });
     curl.perform();
-    await promise;
+    await finished;
   }
   curl.close();
 }).catch(console.log);

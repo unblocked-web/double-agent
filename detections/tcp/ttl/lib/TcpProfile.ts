@@ -21,36 +21,6 @@ export default class TcpProfile {
     saveUseragentProfile(this.useragent, data, profilesDir);
   }
 
-  public test() {
-    const ua = lookup(this.useragent);
-    let expectedOsWindowSizes = expectedWindowSizes[ua.os.family];
-    if (ua.os.family === 'Windows') {
-      expectedOsWindowSizes = expectedWindowSizes[Number(ua.os.major) >= 10 ? 'Windows10' : 'Windows7'];
-    }
-    const expectedOsTtl = expectedTtlValues[ua.os.family];
-    // allow some leeway for router hops that decrement ttls
-    const ttlDiff = expectedOsTtl - this.ttl;
-
-    return [
-      {
-        success: ttlDiff < TcpProfile.allowedHops && ttlDiff >= 0,
-        category: 'TCP Layer',
-        name: 'Packet TTL',
-        value: this.ttl,
-        expected: expectedOsTtl,
-        useragent: this.useragent,
-      },
-      {
-        success: expectedOsWindowSizes.includes(this.windowSize),
-        category: 'TCP Layer',
-        name: 'Packet WindowSize',
-        value: this.windowSize,
-        expected: expectedOsWindowSizes.join(','),
-        useragent: this.useragent,
-      },
-    ];
-  }
-
   public static findUniqueProfiles(): ITcpGrouping[] {
     const profiles = this.getAllProfiles();
     const groupings: { [key: string]: ITcpGrouping } = {};
@@ -88,16 +58,3 @@ interface ITcpGrouping {
   ttl: number;
   windowSize: number;
 }
-
-const expectedTtlValues = {
-  'Mac OS X': 64,
-  Linux: 64,
-  Windows: 128,
-};
-
-const expectedWindowSizes = {
-  'Mac OS X': [65535],
-  Linux: [5840, 29200, 5720],
-  Windows7: [8192],
-  Windows10: [64240, 65535],
-};

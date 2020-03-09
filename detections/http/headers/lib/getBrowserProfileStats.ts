@@ -1,9 +1,12 @@
 import * as util from 'util';
 import getDefaultHeaderOrder from './getDefaultHeaderOrder';
 import { headerCaseTest } from './generateXhrTests';
-import Profile from './Profile';
+import HeaderProfile from './HeaderProfile';
+import { getUseragentPath } from '@double-agent/runner/lib/useragentProfileHelper';
+import OriginType from '@double-agent/runner/interfaces/OriginType';
+import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 
-export default function getBrowserProfileStats(https = false) {
+export default function getBrowserProfileStats() {
   const statsByResourceType: {
     [type: string]: { [order: string]: { browsers: string[]; urls: string[] } };
   } = {};
@@ -15,47 +18,53 @@ export default function getBrowserProfileStats(https = false) {
 
   const statsByBrowserVersion: IStatsByBrowserVersion = {};
 
-  const profileType = https ? 'https' : 'http';
-  for (const profile of Profile.getAllProfiles(profileType)) {
-    for (const entry of profile.cleanedEntries) {
+  for (const profile of HeaderProfile.getAllProfiles()) {
+    for (const entry of profile.requests) {
       const { defaultKeys, rawOrder } = getDefaultHeaderOrder(entry.headers);
       const defaultKeysOrder = defaultKeys.join(',');
       const customHeaderOrder = rawOrder.join(',');
 
-      if (!statsByResourceType[entry.type]) {
-        statsByResourceType[entry.type] = {};
+      const key = getStatsKey(
+        entry.secureDomain,
+        entry.originType,
+        entry.resourceType,
+        entry.method
+      );
+
+      if (!statsByResourceType[key]) {
+        statsByResourceType[key] = {};
       }
-      const statEntry = statsByResourceType[entry.type];
+      const statEntry = statsByResourceType[key];
       let record = statEntry[defaultKeysOrder];
-      const agentGrouping = profile.agentGrouping;
+      const agentGrouping = getUseragentPath(profile.useragent);
 
       if (!record) {
-        record = { browsers: [agentGrouping], urls: [entry.path] };
+        record = { browsers: [agentGrouping], urls: [entry.url] };
         statEntry[defaultKeysOrder] = record;
       } else {
-        if (!record.urls.includes(entry.path)) {
-          record.urls.push(entry.path);
+        if (!record.urls.includes(entry.url)) {
+          record.urls.push(entry.url);
         }
         if (!record.browsers.includes(agentGrouping)) {
           record.browsers.push(agentGrouping);
         }
       }
 
-      if (!statsByUrl[entry.path]) {
-        statsByUrl[entry.path] = {};
+      if (!statsByUrl[entry.url]) {
+        statsByUrl[entry.url] = {};
       }
-      if (!statsByUrl[entry.path][defaultKeysOrder]) {
-        statsByUrl[entry.path][defaultKeysOrder] = [];
+      if (!statsByUrl[entry.url][defaultKeysOrder]) {
+        statsByUrl[entry.url][defaultKeysOrder] = [];
       }
-      if (!statsByUrl[entry.path][defaultKeysOrder].includes(agentGrouping)) {
-        statsByUrl[entry.path][defaultKeysOrder].push(agentGrouping);
+      if (!statsByUrl[entry.url][defaultKeysOrder].includes(agentGrouping)) {
+        statsByUrl[entry.url][defaultKeysOrder].push(agentGrouping);
       }
 
-      const browserVersion = profile.browserAndVersion;
+      const browserVersion = agentGrouping.split('__').pop();
       if (!statsByBrowserVersion[browserVersion]) {
         statsByBrowserVersion[browserVersion] = {};
       }
-      let browserRequestType = statsByBrowserVersion[browserVersion][entry.type];
+      let browserRequestType = statsByBrowserVersion[browserVersion][key];
       if (!browserRequestType) {
         browserRequestType = {
           defaultHeaderOrders: [],
@@ -64,7 +73,7 @@ export default function getBrowserProfileStats(https = false) {
           defaults: {},
           samples: 0,
         };
-        statsByBrowserVersion[browserVersion][entry.type] = browserRequestType;
+        statsByBrowserVersion[browserVersion][key] = browserRequestType;
       }
       browserRequestType.samples += 1;
       if (!browserRequestType.defaultHeaderOrders.includes(defaultKeysOrder)) {
@@ -82,7 +91,7 @@ export default function getBrowserProfileStats(https = false) {
             ? 'lower'
             : 'title';
       }
-      for (const key of entry.rawHeaders) {
+      for (const key of entry.headers) {
         const [name, ...value] = key.split('=');
         if (defaultKeys.includes(name)) {
           if (!browserRequestType.defaults[name]) {
@@ -123,6 +132,18 @@ export default function getBrowserProfileStats(https = false) {
     statsByType: statsByResourceType,
     statsByBrowserVersion,
   };
+}
+
+export function getStatsKey(
+  secureDomain: boolean,
+  originType: OriginType,
+  resourceType: ResourceType,
+  method: string = 'GET'
+) {
+  const origin = typeof originType === 'string' ? originType : OriginType[originType];
+  const resource = typeof resourceType === 'string' ? resourceType : ResourceType[resourceType];
+
+  return [secureDomain ? 'Secure' : '', origin, resource, method].filter(Boolean).join(' ');
 }
 
 export interface IStatsByBrowserVersion {

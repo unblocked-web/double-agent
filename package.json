@@ -8,8 +8,9 @@
     "watch": "tsc -w",
     "docs": "node docs/generator",
     "profile": "yarn workspace @double-agent/profiler start",
-    "missingProfiles": "yarn workspace @double-agent/profiler missing",
-    "start": "yarn workspace @double-agent/runner start"
+    "cleanProfiles": "rm -rf detections/*/*/profiles/*.json",
+    "start": "yarn workspace @double-agent/runner start",
+    "prod": "yarn workspace @double-agent/runner prod"
   },
   "author": "Data Liberation Foundation",
   "license": "ISC",
@@ -65,7 +66,7 @@
       ]
     },
     "ignore": [
-      "**/fingerprint/profiles/*.json",
+      "**/fingerprint/profiles/**/*.json",
       "**/types/*.js",
       "**/types/*.d.ts",
       "**/results/*.json"

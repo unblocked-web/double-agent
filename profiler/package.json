@@ -1,11 +1,9 @@
 {
   "name": "@double-agent/profiler",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "export $(cat .env | xargs) && node start.js",
-    "missing": "export $(cat .env | xargs) && node -e 'require(\"./lib/findMissingProfiles.js\")'",
+    "start": "export $(cat .env | xargs) && node index.js",
     "intoliStats": "node -e 'require(\"./lib/intoliBrowserStats.js\").default()'",
     "getBrowsers": "node -e 'require(\"./lib/getBrowsersToProfile.js\").default()'",
     "updateStats": "node -e 'require(\"./lib/statcounterStats.js\").default()'"
@@ -13,6 +11,7 @@
   "dependencies": {
     "useragent": "^2.3.0",
     "user-agents": "latest",
+    "node-fetch": "^2.6.0",
     "source-map-support": "^0.5.16",
     "p-queue": "^6.3.0",
     "moment": "^2.24.0",

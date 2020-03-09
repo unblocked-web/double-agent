@@ -1,4 +1,4 @@
-import IDetectorModule from './IDetectorModule';
+import IDetectorModule from '../interfaces/IDetectorModule';
 import fs from 'fs';
 
 function capitalizeFirstLetter(str: string) {
@@ -14,16 +14,16 @@ function titleCase(str: string) {
     .join(' ');
 }
 
-const stackOrder = ['tcp', 'tls', 'ip', 'http', 'browser', 'user', 'end2end'];
+const stackOrder = ['tcp', 'tls', 'ip', 'http', 'browser', 'user'];
 
 export const detectionsDir = __dirname + '/../../detections';
 
 export default function getAllDetectors(print = false) {
   const detectors: IDetectorModule[] = [];
-  let testsFilter;
+  let filter;
 
   if (process.argv.length > 2) {
-    testsFilter = process.argv
+    filter = process.argv
       .slice(2)
       .map(x => x.trim().split(','))
       .reduce((tot, x) => {
@@ -32,30 +32,31 @@ export default function getAllDetectors(print = false) {
       }, [])
       .filter(Boolean);
   }
-  for (const category of fs.readdirSync(detectionsDir)) {
-    if (category === '.DS_Store') continue;
-    if (!fs.statSync(`${detectionsDir}/${category}`).isDirectory()) continue;
-    for (const testName of fs.readdirSync(`${detectionsDir}/${category}`)) {
-      if (testName === '.DS_Store') continue;
-      if (!fs.statSync(`${detectionsDir}/${category}/${testName}`).isDirectory()) continue;
-      if (testsFilter && !testsFilter.includes(testName) && !`${category}/${testName}`.includes(testsFilter)) continue;
+
+  for (const layer of fs.readdirSync(detectionsDir)) {
+    if (layer === '.DS_Store') continue;
+    if (!fs.statSync(`${detectionsDir}/${layer}`).isDirectory()) continue;
+    for (const name of fs.readdirSync(`${detectionsDir}/${layer}`)) {
+      if (name === '.DS_Store') continue;
+      if (!fs.statSync(`${detectionsDir}/${layer}/${name}`).isDirectory()) continue;
+      if (filter && !filter.includes(name) && !`${layer}/${name}`.includes(filter)) continue;
 
       const entry = {
-        category,
-        testName,
+        layer,
+        name,
+        dir: `${detectionsDir}/${layer}/${name}`,
       } as IDetectorModule;
+
       try {
-        const Module = require(`${detectionsDir}/${category}/${testName}/detector`)?.default;
-        if (Module) entry.module = new Module();
+        const Plugin = require(`${detectionsDir}/${layer}/${name}`)?.default;
+        if (Plugin) entry.plugin = new Plugin();
       } catch (err) {}
 
       try {
-        const packageJson = require(`${detectionsDir}/${category}/${testName}/package.json`);
+        const packageJson = require(`${detectionsDir}/${layer}/${name}/package.json`);
         if (packageJson) {
           entry.summary = packageJson.description;
-          entry.testCategories = packageJson['test-categories'] ?? [
-            titleCase(`${category} ${testName}`),
-          ];
+          entry.checkCategories = packageJson['checkCategories'] ?? [titleCase(`${layer} ${name}`)];
         }
         detectors.push(entry);
       } catch (err) {}
@@ -63,19 +64,19 @@ export default function getAllDetectors(print = false) {
   }
 
   detectors.sort((a, b) => {
-    if (a.module && !b.module) return -1;
-    else if (b.module && !a.module) return 1;
+    if (a.plugin && !b.plugin) return -1;
+    else if (b.plugin && !a.plugin) return 1;
 
-    const stackDiff = stackOrder.indexOf(a.category) - stackOrder.indexOf(b.category);
+    const stackDiff = stackOrder.indexOf(a.layer) - stackOrder.indexOf(b.layer);
     if (stackDiff !== 0) return stackDiff;
 
-    return a.category.localeCompare(b.category);
+    return a.layer.localeCompare(b.layer);
   });
 
   if (print) {
     console.log(
-      'Test Suites Activated',
-      detectors.map(x => `${x.module ? '✓' : 'x'} ${x.category}-${x.testName} - ${x.summary}`),
+      'Detection Suites Activated',
+      detectors.map(x => `${x.plugin ? '✓' : 'x'} ${x.layer}-${x.name} - ${x.summary}`),
     );
   }
 
