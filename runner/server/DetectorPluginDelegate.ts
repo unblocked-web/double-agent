@@ -4,6 +4,7 @@ import IDetectorModule from '../interfaces/IDetectorModule';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import IDirective from '../interfaces/IDirective';
 import IDetectionSession from '../interfaces/IDetectionSession';
+import IdBucketTracker from '../lib/IdBucketTracker';
 
 export default class DetectorPluginDelegate implements IDetectionPlugin {
   constructor(readonly detectors: IDetectorModule[]) {}
@@ -16,11 +17,15 @@ export default class DetectorPluginDelegate implements IDetectionPlugin {
     }
   }
 
-  async start(domains: IDetectionDomains, secureDomains: IDetectionDomains) {
+  async start(
+    domains: IDetectionDomains,
+    secureDomains: IDetectionDomains,
+    bucketTracker: IdBucketTracker,
+  ) {
     for (const detector of this.detectors) {
       if (!detector.plugin || !detector.plugin.start) continue;
 
-      await detector.plugin.start(domains, secureDomains);
+      await detector.plugin.start(domains, secureDomains, bucketTracker);
     }
   }
 
@@ -55,7 +60,14 @@ export default class DetectorPluginDelegate implements IDetectionPlugin {
     }
   }
 
-  onWebsocketMessage(message: any, session:IDetectionSession) {
+  async afterRequestDetectorsRun(ctx: IRequestContext) {
+    for (const detector of this.detectors) {
+      if (!detector.plugin || !detector.plugin.afterRequestDetectorsRun) continue;
+      await detector.plugin?.afterRequestDetectorsRun(ctx);
+    }
+  }
+
+  onWebsocketMessage(message: any, session: IDetectionSession) {
     for (const detector of this.detectors) {
       if (!detector.plugin || !detector.plugin.onWebsocketMessage) continue;
       detector.plugin?.onWebsocketMessage(message, session);

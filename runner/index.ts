@@ -32,7 +32,7 @@ NOTE if not using dockers:
 127.0.0.1      ${domains.main.hostname}
 127.0.0.1      ${domains.subdomain.hostname}
 127.0.0.1      ${domains.external.hostname}
-127.0.0.1      ${process.env.TLS_DOMAIN ?? 'tls.ulixee-test.org'}
+127.0.0.1      ${process.env.TLS_DOMAIN || 'tls.ulixee-test.org'}
 
 Run the suite:
 4. Point your scraper at http://ulixee-test.org:${directivesPort} to get your first instruction.

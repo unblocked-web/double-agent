@@ -25,27 +25,32 @@ export default class DirectiveServer {
     if (!this.routes[requestUrl.pathname]) {
       res.writeHead(200).end();
     }
-    const scraperName = req.headers.scraper ?? requestUrl.query.scraper;
-    if (!scraperName) {
+
+    const scraperDir = req.headers.scraper ?? requestUrl.query.scraper;
+    if (!scraperDir) {
       return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
     }
-    await this.routes[requestUrl.pathname](req, res, scraperName as string);
+    await this.routes[requestUrl.pathname](req, res, scraperDir as string);
   }
 
-  private async nextDirective(_, res: ServerResponse, scraperName: string) {
-    const directive = await this.detectionsServer.nextDirective(scraperName);
+  private async nextDirective(_, res: ServerResponse, scraperDir: string) {
+    const directive = await this.detectionsServer.nextDirective(scraperDir);
     if (directive) {
       sendJson(res, { directive });
     } else {
+      const result = await this.detectionsServer.saveScraperResults(
+        scraperDir,
+        `${__dirname}/../../scrapers/${scraperDir}`,
+      );
       console.log(
         '\n\n--------------------  Results Complete for "%s"  -------------------\n\n',
-        scraperName,
+        scraperDir,
       );
-      sendJson(res, { complete: true });
+      sendJson(res, { result });
     }
   }
 
-  private async createDirective(req: IncomingMessage, res: ServerResponse, scraperName: string) {
+  private async createDirective(_, res: ServerResponse, scraperName: string) {
     const directive = await this.detectionsServer.createSessionDirectives(scraperName);
     sendJson(res, { directive });
   }

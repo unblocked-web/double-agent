@@ -1,12 +1,13 @@
 import fs from 'fs';
-import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
+import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import { inspect } from 'util';
-import Useragent, { lookup } from 'useragent';
+import Useragent, { Agent, lookup } from 'useragent';
 import HostDomain from '@double-agent/runner/interfaces/HostDomain';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import SessionTracker from '@double-agent/runner/lib/SessionTracker';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
+import IRequestDetails from '@double-agent/runner/interfaces/IRequestDetails';
 
 const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
 
@@ -15,24 +16,7 @@ export default class CookieProfile {
   public readonly useragent: string;
   constructor(readonly ctx: IRequestContext) {
     this.useragent = ctx.requestDetails.useragent;
-    this.requests = ctx.session.requests.map(x => {
-      return {
-        url: x.url,
-        cookieNames: Object.keys(x.cookies ?? {}),
-        setCookies: x.setCookies?.map(x =>
-          SessionTracker.cleanUrls(
-            x,
-            ctx.session.id,
-            ctx.domains.secureDomains,
-            ctx.domains.httpDomains,
-          ),
-        ),
-        originType: x.originType,
-        secureDomain: x.secureDomain,
-        resourceType: x.resourceType,
-        hostDomain: x.hostDomain,
-      };
-    });
+    this.requests = ctx.session.requests.map(x => CookieProfile.processRequestDetails(x, ctx));
   }
 
   public save() {
@@ -44,6 +28,25 @@ export default class CookieProfile {
     } as ICookieProfile;
 
     saveUseragentProfile(this.useragent, data, profilesDir);
+  }
+
+  public static processRequestDetails(x: IRequestDetails, ctx: IRequestContext) {
+    return {
+      url: x.url,
+      cookieNames: Object.keys(x.cookies ?? {}),
+      setCookies: x.setCookies?.map(x =>
+        SessionTracker.cleanUrls(
+          x,
+          ctx.session.id,
+          ctx.domains.secureDomains,
+          ctx.domains.httpDomains,
+        ),
+      ),
+      originType: x.originType,
+      secureDomain: x.secureDomain,
+      resourceType: x.resourceType,
+      hostDomain: x.hostDomain,
+    };
   }
 
   public static findUniqueProfiles(): ICookieGrouping[] {
@@ -122,6 +125,18 @@ export default class CookieProfile {
       entries.push(json);
     }
     return entries;
+  }
+
+  public static getProfileForSession(ctx: IRequestContext) {
+    const agent = ctx.session.parsedUseragent;
+    const profile = CookieProfile.getAllProfiles().find(x => {
+      if (x.userAgent.major !== agent.major) return false;
+      return x.userAgent.family === agent.family;
+    });
+    if (!profile) {
+      console.log('WARN: no Cooke profile for %s %s', agent.major, agent.family);
+    }
+    return profile;
   }
 }
 

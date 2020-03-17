@@ -1,5 +1,5 @@
 {
-  "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36",
+  "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
   "ja3": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0",
   "ja3Md5": "66918128f1b9b03303d77c6f2eefd128",
   "ja3Extended": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0,1027-2052-1025-1283-2053-1281-2054-1537-513,772-771-770-769,h2-http/1.1,1",
@@ -8,12 +8,12 @@
     "type": "ClientHello",
     "version": "0x303 (TLS 1.2)",
     "random": {
-      "unixTime": "0x7ADFA94A",
-      "randomBytes": "819D047768E154B2CAF15A13DFEB263334996D170C2118751D85785E"
+      "unixTime": "0x4586255A",
+      "randomBytes": "DD5361B13291FEE7F1606D93D50C4D254F86944FB296DE9B57D798DE"
     },
-    "sessionId": "01A834C37747C8060039F03E814B08BA537CFC0DAACE777F7AA2DBFA6E74DA4C",
+    "sessionId": "BF119A9EA92DD4C262130C7CAA21C2FA541C76435B4047467583C56189DECC30",
     "ciphers": [
-      "{0x3A, 0x3A} GREASE",
+      "{0x0A, 0x0A} GREASE",
       "{0x13, 0x01} TLS_AES_128_GCM_SHA256",
       "{0x13, 0x02} TLS_AES_256_GCM_SHA384",
       "{0x13, 0x03} TLS_CHACHA20_POLY1305_SHA256",
@@ -35,7 +35,7 @@
     "extensions": [
       {
         "type": "GREASE",
-        "decimal": 19018,
+        "decimal": 31354,
         "values": []
       },
       {
@@ -60,7 +60,7 @@
         "type": "supported_groups",
         "decimal": 10,
         "values": [
-          "GREASE (51914)",
+          "GREASE (43690)",
           "ecdh_x25519 (29)",
           "secp256r1 (P-256) (23)",
           "secp384r1 (P-384) (24)"
@@ -110,10 +110,10 @@
         "type": "key_share",
         "decimal": 51,
         "values": [
-          "NamedGroup: GREASE (51914)",
+          "NamedGroup: GREASE (43690)",
           "key_exchange:  (len=1): 00",
           "NamedGroup: ecdh_x25519 (29)",
-          "key_exchange:  (len=32): 1FF1FDB980BEE1B06DC01E5A3C3EBAFC073782DB3A166CEABF3CB72180E51254"
+          "key_exchange:  (len=32): C2A8117C2AF5B10662F7E45264310E19EC1B10EDFBDA21309CA47AB16232AE50"
         ]
       },
       {
@@ -125,7 +125,7 @@
         "type": "supported_versions",
         "decimal": 43,
         "values": [
-          "GREASE (2570)",
+          "GREASE (43690)",
           "TLS 1.3 (772)",
           "TLS 1.2 (771)",
           "TLS 1.1 (770)",
@@ -139,7 +139,7 @@
       },
       {
         "type": "GREASE",
-        "decimal": 35466,
+        "decimal": 39578,
         "values": ["0000 - 00                                             ."]
       },
       {

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
+import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import IFingerprintProfile from '../interfaces/IFingerprintProfile';
 
 const profilesDir = `${__dirname}/../profiles`;

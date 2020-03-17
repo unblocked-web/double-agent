@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
+import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import Useragent, { lookup } from 'useragent';
 
 const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;

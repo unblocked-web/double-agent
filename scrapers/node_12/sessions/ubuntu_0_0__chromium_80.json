@@ -1,0 +1,548 @@
+{
+  "id": "14",
+  "requests": [
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "Main-ToBeExpired=start;",
+        "SecureMain=0",
+        "SecureMain--Secure=0; Secure",
+        "SecureMain--HttpOnly=0; HttpOnly",
+        "SecureMain--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "SecureMain--SameSiteLax=0; SameSite=Lax",
+        "SecureMain--SameSiteStrict=0; SameSite=Strict",
+        "SecureMain--SameSiteNone=0; SameSite=None",
+        "SecureMain--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "SecureMain--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "SecureMain--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-SecureMain--Secure-SecurePrefix=0; Secure",
+        "__Host-SecureMain--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "SecureMain--HttpOnly-RootDomain=0; HttpOnly; Domain=ulixee-test.org",
+        "SecureMain--RootDomain-SameSiteNone=0; SameSite=None; Domain=ulixee-test.org",
+        "SecureMain--RootDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=ulixee-test.org",
+        "SecureMain--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
+        "SecureMain--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49213",
+      "url": "https://main/?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": true,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "Main-ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49214",
+      "url": "https://main/run",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": true,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "SecureSub=0",
+        "SecureSub--Secure=0; Secure",
+        "SecureSub--HttpOnly=0; HttpOnly",
+        "SecureSub--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "SecureSub--SameSiteLax=0; SameSite=Lax",
+        "SecureSub--SameSiteStrict=0; SameSite=Strict",
+        "SecureSub--SameSiteNone=0; SameSite=None",
+        "SecureSub--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "SecureSub--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "SecureSub--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-SecureSub--Secure-SecurePrefix=0; Secure",
+        "__Host-SecureSub--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "SecureSub--HttpOnly-RootDomain=0; HttpOnly; Domain=ulixee-test.org",
+        "SecureSub--RootDomain-SameSiteNone=0; SameSite=None; Domain=ulixee-test.org",
+        "SecureSub--RootDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=ulixee-test.org",
+        "SecureSub--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
+        "SecureSub--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49215",
+      "url": "https://subdomain/run-redirect?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=subdomain",
+        "Connection=close"
+      ],
+      "hostDomain": "Sub",
+      "secureDomain": true,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "SecureExternal=0",
+        "SecureExternal--Secure=0; Secure",
+        "SecureExternal--HttpOnly=0; HttpOnly",
+        "SecureExternal--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "SecureExternal--SameSiteLax=0; SameSite=Lax",
+        "SecureExternal--SameSiteStrict=0; SameSite=Strict",
+        "SecureExternal--SameSiteNone=0; SameSite=None",
+        "SecureExternal--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "SecureExternal--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "SecureExternal--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-SecureExternal--Secure-SecurePrefix=0; Secure",
+        "__Host-SecureExternal--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49216",
+      "url": "https://external/run-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=external",
+        "Connection=close"
+      ],
+      "hostDomain": "External",
+      "secureDomain": true,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "SecureExternal=0",
+        "SecureExternal--Secure=0; Secure",
+        "SecureExternal--HttpOnly=0; HttpOnly",
+        "SecureExternal--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "SecureExternal--SameSiteLax=0; SameSite=Lax",
+        "SecureExternal--SameSiteStrict=0; SameSite=Strict",
+        "SecureExternal--SameSiteNone=0; SameSite=None",
+        "SecureExternal--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "SecureExternal--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "SecureExternal--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-SecureExternal--Secure-SecurePrefix=0; Secure",
+        "__Host-SecureExternal--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49217",
+      "url": "https://external/run-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=external",
+        "Connection=close"
+      ],
+      "hostDomain": "External",
+      "secureDomain": true,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49218",
+      "url": "https://external/results",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=external",
+        "Connection=close"
+      ],
+      "hostDomain": "External",
+      "secureDomain": true,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49219",
+      "url": "https://subdomain/results-redirect?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=subdomain",
+        "Connection=close"
+      ],
+      "hostDomain": "Sub",
+      "secureDomain": true,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49220",
+      "url": "https://main/results-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": true,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49221",
+      "url": "https://main/results-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": true,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "Main-ToBeExpired=start;",
+        "Main=0",
+        "Main--Secure=0; Secure",
+        "Main--HttpOnly=0; HttpOnly",
+        "Main--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "Main--SameSiteLax=0; SameSite=Lax",
+        "Main--SameSiteStrict=0; SameSite=Strict",
+        "Main--SameSiteNone=0; SameSite=None",
+        "Main--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "Main--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "Main--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-Main--Secure-SecurePrefix=0; Secure",
+        "__Host-Main--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "Main--HttpOnly-RootDomain=0; HttpOnly; Domain=ulixee-test.org",
+        "Main--RootDomain-SameSiteNone=0; SameSite=None; Domain=ulixee-test.org",
+        "Main--RootDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=ulixee-test.org",
+        "Main--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
+        "Main--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49222",
+      "url": "http://main/?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "Main-ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49223",
+      "url": "http://main/run",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "Sub=0",
+        "Sub--Secure=0; Secure",
+        "Sub--HttpOnly=0; HttpOnly",
+        "Sub--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "Sub--SameSiteLax=0; SameSite=Lax",
+        "Sub--SameSiteStrict=0; SameSite=Strict",
+        "Sub--SameSiteNone=0; SameSite=None",
+        "Sub--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "Sub--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "Sub--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-Sub--Secure-SecurePrefix=0; Secure",
+        "__Host-Sub--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "Sub--HttpOnly-RootDomain=0; HttpOnly; Domain=ulixee-test.org",
+        "Sub--RootDomain-SameSiteNone=0; SameSite=None; Domain=ulixee-test.org",
+        "Sub--RootDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=ulixee-test.org",
+        "Sub--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
+        "Sub--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49224",
+      "url": "http://subdomain/run-redirect?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=subdomain",
+        "Connection=close"
+      ],
+      "hostDomain": "Sub",
+      "secureDomain": false,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "External=0",
+        "External--Secure=0; Secure",
+        "External--HttpOnly=0; HttpOnly",
+        "External--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "External--SameSiteLax=0; SameSite=Lax",
+        "External--SameSiteStrict=0; SameSite=Strict",
+        "External--SameSiteNone=0; SameSite=None",
+        "External--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "External--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "External--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-External--Secure-SecurePrefix=0; Secure",
+        "__Host-External--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49225",
+      "url": "http://external/run-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=external",
+        "Connection=close"
+      ],
+      "hostDomain": "External",
+      "secureDomain": false,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": [
+        "External=0",
+        "External--Secure=0; Secure",
+        "External--HttpOnly=0; HttpOnly",
+        "External--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "External--SameSiteLax=0; SameSite=Lax",
+        "External--SameSiteStrict=0; SameSite=Strict",
+        "External--SameSiteNone=0; SameSite=None",
+        "External--Secure-SameSiteLax=0; Secure; SameSite=Lax",
+        "External--Secure-SameSiteStrict=0; Secure; SameSite=Strict",
+        "External--Secure-SameSiteNone=0; Secure; SameSite=None",
+        "__Secure-External--Secure-SecurePrefix=0; Secure",
+        "__Host-External--Secure-HostPrefix-RootPath=0; Secure; Path=/",
+        "sessionid=14; HttpOnly;"
+      ],
+      "remoteAddress": "127.0.0.1:49226",
+      "url": "http://external/run-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=external",
+        "Connection=close"
+      ],
+      "hostDomain": "External",
+      "secureDomain": false,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49227",
+      "url": "http://external/results",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=external",
+        "Connection=close"
+      ],
+      "hostDomain": "External",
+      "secureDomain": false,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49228",
+      "url": "http://subdomain/results-redirect?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=subdomain",
+        "Connection=close"
+      ],
+      "hostDomain": "Sub",
+      "secureDomain": false,
+      "resourceType": "Redirect"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49229",
+      "url": "http://main/results-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "resourceType": "Document"
+    },
+    {
+      "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "bodyJson": {},
+      "cookies": {},
+      "setCookies": ["sessionid=14; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:49230",
+      "url": "http://main/results-page?sessionid=X",
+      "originType": "none",
+      "method": "GET",
+      "headers": [
+        "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+        "Host=main",
+        "Connection=close"
+      ],
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "resourceType": "Document"
+    }
+  ],
+  "pluginsRun": ["tcp/ttl", "ip/address", "http/useragent", "https/headers", "http/headers"],
+  "identifiers": [
+    {
+      "raw": "771,4866-4867-4865-49199-49195-49200-49196-158-49191-103-49192-107-163-159-52393-52392-52394-49327-49325-49315-49311-49245-49249-49239-49235-162-49326-49324-49314-49310-49244-49248-49238-49234-49188-106-49187-64-49162-49172-57-56-49161-49171-51-50-157-49313-49309-49233-156-49312-49308-49232-61-60-53-47-255,0-11-10-35-22-23-13-43-45-51,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771,,0",
+      "name": "TLS Fingerprint",
+      "layer": "tls",
+      "id": "944648fe720c5df2dd06c039b9054a12"
+    },
+    {
+      "layer": "ip",
+      "name": "IP Address",
+      "id": "127.0.0.1",
+      "raw": null
+    },
+    {
+      "layer": "ip",
+      "name": "IP Port",
+      "id": "49213",
+      "raw": null
+    },
+    {
+      "layer": "http",
+      "name": "Useragent",
+      "id": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "raw": null
+    }
+  ],
+  "useragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+  "parsedUseragent": {
+    "family": "Chromium",
+    "major": "80",
+    "minor": "0",
+    "patch": "3987",
+    "device": {
+      "family": "Other",
+      "major": "0",
+      "minor": "0",
+      "patch": "0"
+    },
+    "os": {
+      "family": "Linux",
+      "major": "0",
+      "minor": "0",
+      "patch": "0"
+    }
+  },
+  "expectedUseragent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+  "assetsNotLoaded": [],
+  "flaggedChecks": [
+    {
+      "originType": "none",
+      "hostDomain": "Main",
+      "resourceType": "Document",
+      "layer": "tcp",
+      "requestIdx": 0,
+      "secureDomain": true,
+      "category": "TCP Layer",
+      "checkName": "Packet WindowSize",
+      "description": "Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)",
+      "value": 0,
+      "pctBot": 50,
+      "expected": "5840,29200,5720",
+      "seenCount": 1
+    },
+    {
+      "secureDomain": true,
+      "requestIdx": 0,
+      "category": "User Agent",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "none",
+      "hostDomain": "Main",
+      "checkName": "User Agent Popularity",
+      "description": "Checks that a User Agent is among the most popular \"current\" browsers",
+      "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
+      "pctBot": 50,
+      "seenCount": 1
+    }
+  ]
+}

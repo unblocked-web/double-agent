@@ -4,9 +4,10 @@ import ForkedServerRunner from './lib/ForkedServerRunner';
 import ITlsResult from './interfaces/ITlsResult';
 import { isGreased } from './lib/buildJa3Extended';
 import IDirective from '@double-agent/runner/interfaces/IDirective';
-import { getUseragentPath } from '@double-agent/runner/lib/useragentProfileHelper';
+import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import ClientHelloProfile from './lib/ClientHelloProfile';
+import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 
 let tlsPort = Number(process.env.PORT ?? 3002);
 const tlsDomain = `https://${process.env.TLS_DOMAIN ?? 'tls.ulixee-test.org'}`;
@@ -44,7 +45,7 @@ export default class TlsClientHelloPlugin implements IDetectionPlugin {
 
     ctx.session.identifiers.push({
       raw: tlsResult.ja3Extended,
-      name: 'TLS Fingerprint',
+      bucket: UserBucket.TLS,
       layer: 'tls',
       id: tlsResult.ja3ExtendedMd5,
     });

@@ -1,7 +1,7 @@
 import { existsSync, promises as fs } from 'fs';
 import getAllDetectors from './getAllDetectors';
 import getBrowsersToProfile from '@double-agent/profiler/lib/getBrowsersToProfile';
-import { lookup } from 'useragent';
+import { Agent, lookup } from 'useragent';
 import UserAgent from 'user-agents';
 
 export async function getStatcounterUseragents(topXBrowsers: number = 2, stringsCount: number) {
@@ -19,11 +19,8 @@ export async function getStatcounterUseragents(topXBrowsers: number = 2, strings
     const agent = lookup(agentstring);
     return top2Browsers.some(x => x.family === agent.family && x.major === agent.major);
   });
-  const list: string[] = [];
-  for (let i = 0; i < stringsCount; i += 1) {
-    list.push(agentStringsToUse[Math.floor(Math.random() * agentStringsToUse.length)]);
-  }
-  return list;
+
+  return agentStringsToUse;
 }
 
 export function getIntoliUseragents(count: number) {
@@ -31,7 +28,15 @@ export function getIntoliUseragents(count: number) {
   return Array(count)
     .fill('')
     .map(() => userAgent.random())
-    .map(x => x.data.userAgent);
+    .map(x => x.data.userAgent)
+    .reduce((list, item) => {
+      if (!list.includes(item)) list.push(item);
+      return list;
+    }, []);
+}
+
+export function isAgent(agent: Agent, browser: string, major: number) {
+  return agent.family === browser && agent.major === String(major);
 }
 
 async function getKnownUseragentStrings() {

@@ -1,7 +1,7 @@
 import IRequestContext from '../interfaces/IRequestContext';
+import HostDomain from '../interfaces/HostDomain';
 
 export default function(ctx: IRequestContext) {
-  const domains = ctx.domains.listeningDomains;
   const sessionid = ctx.session.id;
   const { remoteAddress, useragent } = ctx.requestDetails;
   return `
@@ -9,27 +9,30 @@ export default function(ctx: IRequestContext) {
 <head>
     <link rel="icon" 
       type="image/png" 
-      href="favicon.ico?sessionid=${sessionid}">
+      href="${ctx.trackUrl('favicon.ico')}">
       
-    <link rel="stylesheet" type="text/css" href="${
-      domains.main.href
-    }main.css?sessionid=${sessionid}" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="${
-      domains.subdomain.href
-    }main.css?sessionid=${sessionid}" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="${
-      domains.external.href
-    }main.css?sessionid=${sessionid}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="${ctx.trackUrl(
+      'main.css',
+      HostDomain.Main,
+    )}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="${ctx.trackUrl(
+      'main.css',
+      HostDomain.Sub,
+    )}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="${ctx.trackUrl(
+      'main.css',
+      HostDomain.External,
+    )}" type="text/css"/>
     
-    <script src="${
-      domains.main.href
-    }main.js?sessionid=${sessionid}" type="application/javascript"></script>
-    <script src="${
-      domains.subdomain.href
-    }main.js?sessionid=${sessionid}" type="application/javascript"></script>
-    <script src="${
-      domains.external.href
-    }main.js?sessionid=${sessionid}" type="application/javascript"></script>
+    <script src="${ctx.trackUrl(
+      'main.js',
+      HostDomain.Main,
+    )}" type="application/javascript"></script>
+    <script src="${ctx.trackUrl('main.js', HostDomain.Sub)}" type="application/javascript"></script>
+    <script src="${ctx.trackUrl(
+      'main.js',
+      HostDomain.External,
+    )}" type="application/javascript"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         window.pageQueue = [];
@@ -41,23 +44,24 @@ export default function(ctx: IRequestContext) {
 <p><b>Address:</b> <span id="addresses">${remoteAddress}</span></p>
 <p><b>User Agent: </b> ${useragent}</p>
 <hr/>
-<a href="/results?sessionid=${sessionid}" id="goto-results-page" style="display:none">Next >></a>
+<a href="${ctx.trackUrl('results')}" id="goto-results-page" style="display:none">Next >></a>
 <br/><br/>
-<img src="${domains.main.href}icon-wildcard.svg?sessionid=${sessionid}" width="5" />
-<img src="${domains.subdomain.href}icon-wildcard.svg?sessionid=${sessionid}" width="5" />
-<img src="${domains.external.href}icon-wildcard.svg?sessionid=${sessionid}" width="5" />
+<img src="${ctx.trackUrl('icon-wildcard.svg', HostDomain.Main)}" width="5" />
+<img src="${ctx.trackUrl('icon-wildcard.svg', HostDomain.Sub)}" width="5" />
+<img src="${ctx.trackUrl('icon-wildcard.svg', HostDomain.External)}" width="5" />
 Ulixee.org
 
 <script>
-  function ws(domain) {
+  function ws(wsUrl) {
     return new Promise(resolve => {
-      const ws = new WebSocket('ws${domains.isSSL ? 's' : ''}://' + domain);
+      const ws = new WebSocket(wsUrl);
       ws.onerror = function(err) {
         console.log('WebSocket error', err);
         resolve();
       };
       ws.onopen = function() {
-        ws.send('sent from ' + location.host + ' with sessionid ${sessionid}', {
+        const message = JSON.stringify({ host: location.host, sessionid: '${sessionid}'});
+        ws.send(message, {
           compress:true, binary:false, fin: false, mask: true
         }, function(){});
         resolve();
@@ -65,13 +69,18 @@ Ulixee.org
       ws.onmessage = console.log;
     });
   }
+  window.pageQueue.push(
+    ws('${ctx.trackUrl('', HostDomain.Main, 'ws')}'), 
+    ws('${ctx.trackUrl('', HostDomain.Sub, 'ws')}'),
+    ws('${ctx.trackUrl('', HostDomain.External, 'ws')}')
+  );
 </script>
   
 ${(ctx.extraScripts || []).join('\n')}
 <script>
   function pageLoaded(){
     return Promise.all(window.pageQueue)
-      .then(() => fetch('/page-loaded?page=run&sessionid=${sessionid}'))
+      .then(() => fetch('${ctx.trackUrl('/page-loaded?page=run')}'))
       .then(() => {
         document.getElementById('goto-results-page').classList.add('ready');
         document.getElementById('goto-results-page').style.display = 'block';

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import IJa3BrowserProfile from '../interfaces/IJa3BrowserProfile';
-import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
+import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import useragent, { Agent, OperatingSystem } from 'useragent';
 import IJa3 from '../interfaces/IJa3';
 

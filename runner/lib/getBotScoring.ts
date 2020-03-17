@@ -14,7 +14,7 @@ export default function getBotScoring(ctx: IRequestContext) {
 
   const extras: any = {};
   if (ctx.url.pathname.includes('-page')) {
-    extras.ids = ctx.session.identifiers.map(x => `${x.name}: ${x.id}`);
+    extras.ids = ctx.session.identifiers.map(x => `${x.bucket}: ${x.id}`);
     extras.botReasons = botReasons;
   }
 

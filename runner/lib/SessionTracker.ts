@@ -2,6 +2,12 @@ import IDetectionSession from '../interfaces/IDetectionSession';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { lookup } from 'useragent';
+import IDomainset from '../interfaces/IDomainset';
+import OriginType from '../interfaces/OriginType';
+import uuid from 'uuid/v1';
+import { assetFromURL } from './flagUtils';
+import HostDomain from '../interfaces/HostDomain';
+import UserBucket from '../interfaces/UserBucket';
 
 let sessionIdCounter = 0;
 export default class SessionTracker {
@@ -15,18 +21,29 @@ export default class SessionTracker {
 
   public createSession(expectedUseragent: string) {
     const sessionid = String((sessionIdCounter += 1));
-    this.sessions[sessionid] = {
+
+    const session: IDetectionSession = {
       id: sessionid,
       requests: [],
       pluginsRun: [],
       identifiers: [],
       useragent: null,
+      userUuid: null,
       parsedUseragent: null,
       expectedUseragent,
+      expectedAssets: [],
       assetsNotLoaded: [],
       flaggedChecks: [],
+      trackAsset(url: URL, origin: OriginType, domains: IDomainset, fromUrl?: string) {
+        url.searchParams.set('sessionid', sessionid);
+        const asset: any = assetFromURL(url, origin, domains);
+        asset.fromUrl = fromUrl;
+        session.expectedAssets.push(asset);
+        return url;
+      },
     };
-    return this.sessions[sessionid];
+    this.sessions[sessionid] = session;
+    return session;
   }
 
   public recordRequest(
@@ -55,12 +72,33 @@ export default class SessionTracker {
       session.parsedUseragent = lookup(useragent);
     }
 
+    if (!session.userUuid && requestDetails.hostDomain !== HostDomain.External) {
+      session.userUuid = cookies['uuid'];
+      if (!session.userUuid) {
+        session.userUuid = uuid();
+        requestDetails.setCookies.push(
+          `uuid=${session.userUuid}; Secure; SameSite=None; HttpOnly;`,
+        );
+      }
+      session.identifiers.push({
+        bucket: UserBucket.UserCookie,
+        id: session.userUuid,
+        description: 'A distinct cookie set per user',
+        layer: 'http',
+        raw: null,
+      });
+    }
     requestDetails.headers = requestDetails.headers.map(x => this.cleanDomains(x, sessionid));
     requestDetails.origin = this.cleanDomains(requestDetails.origin, sessionid);
     requestDetails.referer = this.cleanDomains(requestDetails.referer, sessionid);
     requestDetails.url = this.cleanDomains(requestDetails.url, sessionid);
 
     session.requests.push(requestDetails);
+
+    if (!requestDetails.cookies.sessionid) {
+      const cookie = `sessionid=${session.id}; HttpOnly;`;
+      requestDetails.setCookies.push(cookie);
+    }
     return session;
   }
 

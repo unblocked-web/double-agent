@@ -1,7 +1,8 @@
 import csv from 'csv-parse/lib/sync';
 import { readFileSync } from 'fs';
+import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 
-export default function codecPageScript() {
+export default function codecPageScript(ctx: IRequestContext) {
   return `
 <script type="text/javascript">
 const videoMimes = ${JSON.stringify(videoMimes)};
@@ -74,7 +75,7 @@ const codecs = ${JSON.stringify(codecs)};
     });
   }
   const done = testCodecs().then(() =>
-    fetch('/codecs', {
+    fetch('${ctx.trackUrl('/codecs')}', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ audioSupport, videoSupport, webRtcAudioCodecs, webRtcVideoCodecs }),

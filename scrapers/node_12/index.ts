@@ -7,6 +7,9 @@ import { basename } from 'path';
 forEachDirective(basename(__dirname), async directive => {
   for (const page of directive.pages) {
     await httpGet(page.url, directive.useragent);
+    if (page.clickDestinationUrl) {
+      await httpGet(page.clickDestinationUrl, directive.useragent);
+    }
   }
 }).catch(console.log);
 

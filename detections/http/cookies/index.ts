@@ -3,8 +3,19 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import CookieProfile from './lib/CookieProfile';
 import checkCookieProfile from './lib/checkCookieProfile';
 import HostDomain from '@double-agent/runner/interfaces/HostDomain';
+import checkCookieRequest from './lib/checkCookieRequest';
 
 export default class HttpCookiesPlugin implements IDetectionPlugin {
+  public static pagesToCheck = [
+    '/run',
+    '/run-redirect',
+    '/run-page',
+    '/main.css',
+    '/results',
+    '/results-redirect',
+    '/results-page',
+  ];
+
   public async onRequest(ctx: IRequestContext) {
     const cookieDomain = ctx.requestDetails.hostDomain;
 
@@ -30,9 +41,12 @@ export default class HttpCookiesPlugin implements IDetectionPlugin {
       case '/results-page':
         this.testResults(ctx);
         break;
-
       default:
         break;
+    }
+
+    if (HttpCookiesPlugin.pagesToCheck.includes(ctx.url.pathname)) {
+      checkCookieRequest(ctx);
     }
   }
 

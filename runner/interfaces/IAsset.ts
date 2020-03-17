@@ -8,6 +8,7 @@ export default interface IAsset {
   resourceType: ResourceType;
   hostDomain?: HostDomain;
   originType?: OriginType;
+  pathname?: string;
   layer: Layer;
   referer?: string;
 }

@@ -1,12 +1,14 @@
 import IDirective from '../interfaces/IDirective';
 import DetectionsServer from '../server/DetectionsServer';
-import { getUseragentPath } from './useragentProfileHelper';
+import { getUseragentPath } from './profileHelper';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
-import { getIntoliUseragents, getStatcounterUseragents } from './userAgentUtils';
+import { IBrowserTest } from './generateBrowserTest';
 
-export default async function getAllDirectives(detectionsServer: DetectionsServer) {
-  const top2BrowserAgents = await getStatcounterUseragents(2, 10);
-  const topBrowserDirectives = top2BrowserAgents.map(useragent =>
+export default async function getAllDirectives(
+  detectionsServer: DetectionsServer,
+  browserTest: IBrowserTest,
+) {
+  const topBrowserDirectives = browserTest.topBrowsers.map(useragent =>
     buildDirective(
       detectionsServer.httpDomains,
       detectionsServer.httpsDomains,
@@ -16,7 +18,7 @@ export default async function getAllDirectives(detectionsServer: DetectionsServe
     ),
   );
 
-  const intoliDirectives = getIntoliUseragents(10).map(useragent =>
+  const intoliDirectives = browserTest.intoliBrowsers.map(useragent =>
     buildDirective(
       detectionsServer.httpDomains,
       detectionsServer.httpsDomains,
@@ -44,10 +46,12 @@ export function buildDirective(
       {
         url: secureDomains.main.href,
         clickSelector: '#goto-run-page',
+        clickDestinationUrl: new URL('/run', secureDomains.main).href,
       },
       {
         url: new URL('/run-page', secureDomains.external).href,
         clickSelector: '#goto-results-page',
+        clickDestinationUrl: new URL('/results', secureDomains.external).href,
       },
       {
         url: new URL('/results-page', secureDomains.main).href,
@@ -55,10 +59,12 @@ export function buildDirective(
       {
         url: httpDomains.main.href,
         clickSelector: '#goto-run-page',
+        clickDestinationUrl: new URL('/run', httpDomains.main).href,
       },
       {
         url: new URL('/run-page', httpDomains.external).href,
         clickSelector: '#goto-results-page',
+        clickDestinationUrl: new URL('/results', httpDomains.external).href,
       },
       {
         url: new URL('/results-page', httpDomains.main).href,

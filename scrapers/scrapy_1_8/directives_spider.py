@@ -4,7 +4,7 @@ from collections import namedtuple
 
 class DirectivesSpider(scrapy.Spider):
     name = "directives"
-    start_urls = ['http://ulixee-test.org:3000/?scraper=scrapy_1_8']
+    start_urls = ['http://a0.ulixee-test.org:3000/?scraper=scrapy_1_8']
 
     custom_settings = {
        'DUPEFILTER_CLASS':'scrapy.dupefilters.BaseDupeFilter'

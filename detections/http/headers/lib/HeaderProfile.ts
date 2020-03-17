@@ -2,10 +2,11 @@ import fs from 'fs';
 import {
   getUseragentPath,
   saveUseragentProfile,
-} from '@double-agent/runner/lib/useragentProfileHelper';
+} from '@double-agent/runner/lib/profileHelper';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
+import IRequestDetails from '@double-agent/runner/interfaces/IRequestDetails';
 
 const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
 
@@ -22,15 +23,7 @@ export default class HeaderProfile {
     this.useragent = session.useragent;
     this.agentGrouping = getUseragentPath(session.useragent);
 
-    this.requests = session.requests.map((x, i) => ({
-      url: x.url,
-      method: x.method,
-      requestIdx: i,
-      resourceType: x.resourceType,
-      originType: x.originType,
-      headers: x.headers,
-      secureDomain: x.secureDomain,
-    }));
+    this.requests = session.requests.map(x => HeaderProfile.processRequestDetails(x, session));
   }
 
   public save() {
@@ -44,6 +37,17 @@ export default class HeaderProfile {
     saveUseragentProfile(this.useragent, data, profilesDir);
   }
 
+  public static processRequestDetails(x: IRequestDetails, session: IDetectionSession) {
+    return {
+      url: x.url,
+      method: x.method,
+      requestIdx: session.requests.indexOf(x),
+      resourceType: x.resourceType,
+      originType: x.originType,
+      headers: x.headers,
+      secureDomain: x.secureDomain,
+    } as IHeadersRequest;
+  }
   public static getAllProfiles() {
     const entries: IProfile[] = [];
     for (const filepath of fs.readdirSync(profilesDir)) {

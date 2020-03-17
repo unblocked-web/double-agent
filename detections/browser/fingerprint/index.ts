@@ -4,12 +4,10 @@ import FingerprintTracker from './lib/FingerprintTracker';
 import IFingerprintProfile from './interfaces/IFingerprintProfile';
 import * as fs from 'fs';
 import FingerprintProfile from './lib/FingerprintProfile';
-import fingerprintScript, {
-  browserIgnoredAttributes,
-  sessionIgnoredAttributes,
-} from './fingerprintScript';
+import fingerprintScript, { browserIgnoredAttributes, sessionIgnoredAttributes } from './fingerprintScript';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
-import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
+import UserBucket from '@double-agent/runner/interfaces/UserBucket';
+import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 
 const filepath = require.resolve('fingerprintjs2/dist/fingerprint2.min.js');
 
@@ -19,14 +17,20 @@ export default class BrowserFingerprintPlugin implements IDetectionPlugin {
   private sessionFingerprints = new FingerprintTracker();
 
   public async onRequest(ctx: IRequestContext) {
-    if (ctx.requestDetails.resourceType === ResourceType.Document) {
-      ctx.extraHead.push(`<script src="fingerprint2.js" type="text/javascript"></script>`);
-      ctx.extraScripts.push(fingerprintScript());
+    if (
+      ctx.requestDetails.resourceType === ResourceType.Document &&
+      ctx.requestDetails.secureDomain
+    ) {
+      const page = ctx.url.pathname.replace(/[/\-.]/gi, '_');
+      ctx.extraHead.push(
+        `<script src="${ctx.trackUrl(`fpjs-${page}.js`)}" type="text/javascript"></script>`,
+      );
+      ctx.extraScripts.push(fingerprintScript(ctx.trackUrl(`fpres-${page}`)));
     }
   }
 
   async handleResponse(ctx: IRequestContext) {
-    if (ctx.url.pathname === '/fingerprint2.js') {
+    if (ctx.url.pathname.startsWith('/fpjs-')) {
       ctx.res.writeHead(200, {
         'Content-Type': 'text/javascript',
       });
@@ -36,7 +40,7 @@ export default class BrowserFingerprintPlugin implements IDetectionPlugin {
       return true;
     }
 
-    if (ctx.url.pathname === '/fingerprints') {
+    if (ctx.url.pathname.startsWith('/fpres-')) {
       const profile = await FingerprintProfile.save(
         ctx.requestDetails.useragent,
         ctx.requestDetails.bodyJson as IFingerprintProfile,
@@ -47,61 +51,54 @@ export default class BrowserFingerprintPlugin implements IDetectionPlugin {
       this.browserFingerprints.hit(browserHash, components);
       this.sessionFingerprints.hit(sessionHash, components);
 
-      const sessionFingerprintName = 'Single Session Browser Fingerprint';
-      if (!ctx.session.pluginsRun.push(this.pluginName)) {
+      if (!ctx.session.pluginsRun.includes(this.pluginName)) {
         ctx.session.pluginsRun.push(this.pluginName);
         ctx.session.identifiers.push({
           id: profile.browserHash,
           layer: 'browser',
-          name: 'Cross-Session Browser Fingerprint',
+          bucket: UserBucket.Browser,
           description: `Calculates a hash from browser attributes in fingerprint2 that should stay the same regardless of user agent (excludes: ${browserIgnoredAttributes})`,
           raw: profile.components,
         });
         ctx.session.identifiers.push({
           id: profile.sessionHash,
           layer: 'browser',
-          name: sessionFingerprintName,
+          bucket: UserBucket.BrowserSingleSession,
           description: `Calculates a hash from browser attributes in fingerprint2 that should stay the same during a single user session (excludes: ${sessionIgnoredAttributes})`,
           raw: profile.components,
         });
       }
 
-      const priorFingerprint = ctx.session.identifiers.find(x => x.name === sessionFingerprintName);
+      const priorFingerprint = ctx.session.identifiers.find(
+        x => x.bucket === UserBucket.BrowserSingleSession,
+      );
       if (priorFingerprint) {
-        const baseFlag: IFlaggedCheck = {
-          pctBot: 100,
-          secureDomain: ctx.requestDetails.secureDomain,
-          resourceType: ctx.requestDetails.resourceType,
-          hostDomain: ctx.requestDetails.hostDomain,
-          requestIdx: ctx.session.requests.indexOf(ctx.requestDetails),
-          layer: 'browser',
-          category: 'Browser Fingerprint',
-          expected: priorFingerprint.id,
-          checkName: null,
-          value: null,
-        };
         if (priorFingerprint.id !== profile.sessionHash) {
           ctx.session.flaggedChecks.push({
-            ...baseFlag,
+            ...flaggedCheckFromRequest(ctx, 'browser', 'Browser Fingerprint'),
+            pctBot: 100,
             checkName: 'Browser Fingerprint Stable across Session',
             description: 'Checks if a browser fingerprint changes across requests',
             value: profile.sessionHash,
+            expected: priorFingerprint.id,
           });
         }
         const storedSessionValue = ctx.requestDetails.cookies['inconspicuous-cookie'] as string;
         if (storedSessionValue && priorFingerprint.id !== storedSessionValue) {
           ctx.session.flaggedChecks.push({
-            ...baseFlag,
+            ...flaggedCheckFromRequest(ctx, 'browser', 'Browser Fingerprint'),
+            pctBot: 100,
             checkName: 'Browser Fingerprint Matches Cookie',
             description:
               'Checks if a browser fingerprint stored in a cookie is different than the fingerprint from this request',
             value: storedSessionValue,
+            expected: priorFingerprint.id,
           });
         }
       }
 
       ctx.res.writeHead(200, {
-        'Set-Cookie': `inconspicuous-cookie=${profile.sessionHash}; Max-Age=30000`,
+        'Set-Cookie': `inconspicuous-cookie=${profile.sessionHash}; Max-Age=30000; Secure; HttpOnly;`,
       });
       ctx.res.end(JSON.stringify({ success: true }));
       return true;

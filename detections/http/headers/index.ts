@@ -3,47 +3,67 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import generateXhrTests from './lib/generateXhrTests';
 import HeaderProfile from './lib/HeaderProfile';
 import getBrowserProfileStats from './lib/getBrowserProfileStats';
-import runChecks, { IResourceCheck } from './checks';
-import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
+import { getAgentBrowser } from '@double-agent/runner/lib/profileHelper';
+import checkRequestHeaders from './checks/checkRequestHeaders';
+import IRequestDetails from '@double-agent/runner/interfaces/IRequestDetails';
+import HostDomain from '@double-agent/runner/interfaces/HostDomain';
 
 export default class HttpHeadersPlugin implements IDetectionPlugin {
+  private browserStats = getBrowserProfileStats();
   public async onRequest(ctx: IRequestContext) {
+    if (ctx.url.pathname === '/') {
+      ctx.extraScripts.push(`
+<script type="text/javascript">
+  window.pageQueue.push(fetch('${ctx.trackUrl(
+    'fetch-samesite-headers.json',
+    HostDomain.Sub,
+  )}', { mode: 'cors' }).catch(console.log));
+</script>`);
+    }
+
     if (ctx.url.pathname === '/run-page') {
-      const xhrs = generateXhrTests(ctx);
+      const xhrs = generateXhrTests(ctx).map(x => {
+        return {
+          url: ctx.trackUrl(x.pathname, x.hostDomain),
+          func: x.func,
+          args: x.args,
+        };
+      });
 
       ctx.extraScripts.push(`
 <script type="text/javascript">
   const urls = ${JSON.stringify(xhrs)};
   window.pageQueue.push(...urls.map(x => {
     if (x.func === 'axios.get') return axios.get(x.url, x.args || {}).catch(console.log);
-    else if (x.func === 'ws') return ws(x.url);
     else fetch(x.url, x.args || {}).catch(console.log);
   }));
 </script>`);
     }
-    if (ctx.url.pathname === '/results') {
-      const key = this.getCheckName(ctx);
-      // if results page loaded, the page load command didn't happen (ie, no js)
-      if (!ctx.session.pluginsRun.includes(key)) {
-        ctx.session.pluginsRun.push(key);
+
+    if (ctx.url.pathname === '/results-page') {
+      if (ctx.requestDetails.secureDomain === false) {
         const profile = new HeaderProfile(ctx.session);
-        if (ctx.requestDetails.secureDomain === false) {
-          profile.save();
-        }
-        this.checkUserProfile(profile, ctx.requestDetails.secureDomain);
+        profile.save();
       }
     }
+
+    this.checkRequest(ctx);
   }
 
   public async handleResponse(ctx: IRequestContext): Promise<boolean> {
     const requestUrl = ctx.url;
-    if (requestUrl.pathname.includes('headers.json') || requestUrl.pathname.endsWith('headers')) {
+    if (requestUrl.pathname.includes('headers.json')) {
       const res = ctx.res;
+
+      if (ctx.req.headers.origin) {
+        res.setHeader('Access-Control-Allow-Origin', ctx.req.headers.origin);
+      } else if (ctx.req.headers.referer) {
+        res.setHeader('Access-Control-Allow-Origin', new URL(ctx.req.headers.referer).origin);
+      }
 
       res.writeHead(200, {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': ctx.domains.listeningDomains.main.href,
         'X-Content-Type-Options': 'nosniff',
       });
 
@@ -53,120 +73,84 @@ export default class HttpHeadersPlugin implements IDetectionPlugin {
     return false;
   }
 
-  private getCheckName(ctx: IRequestContext) {
-    return ctx.requestDetails.secureDomain ? 'https/headers' : 'http/headers';
-  }
-
-  private checkUserProfile(profile: HeaderProfile, secureDomain: boolean) {
-    try {
-      const analysis = getBrowserProfileStats();
-      const browserVersion = profile.browserAndVersion;
-      const browserStats = analysis.statsByBrowserVersion[browserVersion];
-      if (!browserStats) return;
-
-      const checks: IResourceCheck[] = [];
-      const siteType = secureDomain ? 'Https' : 'Http';
-
-      checks.push({
-        category: `Standard ${siteType} Headers`,
-        originType: OriginType.SameSite,
-        resourceType: ResourceType.Document,
-        secureDomain,
-      });
-
-      checks.push({
-        category: `Redirect ${siteType} Headers`,
-        originType: OriginType.CrossSite,
-        resourceType: ResourceType.Document,
-        secureDomain,
-      });
-
-      for (const origin in OriginType) {
-        const originType = OriginType[origin];
-
-        checks.push({
-          secureDomain,
-          originType,
-          category: 'Websocket Headers',
-          resourceType: ResourceType.WebsocketUpgrade,
-          extraBrowserDefaultHeaders: [
-            'Upgrade',
-            'Sec-WebSocket-Version',
-            'Sec-WebSocket-Extensions',
-          ],
-        });
-
-        checks.push(
-          {
-            secureDomain,
-            originType,
-            category: 'Asset Headers',
-            resourceType: ResourceType.Stylesheet,
-          },
-          {
-            secureDomain,
-            originType,
-            category: 'Asset Headers',
-            resourceType: ResourceType.Script,
-          },
-          {
-            secureDomain,
-            originType,
-            category: 'Asset Headers',
-            resourceType: ResourceType.Image,
-            refererFilter: '/main.css', // image from stylesheet
-            descriptionExtra:
-              ' This check is for an image loaded from inside a stylesheet has matching headers',
-          },
-          {
-            secureDomain,
-            originType,
-            category: 'Asset Headers',
-            resourceType: ResourceType.Image,
-            checkHeaderCaseOnly: true,
-            urlFilter: 'icon-wildcard.svg',
-            refererFilter: 'run-page',
-          },
-          {
-            secureDomain,
-            originType,
-            category: 'Xhr Headers',
-            resourceType: ResourceType.Xhr,
-            urlFilter: 'axios-no-headers',
-            checkHeaderCaseOnly: true,
-          },
-          {
-            secureDomain,
-            originType,
-            category: 'Xhr Headers',
-            resourceType: ResourceType.Xhr,
-            urlFilter: 'fetch-noheaders',
-            checkHeaderCaseOnly: true,
-          },
-          {
-            secureDomain,
-            originType,
-            category: 'Xhr Headers',
-            resourceType: ResourceType.Xhr,
-            urlFilter: 'fetch-post-noheaders',
-            checkHeaderCaseOnly: true,
-            httpMethod: 'POST',
-          },
-        );
-
-        if (originType !== OriginType.SameOrigin) {
-          checks.push({
-            secureDomain,
-            originType,
-            category: 'Cors Preflight Headers',
-            resourceType: ResourceType.Preflight,
-          });
-        }
-      }
-
-      runChecks(profile, browserStats, checks);
-    } catch (err) {
-      console.log('ERROR processing header profile', err);
+  private checkRequest(ctx: IRequestContext) {
+    const browserVersion = getAgentBrowser(ctx.session.parsedUseragent);
+    const browserStats = this.browserStats.statsByBrowserVersion[browserVersion];
+    if (!browserStats) {
+      console.log('No Header checks for profile - no browser stats', browserVersion);
+      return;
     }
+
+    const category = getResourceCategory(ctx.requestDetails);
+    // if nothing returned, means we're not testing this category
+    if (!category) return;
+
+    let extraDescription: string;
+    let checkHeaderCaseOnly = false;
+    let extraDefaultHeaders: string[];
+
+    if (ctx.requestDetails.resourceType === ResourceType.WebsocketUpgrade) {
+      extraDefaultHeaders = ['Upgrade', 'Sec-WebSocket-Version', 'Sec-WebSocket-Extensions'];
+    }
+
+    const pathname = ctx.url.pathname;
+    const referer = ctx.requestDetails.referer ?? '';
+    const resource = ctx.requestDetails.resourceType;
+
+    if (resource === ResourceType.Preflight) {
+      checkHeaderCaseOnly = true;
+    }
+
+    if (resource === ResourceType.Image) {
+      if (referer.includes('/main.css')) {
+        extraDescription =
+          ' This check is for an image loaded from inside a stylesheet has matching headers';
+      } else if (pathname.includes('icon-wildcard.svg') && referer.includes('run-page')) {
+        checkHeaderCaseOnly = true;
+      } else {
+        return;
+      }
+    }
+
+    if (resource === ResourceType.Xhr) {
+      const shouldInclude =
+        pathname.endsWith('nocustomheaders.json') || pathname === 'fetch-samesite-headers.json';
+      if (shouldInclude === false) return;
+
+      checkHeaderCaseOnly = true;
+    }
+
+    const pluginName = ctx.requestDetails.secureDomain ? 'https/headers' : 'http/headers';
+    if (!ctx.session.pluginsRun.includes(pluginName)) ctx.session.pluginsRun.push(pluginName);
+
+    checkRequestHeaders(
+      ctx,
+      browserStats,
+      category,
+      checkHeaderCaseOnly,
+      extraDefaultHeaders,
+      extraDescription,
+    );
+  }
+}
+
+function getResourceCategory(request: IRequestDetails) {
+  const siteType = request.secureDomain ? 'Https' : 'Http';
+  switch (request.resourceType) {
+    case ResourceType.Document:
+    case ResourceType.Redirect:
+      return `Standard ${siteType} Headers`;
+    case ResourceType.WebsocketUpgrade:
+      return 'Websocket Headers';
+    case ResourceType.Stylesheet:
+    case ResourceType.Script:
+    case ResourceType.Image:
+      return 'Asset Headers';
+    case ResourceType.Preflight:
+      return 'Cors Preflight Headers';
+    case ResourceType.Xhr:
+      return 'Xhr Headers';
+    default:
+      return null;
   }
 }

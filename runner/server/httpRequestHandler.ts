@@ -9,14 +9,19 @@ import resultsPage from '../views/resultsPage';
 import SessionTracker from '../lib/SessionTracker';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import extractRequestDetails from './extractRequestDetails';
-import { getUseragentPath } from '../lib/useragentProfileHelper';
+import { getUseragentPath } from '../lib/profileHelper';
 import getBotScoring from '../lib/getBotScoring';
 import IDomainset from '../interfaces/IDomainset';
+import RequestContext from '../lib/RequestContext';
+import IdBucketTracker from '../lib/IdBucketTracker';
+import { Moment } from 'moment';
 
 export default function httpRequestHandler(
   pluginDelegate: IDetectionPlugin,
   domains: IDomainset,
   sessionTracker: SessionTracker,
+  bucketTracker: IdBucketTracker,
+  time: Moment
 ) {
   return async function requestHandler(req: IncomingMessage, res: ServerResponse) {
     // browserstack sends head requests to check if a domain is active. not part of the tests..
@@ -26,9 +31,7 @@ export default function httpRequestHandler(
 
     const listeningDomains = domains.listeningDomains;
 
-    const requestUrl = new URL(
-      `${listeningDomains.main.protocol}//${req.headers.host}${req.url}`,
-    );
+    const requestUrl = new URL(`${listeningDomains.main.protocol}//${req.headers.host}${req.url}`);
 
     if (!isOndomains(requestUrl, listeningDomains)) {
       return sendMessageReply(
@@ -39,20 +42,15 @@ export default function httpRequestHandler(
     }
 
     try {
-      const { requestDetails, accessControlHeader } = await extractRequestDetails(req, domains);
+      const { requestDetails, accessControlHeader } = await extractRequestDetails(req, domains, time);
 
       const session = sessionTracker.recordRequest(requestDetails, requestUrl, accessControlHeader);
-      const ctx: IRequestContext = {
-        req,
-        res,
-        url: requestUrl,
-        requestDetails,
-        domains,
-        session,
-        extraHead: [],
-        extraScripts: [],
-      };
+      const ctx = new RequestContext(req, res, requestUrl, requestDetails, session, domains, bucketTracker);
+
+      bucketTracker.recordRequest(ctx);
+
       await pluginDelegate.onRequest(ctx);
+      await pluginDelegate.afterRequestDetectorsRun(ctx);
 
       const botScore = getBotScoring(ctx);
 
@@ -65,10 +63,6 @@ export default function httpRequestHandler(
         ...botScore,
       );
 
-      if (!requestDetails.cookies.sessionid) {
-        const cookie = `sessionid=${session.id}; HttpOnly;`;
-        requestDetails.setCookies.push(cookie);
-      }
       if (requestDetails.setCookies.length) {
         ctx.res.setHeader('Set-Cookie', requestDetails.setCookies);
       }
@@ -94,15 +88,11 @@ export default function httpRequestHandler(
 
 const urlFlow = {
   '/': ctx => sendPage(ctx, startPage),
-  '/run': ctx =>
-    sendRedirect(ctx, HostDomain.Sub, ctx.requestDetails.secureDomain, '/run-redirect'),
-  '/run-redirect': ctx =>
-    sendRedirect(ctx, HostDomain.External, ctx.requestDetails.secureDomain, '/run-page'),
+  '/run': ctx => sendRedirect(ctx, HostDomain.Sub, '/run-redirect'),
+  '/run-redirect': ctx => sendRedirect(ctx, HostDomain.External, '/run-page'),
   '/run-page': ctx => sendPage(ctx, runPage),
-  '/results': ctx =>
-    sendRedirect(ctx, HostDomain.Sub, ctx.requestDetails.secureDomain, '/results-redirect'),
-  '/results-redirect': ctx =>
-    sendRedirect(ctx, HostDomain.Main, ctx.requestDetails.secureDomain, '/results-page'),
+  '/results': ctx => sendRedirect(ctx, HostDomain.Sub, '/results-redirect'),
+  '/results-redirect': ctx => sendRedirect(ctx, HostDomain.Main, '/results-page'),
   '/results-page': ctx => sendPage(ctx, resultsPage),
   '/page-loaded': (ctx, pluginDelegate) => onPageload(ctx, pluginDelegate),
 };
@@ -110,6 +100,7 @@ const urlFlow = {
 const serveFiles = {
   '/main.js': 'application/javascript',
   '/main.css': 'text/css',
+  '/result.css': 'text/css',
   '/world.png': 'image/png',
   '/icon-wildcard.svg': 'image/svg+xml',
   '/favicon.ico': 'image/x-icon',
@@ -141,28 +132,16 @@ function sendPage(ctx: IRequestContext, render: (ctx: IRequestContext) => string
   ctx.res.end(html);
 }
 
-function sendRedirect(
-  ctx: IRequestContext,
-  origin: HostDomain,
-  secureDomain: boolean,
-  location: string,
-) {
-  const domains = secureDomain ? ctx.domains.secureDomains : ctx.domains.httpDomains;
-  const domain =
-    origin === HostDomain.Main
-      ? domains.main
-      : origin === HostDomain.External
-      ? domains.external
-      : domains.subdomain;
+function sendRedirect(ctx: IRequestContext, origin: HostDomain, location: string) {
   ctx.res.writeHead(302, {
-    location: `${new URL(location, domain.href)}?sessionid=${ctx.session.id}`,
+    location: `${ctx.trackUrl(location, origin)}`,
   });
   ctx.res.end();
 }
 
 function preflight(ctx: IRequestContext) {
   ctx.res.writeHead(204, {
-    'Access-Control-Allow-Origin': ctx.domains.listeningDomains.main.href,
+    'Access-Control-Allow-Origin': ctx.req.headers.origin,
     'Access-Control-Allow-Methods': 'GET,POST',
     'Access-Control-Allow-Headers': ctx.req.headers['access-control-request-headers'],
     'Content-Length': 0,
@@ -172,7 +151,8 @@ function preflight(ctx: IRequestContext) {
 }
 
 function sendAsset(ctx: IRequestContext) {
-  const pathname = ctx.url.pathname;
+  let pathname = ctx.url.pathname;
+  if (pathname === '/result.css') pathname = '/main.css';
   ctx.res.writeHead(200, {
     'Content-Type': serveFiles[pathname],
   });

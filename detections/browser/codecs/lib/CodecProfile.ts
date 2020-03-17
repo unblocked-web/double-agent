@@ -1,6 +1,6 @@
 import fs from 'fs';
 import ICodecProfile from '../interfaces/ICodecProfile';
-import { getUseragentPath } from '@double-agent/runner/lib/useragentProfileHelper';
+import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import ICodecSupport from '../interfaces/ICodecSupport';
 import IWebRTCCodec from '../interfaces/IWebRTCCodec';
 

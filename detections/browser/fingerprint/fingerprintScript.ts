@@ -1,4 +1,4 @@
-export default function fingerprintScript() {
+export default function fingerprintScript(dest: string) {
   return `
 <script type="text/javascript">
   const browserIgnoredAttributes = ${JSON.stringify(browserIgnoredAttributes)};
@@ -33,7 +33,7 @@ export default function fingerprintScript() {
           const browserHash = Fingerprint2.x64hash128(browserValues.join(''), 31);
           const sessionHash = Fingerprint2.x64hash128(sessionValues.join(''), 31);
   
-          fetch('/fingerprints', {
+          fetch("${dest}", {
             method: 'POST',
             body: JSON.stringify({
               components,

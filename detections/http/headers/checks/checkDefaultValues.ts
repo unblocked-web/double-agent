@@ -2,6 +2,8 @@ import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession
 import { IHeaderStats } from '../lib/getBrowserProfileStats';
 import { IHeadersRequest } from '../lib/HeaderProfile';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
+import ResourceType from '@double-agent/runner/interfaces/ResourceType';
+import { isAgent } from '@double-agent/runner/lib/userAgentUtils';
 
 export default function checkDefaultValues(params: {
   session: IDetectionSession;
@@ -25,6 +27,7 @@ export default function checkDefaultValues(params: {
       .join('=');
 
     const defaultValues = defaults[header] ?? defaults[header.toLowerCase()];
+
     let passing = false;
     if (defaultValues && defaultValues.length) {
       passing = defaultValues.includes(value);
@@ -33,11 +36,12 @@ export default function checkDefaultValues(params: {
     }
 
     if (!passing) {
+      const agent = params.session.parsedUseragent;
       let pctBot = 99;
       if (header === 'Accept-Language') {
         if (!value) pctBot = 100;
         // chrome always includes a quality metric
-        else if (params.session.parsedUseragent.family === 'Chrome') {
+        else if (agent.family === 'Chrome') {
           if (!value.includes(';q=')) pctBot = 100;
           if (defaultValues.includes(value.replace(',und;q=0.8', ''))) {
             // my chrome includes a "und" value. if that's here, just ignore it
@@ -46,6 +50,15 @@ export default function checkDefaultValues(params: {
           }
         }
         // TODO: support languages other than english
+      }
+
+      // Chrome 80 sending not sending Sec-Fetch-Dest for Preflight on local machine... not sure why.
+      if (
+        header === 'Sec-Fetch-Dest' &&
+        params.precheck.resourceType === ResourceType.Preflight &&
+        isAgent(agent, 'Chrome', 80)
+      ) {
+        pctBot = 10;
       }
       params.session.flaggedChecks.push({
         ...params.precheck,

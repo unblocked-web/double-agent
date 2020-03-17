@@ -17,7 +17,8 @@ dockerHost=$(docker run -it --rm "$scraper" getent hosts host.docker.internal | 
 echo 'Local docker internal ip is $dockerHost'
 
 docker run -it --rm --init --cap-add=SYS_ADMIN \
-  --add-host="ulixee-test.org:$dockerHost" \
+  --add-host="a0.ulixee-test.org:$dockerHost" \
   --add-host="a1.ulixee-test.org:$dockerHost" \
   --add-host="headers.ulixee-test.org:$dockerHost" \
+  --add-host="tls.ulixee-test.org:$dockerHost" \
   "$scraper"

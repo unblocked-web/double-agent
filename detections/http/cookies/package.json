@@ -4,21 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "checkCategories": [
-    "Can Set Cookies",
+    "Cookie Support",
+    "Secure Cookies",
     "Same Site Cookies",
     "Same Origin Cookies",
-    "Secure Cookies",
-    "Cross Domain Cookies"
+    "Cross Site Cookies"
   ],
   "description": "Are cookies enabled? Are same-site, secure and other cookies correctly sent?",
-  "scripts": {
-    "profile": "yarn workspace @double-agent/profiler start",
-    "start": "MAIN_DOMAIN=ulixee-test.org SAME_SITE_DOMAIN=a1.ulixee-test.org CROSS_SITE_DOMAIN=a1.dlf.org node index.js",
-    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 MAIN_DOMAIN=headers.ulixee.org SAME_SITE_DOMAIN=a1.ulixee.org CROSS_SITE_DOMAIN=headers.dataliberationfoundation.org HTTP_PORT=80 HTTPS_PORT=443 node index.js"
-  },
   "dependencies": {
     "useragent": "^2.3.0",
     "diff": "^4.0.2",
+    "uuid": "^7.0.2",
     "cookie": "^0.4.0",
     "ws": "^7.2.1",
     "source-map-support": "^0.5.16"

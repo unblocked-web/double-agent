@@ -11,13 +11,20 @@ forEachDirective(basename(__dirname), async directive => {
   curl.setOpt('FOLLOWLOCATION', 1);
   curl.setOpt('AUTOREFERER', 1);
   for (const page of directive.pages) {
-    curl.setOpt('URL', page.url);
-    const finished = new Promise((resolve, reject) => {
-      curl.on('end', resolve);
-      curl.on('error', reject);
-    });
-    curl.perform();
-    await finished;
+    await httpGet(curl, page.url);
+    if (page.clickDestinationUrl) {
+      await httpGet(curl, page.clickDestinationUrl);
+    }
   }
   curl.close();
 }).catch(console.log);
+
+async function httpGet(curl: Curl, url: string) {
+  curl.setOpt('URL', url);
+  const finished = new Promise((resolve, reject) => {
+    curl.on('end', resolve);
+    curl.on('error', reject);
+  });
+  curl.perform();
+  await finished;
+}

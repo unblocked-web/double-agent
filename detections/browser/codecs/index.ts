@@ -1,6 +1,6 @@
 import IDetectionPlugin from '@double-agent/runner/interfaces/IDetectionPlugin';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
-import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
+import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import { cleanProfile, convertWebRtcCodecsToString, getProfileForUa } from './lib/CodecProfile';
 import ICodecSupport from './interfaces/ICodecSupport';
 import codecPageScript from './codecPageScript';
@@ -16,7 +16,7 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
       !ctx.session.pluginsRun.includes(this.pluginName) &&
       ctx.requestDetails.resourceType === ResourceType.Document
     ) {
-      ctx.extraScripts.push(codecPageScript());
+      ctx.extraScripts.push(codecPageScript(ctx));
     }
   }
 
@@ -33,9 +33,13 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
         saveUseragentProfile(agentProfile.useragent, agentProfile, __dirname + '/profiles');
       }
 
+      if (ctx.req.headers.origin) {
+        res.setHeader('Access-Control-Allow-Origin', ctx.req.headers.origin);
+      } else if (ctx.req.headers.referer) {
+        res.setHeader('Access-Control-Allow-Origin', new URL(ctx.req.headers.referer).origin);
+      }
       res.writeHead(200, {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': ctx.domains.listeningDomains.main.href,
         'X-Content-Type-Options': 'nosniff',
       });
 

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { saveUseragentProfile } from '@double-agent/runner/lib/useragentProfileHelper';
+import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
@@ -31,6 +31,14 @@ export default class IpProfile {
     return new IpProfile(ctx.session.useragent, requests);
   }
 
+  public static getPortRange(portString: string | number) {
+    const port = Number(portString);
+    const modulus = port % 500;
+    const startPort = modulus > 250 ? port - modulus : port - (port % 500) - 500;
+
+    return `${startPort}-${startPort + 1000}`;
+  }
+
   public static analyze() {
     const profiles = IpProfile.getAllProfiles();
     const socketsPerSession: IIpAddressGroup[] = [];
@@ -39,6 +47,7 @@ export default class IpProfile {
         useragent: profile.useragent,
         secureSockets: 0,
         httpSockets: 0,
+        portRanges: [],
         securePorts: [],
         httpPorts: [],
         socketsPerPage: [],
@@ -48,6 +57,9 @@ export default class IpProfile {
 
       for (const request of profile.requests) {
         const port = Number(request.remoteAddress.split(':').pop());
+        const portRange = IpProfile.getPortRange(port);
+        if (!session.portRanges.includes(portRange)) session.portRanges.push(portRange);
+
         let page = session.socketsPerPage.find(x => x.url === request.referer);
         if (!session.portUses[port]) session.portUses[port] = [];
         session.portUses[port].push(
@@ -91,7 +103,26 @@ export default class IpProfile {
         }
       }
     }
-    console.log(inspect(socketsPerSession, false, null, true));
+    console.log(
+      inspect(
+        socketsPerSession.map(x => {
+          const portUses = Object.entries(x.portUses).map(([port, uses]) => uses.length);
+          const avgPortUses = portUses.reduce((p, c) => p + c, 0) / portUses.length;
+          return {
+            ranges: x.portRanges,
+            securePorts: x.securePorts.length,
+            httpPorts: x.httpPorts.length,
+            overlappingPorts: x.securePorts.filter(y => x.httpPorts.includes(y)).length,
+            requestsPerPort: Math.round(avgPortUses * 100) / 100,
+            minRequestsPerPort: Math.min(...portUses),
+            maxRequestsPerPort: Math.max(...portUses)
+          };
+        }),
+        false,
+        null,
+        true,
+      ),
+    );
   }
 
   public static getAllProfiles() {
@@ -112,6 +143,7 @@ interface IIpAddressGroup {
   httpSockets: number;
   securePorts: number[];
   httpPorts: number[];
+  portRanges: string[];
   socketsPerPage: { url: string; securePorts: number[]; httpPorts: number[]; requests: number }[];
   portUses: { [port: number]: string[] };
 }

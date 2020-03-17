@@ -2,7 +2,7 @@ import * as util from 'util';
 import getDefaultHeaderOrder from './getDefaultHeaderOrder';
 import { headerCaseTest } from './generateXhrTests';
 import HeaderProfile from './HeaderProfile';
-import { getUseragentPath } from '@double-agent/runner/lib/useragentProfileHelper';
+import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 

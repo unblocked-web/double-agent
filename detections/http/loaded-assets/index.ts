@@ -2,14 +2,65 @@ import IDetectionPlugin from '@double-agent/runner/interfaces/IDetectionPlugin';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
+import OriginType from '@double-agent/runner/interfaces/OriginType';
 
 export default class LoadedAssetsPlugin implements IDetectionPlugin {
-  public async onRequest(ctx: IRequestContext) {
+  public async afterRequestDetectorsRun(ctx: IRequestContext) {
+    if (ctx.requestDetails.resourceType === ResourceType.Document) {
+      for (const expectedLoad of ctx.session.expectedAssets) {
+        // don't check current urls
+        if (expectedLoad.fromUrl === ctx.requestDetails.url) continue;
+
+        const hasLoad = ctx.session.requests.some(
+          x =>
+            x.resourceType === expectedLoad.resourceType &&
+            x.hostDomain === expectedLoad.hostDomain &&
+            x.secureDomain === expectedLoad.secureDomain,
+        );
+        if (!hasLoad) {
+          if (
+            !ctx.session.assetsNotLoaded.some(
+              x =>
+                x.resourceType === expectedLoad.resourceType &&
+                x.originType === expectedLoad.originType &&
+                x.secureDomain === expectedLoad.secureDomain &&
+                x.hostDomain === expectedLoad.hostDomain,
+            )
+          ) {
+            ctx.session.assetsNotLoaded.push(expectedLoad);
+          }
+        }
+      }
+    }
     // only check these on results pages
-    if (ctx.url.pathname !== '/results') return;
+    if (ctx.url.pathname !== '/results-page') return;
 
     const excluded = ctx.session.assetsNotLoaded;
     if (!excluded.length) return;
+
+    const xhrPreflightRequestsExpected = ctx.session.requests.filter(
+      x =>
+        x.resourceType === ResourceType.Xhr &&
+        x.secureDomain === ctx.requestDetails.secureDomain &&
+        x.originType !== OriginType.SameOrigin,
+    ).length;
+    if (xhrPreflightRequestsExpected > 0) {
+      const preflights = ctx.session.requests.filter(x => x.resourceType === ResourceType.Preflight)
+        .length;
+      if (preflights === 0) {
+        ctx.session.flaggedChecks.push({
+          pctBot: 100,
+          layer: 'http',
+          category: 'Loads All Page Assets',
+          checkName: 'Performs Preflight Checks',
+          description: `Checks that a user agent is loading Preflight requests before non Same Origin Xhr Requests`,
+          secureDomain: ctx.requestDetails.secureDomain,
+          resourceType: ResourceType.Preflight,
+          value: preflights,
+          expected: xhrPreflightRequestsExpected,
+        });
+      }
+    }
 
     const { expectedAssets } = areAllAssetsLoaded(ctx, ResourceType.WebsocketUpgrade);
 
@@ -52,8 +103,8 @@ function areAllAssetsLoaded(
       pctBot: assetsLoaded === 0 ? 99 : 75,
       layer: 'http',
       category: 'Loads All Page Assets',
-      checkName: 'Loads ' + ResourceType[resourceType],
-      description: `Checks that a user agent is loading ${ResourceType[resourceType]}s (bots frequently don't load all css/images/etc)`,
+      checkName: 'Loads ' + resourceType,
+      description: `Checks that a user agent is loading ${resourceType}s (bots frequently don't load all css/images/etc)`,
       secureDomain: ctx.requestDetails.secureDomain,
       resourceType: resourceType,
       value: assetsLoaded,

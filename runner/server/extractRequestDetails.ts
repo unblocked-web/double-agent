@@ -1,15 +1,16 @@
 import * as http from 'http';
-import { IncomingMessage } from 'http';
 import ResourceType from '../interfaces/ResourceType';
 import cookie from 'cookie';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import HostDomain from '../interfaces/HostDomain';
 import IDomainset from '../interfaces/IDomainset';
 import OriginType from '../interfaces/OriginType';
+import { Moment } from 'moment';
 
 export default async function extractRequestDetails(
   req: http.IncomingMessage,
   domains: IDomainset,
+  time: Moment,
   overrideResourceType?: ResourceType,
 ) {
   const useragent = req.headers['user-agent'];
@@ -33,6 +34,7 @@ export default async function extractRequestDetails(
     useragent,
     bodyJson,
     cookies,
+    time,
     setCookies: [],
     remoteAddress: addr,
     url: requestUrl.href,
@@ -41,24 +43,10 @@ export default async function extractRequestDetails(
     referer: req.headers.referer,
     method: req.method,
     headers: rawHeaders,
-    hostDomain: HostDomain.Main,
+    hostDomain: getHostType(requestUrl, domains),
     secureDomain: listeningDomain.isSSL,
-    resourceType: overrideResourceType ?? getResourceType(req, requestUrl.pathname),
+    resourceType: overrideResourceType ?? getResourceType(req.method, requestUrl.pathname),
   };
-
-  if (
-    requestUrl.host === domains.secureDomains.subdomain.host ||
-    requestUrl.host === domains.httpDomains.subdomain.host
-  ) {
-    requestDetails.hostDomain = HostDomain.Sub;
-  } else if (
-    requestUrl.host === domains.secureDomains.external.host ||
-    requestUrl.host === domains.httpDomains.external.host
-  ) {
-    requestDetails.hostDomain = HostDomain.External;
-  } else {
-    requestDetails.hostDomain = HostDomain.Main;
-  }
 
   // if origin sent, translate into origin type
   if (requestDetails.origin) {
@@ -82,20 +70,9 @@ export default async function extractRequestDetails(
   };
 }
 
-function getOriginType(referer: URL, host: HostDomain, domains: IDomainset) {
+export function getOriginType(referer: URL, host: HostDomain, domains: IDomainset) {
   if (!referer) return OriginType.None;
-  let refererDomain = HostDomain.Main;
-  if (
-    referer.host === domains.secureDomains.subdomain.host ||
-    referer.host === domains.httpDomains.subdomain.host
-  ) {
-    refererDomain = HostDomain.Sub;
-  } else if (
-    referer.host === domains.secureDomains.external.host ||
-    referer.host === domains.httpDomains.external.host
-  ) {
-    refererDomain = HostDomain.External;
-  }
+  const refererDomain = getHostType(referer, domains);
 
   if (host === refererDomain) return OriginType.SameOrigin;
   if (host === HostDomain.Sub && refererDomain === HostDomain.Main) return OriginType.SameSite;
@@ -103,14 +80,30 @@ function getOriginType(referer: URL, host: HostDomain, domains: IDomainset) {
   return OriginType.CrossSite;
 }
 
-function getResourceType(req: IncomingMessage, pathname: string) {
+export function getHostType(requestUrl: URL, domains: IDomainset) {
+  if (
+    requestUrl.host === domains.secureDomains.main.host ||
+    requestUrl.host === domains.httpDomains.main.host
+  ) {
+    return HostDomain.Main;
+  } else if (
+    requestUrl.host === domains.secureDomains.external.host ||
+    requestUrl.host === domains.httpDomains.external.host
+  ) {
+    return HostDomain.External;
+  } else {
+    return HostDomain.Sub;
+  }
+}
+
+export function getResourceType(httpMethod: string, pathname: string) {
   if (pathname === '/' || pathname.includes('-page')) {
     return ResourceType.Document;
   }
   if (pathname === '/run' || pathname === '/results' || pathname.includes('-redirect')) {
     return ResourceType.Redirect;
   }
-  if (req.method === 'OPTIONS') {
+  if (httpMethod === 'OPTIONS') {
     return ResourceType.Preflight;
   }
   if (pathname.endsWith('.js')) {

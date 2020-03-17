@@ -32,6 +32,10 @@ export default class TcpPlugin implements IDetectionPlugin {
     await profile.save();
 
     const ua = lookup(ctx.requestDetails.useragent);
+
+    if (ua.os.family === 'Ubuntu') {
+      ua.os.family = 'Linux';
+    }
     let expectedOsWindowSizes = expectedWindowSizes[ua.os.family];
     if (ua.os.family === 'Windows') {
       expectedOsWindowSizes =
@@ -52,34 +56,27 @@ export default class TcpPlugin implements IDetectionPlugin {
       secureDomain: ctx.requestDetails.secureDomain,
     } as IAsset;
 
-    const ttlCheck = {
-      ...entry,
-      category: 'TCP Layer',
-      checkName: 'Packet TTL',
-      description:
-        'Check that the Operating System tcp packet TTL value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
-      value: ttlDiff,
-    };
-
     if (ttlDiff > TcpProfile.allowedHops && ttlDiff >= 0) {
       ctx.session.flaggedChecks.push({
-        ...ttlCheck,
+        ...entry,
+        category: 'TCP Layer',
+        checkName: 'Packet TTL',
+        description:
+          'Check that the Operating System tcp packet TTL value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
+        value: ttlDiff,
         pctBot: 50,
         expected: expectedOsTtl,
       });
     }
 
-    const windowCheck = {
-      ...entry,
-      checkName: 'Packet WindowSize',
-      description:
-        'Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
-      value: ttlDiff,
-    } as IFlaggedCheck;
-
     if (!expectedOsWindowSizes.includes(windowSize)) {
       ctx.session.flaggedChecks.push({
-        ...windowCheck,
+        ...entry,
+        category: 'TCP Layer',
+        checkName: 'Packet WindowSize',
+        description:
+          'Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
+        value: ttlDiff,
         pctBot: 50,
         expected: expectedOsWindowSizes.join(','),
       });
