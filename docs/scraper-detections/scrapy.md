@@ -13,7 +13,7 @@ Mac OS X | 2 | 0 | 0 |
 ## Tls Clienthello
 Looks at the tls handshake and compares to the proposed user agent OS
 
-### TLS Initial Handshake
+### Tls handshake
 
 User Agent | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---

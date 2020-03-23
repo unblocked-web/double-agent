@@ -1,0 +1,128 @@
+{
+  "TCP Layer": {
+    "checks": 2,
+    "flagged": 1,
+    "flaggedChecks": [
+      {
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "resourceType": "Document",
+        "layer": "tcp",
+        "requestIdx": 0,
+        "secureDomain": true,
+        "category": "TCP Layer",
+        "checkName": "Packet WindowSize",
+        "description": "Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)",
+        "value": 0,
+        "pctBot": 50,
+        "expected": "5840,29200,5720"
+      }
+    ],
+    "botPct": 50
+  },
+  "IP Address": {
+    "checks": 112,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Standard Https Headers": {
+    "checks": 220,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "User Agent": {
+    "checks": 114,
+    "flagged": 2,
+    "flaggedChecks": [
+      {
+        "category": "User Agent",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": true,
+        "requestIdx": 0,
+        "checkName": "Browser Popularity",
+        "description": "Checks that a User Agent is among the most popular \"current\" browsers",
+        "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/79.0.3945.79 Chrome/79.0.3945.79 Safari/537.36",
+        "pctBot": 50
+      },
+      {
+        "category": "User Agent",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": true,
+        "requestIdx": 0,
+        "checkName": "Operating System Popularity",
+        "description": "Checks that a User Agent is among the most popular \"current\" Operating Systems",
+        "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/79.0.3945.79 Chrome/79.0.3945.79 Safari/537.36",
+        "pctBot": 50
+      }
+    ],
+    "botPct": 50
+  },
+  "Asset Headers": {
+    "checks": 650,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Browser Fingerprint": {
+    "checks": 6,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Same Origin Cookies": {
+    "checks": 6,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Same Site Cookies": {
+    "checks": 2,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Cross Site Cookies": {
+    "checks": 10,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Xhr Headers": {
+    "checks": 478,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Websocket Headers": {
+    "checks": 210,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Cors Preflight Headers": {
+    "checks": 348,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Loads All Page Assets": {
+    "checks": 10,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Standard Http Headers": {
+    "checks": 180,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  }
+}

@@ -5,6 +5,7 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import HeaderProfile from '../lib/HeaderProfile';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
+import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 
 export default function checkRequestHeaders(
   ctx: IRequestContext,
@@ -23,12 +24,7 @@ export default function checkRequestHeaders(
       ctx.requestDetails.resourceType,
       ctx.requestDetails.method,
     );
-    const browserResourceStats = browserStats[key];
-
-    if (!browserResourceStats) {
-      // don't have browser stats
-      return;
-    }
+    const browserResourceStats = browserStats ? browserStats[key] : null;
 
     const request = HeaderProfile.processRequestDetails(ctx.requestDetails, ctx.session);
 
@@ -38,13 +34,7 @@ export default function checkRequestHeaders(
       (precheck as IFlaggedCheck).description = descriptionExtra;
     }
 
-    checkHeaderOrderAndCase(
-      session,
-      precheck,
-      checkHeaderCaseOnly,
-      request,
-      browserResourceStats,
-    );
+    checkHeaderOrderAndCase(session, precheck, checkHeaderCaseOnly, request, browserResourceStats);
 
     checkDefaultValues({
       session,

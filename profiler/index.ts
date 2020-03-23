@@ -33,7 +33,7 @@ const runnerDomain = 'a1.ulixee.org';
       queue.add(getRunnerForAgent(agent));
     }
   }
-  await queue.onEmpty();
+  await queue.onIdle();
 })();
 
 function getRunnerForAgent(agent: IBrowserstackAgent) {
@@ -51,10 +51,9 @@ function getRunnerForAgent(agent: IBrowserstackAgent) {
     // const times = directive.hits ?? 1;
     const driver = await BrowserStack.buildWebDriver(agent);
 
-    const startUrl = `http://${runnerDomain}:3000/directive.html?scraper=profiler&sessionid=${directive.sessionid}`;
     try {
       for (let i = 0; i < times; i += 1) {
-        await runDirectiveInWebDriver(driver, startUrl, directive, agent.browserName);
+        await runDirectiveInWebDriver(driver, directive, agent.browserName);
         if (times > 1) {
           await createNewWindow(driver);
         }

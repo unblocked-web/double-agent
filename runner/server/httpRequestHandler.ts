@@ -6,26 +6,22 @@ import IDetectionPlugin from '../interfaces/IDetectionPlugin';
 import IRequestContext from '../interfaces/IRequestContext';
 import HostDomain from '../interfaces/HostDomain';
 import resultsPage from '../views/resultsPage';
-import SessionTracker from '../lib/SessionTracker';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import extractRequestDetails from './extractRequestDetails';
 import { getUseragentPath } from '../lib/profileHelper';
 import getBotScoring from '../lib/getBotScoring';
 import IDomainset from '../interfaces/IDomainset';
 import RequestContext from '../lib/RequestContext';
-import IdBucketTracker from '../lib/IdBucketTracker';
-import { Moment } from 'moment';
+import IDetectionContext from '../interfaces/IDetectionContext';
 
 export default function httpRequestHandler(
-  pluginDelegate: IDetectionPlugin,
   domains: IDomainset,
-  sessionTracker: SessionTracker,
-  bucketTracker: IdBucketTracker,
-  time: Moment
+  detectionContext: IDetectionContext,
 ) {
   return async function requestHandler(req: IncomingMessage, res: ServerResponse) {
     // browserstack sends head requests to check if a domain is active. not part of the tests..
     if (req.method === 'HEAD') {
+      console.log('HEAD request inbound. Should not be getting this.', req.url, req.headers);
       return res.end();
     }
 
@@ -41,11 +37,24 @@ export default function httpRequestHandler(
       );
     }
 
+    const { bucketTracker, pluginDelegate, sessionTracker } = detectionContext;
     try {
-      const { requestDetails, accessControlHeader } = await extractRequestDetails(req, domains, time);
+      const { requestDetails, accessControlHeader } = await extractRequestDetails(
+        req,
+        domains,
+        detectionContext.getNow(),
+      );
 
       const session = sessionTracker.recordRequest(requestDetails, requestUrl, accessControlHeader);
-      const ctx = new RequestContext(req, res, requestUrl, requestDetails, session, domains, bucketTracker);
+      const ctx = new RequestContext(
+        req,
+        res,
+        requestUrl,
+        requestDetails,
+        session,
+        domains,
+        bucketTracker,
+      );
 
       bucketTracker.recordRequest(ctx);
 

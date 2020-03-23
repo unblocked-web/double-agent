@@ -54,6 +54,7 @@ const browserstackSettings = {
   'browserstack.user': process.env.BROWSERSTACK_USER,
   'browserstack.key': process.env.BROWSERSTACK_KEY,
   'browserstack.safari.allowAllCookies': 'true',
+  checkURL: 'false',
   buildName: 'Profiles',
   projectName: 'Double Agent',
 };

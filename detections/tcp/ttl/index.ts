@@ -4,7 +4,6 @@ import trackRemoteTcpVars from './lib/trackRemoteTcpVars';
 import IDetectionDomains from '@double-agent/runner/interfaces/IDetectionDomains';
 import TcpProfile from './lib/TcpProfile';
 import { lookup } from 'useragent';
-import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import IAsset from '@double-agent/runner/interfaces/IAsset';
 
 export default class TcpPlugin implements IDetectionPlugin {
@@ -56,31 +55,28 @@ export default class TcpPlugin implements IDetectionPlugin {
       secureDomain: ctx.requestDetails.secureDomain,
     } as IAsset;
 
-    if (ttlDiff > TcpProfile.allowedHops && ttlDiff >= 0) {
-      ctx.session.flaggedChecks.push({
-        ...entry,
-        category: 'TCP Layer',
-        checkName: 'Packet TTL',
-        description:
-          'Check that the Operating System tcp packet TTL value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
-        value: ttlDiff,
-        pctBot: 50,
-        expected: expectedOsTtl,
-      });
-    }
+    const flagTtl = ttlDiff > TcpProfile.allowedHops && ttlDiff >= 0;
+    ctx.session.recordCheck(flagTtl, {
+      ...entry,
+      category: 'TCP Layer',
+      checkName: 'Packet TTL',
+      description: `Check that the Operating System tcp packet TTL value within ${TcpProfile.allowedHops} hops of expected OS values (NOTE: tcp packets routed through proxies can change these values)`,
+      value: ttl,
+      pctBot: 70,
+      expected: expectedOsTtl,
+    });
 
-    if (!expectedOsWindowSizes.includes(windowSize)) {
-      ctx.session.flaggedChecks.push({
-        ...entry,
-        category: 'TCP Layer',
-        checkName: 'Packet WindowSize',
-        description:
-          'Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
-        value: ttlDiff,
-        pctBot: 50,
-        expected: expectedOsWindowSizes.join(','),
-      });
-    }
+    const flagWindowSize = !expectedOsWindowSizes.includes(windowSize);
+    ctx.session.recordCheck(flagWindowSize, {
+      ...entry,
+      category: 'TCP Layer',
+      checkName: 'Packet WindowSize',
+      description:
+        'Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
+      value: windowSize,
+      pctBot: 70,
+      expected: expectedOsWindowSizes.join(','),
+    });
     ctx.session.pluginsRun.push(`tcp/ttl`);
   }
 }

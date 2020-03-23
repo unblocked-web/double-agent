@@ -1,17 +1,13 @@
-import IDetectionSession from '../interfaces/IDetectionSession';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
-import { lookup } from 'useragent';
-import IDomainset from '../interfaces/IDomainset';
-import OriginType from '../interfaces/OriginType';
-import uuid from 'uuid/v1';
-import { assetFromURL } from './flagUtils';
+import { v1 } from 'uuid';
 import HostDomain from '../interfaces/HostDomain';
 import UserBucket from '../interfaces/UserBucket';
+import DetectionSession from './DetectionSession';
 
 let sessionIdCounter = 0;
 export default class SessionTracker {
-  private sessions: { [sessionid: string]: IDetectionSession } = {};
+  private sessions: { [sessionid: string]: DetectionSession } = {};
 
   constructor(readonly httpDomains: IDetectionDomains, readonly secureDomains: IDetectionDomains) {}
 
@@ -22,26 +18,8 @@ export default class SessionTracker {
   public createSession(expectedUseragent: string) {
     const sessionid = String((sessionIdCounter += 1));
 
-    const session: IDetectionSession = {
-      id: sessionid,
-      requests: [],
-      pluginsRun: [],
-      identifiers: [],
-      useragent: null,
-      userUuid: null,
-      parsedUseragent: null,
-      expectedUseragent,
-      expectedAssets: [],
-      assetsNotLoaded: [],
-      flaggedChecks: [],
-      trackAsset(url: URL, origin: OriginType, domains: IDomainset, fromUrl?: string) {
-        url.searchParams.set('sessionid', sessionid);
-        const asset: any = assetFromURL(url, origin, domains);
-        asset.fromUrl = fromUrl;
-        session.expectedAssets.push(asset);
-        return url;
-      },
-    };
+    const session = new DetectionSession(sessionid);
+    session.expectedUseragent = expectedUseragent;
     this.sessions[sessionid] = session;
     return session;
   }
@@ -68,14 +46,13 @@ export default class SessionTracker {
 
     const session = this.sessions[sessionid];
     if (!session.useragent) {
-      session.useragent = useragent;
-      session.parsedUseragent = lookup(useragent);
+      session.setUseragent(useragent);
     }
 
     if (!session.userUuid && requestDetails.hostDomain !== HostDomain.External) {
       session.userUuid = cookies['uuid'];
       if (!session.userUuid) {
-        session.userUuid = uuid();
+        session.userUuid = v1();
         requestDetails.setCookies.push(
           `uuid=${session.userUuid}; Secure; SameSite=None; HttpOnly;`,
         );
@@ -85,7 +62,7 @@ export default class SessionTracker {
         id: session.userUuid,
         description: 'A distinct cookie set per user',
         layer: 'http',
-        raw: null,
+        category: 'Cookie Support'
       });
     }
     requestDetails.headers = requestDetails.headers.map(x => this.cleanDomains(x, sessionid));

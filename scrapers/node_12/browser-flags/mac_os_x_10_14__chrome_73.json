@@ -1,0 +1,160 @@
+{
+  "TCP Layer": {
+    "checks": 2,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "IP Address": {
+    "checks": 6,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Standard Https Headers": {
+    "checks": 54,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "User Agent": {
+    "checks": 8,
+    "flagged": 2,
+    "flaggedChecks": [
+      {
+        "category": "User Agent",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": true,
+        "requestIdx": 0,
+        "checkName": "Browser Popularity",
+        "description": "Checks that a User Agent is among the most popular \"current\" browsers",
+        "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36",
+        "pctBot": 50
+      },
+      {
+        "category": "User Agent",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": true,
+        "requestIdx": 0,
+        "checkName": "Operating System Popularity",
+        "description": "Checks that a User Agent is among the most popular \"current\" Operating Systems",
+        "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36",
+        "pctBot": 8
+      }
+    ],
+    "botPct": 50
+  },
+  "Cross Site Cookies": {
+    "checks": 4,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
+  "Loads All Page Assets": {
+    "checks": 10,
+    "flagged": 8,
+    "flaggedChecks": [
+      {
+        "pctBot": 100,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Performs Preflight Checks",
+        "description": "Checks that a user agent is loading Preflight requests before non Same Origin Xhr Requests",
+        "secureDomain": true,
+        "resourceType": "Preflight",
+        "value": 0,
+        "expected": 0
+      },
+      {
+        "pctBot": 99,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Loads Websocket Upgrade",
+        "description": "Checks that a user agent is loading Websocket Upgrades (bots frequently don't load all css/images/etc)",
+        "secureDomain": true,
+        "resourceType": "Websocket Upgrade",
+        "value": 0,
+        "expected": 3
+      },
+      {
+        "pctBot": 99,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Loads Stylesheet",
+        "description": "Checks that a user agent is loading Stylesheets (bots frequently don't load all css/images/etc)",
+        "secureDomain": true,
+        "resourceType": "Stylesheet",
+        "value": 0,
+        "expected": 3
+      },
+      {
+        "pctBot": 99,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Loads Image",
+        "description": "Checks that a user agent is loading Images (bots frequently don't load all css/images/etc)",
+        "secureDomain": true,
+        "resourceType": "Image",
+        "value": 0,
+        "expected": 3
+      },
+      {
+        "pctBot": 100,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Performs Preflight Checks",
+        "description": "Checks that a user agent is loading Preflight requests before non Same Origin Xhr Requests",
+        "secureDomain": false,
+        "resourceType": "Preflight",
+        "value": 0,
+        "expected": 0
+      },
+      {
+        "pctBot": 99,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Loads Websocket Upgrade",
+        "description": "Checks that a user agent is loading Websocket Upgrades (bots frequently don't load all css/images/etc)",
+        "secureDomain": false,
+        "resourceType": "Websocket Upgrade",
+        "value": 0,
+        "expected": 3
+      },
+      {
+        "pctBot": 99,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Loads Stylesheet",
+        "description": "Checks that a user agent is loading Stylesheets (bots frequently don't load all css/images/etc)",
+        "secureDomain": false,
+        "resourceType": "Stylesheet",
+        "value": 0,
+        "expected": 3
+      },
+      {
+        "pctBot": 99,
+        "layer": "http",
+        "category": "Loads All Page Assets",
+        "checkName": "Loads Image",
+        "description": "Checks that a user agent is loading Images (bots frequently don't load all css/images/etc)",
+        "secureDomain": false,
+        "resourceType": "Image",
+        "value": 0,
+        "expected": 3
+      }
+    ],
+    "botPct": 100
+  },
+  "Standard Http Headers": {
+    "checks": 54,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  }
+}

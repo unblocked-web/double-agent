@@ -4,7 +4,10 @@ import FingerprintTracker from './lib/FingerprintTracker';
 import IFingerprintProfile from './interfaces/IFingerprintProfile';
 import * as fs from 'fs';
 import FingerprintProfile from './lib/FingerprintProfile';
-import fingerprintScript, { browserIgnoredAttributes, sessionIgnoredAttributes } from './fingerprintScript';
+import fingerprintScript, {
+  browserIgnoredAttributes,
+  sessionIgnoredAttributes,
+} from './fingerprintScript';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
@@ -56,16 +59,16 @@ export default class BrowserFingerprintPlugin implements IDetectionPlugin {
         ctx.session.identifiers.push({
           id: profile.browserHash,
           layer: 'browser',
+          category: 'Browser Fingerprint',
           bucket: UserBucket.Browser,
           description: `Calculates a hash from browser attributes in fingerprint2 that should stay the same regardless of user agent (excludes: ${browserIgnoredAttributes})`,
-          raw: profile.components,
         });
         ctx.session.identifiers.push({
           id: profile.sessionHash,
           layer: 'browser',
+          category: 'Browser Fingerprint',
           bucket: UserBucket.BrowserSingleSession,
           description: `Calculates a hash from browser attributes in fingerprint2 that should stay the same during a single user session (excludes: ${sessionIgnoredAttributes})`,
-          raw: profile.components,
         });
       }
 
@@ -73,28 +76,25 @@ export default class BrowserFingerprintPlugin implements IDetectionPlugin {
         x => x.bucket === UserBucket.BrowserSingleSession,
       );
       if (priorFingerprint) {
-        if (priorFingerprint.id !== profile.sessionHash) {
-          ctx.session.flaggedChecks.push({
-            ...flaggedCheckFromRequest(ctx, 'browser', 'Browser Fingerprint'),
-            pctBot: 100,
-            checkName: 'Browser Fingerprint Stable across Session',
-            description: 'Checks if a browser fingerprint changes across requests',
-            value: profile.sessionHash,
-            expected: priorFingerprint.id,
-          });
-        }
+        ctx.session.recordCheck(priorFingerprint.id !== profile.sessionHash, {
+          ...flaggedCheckFromRequest(ctx, 'browser', 'Browser Fingerprint'),
+          pctBot: 100,
+          checkName: 'Browser Fingerprint Stable across Session',
+          description: 'Checks if a browser fingerprint changes across requests',
+          value: profile.sessionHash,
+          expected: priorFingerprint.id,
+        });
+
         const storedSessionValue = ctx.requestDetails.cookies['inconspicuous-cookie'] as string;
-        if (storedSessionValue && priorFingerprint.id !== storedSessionValue) {
-          ctx.session.flaggedChecks.push({
-            ...flaggedCheckFromRequest(ctx, 'browser', 'Browser Fingerprint'),
-            pctBot: 100,
-            checkName: 'Browser Fingerprint Matches Cookie',
-            description:
-              'Checks if a browser fingerprint stored in a cookie is different than the fingerprint from this request',
-            value: storedSessionValue,
-            expected: priorFingerprint.id,
-          });
-        }
+        ctx.session.recordCheck(storedSessionValue && priorFingerprint.id !== storedSessionValue, {
+          ...flaggedCheckFromRequest(ctx, 'browser', 'Browser Fingerprint'),
+          pctBot: 100,
+          checkName: 'Browser Fingerprint Matches Cookie',
+          description:
+            'Checks if a browser fingerprint stored in a cookie is different than the fingerprint from this request',
+          value: storedSessionValue,
+          expected: priorFingerprint.id,
+        });
       }
 
       ctx.res.writeHead(200, {

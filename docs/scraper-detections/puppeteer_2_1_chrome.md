@@ -8,7 +8,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 289 | 34 | 0
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 0 | 0 | 
+Tls handshake | 1 | 0 | 0 | 
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 0 | 0 | 
 Same Site Cookies | 2 | 0 | 0 | 
@@ -31,7 +31,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 233 | 95 | 0
 TCP Layer | 2 | 0 | 0 | 
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Can Set Cookies | 8 | 0 | 0 | 
 Same Site Cookies | 2 | 0 | 0 | 
@@ -54,7 +54,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 233 | 98 | 0
 TCP Layer | 2 | 1 | 0 | - Packet TTL<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Can Set Cookies | 8 | 0 | 0 | 
 Same Site Cookies | 2 | 0 | 0 | 
@@ -77,7 +77,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 289 | 25 | 0
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 0 | 0 | 
+Tls handshake | 1 | 0 | 0 | 
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 0 | 0 | 
 Same Site Cookies | 2 | 0 | 0 | 
@@ -100,7 +100,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 238 | 99 | 0
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Can Set Cookies | 8 | 0 | 0 | 
 Same Site Cookies | 2 | 0 | 0 | 

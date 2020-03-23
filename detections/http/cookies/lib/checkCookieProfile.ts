@@ -23,30 +23,27 @@ export default (profile: CookieProfile, ctx: IRequestContext) => {
   };
 
   const requests = profile.requests;
-  if (!requests.some(x => x.cookieNames?.length)) {
-    ctx.session.flaggedChecks.push({
-      ...baseCheck,
-      pctBot: 100,
-      checkName: 'Http Cookies',
-      description: 'Check if a user agent can set any cookies',
-    });
-  }
+  const flagIfNoCookies = !requests.some(x => x.cookieNames?.length);
+  ctx.session.recordCheck(flagIfNoCookies, {
+    ...baseCheck,
+    pctBot: 100,
+    checkName: 'Http Cookies',
+    description: 'Check if a user agent can set any cookies',
+  });
 
-  if (!requests.some(x => x.cookieNames?.some(y => y.includes('-Js')))) {
-    ctx.session.flaggedChecks.push({
-      ...baseCheck,
-      checkName: 'Javascript Cookies',
-      description: 'Checks if a user agent can set cookies via javascript "in-page"',
-    });
-  }
+  const flagIfNoJavascriptCookies = !requests.some(x => x.cookieNames?.some(y => y.includes('-Js')));
+  ctx.session.recordCheck(flagIfNoJavascriptCookies, {
+    ...baseCheck,
+    checkName: 'Javascript Cookies',
+    description: 'Checks if a user agent can set cookies via javascript "in-page"',
+  });
 
-  if (requests.some(x => x.cookieNames?.includes('-Expired'))) {
-    ctx.session.flaggedChecks.push({
-      ...baseCheck,
-      checkName: "Don't Set Expired Cookies",
-      description: 'Checks that a user agent ignores expired cookies',
-    });
-  }
+  const flagIfHASExpiredCookies = requests.some(x => x.cookieNames?.includes('-Expired'));
+  ctx.session.recordCheck(flagIfHASExpiredCookies, {
+    ...baseCheck,
+    checkName: "Don't Set Expired Cookies",
+    description: 'Checks that a user agent ignores expired cookies',
+  });
 
   ctx.session.pluginsRun.push(`http${ctx.requestDetails.secureDomain ? 's' : ''}/cookies`);
 };

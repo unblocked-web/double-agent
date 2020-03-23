@@ -1,6 +1,6 @@
 import http from 'http';
 import https from 'https';
-import { promises as fs, existsSync } from 'fs';
+import { existsSync, promises as fs } from 'fs';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import httpRequestHandler from './httpRequestHandler';
 import webServicesHandler from './websocketHandler';
@@ -12,10 +12,12 @@ import IDirective from '../interfaces/IDirective';
 import IDomainset from '../interfaces/IDomainset';
 import BotDetectionResults from '../lib/BotDetectionResults';
 import IDetectorModule from '../interfaces/IDetectorModule';
-import generateBrowserTest, { IBrowserTest } from '../lib/generateBrowserTest';
-import IdBucketTracker from '../lib/IdBucketTracker';
-import moment from 'moment';
+import generateBrowserTest, { IBrowsersToTest } from '../lib/generateBrowserTest';
+import UserBucketTracker from '../lib/UserBucketTracker';
 import { inspect } from 'util';
+import UserBucketStats from '../lib/UserBucketStats';
+import IDetectionContext from '../interfaces/IDetectionContext';
+import DetectionSession from '../lib/DetectionSession';
 
 const certPath = process.env.LETSENCRYPT
   ? '/etc/letsencrypt/live/headers.ulixee.org'
@@ -27,6 +29,8 @@ const domains = {
   main: process.env.MAIN_DOMAIN ?? 'a0.ulixee-test.org',
 };
 
+const browsersToTest = 50;
+
 export default class DetectionsServer {
   private httpServer: http.Server;
   private httpsServer: https.Server;
@@ -37,9 +41,9 @@ export default class DetectionsServer {
   public readonly httpsDomains: IDetectionDomains;
 
   public sessionTracker: SessionTracker;
-  public bucketTracker: IdBucketTracker;
+  public bucketTracker: UserBucketTracker;
 
-  public browserTest: IBrowserTest;
+  public browsersToTest: IBrowsersToTest;
 
   public scraperDirectives: {
     [agent: string]: {
@@ -48,7 +52,7 @@ export default class DetectionsServer {
     };
   } = {};
 
-  constructor(readonly httpPort: number, readonly httpsPort: number) {
+  constructor(readonly httpPort: number, readonly httpsPort: number, detectRepeatVisits = false) {
     this.httpDomains = {
       main: new URL(`http://${domains.main}:${this.httpPort}`),
       external: new URL(`http://${domains.crossSite}:${this.httpPort}`),
@@ -62,9 +66,9 @@ export default class DetectionsServer {
       isSSL: true,
     };
     this.sessionTracker = new SessionTracker(this.httpDomains, this.httpsDomains);
-    this.detectors = getAllDetectors(true);
+    this.detectors = getAllDetectors(detectRepeatVisits, true);
     this.pluginDelegate = new DetectorPluginDelegate(this.detectors);
-    this.bucketTracker = new IdBucketTracker(this.detectors);
+    this.bucketTracker = new UserBucketTracker(this.detectors);
   }
 
   public async start() {
@@ -72,8 +76,8 @@ export default class DetectionsServer {
     this.httpServer = await this.buildServer();
     this.httpsServer = (await this.buildServer(true)) as https.Server;
     await this.pluginDelegate.start(this.httpDomains, this.httpsDomains, this.bucketTracker);
-    this.browserTest = await generateBrowserTest(100, 2);
-    console.log(inspect(this.browserTest, false, null, true));
+    this.browsersToTest = await generateBrowserTest(browsersToTest, 2);
+    console.log(inspect(this.browsersToTest, false, null, true));
     return this;
   }
 
@@ -97,7 +101,11 @@ export default class DetectionsServer {
   public async nextDirective(scraper: string) {
     if (!this.scraperDirectives[scraper]) {
       this.scraperDirectives[scraper] = {
-        directives: await getAllDirectives(this, this.browserTest),
+        directives: await getAllDirectives(
+          this.httpDomains,
+          this.httpsDomains,
+          this.browsersToTest,
+        ),
         index: -1,
       };
     }
@@ -116,7 +124,8 @@ export default class DetectionsServer {
 
   public async saveScraperResults(scraper: string, scraperDir: string) {
     const directives = this.scraperDirectives[scraper]?.directives;
-    delete this.scraperDirectives[scraper];
+
+    console.log('Saving results for %s', scraper);
 
     if (!existsSync(scraperDir + '/sessions')) {
       await fs.mkdir(scraperDir + '/sessions', {
@@ -124,11 +133,29 @@ export default class DetectionsServer {
       });
     }
 
-    const botDetectionResults = new BotDetectionResults(this.detectors);
+    if (!existsSync(scraperDir + '/browser-flags')) {
+      await fs.mkdir(scraperDir + '/browser-flags', {
+        recursive: true,
+      });
+    }
+
+    const botDetectionResults = new BotDetectionResults();
+    if (!directives) return botDetectionResults;
+    const identityResults = new UserBucketStats();
 
     for (const directive of directives) {
-      const session = this.sessionTracker.getSession(directive.sessionid);
+      let session: DetectionSession;
+      let tries = 0;
+      while (!session) {
+        session = this.sessionTracker.getSession(directive.sessionid);
+        if (!session && tries < 200) {
+          tries += 1;
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
+      }
+
       botDetectionResults.trackDirectiveResults(directive, session);
+      identityResults.trackDirectiveResults(directive, session);
 
       await fs.writeFile(
         `${scraperDir}/sessions/${directive.browserGrouping}.json`,
@@ -136,8 +163,24 @@ export default class DetectionsServer {
       );
     }
 
-    await fs.writeFile(`${scraperDir}/botStats.json`, JSON.stringify(botDetectionResults, null, 2));
+    const botStats = botDetectionResults.toJSON();
+    for (const [browser, categories] of Object.entries(botStats.browserFindings)) {
+      await fs.writeFile(
+        `${scraperDir}/browser-flags/${browser}.json`,
+        JSON.stringify(categories, null, 2),
+      );
+      for (const [category, entry] of Object.entries(categories)) {
+        categories[category] = {
+          flagged: entry.flagged,
+          checks: entry.checks,
+          botPct: entry.botPct,
+        } as any;
+      }
+    }
+    await fs.writeFile(`${scraperDir}/botStats.json`, JSON.stringify(botStats, null, 2));
+    await fs.writeFile(`${scraperDir}/bucketStats.json`, JSON.stringify(identityResults, null, 2));
 
+    delete this.scraperDirectives[scraper];
     return botDetectionResults;
   }
 
@@ -156,7 +199,17 @@ export default class DetectionsServer {
   }
 
   private getNow() {
-    return moment();
+    return new Date();
+  }
+
+  private getContext(): IDetectionContext {
+    return {
+      detectors: this.detectors,
+      bucketTracker: this.bucketTracker,
+      pluginDelegate: this.pluginDelegate,
+      sessionTracker: this.sessionTracker,
+      getNow: this.getNow,
+    };
   }
 
   private async buildServer(secureDomain: boolean = false) {
@@ -179,19 +232,10 @@ export default class DetectionsServer {
     return new Promise<http.Server | https.Server>(resolve => {
       const server = (secureDomain ? https : http).createServer(
         options,
-        httpRequestHandler(
-          this.pluginDelegate,
-          domains,
-          this.sessionTracker,
-          this.bucketTracker,
-          this.getNow(),
-        ),
+        httpRequestHandler(domains, this.getContext()),
       );
       server
-        .on(
-          'upgrade',
-          webServicesHandler(this.pluginDelegate, domains, this.sessionTracker, this.getNow),
-        )
+        .on('upgrade', webServicesHandler(domains, this.getContext()))
         .listen(port, () => resolve(server));
     });
   }
@@ -201,6 +245,7 @@ function addSessionIdToDirective(directive: IDirective, sessionid: string) {
   directive.sessionid = sessionid;
   for (const page of directive.pages) {
     page.url = addSessionIdToUrl(page.url, sessionid);
+    page.clickDestinationUrl = addSessionIdToUrl(page.clickDestinationUrl, sessionid);
   }
 }
 

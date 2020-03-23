@@ -1,27 +1,39 @@
 import http from 'http';
 import WebSocket from 'ws';
 import ResourceType from '../interfaces/ResourceType';
-import SessionTracker from '../lib/SessionTracker';
-import DetectorPluginDelegate from './DetectorPluginDelegate';
 import extractRequestDetails from './extractRequestDetails';
 import IDomainset from '../interfaces/IDomainset';
-import moment from 'moment';
+import RequestContext from '../lib/RequestContext';
+import * as net from 'net';
+import IDetectionContext from '../interfaces/IDetectionContext';
 
-export default function(
-  pluginDelegate: DetectorPluginDelegate,
-  domains: IDomainset,
-  sessionTracker: SessionTracker,
-  getNow: () => moment.Moment,
-) {
+export default function(domains: IDomainset, detectionContext: IDetectionContext) {
   const wss = new WebSocket.Server({ clientTracking: false, noServer: true });
-  return async function upgradeWs(request: http.IncomingMessage, socket, head) {
+  return async function upgradeWs(request: http.IncomingMessage, socket: net.Socket, head) {
+    const { pluginDelegate, sessionTracker, bucketTracker, getNow } = detectionContext;
+
     const { requestDetails, requestUrl } = await extractRequestDetails(
       request,
       domains,
       getNow(),
       ResourceType.WebsocketUpgrade,
     );
+
     const session = sessionTracker.recordRequest(requestDetails, requestUrl);
+    const ctx = new RequestContext(
+      request,
+      null,
+      requestUrl,
+      requestDetails,
+      session,
+      domains,
+      bucketTracker,
+    );
+
+    bucketTracker.recordRequest(ctx);
+
+    await pluginDelegate.onRequest(ctx);
+    await pluginDelegate.afterRequestDetectorsRun(ctx);
 
     const host = request.headers.host;
     wss.handleUpgrade(request, socket, head, async function(ws) {

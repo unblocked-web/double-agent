@@ -4,7 +4,8 @@ import UserBucket from './UserBucket';
 export default interface IUserIdentifier {
   bucket: UserBucket;
   layer: Layer;
+  category: string;
   id: string;
-  raw: any;
+  raw?: any;
   description?: string;
 }

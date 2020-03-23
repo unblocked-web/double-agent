@@ -1,13 +1,11 @@
 import getDefaultHeaderOrder from '../lib/getDefaultHeaderOrder';
-import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
 import { IHeadersRequest } from '../lib/HeaderProfile';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import { IHeaderStats } from '../lib/getBrowserProfileStats';
-import ResourceType from '@double-agent/runner/interfaces/ResourceType';
-import { isAgent } from '@double-agent/runner/lib/userAgentUtils';
+import DetectionSession from '@double-agent/runner/lib/DetectionSession';
 
 export default function checkHeaderOrderAndCase(
-  session: IDetectionSession,
+  session: DetectionSession,
   check: Pick<
     IFlaggedCheck,
     | 'layer'
@@ -22,7 +20,8 @@ export default function checkHeaderOrderAndCase(
   request: IHeadersRequest,
   browserStats: IHeaderStats,
 ) {
-  const expectedOrders = browserStats.defaultHeaderOrders.map(x => x.split(','));
+  const hasBrowserStats = !!browserStats;
+  const expectedOrders = browserStats?.defaultHeaderOrders.map(x => x.split(',')) ?? [];
   const order = getDefaultHeaderOrder(request.headers);
   // remove cache entries
   const userHeaderNames = order.defaultKeys.filter(x => !cacheHeaders.includes(x));
@@ -37,52 +36,36 @@ export default function checkHeaderOrderAndCase(
       if (presentWithIncorrectCase) break;
     }
 
-    if (!presentWithCorrectCase && !presentWithIncorrectCase) {
-      // should not have been in the list
-      let pctBot = 90;
-      // some weirdness with Chrome 80 and preflight sec headers
-      if (
-        headerName.startsWith('Sec-') &&
-        check.resourceType === ResourceType.Preflight &&
-        isAgent(session.parsedUseragent, 'Chrome', 80)
-      ) {
-        pctBot = 10;
-      }
-      session.flaggedChecks.push({
-        ...check,
-        checkName: `Header Should be Included: ${headerName}`,
-        description: `Checks that only expected headers are sent by a user agent`,
-        value: 'Included',
-        pctBot,
-        expected: "Shouldn't be Included",
-      });
-    } else if (presentWithIncorrectCase && !presentWithCorrectCase) {
-      // if casing is wrong, definitely a bot
-      session.flaggedChecks.push({
-        ...check,
-        checkName: `Header has Correct Capitalization: ${headerName}`,
-        description: `Checks that headers sent by a user agent have the correct capitalized letters for the given user agent`,
-        value: headerName,
-        pctBot: 100,
-        expected: presentWithIncorrectCase,
-      });
-    }
+    let isIncorrectCase = presentWithIncorrectCase && !presentWithCorrectCase;
+
+    // if casing is wrong, definitely a bot
+    session.recordCheck(hasBrowserStats && isIncorrectCase, {
+      ...check,
+      checkName: `Header has Correct Capitalization: ${headerName}`,
+      description: `Checks that headers sent by a user agent have the correct capitalized letters for the given user agent`,
+      value: headerName,
+      pctBot: 100,
+      expected: presentWithIncorrectCase,
+    });
   }
 
   if (checkCaseOnly === true) return;
 
-  const hasOrderMatch = headersMatchAKnownOrder(userHeaderNames, browserStats.defaultHeaderOrders);
-  if (!hasOrderMatch) {
-    // see if difference is just cookies
-    session.flaggedChecks.push({
-      ...check,
-      pctBot: 85,
-      checkName: `Headers in Correct Order`,
-      description: `Checks if the request headers are in the correct order for the given user agent`,
-      value: userHeaderNames.join(','),
-      expected: browserStats.defaultHeaderOrders.join(','),
-    });
-  }
+  const hasOrderMatch = headersMatchAKnownOrder(
+    userHeaderNames,
+    browserStats?.defaultHeaderOrders ?? [],
+  );
+  session.recordCheck(hasBrowserStats && !hasOrderMatch, {
+    ...check,
+    pctBot: 85,
+    checkName: `Headers in Correct Order`,
+    description: `Checks if the request headers are in the correct order for the given user agent`,
+    value: userHeaderNames.join(','),
+    expected:
+      browserStats && browserStats.defaultHeaderOrders?.length
+        ? browserStats.defaultHeaderOrders[0]
+        : '?',
+  });
 }
 
 const cacheHeaders = ['Pragma', 'No-Cache'];

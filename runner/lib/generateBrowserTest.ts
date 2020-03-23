@@ -1,15 +1,16 @@
-import { getIntoliUseragents, getStatcounterUseragents } from './userAgentUtils';
+import { getIntoliUseragents, getStatcounterUseragents, IUseragentPercents } from './userAgentUtils';
 
 export default async function generateBrowserTest(browsersPerTest: number, topXBrowsers: number) {
-  const topBrowsers = await getStatcounterUseragents(topXBrowsers, browsersPerTest);
+  const topBrowsers = await getStatcounterUseragents(topXBrowsers);
   const intoliBrowsers = getIntoliUseragents(browsersPerTest);
   return {
     intoliBrowsers,
     topBrowsers,
-  } as IBrowserTest;
+  } as IBrowsersToTest;
 }
 
-export interface IBrowserTest {
-  intoliBrowsers: string[];
-  topBrowsers: string[];
+export interface IBrowsersToTest {
+  intoliBrowsers: IUseragentPercents[];
+  topBrowsers: IUseragentPercents[];
 }
+

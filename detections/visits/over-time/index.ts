@@ -1,17 +1,19 @@
 import IDetectionPlugin from '@double-agent/runner/interfaces/IDetectionPlugin';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import IDetectionDomains from '@double-agent/runner/interfaces/IDetectionDomains';
-import IdBucketTracker from '@double-agent/runner/lib/IdBucketTracker';
+import UserBucketTracker from '@double-agent/runner/lib/UserBucketTracker';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { flaggedCheckFromRequest, maxBotPctByCategory } from '@double-agent/runner/lib/flagUtils';
-import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
+import IVisitLimit from './interfaces/IVisitLimit';
+import bucketChecks from './lib/bucketChecks';
+import visitLimits from './lib/visitLimits';
 
-export default class HttpHitsPlugin implements IDetectionPlugin {
+export default class VisitsOverTimePlugin implements IDetectionPlugin {
   public async start(
     domains: IDetectionDomains,
     secureDomains: IDetectionDomains,
-    bucketTracker: IdBucketTracker,
+    bucketTracker: UserBucketTracker,
   ) {
     bucketTracker.trackHitsByBucketGroup([UserBucket.IpAndPortRange, UserBucket.Useragent]);
     bucketTracker.trackResourceHits((url, request) => {
@@ -22,63 +24,44 @@ export default class HttpHitsPlugin implements IDetectionPlugin {
   }
 
   public async onRequest(ctx: IRequestContext) {
-    const hitAllowances = [
-      [1, 10, 'Hits Per Minute'],
-      [10, 20, 'Hits Per 10 Minutes'], // 20 hits in 10 mins = 1 every 30 seconds
-    ] as HitAllowance[];
+    // just check on document requests
+    if (ctx.requestDetails.resourceType !== ResourceType.Document) return;
 
-    const checks = [
-      { buckets: [UserBucket.IpAndPortRange], title: 'IP Address' },
-      { buckets: [UserBucket.Browser], title: 'Browser Fingerprint' },
-      {
-        buckets: [UserBucket.IpAndPortRange, UserBucket.Useragent],
-        title: 'IP Address/Port Range and Useragent',
-        extras: '  Outbound requests will often follow a series of ports when from the same client',
-      },
-    ];
+    for (const check of bucketChecks) {
+      for (const { minutes, limits, periodName } of visitLimits) {
+        const documentHits = ctx.bucketTracker.getBucketHits(ctx, minutes, check.buckets, 'page');
+        const maxBotPctsForBucket = maxBotPctByCategory(ctx).map(
+          ([category]) => documentHits.botScoreByCategory[category]?.max ?? 0,
+        );
+        const threshold = limits.find(x => documentHits.hits > x.visits);
+        let { isFlagged, pctBot } = VisitsOverTimePlugin.getBotPct(threshold, maxBotPctsForBucket);
 
-    for (const check of checks) {
-      for (const [mins, allowedHits, name] of hitAllowances) {
-        const documentHits = ctx.bucketTracker.getBucketHits(ctx, mins, check.buckets, 'page');
+        ctx.session.recordCheck(isFlagged, {
+          ...flaggedCheckFromRequest(ctx, 'visits', periodName),
 
-        // TODO: calculate ideal percents. these are semi-random swags
-        const multiplier = Math.max(0, documentHits.hits - allowedHits);
-
-        recordCategoryHits(name, ctx, documentHits, multiplier, {
-          checkName: `Page ${name} from the Same ${check.title}`,
+          checkName: `Page ${periodName} from the Same ${check.title}`,
           description: `Multiplies the likelihood a request is a bot by the maximum seen with the same ${
             check.title
           }${check.extras ?? ''}`,
+          pctBot,
+          value: documentHits.hits + ' Hits',
         });
       }
     }
   }
-}
 
-type HitAllowance = [number, number, string];
+  private static getBotPct(threshold: IVisitLimit, maxBotPctsForBucket: number[]) {
+    let isFlagged = threshold.categoryMultiplier === 0;
+    let maxBucketPct = threshold.pctBot;
 
-function recordCategoryHits(
-  flagCategory: string,
-  ctx: IRequestContext,
-  hitsByBrowser: { botScoreByCategory: { [key: string]: { max: number } }; hits: number },
-  multiplierPct: number,
-  details: Pick<IFlaggedCheck, 'checkName' | 'description'>,
-) {
-  if (multiplierPct === 0) return;
-  const maxPcts = maxBotPctByCategory(ctx);
-  for (const [category, botPct] of maxPcts) {
-    // can't go up from here :)
-    if (botPct === 100) continue;
-    const maxPct = hitsByBrowser.botScoreByCategory[category]?.max;
-    if (maxPct) {
-      const updatedFlag = maxPct + Math.floor((maxPct * multiplierPct) / 100);
-      const pctBot = Math.min(99, updatedFlag);
-      ctx.session.flaggedChecks.push({
-        ...flaggedCheckFromRequest(ctx, 'visits', flagCategory),
-        ...details,
-        pctBot,
-        value: hitsByBrowser.hits + ' Hits',
-      });
+    for (const maxPct of maxBotPctsForBucket) {
+      const botPctWithMultiplier = Math.floor(
+        (maxPct * (100 + threshold.categoryMultiplier)) / 100,
+      );
+      if (botPctWithMultiplier > maxBucketPct) maxBucketPct = botPctWithMultiplier;
     }
+
+    const pctBot = Math.min(100, maxBucketPct);
+    return { isFlagged, pctBot };
   }
 }

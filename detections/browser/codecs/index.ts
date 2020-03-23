@@ -9,11 +9,11 @@ import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 
 export default class BrowserCodecsPlugin implements IDetectionPlugin {
-  private pluginName = 'browser/codecs';
+  private static pluginName = 'browser/codecs';
   public async onRequest(ctx: IRequestContext) {
     // only load on the secure domain
     if (
-      !ctx.session.pluginsRun.includes(this.pluginName) &&
+      !ctx.session.pluginsRun.includes(BrowserCodecsPlugin.pluginName) &&
       ctx.requestDetails.resourceType === ResourceType.Document
     ) {
       ctx.extraScripts.push(codecPageScript(ctx));
@@ -32,6 +32,7 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
       if (process.env.GENERATE_PROFILES) {
         saveUseragentProfile(agentProfile.useragent, agentProfile, __dirname + '/profiles');
       }
+      this.checkProfile(ctx, agentProfile);
 
       if (ctx.req.headers.origin) {
         res.setHeader('Access-Control-Allow-Origin', ctx.req.headers.origin);
@@ -44,7 +45,6 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
       });
 
       res.end(JSON.stringify({ success: true }));
-      this.checkProfile(ctx, agentProfile);
       return true;
     }
     return false;
@@ -76,30 +76,27 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
         const [property, name] = entry;
         const provided = agentCodecSupport[property];
         const expected = expectedAgentCodecSupport[property];
-        if (!expected.every(x => provided.includes(x))) {
-          ctx.session.flaggedChecks.push({
-            ...codecEntry,
-            pctBot: 99,
-            value: provided.toString(),
-            expected: expected.toString(),
-            checkName: `${title} ${name} Codecs`,
-          });
-        }
+        const checkName = `${title} ${name} Codecs`;
+        ctx.session.recordCheck(!expected.every(x => provided.includes(x)), {
+          ...codecEntry,
+          pctBot: 99,
+          value: provided.toString(),
+          expected: expected.toString(),
+          checkName,
+        });
       }
 
       const expected = convertWebRtcCodecsToString(browserProfile[`webRtc${title}Codecs`]);
       const value = convertWebRtcCodecsToString(agentProfile[`webRtc${title}Codecs`]);
 
-      if (expected !== value) {
-        ctx.session.flaggedChecks.push({
-          ...codecEntry,
-          pctBot: 70,
-          category: `WebRTC ${title} Codecs Supported`,
-          checkName: `WebRTC ${title} MimeTypes and ClockRate Match`,
-          value,
-          expected,
-        });
-      }
+      ctx.session.recordCheck(expected !== value, {
+        ...codecEntry,
+        pctBot: 70,
+        category: `WebRTC ${title} Codecs Supported`,
+        checkName: `WebRTC ${title} MimeTypes and ClockRate Match`,
+        value,
+        expected,
+      });
       ctx.session.pluginsRun.push('browser/codecs');
     }
   }

@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import IRequestContext from '../interfaces/IRequestContext';
 import { maxBotPctByCategory } from './flagUtils';
 
@@ -12,7 +12,7 @@ export default class HitTracker {
       [category: string]: { sum: number; max: number; avg: number };
     } = {};
 
-    const hits = this.hits.filter(x => x.time.isSameOrAfter(time));
+    const hits = this.hits.filter(x => moment(x.time).isSameOrAfter(time));
 
     for (const hit of hits) {
       for (const [cat, botPct] of Object.entries(hit.botScoreByCategory)) {
@@ -53,7 +53,7 @@ export default class HitTracker {
 }
 
 interface IHit {
-  time: Moment;
+  time: Date;
   sessionid: string;
   botScoreByCategory: { [category: string]: number };
 }

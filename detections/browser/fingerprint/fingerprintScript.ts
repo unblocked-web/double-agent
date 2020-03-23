@@ -52,19 +52,16 @@ export default function fingerprintScript(dest: string) {
   }
 
   window.pageQueue.push(fingerprintPromise);
-  
+  //fingerprint();
+
   if (window.requestIdleCallback) {
     requestIdleCallback(fingerprint);
   } else {
-    setTimeout(fingerprint, 500);
+    setTimeout(fingerprint, 100);
   }
 </script>`;
 }
 
-const useragentAttributes = ['userAgent', 'platform'];
-
-// unstable across requests, per https://github.com/Valve/fingerprintjs2/wiki/Stable-components
-const unstableAttributes = ['canvas', 'webgl', 'enumerateDevices'];
 const checkedOtherPlaces = [
   'webdriver',
   'hasLiedLanguages',
@@ -73,5 +70,5 @@ const checkedOtherPlaces = [
   'hasLiedBrowser',
 ];
 
-export const browserIgnoredAttributes = useragentAttributes.concat(checkedOtherPlaces);
-export const sessionIgnoredAttributes = unstableAttributes.concat(checkedOtherPlaces);
+export const browserIgnoredAttributes = ['userAgent', 'platform', 'enumerateDevices'].concat(checkedOtherPlaces);
+export const sessionIgnoredAttributes = ['canvas', 'webgl', 'enumerateDevices'].concat(checkedOtherPlaces);

@@ -1,13 +1,12 @@
 import IRequestDetails from './IRequestDetails';
-import { Agent } from 'useragent';
 import IFlaggedCheck from './IFlaggedCheck';
 import IUserIdentifiers from './IUserIdentifier';
 import IAsset from './IAsset';
-import OriginType from './OriginType';
-import IDomainset from './IDomainset';
+import ICheckCounter from './ICheckCounter';
 
 export default interface IDetectionSession {
   requests: IRequestDetails[];
+  checks: ICheckCounter[];
   flaggedChecks: IFlaggedCheck[];
   identifiers: IUserIdentifiers[];
   assetsNotLoaded: IAsset[];
@@ -15,8 +14,6 @@ export default interface IDetectionSession {
   pluginsRun: string[];
   useragent: string;
   expectedUseragent: string;
-  parsedUseragent: Agent;
   userUuid: string;
   id: string;
-  trackAsset: (url: URL, origin: OriginType, domains: IDomainset, fromUrl?: string) => void;
 }

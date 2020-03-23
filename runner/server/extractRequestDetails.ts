@@ -5,12 +5,11 @@ import IRequestDetails from '../interfaces/IRequestDetails';
 import HostDomain from '../interfaces/HostDomain';
 import IDomainset from '../interfaces/IDomainset';
 import OriginType from '../interfaces/OriginType';
-import { Moment } from 'moment';
 
 export default async function extractRequestDetails(
   req: http.IncomingMessage,
   domains: IDomainset,
-  time: Moment,
+  time: Date,
   overrideResourceType?: ResourceType,
 ) {
   const useragent = req.headers['user-agent'];
@@ -124,7 +123,7 @@ export function getResourceType(httpMethod: string, pathname: string) {
 
 function parseHeaders(rawHeaders: string[]) {
   const headers = rawHeaders;
-  const headerPrintout = [];
+  const headerPrintout: string[] = [];
   for (let i = 0; i < headers.length; i += 2) {
     const key = headers[i];
     const value = headers[i + 1];

@@ -74,13 +74,6 @@ export default class HttpHeadersPlugin implements IDetectionPlugin {
   }
 
   private checkRequest(ctx: IRequestContext) {
-    const browserVersion = getAgentBrowser(ctx.session.parsedUseragent);
-    const browserStats = this.browserStats.statsByBrowserVersion[browserVersion];
-    if (!browserStats) {
-      console.log('No Header checks for profile - no browser stats', browserVersion);
-      return;
-    }
-
     const category = getResourceCategory(ctx.requestDetails);
     // if nothing returned, means we're not testing this category
     if (!category) return;
@@ -122,6 +115,9 @@ export default class HttpHeadersPlugin implements IDetectionPlugin {
 
     const pluginName = ctx.requestDetails.secureDomain ? 'https/headers' : 'http/headers';
     if (!ctx.session.pluginsRun.includes(pluginName)) ctx.session.pluginsRun.push(pluginName);
+
+    const browserVersion = getAgentBrowser(ctx.session.parsedUseragent);
+    const browserStats = this.browserStats.statsByBrowserVersion[browserVersion];
 
     checkRequestHeaders(
       ctx,

@@ -8,6 +8,7 @@ import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import ClientHelloProfile from './lib/ClientHelloProfile';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
+import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 
 let tlsPort = Number(process.env.PORT ?? 3002);
 const tlsDomain = `https://${process.env.TLS_DOMAIN ?? 'tls.ulixee-test.org'}`;
@@ -47,6 +48,7 @@ export default class TlsClientHelloPlugin implements IDetectionPlugin {
       raw: tlsResult.ja3Extended,
       bucket: UserBucket.TLS,
       layer: 'tls',
+      category: 'TLS Handshake',
       id: tlsResult.ja3ExtendedMd5,
     });
 
@@ -58,42 +60,32 @@ export default class TlsClientHelloPlugin implements IDetectionPlugin {
       console.log('No tls profile for user agent', tlsResult.useragent);
       return;
     }
-    const check = {
-      value: tlsResult.ja3Extended,
-      requestIdx: ctx.session.requests.indexOf(ctx.requestDetails),
-      originType: ctx.requestDetails.originType,
-      hostDomain: ctx.requestDetails.hostDomain,
-      resourceType: ctx.requestDetails.resourceType,
-      layer: 'tls',
-      category: 'TLS Initial Handshake',
-      checkName: 'TLS Fingerprint Match',
-      description: 'Checks that the tls client hello signature matches the provided user agent',
-    } as IFlaggedCheck;
 
-    if (!tlsResult.match) {
-      ctx.session.flaggedChecks.push({
-        ...check,
-        expected: expected.ja3Extended,
-        pctBot: 100,
-        details:
-          tlsResult.reason ??
-          (tlsResult.ja3MatchFor?.length
-            ? `Provided ja3 signature matches: [${tlsResult.ja3MatchFor.join(', ')}]`
-            : tlsResult.ja3erMatchFor ?? 'Not a match for known browser signatures'),
-      });
-    }
+    ctx.session.recordCheck(!tlsResult.match, {
+      ...flaggedCheckFromRequest(ctx, 'tls', 'TLS Handshake'),
+      value: tlsResult.ja3Extended,
+      checkName: 'TLS Fingerprint Match',
+      description: 'Checks that the TLS ClientHello signature matches the provided user agent',
+      expected: expected.ja3Extended,
+      pctBot: 100,
+      details:
+        tlsResult.reason ??
+        (tlsResult.ja3MatchFor?.length
+          ? `Provided ja3 signature matches: [${tlsResult.ja3MatchFor.join(', ')}]`
+          : tlsResult.ja3erMatchFor ?? 'Not a match for known browser signatures'),
+    });
 
     const shouldBeGreased = isGreased(expected.ja3Extended);
-    if (shouldBeGreased !== tlsResult.hasGrease) {
-      ctx.session.flaggedChecks.push({
-        ...check,
-        value: tlsResult.hasGrease,
-        category: 'TLS Grease Used',
-        checkName: 'TLS Grease in ClientHello',
-        expected: shouldBeGreased,
-        pctBot: 100,
-      });
-    }
+
+    ctx.session.recordCheck(shouldBeGreased !== tlsResult.hasGrease, {
+      ...flaggedCheckFromRequest(ctx, 'tls', 'TLS Handshake'),
+      value: tlsResult.hasGrease ? 'Greased' : 'Not Greased',
+      category: 'TLS Grease Used',
+      checkName: 'TLS Grease in ClientHello',
+      description: 'Checks that the TLS ClientHello mesage uses TLS Grease',
+      expected: shouldBeGreased ? 'Greased' : 'Not Greased',
+      pctBot: 100,
+    });
     ctx.session.pluginsRun.push(`tls/clienthello`);
   }
 

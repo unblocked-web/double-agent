@@ -10,16 +10,16 @@ export default class IpAddressPlugin implements IDetectionPlugin {
       const ip = ctx.requestDetails.remoteAddress.split(':').shift();
       ctx.session.identifiers.push({
         layer: 'ip',
+        category: 'IP Address',
         bucket: UserBucket.IP,
         id: ip,
-        raw: null,
       });
 
       ctx.session.identifiers.push({
         layer: 'ip',
+        category: 'IP Address',
         bucket: UserBucket.IpAndPortRange,
         id: ip + ':' + IpProfile.getPortRange(ctx.requestDetails.remoteAddress.split(':').pop()),
-        raw: null,
       });
       ctx.session.pluginsRun.push(`ip/address`);
     }
@@ -28,16 +28,15 @@ export default class IpAddressPlugin implements IDetectionPlugin {
     for (const request of ctx.session.requests) {
       ips.add(request.remoteAddress.split(':').shift());
     }
-    if (ips.size > 1) {
-      ctx.session.flaggedChecks.push({
-        ...flaggedCheckFromRequest(ctx, 'ip', 'IP Address'),
-        value: `${ips.size} IPs`,
-        expected: '1 IP',
-        checkName: 'Same IP for all Requests',
-        description: 'Checks that all requests for a session come from the same IP',
-        pctBot: 95, // these are all desktop browsers right now
-      });
-    }
+    const baseFlag = flaggedCheckFromRequest(ctx, 'ip', 'IP Address');
+    ctx.session.recordCheck(ips.size > 1, {
+      ...baseFlag,
+      value: `${ips.size} IPs`,
+      expected: '1 IP',
+      checkName: 'Same IP for all Requests',
+      description: 'Checks that all requests for a session come from the same IP',
+      pctBot: 95, // these are all desktop browsers right now
+    });
 
     if (ctx.url.pathname === '/results-page' && ctx.requestDetails.secureDomain === false) {
       const profile = IpProfile.fromContext(ctx);

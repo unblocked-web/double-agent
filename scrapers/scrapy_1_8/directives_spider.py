@@ -1,74 +1,91 @@
 import scrapy
 import json
+from scrapy import signals
 from collections import namedtuple
+import urllib.request
 
 class DirectivesSpider(scrapy.Spider):
     name = "directives"
     start_urls = ['http://a0.ulixee-test.org:3000/?scraper=scrapy_1_8']
+    end_urls = ['http://a0.ulixee-test.org:3000/results?scraper=scrapy_1_8']
 
     custom_settings = {
        'DUPEFILTER_CLASS':'scrapy.dupefilters.BaseDupeFilter'
     }
 
+
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        spider = super(DirectivesSpider, cls).from_crawler(crawler, *args, **kwargs)
+        crawler.signals.connect(spider.spider_idle, signal=signals.spider_idle)
+        return spider
+
+
+    def spider_idle(self):
+        print('Spider idle, getting results')
+        contents = urllib.request.urlopen(self.end_urls[0]).read()
+        print (contents)
+
+
     def parse(self, response):
         jsonresponse = json.loads(response.text)
-        if "directive" in jsonresponse:
+        if "directive" in jsonresponse and jsonresponse["directive"] is not None:
             directive = jsonresponse['directive']
             print(directive)
-            print ('making request')
             yield scrapy.Request(
-                url = directive['url'],
-                callback = self.parse_start_page,
+                url = directive['pages'][0]['url'],
+                callback = self.extract_page,
                 cb_kwargs = directive,
                 meta = { "referrer_policy" : 'no-referrer'},
                 headers = {'User-Agent': directive['useragent'] }
               )
 
-    def parse_start_page(self, response, **directive):
-        print("Loaded test", response.request.url)
-        if "clickItemSelector" in directive:
-            print("Click", directive["clickItemSelector"])
-            yield response.follow(
-                   response.css(directive["clickItemSelector"] + "::attr(href)")[0].get(),
+    def extract_page(self, response, **directive):
+        for link in response.css('script'):
+            if "src" in link.attrib:
+                print("Following script", link.attrib['src'])
+                yield response.follow(link.attrib['src'], self.no_extract)
+        for link in response.css('link[rel="stylesheet"]'):
+            if "href" in link.attrib:
+                print("Following style", link.attrib['href'])
+                yield response.follow(link.attrib['href'], self.no_extract)
+        for link in response.css('img'):
+            if "src" in link.attrib:
+                print("Following img", link.attrib['src'])
+                yield response.follow(link.attrib['src'], self.no_extract)
+
+        still_on_pages = False
+        url_was_last_page = False
+        for page in directive['pages']:
+            print("Check url", page['url'], response.url)
+            if url_was_last_page:
+                url = page["url"]
+                still_on_pages = True
+                print("Load url", url)
+                yield response.follow(
+                   url,
                    headers = {'User-Agent': directive["useragent"]},
                    cb_kwargs = directive,
                    callback = self.extract_page
-                 )
-        else:
-            yield from self.extract_page(response, directive = directive)
+                )
+            elif page['url'] == response.url:
+                if  "clickSelector" in page:
+                    css_match = response.css(page["clickSelector"] + "::attr(href)")
+                    url =  css_match[0].get() if css_match else page["clickDestinationUrl"]
+                    print("Follow click", url)
+                    still_on_pages = True
+                    yield response.follow(
+                       url,
+                       headers = {'User-Agent': directive["useragent"]},
+                       cb_kwargs = directive,
+                       callback = self.extract_page
+                    )
+                else:
+                    url_was_last_page = True
 
 
-    def extract_page(self, response, **directive):
-        if "requiredFinalUrl" in directive or "requiredFinalClickSelector" in directive:
-            for link in response.css('script'):
-                if "src" in link.attrib:
-                    print("Following script", link.attrib['src'])
-                    yield response.follow(link.attrib['src'], self.no_extract)
-            for link in response.css('link[rel="stylesheet"]'):
-                if "href" in link.attrib:
-                    print("Following style", link.attrib['href'])
-                    yield response.follow(link.attrib['href'], self.no_extract)
-            for link in response.css('img'):
-                if "src" in link.attrib:
-                    print("Following img", link.attrib['src'])
-                    yield response.follow(link.attrib['src'], self.no_extract)
-
-            if "requiredFinalClickSelector" in directive:
-                print("Final click", directive["requiredFinalClickSelector"])
-                yield response.follow(
-                   response.css(directive["requiredFinalClickSelector"] + "::attr(href)")[0].get(),
-                   headers = {'User-Agent': directive["useragent"]},
-                   callback = self.next_directive
-                 )
-            else:
-                print("Final", directive["requiredFinalUrl"])
-                yield response.follow(
-                   directive["requiredFinalUrl"],
-                   headers = {'User-Agent': directive["useragent"]},
-                   callback = self.next_directive
-                 )
-        else:
-           yield from self.next_directive(response)
+        if not still_on_pages:
+            yield from self.next_directive(response)
 
     def next_directive(self, response):
         print("Next Directive")

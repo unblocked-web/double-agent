@@ -7,7 +7,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 272 | 111 | 124
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Can Set Cookies | 8 | 3 | 0 | - Javascript Cookies<br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -30,7 +30,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 241 | 79 | 124
 TCP Layer | 2 | 0 | 0 | 
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 5 | 0 | - Cross Domain Page<br/>- Javascript Cookies<br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -53,7 +53,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 243 | 83 | 124
 TCP Layer | 2 | 1 | 0 | - Packet TTL<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 5 | 0 | - Cross Domain Page<br/>- Javascript Cookies<br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -76,7 +76,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 272 | 113 | 124
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Can Set Cookies | 8 | 5 | 0 | - Cross Domain Page<br/>- Javascript Cookies<br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -99,7 +99,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 245 | 85 | 124
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 5 | 0 | - Cross Domain Page<br/>- Javascript Cookies<br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>

@@ -4,7 +4,7 @@ import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import ICodecSupport from '../interfaces/ICodecSupport';
 import IWebRTCCodec from '../interfaces/IWebRTCCodec';
 
-const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}`;
+const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
 
 const entries: { [browserName: string]: ICodecProfile[] } = {};
 

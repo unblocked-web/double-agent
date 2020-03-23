@@ -1,17 +1,17 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import IRequestDetails from './IRequestDetails';
-import IDetectionSession from './IDetectionSession';
 import IDomainset from './IDomainset';
 import HostDomain from './HostDomain';
-import IdBucketTracker from '../lib/IdBucketTracker';
+import UserBucketTracker from '../lib/UserBucketTracker';
+import DetectionSession from '../lib/DetectionSession';
 
 export default interface IRequestContext {
   req: IncomingMessage;
   res: ServerResponse;
   url: URL;
   requestDetails: IRequestDetails;
-  session: IDetectionSession;
-  bucketTracker: IdBucketTracker,
+  session: DetectionSession;
+  bucketTracker: UserBucketTracker;
   domains: IDomainset;
   extraHead: string[];
   extraScripts: string[];

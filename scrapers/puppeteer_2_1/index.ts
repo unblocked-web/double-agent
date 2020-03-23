@@ -3,18 +3,28 @@ import runDirectiveInPuppeteer from '../puppeteer_2_0/lib/runDirectiveInPuppetee
 import cleanPageCache from '../puppeteer_2_0/lib/cleanPageCache';
 import forEachDirective from '../lib/forEachDirective';
 import { basename } from 'path';
+import Pool from '../lib/Pool';
+import IDirective from '@double-agent/runner/interfaces/IDirective';
 
 (async function() {
-  const puppBrowser = await puppeteer.launch({
-    ignoreHTTPSErrors: true,
-  });
-  await forEachDirective(basename(__dirname), async directive => {
+  const pool = new Pool(6, () =>
+    puppeteer.launch({
+      ignoreHTTPSErrors: true,
+    }),
+  );
+
+  async function run(puppBrowser: puppeteer.Browser, directive: IDirective) {
     const page = await puppBrowser.newPage();
 
     await cleanPageCache(page);
     await runDirectiveInPuppeteer(page, directive);
     // don't wait for close
     page.close().catch();
-  });
-  await puppBrowser.close();
+  }
+
+  try {
+    await forEachDirective(basename(__dirname), dir => pool.run(run, dir), pool.count);
+  } finally {
+    await pool.stop();
+  }
 })().catch(console.log);

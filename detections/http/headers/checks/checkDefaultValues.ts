@@ -1,12 +1,12 @@
-import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
 import { IHeaderStats } from '../lib/getBrowserProfileStats';
 import { IHeadersRequest } from '../lib/HeaderProfile';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
-import { isAgent } from '@double-agent/runner/lib/userAgentUtils';
+import DetectionSession from '@double-agent/runner/lib/DetectionSession';
+import { Agent } from 'useragent';
 
 export default function checkDefaultValues(params: {
-  session: IDetectionSession;
+  session: DetectionSession;
   precheck: Pick<
     IFlaggedCheck,
     'layer' | 'category' | 'requestIdx' | 'resourceType' | 'originType' | 'secureDomain'
@@ -15,7 +15,8 @@ export default function checkDefaultValues(params: {
   browserStats: IHeaderStats;
   extraHeaders?: string[];
 }) {
-  const defaults = params.browserStats.defaults;
+  const hasBrowserStats = !!params.browserStats;
+  const defaults = params.browserStats?.defaults ?? {};
   const { extraHeaders, request } = params;
   const headers = headerDefaultsToCheck.concat(extraHeaders ?? []);
 
@@ -28,48 +29,65 @@ export default function checkDefaultValues(params: {
 
     const defaultValues = defaults[header] ?? defaults[header.toLowerCase()];
 
-    let passing = false;
-    if (defaultValues && defaultValues.length) {
-      passing = defaultValues.includes(value);
-    } else {
-      passing = !value;
+    const agent = params.session.parsedUseragent;
+    const shouldFlag = hasBrowserStats && shouldFlagResult(header, value, defaultValues, agent);
+    const pctBot = getBotScore(header, value, params.precheck.resourceType, agent);
+
+    const checkName = defaultValues?.length
+      ? `Header has a Browser Default Value for: ${header}`
+      : `Header Should NOT be Included: ${header}`;
+
+    params.session.recordCheck(shouldFlag, {
+      ...params.precheck,
+      checkName,
+      description: `Checks if the request has a header value for ${header} matching the default values sent for this user agent`,
+      value,
+      pctBot,
+      expected: defaultValues?.join(', '),
+    });
+  }
+}
+
+function shouldFlagResult(header: string, value: string, defaultValues: string[], agent: Agent) {
+  let shouldFlagResult;
+  if (defaultValues && defaultValues.length) {
+    shouldFlagResult = !defaultValues.includes(value);
+  } else {
+    shouldFlagResult = !!value;
+  }
+
+  const isAcceptLanguageOnChrome = header === 'Accept-Language' && agent.family === 'Chrome';
+  if (shouldFlagResult && isAcceptLanguageOnChrome && !!value) {
+    if (defaultValues.includes(value.replace(',und;q=0.8', ''))) {
+      // my chrome includes a "und" value. if that's here, just ignore it
+      // TODO: is this something common?
+      return false;
     }
+    // TODO: support languages other than english
+  }
+  return shouldFlagResult;
+}
 
-    if (!passing) {
-      const agent = params.session.parsedUseragent;
-      let pctBot = 99;
-      if (header === 'Accept-Language') {
-        if (!value) pctBot = 100;
-        // chrome always includes a quality metric
-        else if (agent.family === 'Chrome') {
-          if (!value.includes(';q=')) pctBot = 100;
-          if (defaultValues.includes(value.replace(',und;q=0.8', ''))) {
-            // my chrome includes a "und" value. if that's here, just ignore it
-            // TODO: is this something common?
-            continue;
-          }
-        }
-        // TODO: support languages other than english
-      }
+function getBotScore(header: string, value: string, resourceType: ResourceType, agent: Agent) {
+  let pctBot = 99;
+  // no accept language header happens in headless chrome by default. no other agents I've tested
+  if (header === 'Accept-Language' && !value) pctBot = 100;
 
-      // Chrome 80 sending not sending Sec-Fetch-Dest for Preflight on local machine... not sure why.
-      if (
-        header === 'Sec-Fetch-Dest' &&
-        params.precheck.resourceType === ResourceType.Preflight &&
-        isAgent(agent, 'Chrome', 80)
-      ) {
-        pctBot = 10;
-      }
-      params.session.flaggedChecks.push({
-        ...params.precheck,
-        checkName: 'Header has a Browser Default Value for: ' + header,
-        description: `Checks if the request has a header value for ${header} matching the default values sent for this user agent`,
-        value,
-        pctBot,
-        expected: defaultValues?.join(', '),
-      });
+  // chrome workarounds
+  if (agent.family === 'Chrome') {
+    // Chrome not sending a quality score has only been observed on very old browsers and headless
+    if (value && !value.includes(';q=')) pctBot = 100;
+
+    // Chrome 80 sending not sending Sec-Fetch-Dest for Preflight on local machine... not sure why.
+    if (
+      header === 'Sec-Fetch-Dest' &&
+      resourceType === ResourceType.Preflight &&
+      agent.major === '80'
+    ) {
+      pctBot = 10;
     }
   }
+  return pctBot;
 }
 
 export const headerDefaultsToCheck = [

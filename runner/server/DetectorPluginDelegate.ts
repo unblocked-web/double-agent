@@ -4,7 +4,7 @@ import IDetectorModule from '../interfaces/IDetectorModule';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import IDirective from '../interfaces/IDirective';
 import IDetectionSession from '../interfaces/IDetectionSession';
-import IdBucketTracker from '../lib/IdBucketTracker';
+import UserBucketTracker from '../lib/UserBucketTracker';
 
 export default class DetectorPluginDelegate implements IDetectionPlugin {
   constructor(readonly detectors: IDetectorModule[]) {}
@@ -20,7 +20,7 @@ export default class DetectorPluginDelegate implements IDetectionPlugin {
   async start(
     domains: IDetectionDomains,
     secureDomains: IDetectionDomains,
-    bucketTracker: IdBucketTracker,
+    bucketTracker: UserBucketTracker,
   ) {
     for (const detector of this.detectors) {
       if (!detector.plugin || !detector.plugin.start) continue;

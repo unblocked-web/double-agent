@@ -1,12 +1,11 @@
 import HostDomain from './HostDomain';
 import ResourceType from './ResourceType';
 import OriginType from './OriginType';
-import { Moment } from 'moment';
 
 export default interface IRequestDetails {
   url: string;
   method: string;
-  time: Moment;
+  time: Date;
   remoteAddress: string;
   useragent: string;
   headers: string[];

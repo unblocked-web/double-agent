@@ -9,7 +9,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 256 | 27 | 218
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -32,7 +32,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 252 | 19 | 218
 TCP Layer | 2 | 0 | 0 | 
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -55,7 +55,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 252 | 21 | 218
 TCP Layer | 2 | 1 | 0 | - Packet TTL<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -78,7 +78,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 256 | 27 | 218
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 1 | 0 | - TLS Grease in ClientHello<br/>
 Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -101,7 +101,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 256 | 23 | 218
 TCP Layer | 6 | 3 | 0 | - Packet TTL<br/>- Packet WindowSize<br/>
-TLS Initial Handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 1 | 1 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 1 | 0 | 0 | 
 Can Set Cookies | 8 | 4 | 1 | - Expires Set Cookies<br/>- Javascript Cookies<br/>- Page<br/><br/>--------------- Not Called -----------<br/><br/>- Page<br/>
 Same Site Cookies | 2 | 1 | 1 | - Same Site Page<br/><br/>--------------- Not Called -----------<br/><br/>- Same Site Stylesheet<br/>
@@ -124,7 +124,7 @@ Detection | Tests | Inconsistency Detected | Flagged (not Called) | Failed Tests
 --- | :---: | :---: | :---: | ---
 Overall | 4 | 2 | 0
 TCP Layer | 0 | 0 | 0 | 
-TLS Initial Handshake | 2 | 2 | 0 | - TLS Fingerprint Match<br/>
+Tls handshake | 2 | 2 | 0 | - TLS Fingerprint Match<br/>
 TLS Grease Used | 2 | 0 | 0 | 
 Can Set Cookies | 0 | 0 | 0 | 
 Same Site Cookies | 0 | 0 | 0 | 

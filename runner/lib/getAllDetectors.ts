@@ -14,11 +14,11 @@ function titleCase(str: string) {
     .join(' ');
 }
 
-const stackOrder = ['tcp', 'tls', 'ip', 'http', 'browser', 'user'];
+export const stackOrder = ['tcp', 'tls', 'ip', 'http', 'browser', 'user', 'visits'];
 
 export const detectionsDir = __dirname + '/../../detections';
 
-export default function getAllDetectors(print = false) {
+export default function getAllDetectors(includeRepeatVisitTests = true, print = false) {
   const detectors: IDetectorModule[] = [];
   let filter;
 
@@ -40,6 +40,7 @@ export default function getAllDetectors(print = false) {
       if (name === '.DS_Store') continue;
       if (!fs.statSync(`${detectionsDir}/${layer}/${name}`).isDirectory()) continue;
       if (filter && !filter.includes(name) && !`${layer}/${name}`.includes(filter)) continue;
+      if (!includeRepeatVisitTests && layer === 'visits') continue;
 
       const entry = {
         layer,

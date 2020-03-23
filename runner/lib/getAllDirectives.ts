@@ -1,30 +1,31 @@
 import IDirective from '../interfaces/IDirective';
-import DetectionsServer from '../server/DetectionsServer';
 import { getUseragentPath } from './profileHelper';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
-import { IBrowserTest } from './generateBrowserTest';
+import { IBrowsersToTest } from './generateBrowserTest';
+import { IUseragentPercents } from './userAgentUtils';
 
 export default async function getAllDirectives(
-  detectionsServer: DetectionsServer,
-  browserTest: IBrowserTest,
+  httpDomains: IDetectionDomains,
+  httpsDomains: IDetectionDomains,
+  browsersToTest: IBrowsersToTest,
 ) {
-  const topBrowserDirectives = browserTest.topBrowsers.map(useragent =>
+  const topBrowserDirectives = browsersToTest.topBrowsers.map(agentDistribution =>
     buildDirective(
-      detectionsServer.httpDomains,
-      detectionsServer.httpsDomains,
+      httpDomains,
+      httpsDomains,
       false,
-      useragent,
-      getUseragentPath(useragent),
+      agentDistribution,
+      getUseragentPath(agentDistribution.useragent),
     ),
   );
 
-  const intoliDirectives = browserTest.intoliBrowsers.map(useragent =>
+  const intoliDirectives = browsersToTest.intoliBrowsers.map(agentDistribution =>
     buildDirective(
-      detectionsServer.httpDomains,
-      detectionsServer.httpsDomains,
+      httpDomains,
+      httpsDomains,
       true,
-      useragent,
-      getUseragentPath(useragent),
+      agentDistribution,
+      getUseragentPath(agentDistribution.useragent),
     ),
   );
 
@@ -35,11 +36,12 @@ export function buildDirective(
   httpDomains: IDetectionDomains,
   secureDomains: IDetectionDomains,
   isIntoliUseragent = false,
-  useragent?: string,
+  agentDistribution?: IUseragentPercents,
   browserGrouping?: string,
 ) {
   return {
-    useragent,
+    useragent: agentDistribution?.useragent,
+    percentOfTraffic: agentDistribution?.percent,
     browserGrouping,
     testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [

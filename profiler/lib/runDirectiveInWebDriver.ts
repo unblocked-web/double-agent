@@ -3,15 +3,10 @@ import IDirective from '@double-agent/runner/interfaces/IDirective';
 
 export default async function runDirectiveInWebDriver(
   driver: WebDriver,
-  startPageUrl: string,
   directive: IDirective,
   browserName: string,
 ) {
   const needsEnterKey = browserName == 'Safari';
-
-  // load the first directive via the page since it will prompt webdriver to load a HEAD request if you go direct
-  console.log('Loading start page for %s: %s', browserName, startPageUrl);
-  await loadFirstPageViaClick(driver, startPageUrl, needsEnterKey);
 
   for (const page of directive.pages) {
     if (page.url !== (await driver.getCurrentUrl())) {
@@ -31,16 +26,6 @@ export default async function runDirectiveInWebDriver(
       await waitForElement(driver, page.waitForElementSelector);
     }
   }
-}
-
-async function loadFirstPageViaClick(
-  driver: WebDriver,
-  startPageUrl: string,
-  needsEnterKey: boolean,
-) {
-  await driver.get(startPageUrl);
-  const elem = await waitForElement(driver, '#start-link');
-  await clickElement(elem, needsEnterKey);
 }
 
 async function waitForElement(driver: WebDriver, cssSelector: string) {

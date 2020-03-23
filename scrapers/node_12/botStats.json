@@ -1,950 +1,983 @@
 {
-  "intoli": {
-    "TCP Layer": {
-      "botPct": 50,
-      "totalFlags": 8,
-      "aggregateBotPct": 400,
-      "flaggedChecks": [
-        {
-          "originType": "none",
-          "hostDomain": "Main",
-          "resourceType": "Document",
-          "layer": "tcp",
-          "requestIdx": 0,
-          "secureDomain": true,
-          "category": "TCP Layer",
-          "checkName": "Packet TTL",
-          "description": "Check that the Operating System tcp packet TTL value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)",
-          "value": 64,
-          "pctBot": 50,
-          "expected": 128,
-          "seenCount": 7
-        },
-        {
-          "originType": "none",
-          "hostDomain": "Main",
-          "resourceType": "Document",
-          "layer": "tcp",
-          "requestIdx": 0,
-          "secureDomain": true,
-          "category": "TCP Layer",
-          "checkName": "Packet WindowSize",
-          "description": "Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)",
-          "value": 0,
-          "pctBot": 50,
-          "expected": "5840,29200,5720",
-          "seenCount": 1
-        }
-      ]
+  "browserFindings": {
+    "mac_os_x_10_13__chrome_79": {
+      "TCP Layer": {
+        "flagged": 0,
+        "checks": 2,
+        "botPct": 0
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 63,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 15
+      },
+      "Same Origin Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 3,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "TLS Initial Handshake": {
-      "botPct": 100,
-      "totalFlags": 8,
-      "aggregateBotPct": 800,
-      "flaggedChecks": [
-        {
-          "value": "771,4866-4867-4865-49199-49195-49200-49196-158-49191-103-49192-107-163-159-52393-52392-52394-49327-49325-49315-49311-49245-49249-49239-49235-162-49326-49324-49314-49310-49244-49248-49238-49234-49188-106-49187-64-49162-49172-57-56-49161-49171-51-50-157-49313-49309-49233-156-49312-49308-49232-61-60-53-47-255,0-11-10-35-22-23-13-43-45-51,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771,,0",
-          "requestIdx": 0,
-          "originType": "none",
-          "hostDomain": "Main",
-          "resourceType": "Document",
-          "layer": "tls",
-          "category": "TLS Initial Handshake",
-          "checkName": "TLS Fingerprint Match",
-          "description": "Checks that the tls client hello signature matches the provided user agent",
-          "expected": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0,1027-2052-1025-1283-2053-1281-2054-1537-513,772-771-770-769,h2-http/1.1,1",
-          "pctBot": 100,
-          "details": "TLS fingerprint seen 0 times on Ja3er crowdsourced tool, but no confirmations ()",
-          "seenCount": 8
-        }
-      ]
+    "mac_os_x_10_14__chrome_79": {
+      "TCP Layer": {
+        "flagged": 0,
+        "checks": 2,
+        "botPct": 0
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 63,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 8
+      },
+      "Same Origin Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 3,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "TLS Grease Used": {
-      "botPct": 100,
-      "totalFlags": 8,
-      "aggregateBotPct": 800,
-      "flaggedChecks": [
-        {
-          "value": false,
-          "requestIdx": 0,
-          "originType": "none",
-          "hostDomain": "Main",
-          "resourceType": "Document",
-          "layer": "tls",
-          "category": "TLS Grease Used",
-          "checkName": "TLS Grease in ClientHello",
-          "description": "Checks that the tls client hello signature matches the provided user agent",
-          "expected": true,
-          "pctBot": 100,
-          "seenCount": 8
-        }
-      ]
+    "mac_os_x_10_15__chrome_79": {
+      "TCP Layer": {
+        "flagged": 0,
+        "checks": 2,
+        "botPct": 0
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 63,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 4
+      },
+      "Same Origin Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 3,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "IP Address": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "mac_os_x_10_15__safari_13": {
+      "TCP Layer": {
+        "flagged": 0,
+        "checks": 2,
+        "botPct": 0
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 0,
+        "checks": 1,
+        "botPct": 0
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 35,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 4
+      },
+      "Same Origin Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 3,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Can Set Cookies": {
-      "botPct": 100,
-      "totalFlags": 82,
-      "aggregateBotPct": 8150,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "pctBot": 100,
-          "category": "Can Set Cookies",
-          "hostDomain": "Main",
-          "originType": "none",
-          "resourceType": "Document",
-          "layer": "http",
-          "checkName": "Http Cookies",
-          "value": null,
-          "description": "Check if a user agent can set any cookies",
-          "seenCount": 64
-        },
-        {
-          "secureDomain": false,
-          "pctBot": 99,
-          "category": "Can Set Cookies",
-          "hostDomain": "Main",
-          "originType": "none",
-          "resourceType": "Document",
-          "layer": "http",
-          "checkName": "Sends Document Cookies",
-          "value": "",
-          "requestIdx": 9,
-          "description": "Check for the cookies for Document requests from origin: none",
-          "expected": "SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--SameSiteStrict,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,inconspicuous-cookie,sessionid",
-          "seenCount": 18
-        }
-      ]
+    "windows_10_0__chrome_79": {
+      "TCP Layer": {
+        "flagged": 1,
+        "checks": 2,
+        "botPct": 70
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 63,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 1,
+        "checks": 16,
+        "botPct": 1
+      },
+      "Same Origin Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 3,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Same Site Cookies": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "windows_7_0__chrome_79": {
+      "TCP Layer": {
+        "flagged": 2,
+        "checks": 2,
+        "botPct": 70
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 63,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 4
+      },
+      "Same Origin Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 3,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Same Origin Cookies": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "mac_os_x_10_15__chrome_80": {
+      "TCP Layer": {
+        "flagged": 0,
+        "checks": 2,
+        "botPct": 0
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 70,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 7
+      },
+      "Same Origin Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 1,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Secure Cookies": {
-      "botPct": 99,
-      "totalFlags": 16,
-      "aggregateBotPct": 1584,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "pctBot": 99,
-          "category": "Secure Cookies",
-          "hostDomain": "Main",
-          "originType": "none",
-          "resourceType": "Document",
-          "layer": "http",
-          "checkName": "Sends Document Cookies",
-          "value": "",
-          "requestIdx": 7,
-          "description": "Check for the cookies for Document requests from origin: none",
-          "expected": "SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--RootDomain-Secure-SameSiteLax,SecureMain--RootDomain-Secure-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--Secure,SecureMain--Secure-SameSiteLax,SecureMain--Secure-SameSiteNone,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,SecureSub--RootDomain-Secure-SameSiteLax,SecureSub--RootDomain-Secure-SameSiteNone,__Host-SecureMain--Secure-HostPrefix-RootPath,__Secure-SecureMain--Secure-SecurePrefix,inconspicuous-cookie,sessionid",
-          "seenCount": 16
-        }
-      ]
+    "linux_0_0__chromium_80": {
+      "TCP Layer": {
+        "flagged": 1,
+        "checks": 2,
+        "botPct": 70
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 0,
+        "checks": 126,
+        "botPct": 0
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 50
+      },
+      "Same Origin Cookies": {
+        "flagged": 0,
+        "checks": 4,
+        "botPct": 0
+      },
+      "Same Site Cookies": {
+        "flagged": 0,
+        "checks": 4,
+        "botPct": 0
+      },
+      "Cross Site Cookies": {
+        "flagged": 0,
+        "checks": 4,
+        "botPct": 0
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 0,
+        "checks": 126,
+        "botPct": 0
+      }
     },
-    "Cross Domain Cookies": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "linux_0_0__chrome_80": {
+      "TCP Layer": {
+        "flagged": 1,
+        "checks": 2,
+        "botPct": 70
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 70,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 50
+      },
+      "Same Origin Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 1,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Standard Http Headers": {
-      "botPct": 100,
-      "totalFlags": 48,
-      "aggregateBotPct": 4760,
-      "flaggedChecks": [
-        {
-          "secureDomain": false,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "category": "Standard Http Headers",
-          "requestIdx": 9,
-          "description": "Checks if the request has all headers for this type of request in the correct order and case for the provided user agent",
-          "checkName": "Headers are in the Correct Order and Case",
-          "value": "User-Agent,Host,Connection",
-          "pctBot": 99,
-          "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Accept,Accept-Encoding,Accept-Language,Cookie",
-          "seenCount": 8
-        },
-        {
-          "secureDomain": false,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "category": "Standard Http Headers",
-          "requestIdx": 9,
-          "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Connection",
-          "value": "close",
-          "pctBot": 99,
-          "expected": "keep-alive",
-          "seenCount": 8
-        },
-        {
-          "secureDomain": false,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "category": "Standard Http Headers",
-          "requestIdx": 9,
-          "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Accept",
-          "pctBot": 99,
-          "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-          "seenCount": 32
-        }
-      ]
+    "windows_10_0__chrome_80": {
+      "TCP Layer": {
+        "flagged": 1,
+        "checks": 2,
+        "botPct": 70
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 70,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 1,
+        "checks": 16,
+        "botPct": 7
+      },
+      "Same Origin Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 1,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Standard Https Headers": {
-      "botPct": 100,
-      "totalFlags": 77,
-      "aggregateBotPct": 7631,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "same-site",
-          "category": "Standard Https Headers",
-          "requestIdx": 0,
-          "description": "Checks if the request has all headers for this type of request in the correct order and case for the provided user agent",
-          "checkName": "Headers are in the Correct Order and Case",
-          "value": "User-Agent,Host,Connection",
-          "pctBot": 99,
-          "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language",
-          "seenCount": 8
-        },
-        {
-          "secureDomain": true,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "same-site",
-          "category": "Standard Https Headers",
-          "requestIdx": 0,
-          "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Connection",
-          "value": "close",
-          "pctBot": 99,
-          "expected": "keep-alive",
-          "seenCount": 8
-        },
-        {
-          "secureDomain": true,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "same-site",
-          "category": "Standard Https Headers",
-          "requestIdx": 0,
-          "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Accept",
-          "pctBot": 99,
-          "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-          "seenCount": 61
-        }
-      ]
+    "mac_os_x_10_14__chrome_80": {
+      "TCP Layer": {
+        "flagged": 0,
+        "checks": 2,
+        "botPct": 0
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 70,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 8
+      },
+      "Same Origin Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 1,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Asset Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "linux_0_0__chrome_75": {
+      "TCP Layer": {
+        "flagged": 1,
+        "checks": 2,
+        "botPct": 70
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 0,
+        "checks": 126,
+        "botPct": 0
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 50
+      },
+      "Same Origin Cookies": {
+        "flagged": 0,
+        "checks": 4,
+        "botPct": 0
+      },
+      "Same Site Cookies": {
+        "flagged": 0,
+        "checks": 4,
+        "botPct": 0
+      },
+      "Cross Site Cookies": {
+        "flagged": 0,
+        "checks": 4,
+        "botPct": 0
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 0,
+        "checks": 126,
+        "botPct": 0
+      }
     },
-    "Xhr Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "linux_0_0__chrome_79": {
+      "TCP Layer": {
+        "flagged": 1,
+        "checks": 2,
+        "botPct": 70
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 63,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 50
+      },
+      "Same Origin Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 4,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 3,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Cors Preflight Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "windows_7_0__chrome_80": {
+      "TCP Layer": {
+        "flagged": 2,
+        "checks": 2,
+        "botPct": 70
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 70,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 7
+      },
+      "Same Origin Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 1,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     },
-    "Websocket Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Loads All Page Assets": {
-      "botPct": 99,
-      "totalFlags": 128,
-      "aggregateBotPct": 11904,
-      "flaggedChecks": [
-        {
-          "pctBot": 99,
-          "layer": "http",
-          "category": "Loads All Page Assets",
-          "checkName": "Loads Websocket Upgrade",
-          "description": "Checks that a user agent is loading Websocket Upgrades (bots frequently don't load all css/images/etc)",
-          "secureDomain": true,
-          "resourceType": "Websocket Upgrade",
-          "value": 0,
-          "expected": 5,
-          "seenCount": 96
-        },
-        {
-          "pctBot": 75,
-          "layer": "http",
-          "category": "Loads All Page Assets",
-          "checkName": "Sends Webservice Requests",
-          "description": "Checks that a user agent sends webservice messages (bots frequently don't load all css/images/etc)",
-          "secureDomain": true,
-          "resourceType": "Websocket Message",
-          "value": 5,
-          "expected": 8,
-          "seenCount": 16
-        },
-        {
-          "pctBot": 75,
-          "layer": "http",
-          "category": "Loads All Page Assets",
-          "checkName": "Sends Webservice Requests",
-          "description": "Checks that a user agent sends webservice messages (bots frequently don't load all css/images/etc)",
-          "secureDomain": true,
-          "resourceType": "Websocket Message",
-          "value": 8,
-          "expected": 14,
-          "seenCount": 16
-        }
-      ]
-    },
-    "User Agent": {
-      "botPct": 50,
-      "totalFlags": 10,
-      "aggregateBotPct": 323,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
-          "pctBot": 35,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36",
-          "pctBot": 32,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36",
-          "pctBot": 32,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/80.0.3987.87 Chrome/80.0.3987.87 Safari/537.36",
-          "pctBot": 50,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
-          "pctBot": 26,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-          "pctBot": 32,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
-          "pctBot": 26,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36",
-          "pctBot": 26,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-          "pctBot": 32,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36",
-          "pctBot": 32,
-          "seenCount": 1
-        }
-      ]
-    },
-    "Audio Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Video Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "WebRTC Audio Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "WebRTC Video Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Browser Fingerprint": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    "mac_os_x_10_13__chrome_80": {
+      "TCP Layer": {
+        "flagged": 0,
+        "checks": 2,
+        "botPct": 0
+      },
+      "TLS Handshake": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "TLS Grease Used": {
+        "flagged": 1,
+        "checks": 1,
+        "botPct": 100
+      },
+      "IP Address": {
+        "flagged": 0,
+        "checks": 14,
+        "botPct": 0
+      },
+      "Standard Https Headers": {
+        "flagged": 70,
+        "checks": 126,
+        "botPct": 100
+      },
+      "User Agent": {
+        "flagged": 2,
+        "checks": 16,
+        "botPct": 15
+      },
+      "Same Origin Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Same Site Cookies": {
+        "flagged": 2,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cross Site Cookies": {
+        "flagged": 1,
+        "checks": 4,
+        "botPct": 99
+      },
+      "Cookie Support": {
+        "flagged": 4,
+        "checks": 6,
+        "botPct": 100
+      },
+      "Loads All Page Assets": {
+        "flagged": 8,
+        "checks": 10,
+        "botPct": 100
+      },
+      "Standard Http Headers": {
+        "flagged": 30,
+        "checks": 126,
+        "botPct": 100
+      }
     }
   },
-  "topBrowsers": {
-    "TCP Layer": {
-      "botPct": 50,
-      "totalFlags": 6,
-      "aggregateBotPct": 300,
-      "flaggedChecks": [
-        {
-          "originType": "none",
-          "hostDomain": "Main",
-          "resourceType": "Document",
-          "layer": "tcp",
-          "requestIdx": 0,
-          "secureDomain": true,
-          "category": "TCP Layer",
-          "checkName": "Packet TTL",
-          "description": "Check that the Operating System tcp packet TTL value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)",
-          "value": 64,
-          "pctBot": 50,
-          "expected": 128,
-          "seenCount": 6
-        }
-      ]
+  "intoliBrowsers": [
+    {
+      "browser": "mac_os_x_10_15__chrome_80",
+      "percentUsed": 24,
+      "agentStrings": 5
     },
-    "TLS Initial Handshake": {
-      "botPct": 100,
-      "totalFlags": 10,
-      "aggregateBotPct": 1000,
-      "flaggedChecks": [
-        {
-          "value": "771,4866-4867-4865-49199-49195-49200-49196-158-49191-103-49192-107-163-159-52393-52392-52394-49327-49325-49315-49311-49245-49249-49239-49235-162-49326-49324-49314-49310-49244-49248-49238-49234-49188-106-49187-64-49162-49172-57-56-49161-49171-51-50-157-49313-49309-49233-156-49312-49308-49232-61-60-53-47-255,0-11-10-35-22-23-13-43-45-51,29-23-30-25-24,0-1-2,1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538,772-771,,0",
-          "requestIdx": 0,
-          "originType": "none",
-          "hostDomain": "Main",
-          "resourceType": "Document",
-          "layer": "tls",
-          "category": "TLS Initial Handshake",
-          "checkName": "TLS Fingerprint Match",
-          "description": "Checks that the tls client hello signature matches the provided user agent",
-          "expected": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0,1027-2052-1025-1283-2053-1281-2054-1537-513,772-771-770-769,h2-http/1.1,1",
-          "pctBot": 100,
-          "details": "TLS fingerprint seen 0 times on Ja3er crowdsourced tool, but no confirmations ()",
-          "seenCount": 10
-        }
-      ]
+    {
+      "browser": "mac_os_x_10_15__safari_13",
+      "percentUsed": 2,
+      "agentStrings": 1
     },
-    "TLS Grease Used": {
-      "botPct": 100,
-      "totalFlags": 9,
-      "aggregateBotPct": 900,
-      "flaggedChecks": [
-        {
-          "value": false,
-          "requestIdx": 0,
-          "originType": "none",
-          "hostDomain": "Main",
-          "resourceType": "Document",
-          "layer": "tls",
-          "category": "TLS Grease Used",
-          "checkName": "TLS Grease in ClientHello",
-          "description": "Checks that the tls client hello signature matches the provided user agent",
-          "expected": true,
-          "pctBot": 100,
-          "seenCount": 9
-        }
-      ]
+    {
+      "browser": "linux_0_0__chromium_80",
+      "percentUsed": 2,
+      "agentStrings": 1
     },
-    "IP Address": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    {
+      "browser": "linux_0_0__chrome_80",
+      "percentUsed": 6,
+      "agentStrings": 3
     },
-    "Can Set Cookies": {
-      "botPct": 100,
-      "totalFlags": 142,
-      "aggregateBotPct": 14098,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "pctBot": 100,
-          "category": "Can Set Cookies",
-          "hostDomain": "Main",
-          "originType": "none",
-          "resourceType": "Document",
-          "layer": "http",
-          "checkName": "Http Cookies",
-          "value": null,
-          "description": "Check if a user agent can set any cookies",
-          "seenCount": 80
-        },
-        {
-          "secureDomain": false,
-          "pctBot": 99,
-          "category": "Can Set Cookies",
-          "hostDomain": "Main",
-          "originType": "none",
-          "resourceType": "Document",
-          "layer": "http",
-          "checkName": "Sends Document Cookies",
-          "value": "",
-          "requestIdx": 9,
-          "description": "Check for the cookies for Document requests from origin: none",
-          "expected": "SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--SameSiteStrict,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,inconspicuous-cookie,sessionid",
-          "seenCount": 62
-        }
-      ]
+    {
+      "browser": "windows_10_0__chrome_80",
+      "percentUsed": 38,
+      "agentStrings": 4
     },
-    "Same Site Cookies": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    {
+      "browser": "windows_10_0__chrome_79",
+      "percentUsed": 4,
+      "agentStrings": 2
     },
-    "Same Origin Cookies": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    {
+      "browser": "mac_os_x_10_14__chrome_80",
+      "percentUsed": 8,
+      "agentStrings": 3
     },
-    "Secure Cookies": {
-      "botPct": 99,
-      "totalFlags": 22,
-      "aggregateBotPct": 2178,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "pctBot": 99,
-          "category": "Secure Cookies",
-          "hostDomain": "Main",
-          "originType": "none",
-          "resourceType": "Document",
-          "layer": "http",
-          "checkName": "Sends Document Cookies",
-          "value": "",
-          "requestIdx": 7,
-          "description": "Check for the cookies for Document requests from origin: none",
-          "expected": "SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--RootDomain-Secure-SameSiteLax,SecureMain--RootDomain-Secure-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--Secure,SecureMain--Secure-SameSiteLax,SecureMain--Secure-SameSiteNone,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,SecureSub--RootDomain-Secure-SameSiteLax,SecureSub--RootDomain-Secure-SameSiteNone,__Host-SecureMain--Secure-HostPrefix-RootPath,__Secure-SecureMain--Secure-SecurePrefix,inconspicuous-cookie,sessionid",
-          "seenCount": 22
-        }
-      ]
+    {
+      "browser": "linux_0_0__chrome_75",
+      "percentUsed": 2,
+      "agentStrings": 1
     },
-    "Cross Domain Cookies": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    {
+      "browser": "mac_os_x_10_15__chrome_79",
+      "percentUsed": 2,
+      "agentStrings": 1
     },
-    "Standard Http Headers": {
-      "botPct": 100,
-      "totalFlags": 60,
-      "aggregateBotPct": 5950,
-      "flaggedChecks": [
-        {
-          "secureDomain": false,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "category": "Standard Http Headers",
-          "requestIdx": 9,
-          "description": "Checks if the request has all headers for this type of request in the correct order and case for the provided user agent",
-          "checkName": "Headers are in the Correct Order and Case",
-          "value": "User-Agent,Host,Connection",
-          "pctBot": 99,
-          "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Accept,Accept-Encoding,Accept-Language,Cookie",
-          "seenCount": 10
-        },
-        {
-          "secureDomain": false,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "category": "Standard Http Headers",
-          "requestIdx": 9,
-          "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Connection",
-          "value": "close",
-          "pctBot": 99,
-          "expected": "keep-alive",
-          "seenCount": 10
-        },
-        {
-          "secureDomain": false,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "category": "Standard Http Headers",
-          "requestIdx": 9,
-          "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Accept",
-          "pctBot": 99,
-          "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-          "seenCount": 40
-        }
-      ]
+    {
+      "browser": "linux_0_0__chrome_79",
+      "percentUsed": 2,
+      "agentStrings": 1
     },
-    "Standard Https Headers": {
-      "botPct": 100,
-      "totalFlags": 91,
-      "aggregateBotPct": 9020,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "same-site",
-          "category": "Standard Https Headers",
-          "requestIdx": 0,
-          "description": "Checks if the request has all headers for this type of request in the correct order and case for the provided user agent",
-          "checkName": "Headers are in the Correct Order and Case",
-          "value": "User-Agent,Host,Connection",
-          "pctBot": 99,
-          "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language",
-          "seenCount": 11
-        },
-        {
-          "secureDomain": true,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "same-site",
-          "category": "Standard Https Headers",
-          "requestIdx": 0,
-          "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Connection",
-          "value": "close",
-          "pctBot": 99,
-          "expected": "keep-alive",
-          "seenCount": 11
-        },
-        {
-          "secureDomain": true,
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "same-site",
-          "category": "Standard Https Headers",
-          "requestIdx": 0,
-          "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
-          "checkName": "Header has a Browser Default Value for: Accept",
-          "pctBot": 99,
-          "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-          "seenCount": 69
-        }
-      ]
+    {
+      "browser": "windows_7_0__chrome_80",
+      "percentUsed": 6,
+      "agentStrings": 2
     },
-    "Asset Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    {
+      "browser": "mac_os_x_10_13__chrome_80",
+      "percentUsed": 2,
+      "agentStrings": 1
     },
-    "Xhr Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Cors Preflight Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Websocket Headers": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Loads All Page Assets": {
-      "botPct": 99,
-      "totalFlags": 160,
-      "aggregateBotPct": 14880,
-      "flaggedChecks": [
-        {
-          "pctBot": 99,
-          "layer": "http",
-          "category": "Loads All Page Assets",
-          "checkName": "Loads Websocket Upgrade",
-          "description": "Checks that a user agent is loading Websocket Upgrades (bots frequently don't load all css/images/etc)",
-          "secureDomain": true,
-          "resourceType": "Websocket Upgrade",
-          "value": 0,
-          "expected": 5,
-          "seenCount": 120
-        },
-        {
-          "pctBot": 75,
-          "layer": "http",
-          "category": "Loads All Page Assets",
-          "checkName": "Sends Webservice Requests",
-          "description": "Checks that a user agent sends webservice messages (bots frequently don't load all css/images/etc)",
-          "secureDomain": true,
-          "resourceType": "Websocket Message",
-          "value": 5,
-          "expected": 8,
-          "seenCount": 20
-        },
-        {
-          "pctBot": 75,
-          "layer": "http",
-          "category": "Loads All Page Assets",
-          "checkName": "Sends Webservice Requests",
-          "description": "Checks that a user agent sends webservice messages (bots frequently don't load all css/images/etc)",
-          "secureDomain": true,
-          "resourceType": "Websocket Message",
-          "value": 8,
-          "expected": 14,
-          "seenCount": 20
-        }
-      ]
-    },
-    "User Agent": {
-      "botPct": 29.5,
-      "totalFlags": 10,
-      "aggregateBotPct": 263.5,
-      "flaggedChecks": [
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
-          "pctBot": 26,
-          "seenCount": 4
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
-          "pctBot": 26,
-          "seenCount": 3
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
-          "pctBot": 26,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36",
-          "pctBot": 26,
-          "seenCount": 1
-        },
-        {
-          "secureDomain": true,
-          "requestIdx": 0,
-          "category": "User Agent",
-          "layer": "http",
-          "resourceType": "Document",
-          "originType": "none",
-          "hostDomain": "Main",
-          "checkName": "User Agent Popularity",
-          "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15",
-          "pctBot": 29.5,
-          "seenCount": 1
-        }
-      ]
-    },
-    "Audio Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Video Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "WebRTC Audio Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "WebRTC Video Codecs Supported": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
-    },
-    "Browser Fingerprint": {
-      "botPct": 0,
-      "totalFlags": 0,
-      "aggregateBotPct": 0,
-      "flaggedChecks": []
+    {
+      "browser": "windows_7_0__chrome_79",
+      "percentUsed": 2,
+      "agentStrings": 1
     }
-  },
-  "categorySources": {
-    "tcp": ["TCP Layer"],
-    "tls": ["TLS Initial Handshake", "TLS Grease Used"],
-    "ip": ["IP Address"],
-    "http": [
-      "Can Set Cookies",
-      "Same Site Cookies",
-      "Same Origin Cookies",
-      "Secure Cookies",
-      "Cross Domain Cookies",
-      "Standard Http Headers",
-      "Standard Https Headers",
-      "Asset Headers",
-      "Xhr Headers",
-      "Cors Preflight Headers",
-      "Websocket Headers",
-      "Loads All Page Assets",
-      "User Agent"
-    ],
-    "browser": [
-      "Audio Codecs Supported",
-      "Video Codecs Supported",
-      "WebRTC Audio Codecs Supported",
-      "WebRTC Video Codecs Supported",
-      "Browser Fingerprint"
-    ]
-  }
+  ],
+  "topBrowsers": [
+    {
+      "browser": "mac_os_x_10_13__chrome_79",
+      "percentUsed": 3,
+      "agentStrings": 1
+    },
+    {
+      "browser": "mac_os_x_10_14__chrome_79",
+      "percentUsed": 6,
+      "agentStrings": 1
+    },
+    {
+      "browser": "mac_os_x_10_15__chrome_79",
+      "percentUsed": 11,
+      "agentStrings": 1
+    },
+    {
+      "browser": "mac_os_x_10_15__safari_13",
+      "percentUsed": 20,
+      "agentStrings": 1
+    },
+    {
+      "browser": "windows_10_0__chrome_79",
+      "percentUsed": 48,
+      "agentStrings": 1
+    },
+    {
+      "browser": "windows_7_0__chrome_79",
+      "percentUsed": 10,
+      "agentStrings": 1
+    }
+  ]
 }

@@ -6,6 +6,9 @@ import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import UserAgentOverride from 'puppeteer-extra-plugin-stealth/evasions/user-agent-override';
 import { lookup } from 'useragent';
+import Pool from '../lib/Pool';
+import IDirective from '@double-agent/runner/interfaces/IDirective';
+import { Browser } from 'puppeteer';
 
 (async function() {
   const stealth = StealthPlugin();
@@ -15,11 +18,16 @@ import { lookup } from 'useragent';
     locale: 'en-US,en',
   });
   puppeteer.use(ua);
-  const puppBrowser = await puppeteer.launch({
-    ignoreHTTPSErrors: true,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  const pool = new Pool(6, () => {
+    return puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      executablePath:
+        process.env.PUPPETEER_EXECUTABLE_PATH ??
+        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    });
   });
-  await forEachDirective(basename(__dirname), async directive => {
+
+  async function run(puppBrowser: Browser, directive: IDirective) {
     const useragent = lookup(directive.useragent);
     ua.opts.userAgent = directive.useragent;
     ua.opts.platform = useragent.os.family === 'Windows' ? 'Win32' : 'MacIntel';
@@ -30,6 +38,11 @@ import { lookup } from 'useragent';
     await runDirectiveInPuppeteer(page, directive, false);
     // don't wait for close
     page.close().catch();
-  });
-  await puppBrowser.close();
+  }
+
+  try {
+    await forEachDirective(basename(__dirname), dir => pool.run(run, dir), pool.count);
+  } finally {
+    await pool.stop();
+  }
 })().catch(console.log);
