@@ -6,7 +6,7 @@ const header = `Module | Detections | Description | Implemented
 
 const outputFile = __dirname + '/../output/detections.md';
 export default function buildDetectionsList() {
-  const allDetectors = getAllDetectors();
+  const allDetectors = getAllDetectors(true, false);
   let md = header;
   for (const detector of allDetectors) {
     md += `\n${detector.layer}/${detector.name} | ${detector.checkCategories

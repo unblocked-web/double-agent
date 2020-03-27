@@ -1,1 +1,0 @@
-# Scrapers Detections

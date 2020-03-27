@@ -6,42 +6,34 @@ Mostly, these tests detect when a user agent is not who it claims to be.
 
 ## Mainstream Scraper Detections:
 
-This version of Double Agent tests how many ways popular scrapers can be detected when emulating the most common browser/OS desktop combos. Future versions will integrate mobile browsers.
+This version of Double Agent tests how many ways popular scrapers can be detected when emulating  browser/OS desktop combos. Future versions will integrate mobile browsers.
 
-Counts shown are the number of ways to detect each scraper agent per test suite emulating browsers with the Operating Systems shown below.
+Scrapers often choose a strategy of rotating user agents using a library, or picking a few popular browsers and rotating between those. This suite tests both strategies.
 
-[]() | Chrome 79 | Safari 13 | Edge 18 | Chrome 80 | Firefox 72
---- |  :---: | :---: | :---: | :---: | :---: 
-[Node.js 12 - http/https](docs/scraper-detections/node_12.md) | [246](docs/scraper-detections/node_12.md#emulating-chrome-79)| [247](docs/scraper-detections/node_12.md#emulating-safari-13)| [248](docs/scraper-detections/node_12.md#emulating-edge-18)| [251](docs/scraper-detections/node_12.md#emulating-chrome-80)| [250](docs/scraper-detections/node_12.md#emulating-firefox-72)
-[curl](docs/scraper-detections/curl.md) | [245](docs/scraper-detections/curl.md#emulating-chrome-79)| [237](docs/scraper-detections/curl.md#emulating-safari-13)| [239](docs/scraper-detections/curl.md#emulating-edge-18)| [245](docs/scraper-detections/curl.md#emulating-chrome-80)| [241](docs/scraper-detections/curl.md#emulating-firefox-72)
-[Scrapy 1.8](docs/scraper-detections/scrapy_1_8.md) | [235](docs/scraper-detections/scrapy_1_8.md#emulating-chrome-79)| [203](docs/scraper-detections/scrapy_1_8.md#emulating-safari-13)| [207](docs/scraper-detections/scrapy_1_8.md#emulating-edge-18)| [237](docs/scraper-detections/scrapy_1_8.md#emulating-chrome-80)| [209](docs/scraper-detections/scrapy_1_8.md#emulating-firefox-72)
-[Puppeteer 2.0 - Chromium 79](docs/scraper-detections/puppeteer_2_0.md) | [52](docs/scraper-detections/puppeteer_2_0.md#emulating-chrome-79)| [92](docs/scraper-detections/puppeteer_2_0.md#emulating-safari-13)| [114](docs/scraper-detections/puppeteer_2_0.md#emulating-edge-18)| [52](docs/scraper-detections/puppeteer_2_0.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_0.md#emulating-firefox-72)
-[Puppeteer 2.0 - Chromium 79 + Incognito Mode](docs/scraper-detections/puppeteer_2_0_incognito.md) | [52](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-chrome-79)| [92](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-safari-13)| [114](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-edge-18)| [52](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_0_incognito.md#emulating-firefox-72)
-[Puppeteer 2.1 - Chromium 80](docs/scraper-detections/puppeteer_2_1.md) | [44](docs/scraper-detections/puppeteer_2_1.md#emulating-chrome-79)| [98](docs/scraper-detections/puppeteer_2_1.md#emulating-safari-13)| [101](docs/scraper-detections/puppeteer_2_1.md#emulating-edge-18)| [35](docs/scraper-detections/puppeteer_2_1.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_1.md#emulating-firefox-72)
-[Puppeteer 2.1 - Chrome 80 + Stealth Plugin](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md) | [26](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-chrome-79)| [95](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-safari-13)| [117](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-edge-18)| [26](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_1_chrome_stealth.md#emulating-firefox-72)
-[Puppeteer 2.1 - Chrome 80](docs/scraper-detections/puppeteer_2_1_chrome.md) | [34](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-chrome-79)| [95](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-safari-13)| [98](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-edge-18)| [25](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-chrome-80)| [99](docs/scraper-detections/puppeteer_2_1_chrome.md#emulating-firefox-72)
-*US desktop browser market share -->* <sup name="browsershare">[1](#statcounter1)</sup> | *42.2%* | *11.1%* | *7.8%* | *7%* | *5.1%*
+1. **Generator:** randomly generated using the Intoli [user-agents](https://github.com/intoli/user-agents) package
+2. **Top Browsers:** rotate between the top 2 Browsers according to [StatCounter.com](https://gs.statcounter.com/)
 
-<sup id="statcounter1">[1]</sup> as of January 2020 from [StatCounter.com](https://gs.statcounter.com/)
+Counts shown are the likelihood of bot detection using both strategies when scraping just a few requests. NOTE: all tests are active in these scores. For a dynamic approach to exploring results, visit [State of Scraping](https://stateofscraping.org).
 
-OS | Market Share
----  | :---:
-Windows 10 | 50.2%
-OS X Catalina | 11.7%
-Windows 7 | 10.4%
-OS X Mojave | 6.2%
-OS X High Sierra | 3.2%
-Total | 81.7%
+[]() | Generator | Top Browsers
+--- | :---: | :---:
+curl 7.64 | 100 | 98
+Node.js 12 - http/https | 100 | 98
+Scrapy 1.8 | 100 | 98
+Puppeteer 2.0 - Chromium 79 | 96 | 98
+Puppeteer 2.0 - Chromium 79 + Incognito Mode | 96 | 98
+Puppeteer 2.1 - Chromium 80 | 95 | 98
+Puppeteer 2.1 - Chrome 80 | 95 | 97
+Puppeteer 2.1 - Chrome 80 + Stealth Plugin | 85 | 97
 
 ## Structure:
 
-This suite is broken into layers of detection. Some of these layers can be used on their own to detect a user agent who
-does not appear who it says it is, but most of these utilities would be combined to determine a “score” of bot-likelihood
-by a detection system.
+This suite is broken up by the layers of an http request. Each layer has one or more plugins that tie into an overall set of pages loaded by a test runner. Each plugin first generates "profiles" of how known browsers behave loading the test pages. Any scraper is then compared to these "profiles" to find discrepancies. These checks are given a "bot score", or likelihood that the flagged check indicates the user agent is actually a bot.
 
 - `/detections`: suite of tests
 - `/runner`: a server that can generate step-by-step instructions for a scraper to run all tests
 - `/scrapers`: some default scraping stacks running the suite
+- `/profiler`: create profiles of real browsers running through the pages 
 
 ## Detections:
 
@@ -50,13 +42,16 @@ The list of detections is listed below (some tests are not yet implemented):
 Module | Detections | Description | Implemented
 --- | --- | --- | :---:
 tcp/ttl | * TCP Layer | Compares tcp packet values to the user agent OS | :white_check_mark:
-tls/clienthello | * Tls handshake<br/><br/>* TLS Grease Used | Looks at the tls handshake and compares to the proposed user agent OS | :white_check_mark:
-http/cookies | * Can Set Cookies<br/><br/>* Same Site Cookies<br/><br/>* Secure Cookies<br/><br/>* Cross Domain Cookies | Are cookies enabled? Are same-site, secure and other cookies correctly sent? | :white_check_mark:
+tls/clienthello | * TLS Handshake<br/><br/>* TLS Grease Used | Looks at the tls handshake and compares to the proposed user agent OS | :white_check_mark:
+ip/address | * IP Address | Checks remote ip addresses and port ranges | :white_check_mark:
+http/cookies | * Cookie Support<br/><br/>* Secure Cookies<br/><br/>* Same Site Cookies<br/><br/>* Same Origin Cookies<br/><br/>* Cross Site Cookies | Are cookies enabled? Are same-site, secure and other cookies correctly sent? | :white_check_mark:
 http/headers | * Standard Http Headers<br/><br/>* Standard Https Headers<br/><br/>* Asset Headers<br/><br/>* Xhr Headers<br/><br/>* Cors Preflight Headers<br/><br/>* Websocket Headers | Compares header order, capitalization and default values to normal (recorded) user agent values | :white_check_mark:
+http/loaded-assets | * Loads All Page Assets | Does a request load expected assets? (css, images, ad networks) | :white_check_mark:
+http/user-agent | * User Agent | Checks how common a user agent is | :white_check_mark:
 browser/codecs | * Audio Codecs Supported<br/><br/>* Video Codecs Supported<br/><br/>* WebRTC Audio Codecs Supported<br/><br/>* WebRTC Video Codecs Supported | Test that the audio, video and WebRTC codecs match the given user agent | :white_check_mark:
 browser/fingerprint | * Browser Fingerprint | Is the browser fingerprint the same on every execution? | :white_check_mark:
+visits/over-time | * Hits Per Second<br/><br/>* Hits Per Minute<br/><br/>* Hits Per Hour | Checks counts of hits from the same user agent buckets | :white_check_mark:
 http/cache | * Cache Headers | Http caching headers sent in different conditions vs default user agent behavior |  
-http/loaded-assets | * Loads All Page Assets | Does a request load expected assets? (css, images, ad networks) |  
 http/navigate | * Sec Navigate Header | Looks at SEC- http headers for user initiated navigation and referrers |  
 http/referrers | * Referrers | Referrer headers indicate browser came from a legitimate source |  
 browser/features | * Dom Features Match Version | Test that the list of browser features matches the user agent |  
@@ -76,7 +71,7 @@ If you'd like to test out your scraper stack:
 1. Navigate to the `/runner` directory and run `yarn start`.
 
 2. The API at `http://localhost:3000` will return directives one at a time until all tests have been run. Include a scraper engine you're testing with
-   a query string or header called "scraper". Directive format can be found at `/runner/lib/IDirective.ts`.
+   a query string or header called "scraper". Directive format can be found at `/runner/interfaces/IDirective.ts`.
 
 3. Once all tests are run, results will be output to the same directory as your scraper engine.
 

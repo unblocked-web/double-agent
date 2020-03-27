@@ -93,13 +93,8 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import Stat from '@/components/Stat.vue';
 import VueSlider from 'vue-slider-component';
-import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { categories, scrapers } from '../data';
-import IBrowserFindings, {
-  IBrowserPercents,
-} from '@double-agent/runner/interfaces/IBrowserFindings';
-import { getActiveBucketChecks } from '@double-agent/visits-over-time/lib/bucketChecks';
-import { getVisitLimit } from '@double-agent/visits-over-time/lib/visitLimits';
+import browserWeightedBotScore from '@double-agent/runner/lib/browserWeightedBotScore';
 
 @Component({
   components: {
@@ -108,7 +103,7 @@ import { getVisitLimit } from '@double-agent/visits-over-time/lib/visitLimits';
   },
 })
 export default class ScraperBotOdds extends Vue {
-  private agentsType = 'intoli';
+  private agentsType: 'intoli' | 'statcounter' = 'intoli';
   private rotateIP = false;
   private selectedCategories: string[] = [];
   private basicCategories: string[] = ['IP Address', 'User Agent'];
@@ -208,23 +203,21 @@ export default class ScraperBotOdds extends Vue {
     const activeCategories = this.selectedCategories.filter(category =>
       this.categoriesAndLayers.some(x => !x.isLayer && x.title === category && x.implemented),
     );
-    for (const [scraperKey, scraper] of Object.entries(scrapers)) {
-      const browsers = this.agentsType === 'intoli' ? scraper.intoliBrowsers : scraper.topBrowsers;
-
-      const scores = getBotScore(
-        scraperKey,
+    for (const [, scraper] of Object.entries(scrapers)) {
+      const scores = browserWeightedBotScore(
+        scraper,
         activeCategories,
-        browsers,
+        this.agentsType,
         this.rotateIP,
         this.requestsPerPeriod,
       );
       this.botScores[scraper.title] = scores.botScore;
       this.botScoresByCategory[scraper.title] = scores.categoryScores;
 
-      const basicScores = getBotScore(
-        scraperKey,
+      const basicScores = browserWeightedBotScore(
+        scraper,
         this.basicCategories,
-        browsers,
+        this.agentsType,
         this.rotateIP,
         this.requestsPerPeriod,
       );
@@ -242,86 +235,6 @@ export default class ScraperBotOdds extends Vue {
     }
     this.$forceUpdate();
   }
-}
-
-function getBotScore(
-  scraperKey: string,
-  activeCategories: string[],
-  browsers: IBrowserPercents[],
-  rotateIP: boolean,
-  requestsPerPeriod: number,
-) {
-  const scraper = scrapers[scraperKey];
-  const buckets = scraper.buckets;
-  const activeBuckets = Object.entries(buckets)
-    .filter(([bucket, entry]) => {
-      if (rotateIP && bucket === UserBucket.IpAndPortRange) return false;
-      return activeCategories.includes(entry.category);
-    })
-    .map(([key]) => key);
-
-  const bucketChecks = getActiveBucketChecks(activeBuckets);
-
-  let botMultiplier = 1;
-  let botScore = 0;
-  const categoryScores: { category: string; botPct: number }[] = [];
-
-  // TODO: convert to average pct instead of max (need percents browsers are picked)
-  for (const bucketCheck of bucketChecks) {
-    const bucketPcts = bucketCheck.buckets.map(x => buckets[x]?.maxReusePct);
-    const bucketability = bucketPcts.reduce((a, b) => (a * 100 * b) / 100, 1);
-
-    const requests = Math.floor((requestsPerPeriod * bucketability) / 100);
-    const visitAllowance = getVisitLimit(10, requests);
-
-    botMultiplier = Math.max(visitAllowance.categoryMultiplier, botMultiplier);
-    botScore = Math.max(visitAllowance.pctBot, botScore);
-    if (visitAllowance.categoryMultiplier > 0) {
-      categoryScores.push({
-        category: 'Visits - ' + bucketCheck.title,
-        botPct: botScore,
-      });
-    }
-  }
-
-  for (const category of activeCategories) {
-    const weightedAverage = getWeightedAverageForBrowsers(
-      scraper.browserFindings,
-      category,
-      browsers,
-      botMultiplier,
-    );
-
-    categoryScores.push({
-      category,
-      botPct: weightedAverage,
-    });
-
-    botScore = Math.max(weightedAverage, botScore);
-  }
-  return {
-    botScore,
-    categoryScores,
-  };
-}
-
-function getWeightedAverageForBrowsers(
-  findings: IBrowserFindings,
-  category: string,
-  browsers: IBrowserPercents[],
-  botMultiplier: number,
-) {
-  if (!browsers.length) return 0;
-  let avg = 0;
-  for (const browser of browsers) {
-    const results = findings[browser.browser];
-    if (!results[category]) continue;
-    const pct = results[category].botPct;
-    avg += pct * (browser.percentUsed / 100);
-  }
-  avg *= botMultiplier;
-  if (avg > 100) avg = 100;
-  return Math.floor(avg);
 }
 </script>
 
