@@ -40,6 +40,9 @@ export default class TcpPlugin implements IDetectionPlugin {
       expectedOsWindowSizes =
         expectedWindowSizes[Number(ua.os.major) >= 10 ? 'Windows10' : 'Windows7'];
     }
+    if (!expectedOsWindowSizes) {
+      console.log('WARN: No expected window sizes found', ua.os.family);
+    }
     const expectedOsTtl = expectedTtlValues[ua.os.family];
 
     const { windowSize, ttl } = packet;
@@ -66,7 +69,7 @@ export default class TcpPlugin implements IDetectionPlugin {
       expected: expectedOsTtl,
     });
 
-    const flagWindowSize = !expectedOsWindowSizes.includes(windowSize);
+    const flagWindowSize = expectedOsWindowSizes && !expectedOsWindowSizes.includes(windowSize);
     ctx.session.recordCheck(flagWindowSize, {
       ...entry,
       category: 'TCP Layer',
@@ -75,7 +78,7 @@ export default class TcpPlugin implements IDetectionPlugin {
         'Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
       value: windowSize,
       pctBot: 70,
-      expected: expectedOsWindowSizes.join(','),
+      expected: expectedOsWindowSizes?.join(',') ?? 'Unknown OS',
     });
     ctx.session.pluginsRun.push(`tcp/ttl`);
   }

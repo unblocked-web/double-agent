@@ -57,6 +57,7 @@ export function buildDirective(
       },
       {
         url: new URL('/results-page', secureDomains.main).href,
+        waitForElementSelector: 'body.ready',
       },
       {
         url: httpDomains.main.href,

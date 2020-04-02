@@ -6,6 +6,7 @@ import IDomainset from '../interfaces/IDomainset';
 import RequestContext from '../lib/RequestContext';
 import * as net from 'net';
 import IDetectionContext from '../interfaces/IDetectionContext';
+import { getUseragentPath } from '../lib/profileHelper';
 
 export default function(domains: IDomainset, detectionContext: IDetectionContext) {
   const wss = new WebSocket.Server({ clientTracking: false, noServer: true });
@@ -17,6 +18,13 @@ export default function(domains: IDomainset, detectionContext: IDetectionContext
       domains,
       getNow(),
       ResourceType.WebsocketUpgrade,
+    );
+    console.log(
+      '%s %s: from %s (%s) %s',
+      requestDetails.method,
+      requestDetails.url,
+      requestDetails.remoteAddress,
+      getUseragentPath(request.headers['user-agent']),
     );
 
     const session = sessionTracker.recordRequest(requestDetails, requestUrl);
@@ -38,7 +46,7 @@ export default function(domains: IDomainset, detectionContext: IDetectionContext
     const host = request.headers.host;
     wss.handleUpgrade(request, socket, head, async function(ws) {
       ws.on('message', function(...message) {
-        console.log(`Received websocket message ${message} on ${host}`);
+        console.log(`WS: Received websocket message ${message} on ${host}`);
         session.requests.push({
           time: getNow(),
           resourceType: ResourceType.WebsocketMessage,

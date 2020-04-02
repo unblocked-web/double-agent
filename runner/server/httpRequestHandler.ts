@@ -152,7 +152,7 @@ function preflight(ctx: IRequestContext) {
   ctx.res.writeHead(204, {
     'Access-Control-Allow-Origin': ctx.req.headers.origin,
     'Access-Control-Allow-Methods': 'GET,POST',
-    'Access-Control-Allow-Headers': ctx.req.headers['access-control-request-headers'],
+    'Access-Control-Allow-Headers': ctx.req.headers['access-control-request-headers'] ?? '',
     'Content-Length': 0,
     Vary: 'Origin',
   });

@@ -5,7 +5,6 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import HeaderProfile from '../lib/HeaderProfile';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
-import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 
 export default function checkRequestHeaders(
   ctx: IRequestContext,
@@ -25,6 +24,10 @@ export default function checkRequestHeaders(
       ctx.requestDetails.method,
     );
     const browserResourceStats = browserStats ? browserStats[key] : null;
+
+    if (!browserResourceStats) {
+      console.log('WARN: no resource stats found for %s', key);
+    }
 
     const request = HeaderProfile.processRequestDetails(ctx.requestDetails, ctx.session);
 

@@ -4,7 +4,7 @@ import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import { IHeaderStats } from '../lib/getBrowserProfileStats';
 import DetectionSession from '@double-agent/runner/lib/DetectionSession';
 
-export default function checkHeaderOrderAndCase(
+export default function userHeadersWithoutCookiesAndCache(
   session: DetectionSession,
   check: Pick<
     IFlaggedCheck,
@@ -24,7 +24,7 @@ export default function checkHeaderOrderAndCase(
   const expectedOrders = browserStats?.defaultHeaderOrders.map(x => x.split(',')) ?? [];
   const order = getDefaultHeaderOrder(request.headers);
   // remove cache entries
-  const userHeaderNames = order.defaultKeys.filter(x => !cacheHeaders.includes(x));
+  const userHeaderNames = order.defaultKeys;
 
   for (let index = 0; index < userHeaderNames.length; index += 1) {
     const headerName = userHeaderNames[index];
@@ -51,10 +51,12 @@ export default function checkHeaderOrderAndCase(
 
   if (checkCaseOnly === true) return;
 
-  const hasOrderMatch = headersMatchAKnownOrder(
-    userHeaderNames,
-    browserStats?.defaultHeaderOrders ?? [],
-  );
+  let hasOrderMatch = true;
+
+  if (browserStats && browserStats.defaultHeaderOrders?.length) {
+    hasOrderMatch = headersMatchAKnownOrder(userHeaderNames, browserStats.defaultHeaderOrders);
+  }
+
   session.recordCheck(hasBrowserStats && !hasOrderMatch, {
     ...check,
     pctBot: 85,
@@ -68,25 +70,27 @@ export default function checkHeaderOrderAndCase(
   });
 }
 
-const cacheHeaders = ['Pragma', 'No-Cache'];
-
 function headersMatchAKnownOrder(userHeaderNames: string[], defaultHeaderOrders: string[]) {
-  const userHeaders = userHeaderNames.join(',');
-  const userHeadersWithoutCookies = userHeaderNames
-    .filter(x => x.toLowerCase() !== 'cookie')
-    .join(',');
+  const secondTierCookies = ['cookie', 'pragma', 'no-cache'];
+  const userHeaders = userHeaderNames.join(',').toLowerCase();
+  const userHeadersWithoutCookiesAndCache = userHeaderNames
+    .filter(x => !secondTierCookies.includes(x))
+    .join(',')
+    .toLowerCase();
 
-  for (const order of defaultHeaderOrders) {
+  for (const order of defaultHeaderOrders.map(x => x.toLowerCase())) {
     if (order === userHeaders) {
       return true;
     }
-    const orderWithoutCookies = order
+
+    const orderWithoutCookiesOrCache = order
       .split(',')
-      .filter(x => x.toLowerCase() !== 'cookie')
+      .filter(x => !secondTierCookies.includes(x))
       .join(',');
-    if (orderWithoutCookies === userHeadersWithoutCookies) {
+    if (orderWithoutCookiesOrCache === userHeadersWithoutCookiesAndCache) {
       return true;
     }
   }
+
   return false;
 }

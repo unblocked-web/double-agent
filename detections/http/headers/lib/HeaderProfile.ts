@@ -1,8 +1,5 @@
 import fs from 'fs';
-import {
-  getUseragentPath,
-  saveUseragentProfile,
-} from '@double-agent/runner/lib/profileHelper';
+import { getUseragentPath, saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
@@ -48,6 +45,7 @@ export default class HeaderProfile {
       secureDomain: x.secureDomain,
     } as IHeadersRequest;
   }
+
   public static getAllProfiles() {
     const entries: IProfile[] = [];
     for (const filepath of fs.readdirSync(profilesDir)) {

@@ -134,7 +134,7 @@ export default class CookieProfile {
       return x.userAgent.family === agent.family;
     });
     if (!profile) {
-      console.log('WARN: no Cooke profile for %s %s', agent.major, agent.family);
+      console.log('WARN: no Cookie profile for %s %s', agent.major, agent.family);
     }
     return profile;
   }
