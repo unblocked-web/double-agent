@@ -30,7 +30,6 @@ export default class RequestContext implements IRequestContext {
     const origin = getOriginType(this.url, this.requestDetails.hostDomain, this.domains);
 
     this.session.trackAsset(url, origin, this.domains, this.requestDetails.url);
-    console.log('Tracking asset', url.href);
 
     if (host === this.url.origin) {
       return [url.pathname, url.search].filter(Boolean).join('');

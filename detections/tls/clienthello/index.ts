@@ -5,7 +5,6 @@ import ITlsResult from './interfaces/ITlsResult';
 import { isGreased } from './lib/buildJa3Extended';
 import IDirective from '@double-agent/runner/interfaces/IDirective';
 import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
-import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import ClientHelloProfile from './lib/ClientHelloProfile';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';

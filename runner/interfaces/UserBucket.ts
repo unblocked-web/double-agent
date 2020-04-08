@@ -8,4 +8,10 @@ enum UserBucket {
   UserCookie = 'UserCookie',
 }
 
+const values = Object.values(UserBucket);
+export function getUserBucket(type: string): UserBucket | null {
+  if (values.includes(type as UserBucket)) return type as UserBucket;
+  return null;
+}
+
 export default UserBucket;

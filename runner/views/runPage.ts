@@ -33,7 +33,7 @@ export default function(ctx: IRequestContext) {
       'main.js',
       HostDomain.External,
     )}" type="application/javascript"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="${ctx.trackUrl('axios.js', HostDomain.Main)}"></script>
     <script>
         window.pageQueue = [];
     </script>

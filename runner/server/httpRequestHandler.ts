@@ -81,6 +81,8 @@ export default function httpRequestHandler(
         flow(ctx, pluginDelegate);
       } else if (req.method === 'OPTIONS') {
         preflight(ctx);
+      } else if (requestUrl.pathname === '/axios.js') {
+        sendAxios(ctx);
       } else if (serveFiles[requestUrl.pathname]) {
         sendAsset(ctx);
       } else if (await pluginDelegate.handleResponse(ctx)) {
@@ -166,6 +168,15 @@ function sendAsset(ctx: IRequestContext) {
     'Content-Type': serveFiles[pathname],
   });
   fs.createReadStream(__dirname + '/../public' + pathname).pipe(ctx.res, {
+    end: true,
+  });
+}
+
+function sendAxios(ctx: IRequestContext) {
+  ctx.res.writeHead(200, {
+    'Content-Type': serveFiles['/main.js'],
+  });
+  fs.createReadStream(require.resolve('axios/dist/axios.js')).pipe(ctx.res, {
     end: true,
   });
 }

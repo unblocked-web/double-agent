@@ -28,8 +28,12 @@ export default async function exportProfiles() {
     for (const entry of profile.requests) {
       const { defaultKeys } = getDefaultHeaderOrder(entry.headers);
       let resourceType = entry.resourceType;
-      if (entry.url.includes('/fetch') && entry.method !== 'OPTIONS')
+      if (entry.url.includes('/fetch') && entry.method !== 'OPTIONS') {
         resourceType = ResourceType.Fetch;
+      }
+      if (resourceType === ResourceType.Redirect) {
+        resourceType = ResourceType.Document;
+      }
       const resourceList = browserEntry[resourceType] || [];
       if (!browserEntry[resourceType]) browserEntry[resourceType] = resourceList;
 

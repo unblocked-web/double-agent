@@ -3,8 +3,8 @@ import getDefaultHeaderOrder from './getDefaultHeaderOrder';
 import { headerCaseTest } from './generateXhrTests';
 import HeaderProfile from './HeaderProfile';
 import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
-import OriginType from '@double-agent/runner/interfaces/OriginType';
-import ResourceType from '@double-agent/runner/interfaces/ResourceType';
+import OriginType, { getOriginType } from '@double-agent/runner/interfaces/OriginType';
+import ResourceType, { getResourceType } from '@double-agent/runner/interfaces/ResourceType';
 
 export default function getBrowserProfileStats() {
   const statsByResourceType: {
@@ -28,7 +28,7 @@ export default function getBrowserProfileStats() {
         entry.secureDomain,
         entry.originType,
         entry.resourceType,
-        entry.method
+        entry.method,
       );
 
       if (!statsByResourceType[key]) {
@@ -138,10 +138,14 @@ export function getStatsKey(
   secureDomain: boolean,
   originType: OriginType,
   resourceType: ResourceType,
-  method: string = 'GET'
+  method: string = 'GET',
 ) {
-  const origin = typeof originType === 'string' ? originType : OriginType[originType];
-  const resource = typeof resourceType === 'string' ? resourceType : ResourceType[resourceType];
+  const origin = getOriginType(originType);
+  let resource = getResourceType(resourceType);
+  // redirects aren't known at client time, so don't make this its own category
+  if (resource === ResourceType.Redirect) {
+    resource = ResourceType.Document;
+  }
 
   return [secureDomain ? 'Secure' : '', origin, resource, method].filter(Boolean).join(' ');
 }

@@ -35,7 +35,7 @@ NOTE if not using dockers:
 127.0.0.1      ${process.env.TLS_DOMAIN || 'tls.ulixee-test.org'}
 
 Run the suite:
-4. Point your scraper at http://ulixee-test.org:${directivesPort} to get your first instruction.
+4. Point your scraper at http://a1.ulixee-test.org:${directivesPort} to get your first instruction.
 5. Follow the instruction, and then ask this same url for your next instruction. Instructions will be returned until the test suite is completed.`,
       );
     })

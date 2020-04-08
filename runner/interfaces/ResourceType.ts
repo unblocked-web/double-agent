@@ -19,7 +19,11 @@ enum ResourceType {
   Ping = 'Ping',
   CSPViolationReport = 'CSP Violation Report',
   Other = 'Other'
-
-
+}
+const values = Object.values(ResourceType);
+export function getResourceType(type: string): ResourceType | null {
+  if (ResourceType[type]) return ResourceType[type];
+  if (values.includes(type as ResourceType)) return type as ResourceType;
+  return null;
 }
 export default ResourceType;
