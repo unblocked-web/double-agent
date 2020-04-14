@@ -12,7 +12,7 @@ const runnerDomain = 'a1.ulixee.org';
 (async () => {
   const queue = new Queue({ concurrency: 5 });
 
-  const browsersToProfile = await getBrowsersToProfile(1, 3);
+  const browsersToProfile = await getBrowsersToProfile(0.5, 3);
   for (const { browser: browserName, version: browser_version } of browsersToProfile.browsers) {
     if (browserName === 'IE') continue; // no support for Promises, lambdas... detections need refactor for support
 
@@ -53,7 +53,7 @@ function getRunnerForAgent(agent: IBrowserstackAgent) {
 
     try {
       for (let i = 0; i < times; i += 1) {
-        await runDirectiveInWebDriver(driver, directive, agent.browserName);
+        await runDirectiveInWebDriver(driver, directive, agent.browserName, agent.browser_version);
         if (times > 1) {
           await createNewWindow(driver);
         }

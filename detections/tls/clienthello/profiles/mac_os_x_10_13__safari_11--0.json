@@ -1,0 +1,109 @@
+{
+  "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1.2 Safari/605.1.15",
+  "ja3": "771,49196-49195-49188-49187-49162-49161-52393-49200-49199-49192-49191-49172-49171-52392-157-156-61-60-53-47,65281-0-23-13-5-13172-18-16-11-10,29-23-24-25,0",
+  "ja3Md5": "a69708a64f853c3bcc214c2c5faf84f3",
+  "ja3Extended": "771,49196-49195-49188-49187-49162-49161-52393-49200-49199-49192-49191-49172-49171-52392-157-156-61-60-53-47,65281-0-23-13-5-13172-18-16-11-10,29-23-24-25,0,1027-2052-1025-1283-2053-1281-2054-1537-513,,h2-h2-16-h2-15-h2-14-spdy/3.1-spdy/3-http/1.1,0",
+  "ja3ExtendedMd5": "2ed20f404f21484a881c38c6e23ca45d",
+  "clientHello": {
+    "type": "ClientHello",
+    "version": "0x303 (TLS 1.2)",
+    "random": {
+      "unixTime": "0xD703899E",
+      "randomBytes": "38DA325DF4971AEA841CAD8DAA13055A4AD68B79255E55207627413B"
+    },
+    "sessionId": "",
+    "ciphers": [
+      "{0xC0, 0x2C} TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+      "{0xC0, 0x2B} TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+      "{0xC0, 0x24} TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384",
+      "{0xC0, 0x23} TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256",
+      "{0xC0, 0x0A} TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
+      "{0xC0, 0x09} TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+      "{0xCC, 0xA9} TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+      "{0xC0, 0x30} TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+      "{0xC0, 0x2F} TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+      "{0xC0, 0x28} TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384",
+      "{0xC0, 0x27} TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+      "{0xC0, 0x14} TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+      "{0xC0, 0x13} TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+      "{0xCC, 0xA8} TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+      "{0x00, 0x9D} TLS_RSA_WITH_AES_256_GCM_SHA384",
+      "{0x00, 0x9C} TLS_RSA_WITH_AES_128_GCM_SHA256",
+      "{0x00, 0x3D} TLS_RSA_WITH_AES_256_CBC_SHA256",
+      "{0x00, 0x3C} TLS_RSA_WITH_AES_128_CBC_SHA256",
+      "{0x00, 0x35} TLS_RSA_WITH_AES_256_CBC_SHA",
+      "{0x00, 0x2F} TLS_RSA_WITH_AES_128_CBC_SHA"
+    ],
+    "compressionMethods": ["No Compression (0x00)"],
+    "extensions": [
+      {
+        "type": "renegotiate",
+        "decimal": 65281,
+        "values": ["<EMPTY>"]
+      },
+      {
+        "type": "server_name",
+        "decimal": 0,
+        "values": [
+          "0000 - 00 11 00 00 0e 74 6c 73-2e 75 6c 69 78 65 65   .....tls.ulixee",
+          "000f - 2e 6f 72 67                                    .org"
+        ]
+      },
+      {
+        "type": "extended_master_secret",
+        "decimal": 23,
+        "values": []
+      },
+      {
+        "type": "signature_algorithms",
+        "decimal": 13,
+        "values": [
+          "ecdsa_secp256r1_sha256 (0x0403)",
+          "rsa_pss_rsae_sha256 (0x0804)",
+          "rsa_pkcs1_sha256 (0x0401)",
+          "ecdsa_secp384r1_sha384 (0x0503)",
+          "rsa_pss_rsae_sha384 (0x0805)",
+          "rsa_pkcs1_sha384 (0x0501)",
+          "rsa_pss_rsae_sha512 (0x0806)",
+          "rsa_pkcs1_sha512 (0x0601)",
+          "rsa_pkcs1_sha1 (0x0201)"
+        ]
+      },
+      {
+        "type": "status_request",
+        "decimal": 5,
+        "values": ["0000 - 01 00 00 00 00                                 ....."]
+      },
+      {
+        "type": "next_proto_neg",
+        "decimal": 13172,
+        "values": []
+      },
+      {
+        "type": "signed_certificate_timestamps",
+        "decimal": 18,
+        "values": []
+      },
+      {
+        "type": "application_layer_protocol_negotiation",
+        "decimal": 16,
+        "values": ["h2", "h2-16", "h2-15", "h2-14", "spdy/3.1", "spdy/3", "http/1.1"]
+      },
+      {
+        "type": "ec_point_formats",
+        "decimal": 11,
+        "values": ["uncompressed (0)"]
+      },
+      {
+        "type": "supported_groups",
+        "decimal": 10,
+        "values": [
+          "ecdh_x25519 (29)",
+          "secp256r1 (P-256) (23)",
+          "secp384r1 (P-384) (24)",
+          "secp521r1 (P-521) (25)"
+        ]
+      }
+    ]
+  }
+}

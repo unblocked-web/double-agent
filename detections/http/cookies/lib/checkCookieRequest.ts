@@ -82,11 +82,3 @@ function allDifferencesFromNonSecureSameNoneCookies(
   }
   return true;
 }
-
-function jsRemove(arr: string[], item: string) {
-  const idx = arr.indexOf(item);
-  if (idx !== -1) {
-    arr.splice(idx, 1);
-  }
-  return arr;
-}

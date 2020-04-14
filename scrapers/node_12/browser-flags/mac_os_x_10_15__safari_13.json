@@ -40,7 +40,7 @@
     "botPct": 0
   },
   "Standard Https Headers": {
-    "checks": 126,
+    "checks": 98,
     "flagged": 35,
     "flaggedChecks": [
       {
@@ -189,7 +189,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "User-Agent,Referer,Host,Connection",
-        "expected": "Host,Accept,Connection,Cookie,User-Agent,Accept-Language,Referer,Accept-Encoding"
+        "expected": "Host,Connection,Accept,User-Agent,Accept-Language,Referer,Accept-Encoding"
       },
       {
         "category": "Standard Https Headers",
@@ -256,7 +256,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "User-Agent,Referer,Host,Connection",
-        "expected": "Host,Accept,Connection,Cookie,User-Agent,Accept-Language,Referer,Accept-Encoding"
+        "expected": "Host,Connection,Accept,User-Agent,Accept-Language,Referer,Accept-Encoding"
       },
       {
         "category": "Standard Https Headers",
@@ -390,7 +390,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "User-Agent,Referer,Host,Connection",
-        "expected": "Host,Accept,Connection,Cookie,User-Agent,Accept-Language,Referer,Accept-Encoding"
+        "expected": "Host,Connection,Accept,User-Agent,Accept-Language,Referer,Accept-Encoding"
       },
       {
         "category": "Standard Https Headers",
@@ -543,7 +543,7 @@
         "checkName": "Operating System Popularity",
         "description": "Checks that a User Agent is among the most popular \"current\" Operating Systems",
         "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15",
-        "pctBot": 4
+        "pctBot": 3
       }
     ],
     "botPct": 4
@@ -592,7 +592,7 @@
         "checkName": "Sends Redirect Cookies",
         "description": "Check for the cookies for Redirect requests from origin: same-origin",
         "value": "",
-        "expected": "Main,Main--HttpOnly,Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,Main--SameSiteLax,Main--SameSiteNone,Main--SameSiteStrict,Main-ToBeExpired,SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--SameSiteStrict"
+        "expected": "Main,Main--HttpOnly,Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,Main--SameSiteLax,Main--SameSiteNone,Main--SameSiteStrict,Main-ToBeExpired,SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--SameSiteStrict,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone"
       },
       {
         "category": "Same Origin Cookies",
@@ -641,7 +641,7 @@
         "checkName": "Sends Document Cookies",
         "description": "Check for the cookies for Document requests from origin: same-site",
         "value": "",
-        "expected": "SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--RootDomain-Secure-SameSiteLax,SecureMain--RootDomain-Secure-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--Secure,SecureMain--Secure-SameSiteLax,SecureMain--Secure-SameSiteNone"
+        "expected": "SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--RootDomain-Secure-SameSiteLax,SecureMain--RootDomain-Secure-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureMain--Secure,SecureMain--Secure-SameSiteLax,SecureMain--Secure-SameSiteNone,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,SecureSub--RootDomain-Secure-SameSiteLax,SecureSub--RootDomain-Secure-SameSiteNone"
       },
       {
         "category": "Same Site Cookies",
@@ -655,7 +655,7 @@
         "checkName": "Sends Redirect Cookies",
         "description": "Check for the cookies for Redirect requests from origin: same-site",
         "value": "",
-        "expected": "Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone"
+        "expected": "Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureSub,SecureSub--HttpOnly,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,SecureSub--SameSiteLax,SecureSub--SameSiteNone,SecureSub--SameSiteStrict"
       },
       {
         "category": "Same Site Cookies",
@@ -669,7 +669,7 @@
         "checkName": "Sends Document Cookies",
         "description": "Check for the cookies for Document requests from origin: same-site",
         "value": "",
-        "expected": "Main,Main--HttpOnly,Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,Main--SameSiteLax,Main--SameSiteNone,SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,Sub--HttpOnly-RootDomain,Sub--RootDomain-SameSiteNone"
+        "expected": "Main,Main--HttpOnly,Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,Main--SameSiteLax,Main--SameSiteNone,SecureMain,SecureMain--HttpOnly,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--SameSiteLax,SecureMain--SameSiteNone,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,Sub--HttpOnly-RootDomain,Sub--RootDomain-SameSiteNone"
       }
     ],
     "botPct": 99
@@ -690,7 +690,7 @@
         "checkName": "Sends Redirect Cookies",
         "description": "Check for the cookies for Redirect requests from origin: cross-site",
         "value": "",
-        "expected": "SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--RootDomain-Secure-SameSiteLax,SecureMain--RootDomain-Secure-SameSiteNone"
+        "expected": "SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureMain--RootDomain-Secure-SameSiteLax,SecureMain--RootDomain-Secure-SameSiteNone,SecureSub,SecureSub--HttpOnly,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,SecureSub--RootDomain-Secure-SameSiteLax,SecureSub--RootDomain-Secure-SameSiteNone,SecureSub--SameSiteLax,SecureSub--SameSiteNone,SecureSub--Secure,SecureSub--Secure-SameSiteLax,SecureSub--Secure-SameSiteNone"
       },
       {
         "category": "Cross Site Cookies",
@@ -704,7 +704,7 @@
         "checkName": "Sends Document Cookies",
         "description": "Check for the cookies for Document requests from origin: cross-site",
         "value": "",
-        "expected": "SecureExternal,SecureExternal--HttpOnly,SecureExternal--SameSiteLax,SecureExternal--SameSiteNone,SecureExternal--SameSiteStrict"
+        "expected": "SecureExternal,SecureExternal--HttpOnly,SecureExternal--SameSiteLax,SecureExternal--SameSiteNone"
       },
       {
         "category": "Cross Site Cookies",
@@ -718,7 +718,7 @@
         "checkName": "Sends Redirect Cookies",
         "description": "Check for the cookies for Redirect requests from origin: cross-site",
         "value": "",
-        "expected": "Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,Sub,Sub--HttpOnly,Sub--HttpOnly-RootDomain,Sub--RootDomain-SameSiteNone,Sub--SameSiteLax,Sub--SameSiteNone"
+        "expected": "Main--HttpOnly-RootDomain,Main--RootDomain-SameSiteNone,SecureMain--HttpOnly-RootDomain,SecureMain--RootDomain-SameSiteNone,SecureSub,SecureSub--HttpOnly,SecureSub--HttpOnly-RootDomain,SecureSub--RootDomain-SameSiteNone,SecureSub--SameSiteLax,SecureSub--SameSiteNone,Sub,Sub--HttpOnly,Sub--HttpOnly-RootDomain,Sub--RootDomain-SameSiteNone,Sub--SameSiteLax,Sub--SameSiteNone"
       }
     ],
     "botPct": 99
@@ -874,12 +874,92 @@
     "botPct": 100
   },
   "Standard Http Headers": {
-    "checks": 126,
-    "flagged": 30,
+    "checks": 98,
+    "flagged": 42,
     "flaggedChecks": [
       {
         "category": "Standard Http Headers",
         "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-origin",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "User-Agent,Referer,Host,Connection",
+        "expected": "Host,Cookie,Connection,Upgrade-Insecure-Requests,Accept,User-Agent,Referer,Accept-Language,Accept-Encoding"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-origin",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Connection",
+        "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
+        "value": "close",
+        "pctBot": 99,
+        "expected": "keep-alive"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-origin",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Accept",
+        "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-origin",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Upgrade-Insecure-Requests",
+        "description": "Checks if the request has a header value for Upgrade-Insecure-Requests matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "1"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-origin",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Accept-Encoding",
+        "description": "Checks if the request has a header value for Accept-Encoding matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "gzip, deflate"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-origin",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Accept-Language",
+        "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
+        "pctBot": 100,
+        "expected": "en-us"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
         "resourceType": "Redirect",
         "originType": "same-origin",
         "hostDomain": "Main",
@@ -1272,6 +1352,86 @@
         "hostDomain": "Sub",
         "secureDomain": false,
         "requestIdx": 12,
+        "checkName": "Header has a Browser Default Value for: Accept-Language",
+        "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
+        "pctBot": 100,
+        "expected": "en-us"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "User-Agent,Referer,Host,Connection",
+        "expected": "Host,Cookie,Connection,Upgrade-Insecure-Requests,Accept,User-Agent,Referer,Accept-Language,Accept-Encoding"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Connection",
+        "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
+        "value": "close",
+        "pctBot": 99,
+        "expected": "keep-alive"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Accept",
+        "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Upgrade-Insecure-Requests",
+        "description": "Checks if the request has a header value for Upgrade-Insecure-Requests matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "1"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Accept-Encoding",
+        "description": "Checks if the request has a header value for Accept-Encoding matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "gzip, deflate"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
         "checkName": "Header has a Browser Default Value for: Accept-Language",
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "pctBot": 100,

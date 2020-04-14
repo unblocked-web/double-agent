@@ -3,6 +3,7 @@ enum UserBucket {
   TLS = 'TLS Fingerprint',
   Browser = 'Cross-Session Browser Fingerprint',
   BrowserSingleSession = 'Single-Session Browser Fingerprint',
+  Font = 'Fonts Fingerprint',
   IpAndPortRange = 'IP Address & Port Range',
   Useragent = 'Useragent',
   UserCookie = 'UserCookie',

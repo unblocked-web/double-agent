@@ -12,29 +12,29 @@
         "secureDomain": true,
         "category": "TCP Layer",
         "checkName": "Packet TTL",
-        "description": "Check that the Operating System tcp packet TTL value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)",
+        "description": "Check that the Operating System tcp packet TTL value within 20 hops of expected OS values (NOTE: tcp packets routed through proxies can change these values)",
         "value": 64,
-        "pctBot": 50,
+        "pctBot": 70,
         "expected": 128
       }
     ],
-    "botPct": 50
+    "botPct": 70
   },
   "IP Address": {
-    "checks": 112,
+    "checks": 114,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
   },
   "Standard Https Headers": {
-    "checks": 220,
+    "checks": 145,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
   },
   "User Agent": {
-    "checks": 114,
-    "flagged": 2,
+    "checks": 116,
+    "flagged": 1,
     "flaggedChecks": [
       {
         "category": "User Agent",
@@ -48,25 +48,12 @@
         "description": "Checks that a User Agent is among the most popular \"current\" browsers",
         "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36 OPR/66.0.3515.115",
         "pctBot": 50
-      },
-      {
-        "category": "User Agent",
-        "layer": "http",
-        "resourceType": "Document",
-        "originType": "same-site",
-        "hostDomain": "Main",
-        "secureDomain": true,
-        "requestIdx": 0,
-        "checkName": "Operating System Popularity",
-        "description": "Checks that a User Agent is among the most popular \"current\" Operating Systems",
-        "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36 OPR/66.0.3515.115",
-        "pctBot": 0.5
       }
     ],
     "botPct": 50
   },
   "Asset Headers": {
-    "checks": 650,
+    "checks": 483,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
@@ -96,19 +83,19 @@
     "botPct": 0
   },
   "Xhr Headers": {
-    "checks": 478,
+    "checks": 320,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
   },
   "Websocket Headers": {
-    "checks": 210,
+    "checks": 150,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
   },
   "Cors Preflight Headers": {
-    "checks": 348,
+    "checks": 228,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
@@ -120,7 +107,7 @@
     "botPct": 0
   },
   "Standard Http Headers": {
-    "checks": 180,
+    "checks": 125,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0

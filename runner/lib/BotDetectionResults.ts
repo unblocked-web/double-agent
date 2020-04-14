@@ -9,7 +9,9 @@ export default class BotDetectionResults {
   private topBrowsers: IBrowserPercents[] = [];
 
   public trackDirectiveResults(directive: IDirective, session: IDetectionSession) {
+    if (!session.useragent) return;
     const browserPath = getUseragentPath(session.useragent);
+
     if (!this.browserFindings[browserPath]) {
       this.browserFindings[browserPath] = {};
 

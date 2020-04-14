@@ -7,5 +7,7 @@
     "Fonts Supported"
   ],
   "description": "Does the font fingerprint match the operating system",
-  "scripts": {}
+  "scripts": {
+    "analyze": "node -e 'require(\"./lib/FontProfile\").analyze()'"
+  }
 }

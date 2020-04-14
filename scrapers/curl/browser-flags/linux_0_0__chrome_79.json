@@ -27,8 +27,8 @@
     "botPct": 0
   },
   "Standard Https Headers": {
-    "checks": 132,
-    "flagged": 46,
+    "checks": 101,
+    "flagged": 45,
     "flaggedChecks": [
       {
         "category": "Standard Https Headers",
@@ -42,7 +42,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,User-Agent,Accept,Referer,Cookie",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language"
       },
       {
         "category": "Standard Https Headers",
@@ -161,7 +161,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,User-Agent,Accept,Referer",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language"
       },
       {
         "category": "Standard Https Headers",
@@ -280,7 +280,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,User-Agent,Accept,Referer,Cookie",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language"
       },
       {
         "category": "Standard Https Headers",
@@ -399,7 +399,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,User-Agent,Accept,Referer,Cookie",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-User,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language"
       },
       {
         "category": "Standard Https Headers",
@@ -505,20 +505,6 @@
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "pctBot": 100,
         "expected": "en-US,en;q=0.9"
-      },
-      {
-        "category": "Standard Https Headers",
-        "layer": "http",
-        "resourceType": "Document",
-        "originType": "same-site",
-        "hostDomain": "Main",
-        "secureDomain": true,
-        "requestIdx": 6,
-        "checkName": "Header Should be Included: Cookie",
-        "description": "Checks that only expected headers are sent by a user agent",
-        "value": "Included",
-        "pctBot": 90,
-        "expected": "Shouldn't be Included"
       },
       {
         "category": "Standard Https Headers",
@@ -657,7 +643,7 @@
         "checkName": "Browser Popularity",
         "description": "Checks that a User Agent is among the most popular \"current\" browsers",
         "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
-        "pctBot": 1
+        "pctBot": 13
       },
       {
         "category": "User Agent",
@@ -892,12 +878,92 @@
     "botPct": 100
   },
   "Standard Http Headers": {
-    "checks": 140,
-    "flagged": 30,
+    "checks": 105,
+    "flagged": 42,
     "flaggedChecks": [
       {
         "category": "Standard Http Headers",
         "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "Host,User-Agent,Accept,Referer,Cookie",
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Accept,Referer,Accept-Encoding,Accept-Language,Cookie"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Connection",
+        "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "keep-alive"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Accept",
+        "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
+        "value": "*/*",
+        "pctBot": 100,
+        "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Upgrade-Insecure-Requests",
+        "description": "Checks if the request has a header value for Upgrade-Insecure-Requests matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "1"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Accept-Encoding",
+        "description": "Checks if the request has a header value for Accept-Encoding matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "gzip, deflate"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 7,
+        "checkName": "Header has a Browser Default Value for: Accept-Language",
+        "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
+        "pctBot": 100,
+        "expected": "en-US,en;q=0.9"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
         "resourceType": "Redirect",
         "originType": "same-site",
         "hostDomain": "Main",
@@ -1290,6 +1356,86 @@
         "hostDomain": "Sub",
         "secureDomain": false,
         "requestIdx": 12,
+        "checkName": "Header has a Browser Default Value for: Accept-Language",
+        "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
+        "pctBot": 100,
+        "expected": "en-US,en;q=0.9"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "Host,User-Agent,Accept,Referer,Cookie",
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Accept,Referer,Accept-Encoding,Accept-Language,Cookie"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Connection",
+        "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "keep-alive"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Accept",
+        "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
+        "value": "*/*",
+        "pctBot": 100,
+        "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Upgrade-Insecure-Requests",
+        "description": "Checks if the request has a header value for Upgrade-Insecure-Requests matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "1"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
+        "checkName": "Header has a Browser Default Value for: Accept-Encoding",
+        "description": "Checks if the request has a header value for Accept-Encoding matching the default values sent for this user agent",
+        "pctBot": 99,
+        "expected": "gzip, deflate"
+      },
+      {
+        "category": "Standard Http Headers",
+        "layer": "http",
+        "resourceType": "Document",
+        "originType": "same-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 13,
         "checkName": "Header has a Browser Default Value for: Accept-Language",
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "pctBot": 100,

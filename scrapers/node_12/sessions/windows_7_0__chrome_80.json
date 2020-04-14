@@ -1,5 +1,5 @@
 {
-  "id": "189",
+  "id": "193",
   "assetsNotLoaded": [
     {
       "pathname": "/fetch-samesite-headers.json",
@@ -340,19 +340,7 @@
       "count": 14
     },
     {
-      "checkName": "Header Should be Included: User-Agent",
-      "category": "Standard Https Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
       "checkName": "Header has Correct Capitalization: User-Agent",
-      "category": "Standard Https Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should be Included: Referer",
       "category": "Standard Https Headers",
       "layer": "http",
       "count": 7
@@ -364,19 +352,7 @@
       "count": 7
     },
     {
-      "checkName": "Header Should be Included: Host",
-      "category": "Standard Https Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
       "checkName": "Header has Correct Capitalization: Host",
-      "category": "Standard Https Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should be Included: Connection",
       "category": "Standard Https Headers",
       "layer": "http",
       "count": 7
@@ -544,19 +520,7 @@
       "count": 2
     },
     {
-      "checkName": "Header Should be Included: User-Agent",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
       "checkName": "Header has Correct Capitalization: User-Agent",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should be Included: Referer",
       "category": "Standard Http Headers",
       "layer": "http",
       "count": 7
@@ -568,19 +532,7 @@
       "count": 7
     },
     {
-      "checkName": "Header Should be Included: Host",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
       "checkName": "Header has Correct Capitalization: Host",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should be Included: Connection",
       "category": "Standard Http Headers",
       "layer": "http",
       "count": 7
@@ -598,88 +550,58 @@
       "count": 7
     },
     {
-      "checkName": "Header Should Not be Included: Connection",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 2
-    },
-    {
-      "checkName": "Header Should Not be Included: Accept",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 2
-    },
-    {
-      "checkName": "Header Should Not be Included: Sec-Fetch-Site",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should Not be Included: Sec-Fetch-Mode",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should Not be Included: Sec-Fetch-User",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should Not be Included: Sec-Fetch-Dest",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 7
-    },
-    {
-      "checkName": "Header Should Not be Included: Upgrade-Insecure-Requests",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 2
-    },
-    {
-      "checkName": "Header Should Not be Included: Accept-Encoding",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 2
-    },
-    {
-      "checkName": "Header Should Not be Included: Accept-Language",
-      "category": "Standard Http Headers",
-      "layer": "http",
-      "count": 2
-    },
-    {
       "checkName": "Header has a Browser Default Value for: Connection",
       "category": "Standard Http Headers",
       "layer": "http",
-      "count": 5
+      "count": 7
     },
     {
       "checkName": "Header has a Browser Default Value for: Accept",
       "category": "Standard Http Headers",
       "layer": "http",
-      "count": 5
+      "count": 7
+    },
+    {
+      "checkName": "Header Should NOT be Included: Sec-Fetch-Site",
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "count": 7
+    },
+    {
+      "checkName": "Header Should NOT be Included: Sec-Fetch-Mode",
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "count": 7
+    },
+    {
+      "checkName": "Header Should NOT be Included: Sec-Fetch-User",
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "count": 7
+    },
+    {
+      "checkName": "Header Should NOT be Included: Sec-Fetch-Dest",
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "count": 7
     },
     {
       "checkName": "Header has a Browser Default Value for: Upgrade-Insecure-Requests",
       "category": "Standard Http Headers",
       "layer": "http",
-      "count": 5
+      "count": 7
     },
     {
       "checkName": "Header has a Browser Default Value for: Accept-Encoding",
       "category": "Standard Http Headers",
       "layer": "http",
-      "count": 5
+      "count": 7
     },
     {
       "checkName": "Header has a Browser Default Value for: Accept-Language",
       "category": "Standard Http Headers",
       "layer": "http",
-      "count": 5
+      "count": 7
     }
   ],
   "expectedAssets": [
@@ -1011,6 +933,15 @@
       "pathname": "/main.js",
       "secureDomain": true,
       "hostDomain": "External",
+      "layer": "http",
+      "originType": "same-origin",
+      "resourceType": "Script",
+      "fromUrl": "https://external/run-page?sessionid=X"
+    },
+    {
+      "pathname": "/axios.js",
+      "secureDomain": true,
+      "hostDomain": "Main",
       "layer": "http",
       "originType": "same-origin",
       "resourceType": "Script",
@@ -1458,6 +1389,15 @@
       "fromUrl": "http://external/run-page?sessionid=X"
     },
     {
+      "pathname": "/axios.js",
+      "secureDomain": false,
+      "hostDomain": "Main",
+      "layer": "http",
+      "originType": "same-origin",
+      "resourceType": "Script",
+      "fromUrl": "http://external/run-page?sessionid=X"
+    },
+    {
       "pathname": "/results",
       "secureDomain": false,
       "hostDomain": "External",
@@ -1784,8 +1724,8 @@
       "requestIdx": 0,
       "checkName": "Browser Popularity",
       "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-      "value": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-      "pctBot": 7
+      "value": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "pctBot": 1
     },
     {
       "category": "User Agent",
@@ -1797,8 +1737,8 @@
       "requestIdx": 0,
       "checkName": "Operating System Popularity",
       "description": "Checks that a User Agent is among the most popular \"current\" Operating Systems",
-      "value": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-      "pctBot": 4
+      "value": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "pctBot": 5
     },
     {
       "category": "Same Origin Cookies",
@@ -1972,7 +1912,7 @@
       "checkName": "Headers in Correct Order",
       "description": "Checks if the request headers are in the correct order for the given user agent",
       "value": "User-Agent,Referer,Host,Connection",
-      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Cookie"
+      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language"
     },
     {
       "category": "Standard Https Headers",
@@ -2104,7 +2044,7 @@
       "checkName": "Headers in Correct Order",
       "description": "Checks if the request headers are in the correct order for the given user agent",
       "value": "User-Agent,Referer,Host,Connection",
-      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Cookie"
+      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language"
     },
     {
       "category": "Standard Https Headers",
@@ -2396,7 +2336,7 @@
       "checkName": "Headers in Correct Order",
       "description": "Checks if the request headers are in the correct order for the given user agent",
       "value": "User-Agent,Referer,Host,Connection",
-      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Cookie"
+      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language"
     },
     {
       "category": "Standard Https Headers",
@@ -2733,6 +2673,86 @@
     {
       "category": "Standard Http Headers",
       "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-origin",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 7,
+      "pctBot": 85,
+      "checkName": "Headers in Correct Order",
+      "description": "Checks if the request headers are in the correct order for the given user agent",
+      "value": "User-Agent,Referer,Host,Connection",
+      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Accept,Referer,Accept-Encoding,Accept-Language,Cookie"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-origin",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 7,
+      "checkName": "Header has a Browser Default Value for: Connection",
+      "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
+      "value": "close",
+      "pctBot": 100,
+      "expected": "keep-alive"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-origin",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 7,
+      "checkName": "Header has a Browser Default Value for: Accept",
+      "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
+      "pctBot": 99,
+      "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-origin",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 7,
+      "checkName": "Header has a Browser Default Value for: Upgrade-Insecure-Requests",
+      "description": "Checks if the request has a header value for Upgrade-Insecure-Requests matching the default values sent for this user agent",
+      "pctBot": 99,
+      "expected": "1"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-origin",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 7,
+      "checkName": "Header has a Browser Default Value for: Accept-Encoding",
+      "description": "Checks if the request has a header value for Accept-Encoding matching the default values sent for this user agent",
+      "pctBot": 99,
+      "expected": "gzip, deflate"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-origin",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 7,
+      "checkName": "Header has a Browser Default Value for: Accept-Language",
+      "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
+      "pctBot": 100,
+      "expected": "en-US,en;q=0.9"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
       "resourceType": "Redirect",
       "originType": "same-origin",
       "hostDomain": "Main",
@@ -3155,6 +3175,86 @@
       "description": "Checks if a user agent can set cookies via javascript \"in-page\""
     },
     {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-site",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 13,
+      "pctBot": 85,
+      "checkName": "Headers in Correct Order",
+      "description": "Checks if the request headers are in the correct order for the given user agent",
+      "value": "User-Agent,Referer,Host,Connection",
+      "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Accept,Referer,Accept-Encoding,Accept-Language,Cookie"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-site",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 13,
+      "checkName": "Header has a Browser Default Value for: Connection",
+      "description": "Checks if the request has a header value for Connection matching the default values sent for this user agent",
+      "value": "close",
+      "pctBot": 100,
+      "expected": "keep-alive"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-site",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 13,
+      "checkName": "Header has a Browser Default Value for: Accept",
+      "description": "Checks if the request has a header value for Accept matching the default values sent for this user agent",
+      "pctBot": 99,
+      "expected": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-site",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 13,
+      "checkName": "Header has a Browser Default Value for: Upgrade-Insecure-Requests",
+      "description": "Checks if the request has a header value for Upgrade-Insecure-Requests matching the default values sent for this user agent",
+      "pctBot": 99,
+      "expected": "1"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-site",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 13,
+      "checkName": "Header has a Browser Default Value for: Accept-Encoding",
+      "description": "Checks if the request has a header value for Accept-Encoding matching the default values sent for this user agent",
+      "pctBot": 99,
+      "expected": "gzip, deflate"
+    },
+    {
+      "category": "Standard Http Headers",
+      "layer": "http",
+      "resourceType": "Document",
+      "originType": "same-site",
+      "hostDomain": "Main",
+      "secureDomain": false,
+      "requestIdx": 13,
+      "checkName": "Header has a Browser Default Value for: Accept-Language",
+      "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
+      "pctBot": 100,
+      "expected": "en-US,en;q=0.9"
+    },
+    {
       "pctBot": 100,
       "layer": "http",
       "category": "Loads All Page Assets",
@@ -3202,7 +3302,7 @@
   "identifiers": [
     {
       "bucket": "UserCookie",
-      "id": "2564f680-6eae-11ea-a37a-618f9127f5a1",
+      "id": "5dd24770-7e8a-11ea-a11d-1337efaad6a3",
       "description": "A distinct cookie set per user",
       "layer": "http",
       "category": "Cookie Support"
@@ -3224,13 +3324,13 @@
       "layer": "ip",
       "category": "IP Address",
       "bucket": "IP Address & Port Range",
-      "id": "127.0.0.1:63500-64500"
+      "id": "127.0.0.1:60000-61000"
     },
     {
       "layer": "http",
       "category": "User Agent",
       "bucket": "Useragent",
-      "id": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"
+      "id": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"
     }
   ],
   "pluginsRun": [
@@ -3247,13 +3347,13 @@
   ],
   "requests": [
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:41.896Z",
+      "time": "2020-04-14T19:58:53.286Z",
       "setCookies": [
-        "uuid=2564f680-6eae-11ea-a37a-618f9127f5a1; Secure; SameSite=None; HttpOnly;",
-        "sessionid=189; HttpOnly;",
+        "uuid=5dd24770-7e8a-11ea-a11d-1337efaad6a3; Secure; SameSite=None; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "Main-ToBeExpired=start;",
         "SecureMain=0",
         "SecureMain--Secure=0; Secure",
@@ -3273,14 +3373,14 @@
         "SecureMain--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
         "SecureMain--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org"
       ],
-      "remoteAddress": "127.0.0.1:64222",
+      "remoteAddress": "127.0.0.1:60539",
       "url": "https://main/?sessionid=X",
       "originType": "same-site",
-      "referer": "https://tls.ulixee-test.org:3191/?sessionid=X",
+      "referer": "https://tls.ulixee-test.org:3195/?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-        "Referer=https://tls.ulixee-test.org:3191/?sessionid=X",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "Referer=https://tls.ulixee-test.org:3195/?sessionid=X",
         "Host=main",
         "Connection=close"
       ],
@@ -3289,21 +3389,21 @@
       "resourceType": "Document"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:41.906Z",
+      "time": "2020-04-14T19:58:53.295Z",
       "setCookies": [
-        "sessionid=189; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "Main-ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT"
       ],
-      "remoteAddress": "127.0.0.1:64223",
+      "remoteAddress": "127.0.0.1:60540",
       "url": "https://main/run?sessionid=X",
       "originType": "same-origin",
       "referer": "https://main/?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=https://main/?sessionid=X",
         "Host=main",
         "Connection=close"
@@ -3313,12 +3413,12 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:41.949Z",
+      "time": "2020-04-14T19:58:53.313Z",
       "setCookies": [
-        "sessionid=189; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "SecureSub=0",
         "SecureSub--Secure=0; Secure",
         "SecureSub--HttpOnly=0; HttpOnly",
@@ -3337,13 +3437,13 @@
         "SecureSub--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
         "SecureSub--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org"
       ],
-      "remoteAddress": "127.0.0.1:64224",
+      "remoteAddress": "127.0.0.1:60541",
       "url": "https://subdomain/run-redirect?sessionid=X",
       "originType": "same-site",
       "referer": "https://main/run?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=https://main/run?sessionid=X",
         "Host=subdomain",
         "Connection=close"
@@ -3353,12 +3453,12 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:41.971Z",
+      "time": "2020-04-14T19:58:53.332Z",
       "setCookies": [
-        "sessionid=189; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "SecureExternal=0",
         "SecureExternal--Secure=0; Secure",
         "SecureExternal--HttpOnly=0; HttpOnly",
@@ -3372,13 +3472,13 @@
         "__Secure-SecureExternal--Secure-SecurePrefix=0; Secure",
         "__Host-SecureExternal--Secure-HostPrefix-RootPath=0; Secure; Path=/"
       ],
-      "remoteAddress": "127.0.0.1:64225",
+      "remoteAddress": "127.0.0.1:60542",
       "url": "https://external/run-page?sessionid=X",
       "originType": "cross-site",
       "referer": "https://subdomain/run-redirect?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=https://subdomain/run-redirect?sessionid=X",
         "Host=external",
         "Connection=close"
@@ -3388,18 +3488,18 @@
       "resourceType": "Document"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:41.997Z",
-      "setCookies": ["sessionid=189; HttpOnly;"],
-      "remoteAddress": "127.0.0.1:64226",
+      "time": "2020-04-14T19:58:53.351Z",
+      "setCookies": ["sessionid=193; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:60543",
       "url": "https://external/results?sessionid=X",
       "originType": "same-origin",
       "referer": "https://external/run-page?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=https://external/run-page?sessionid=X",
         "Host=external",
         "Connection=close"
@@ -3409,18 +3509,18 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.058Z",
-      "setCookies": ["sessionid=189; HttpOnly;"],
-      "remoteAddress": "127.0.0.1:64227",
+      "time": "2020-04-14T19:58:53.374Z",
+      "setCookies": ["sessionid=193; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:60544",
       "url": "https://subdomain/results-redirect?sessionid=X",
       "originType": "cross-site",
       "referer": "https://external/results?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=https://external/results?sessionid=X",
         "Host=subdomain",
         "Connection=close"
@@ -3430,18 +3530,18 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.076Z",
-      "setCookies": ["sessionid=189; HttpOnly;"],
-      "remoteAddress": "127.0.0.1:64228",
+      "time": "2020-04-14T19:58:53.390Z",
+      "setCookies": ["sessionid=193; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:60545",
       "url": "https://main/results-page?sessionid=X",
       "originType": "same-site",
       "referer": "https://subdomain/results-redirect?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=https://subdomain/results-redirect?sessionid=X",
         "Host=main",
         "Connection=close"
@@ -3451,12 +3551,12 @@
       "resourceType": "Document"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.147Z",
+      "time": "2020-04-14T19:58:53.432Z",
       "setCookies": [
-        "sessionid=189; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "Main-ToBeExpired=start;",
         "Main=0",
         "Main--Secure=0; Secure",
@@ -3476,13 +3576,13 @@
         "Main--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
         "Main--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org"
       ],
-      "remoteAddress": "127.0.0.1:64229",
+      "remoteAddress": "127.0.0.1:60546",
       "url": "http://main/?sessionid=X",
       "originType": "same-origin",
       "referer": "https://main/results-page?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=https://main/results-page?sessionid=X",
         "Host=main",
         "Connection=close"
@@ -3492,21 +3592,21 @@
       "resourceType": "Document"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.150Z",
+      "time": "2020-04-14T19:58:53.435Z",
       "setCookies": [
-        "sessionid=189; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "Main-ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT"
       ],
-      "remoteAddress": "127.0.0.1:64230",
+      "remoteAddress": "127.0.0.1:60547",
       "url": "http://main/run?sessionid=X",
       "originType": "same-origin",
       "referer": "http://main/?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=http://main/?sessionid=X",
         "Host=main",
         "Connection=close"
@@ -3516,12 +3616,12 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.166Z",
+      "time": "2020-04-14T19:58:53.451Z",
       "setCookies": [
-        "sessionid=189; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "Sub=0",
         "Sub--Secure=0; Secure",
         "Sub--HttpOnly=0; HttpOnly",
@@ -3540,13 +3640,13 @@
         "Sub--RootDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=ulixee-test.org",
         "Sub--RootDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=ulixee-test.org"
       ],
-      "remoteAddress": "127.0.0.1:64231",
+      "remoteAddress": "127.0.0.1:60548",
       "url": "http://subdomain/run-redirect?sessionid=X",
       "originType": "same-site",
       "referer": "http://main/run?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=http://main/run?sessionid=X",
         "Host=subdomain",
         "Connection=close"
@@ -3556,12 +3656,12 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.197Z",
+      "time": "2020-04-14T19:58:53.467Z",
       "setCookies": [
-        "sessionid=189; HttpOnly;",
+        "sessionid=193; HttpOnly;",
         "External=0",
         "External--Secure=0; Secure",
         "External--HttpOnly=0; HttpOnly",
@@ -3575,13 +3675,13 @@
         "__Secure-External--Secure-SecurePrefix=0; Secure",
         "__Host-External--Secure-HostPrefix-RootPath=0; Secure; Path=/"
       ],
-      "remoteAddress": "127.0.0.1:64232",
+      "remoteAddress": "127.0.0.1:60549",
       "url": "http://external/run-page?sessionid=X",
       "originType": "cross-site",
       "referer": "http://subdomain/run-redirect?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=http://subdomain/run-redirect?sessionid=X",
         "Host=external",
         "Connection=close"
@@ -3591,18 +3691,18 @@
       "resourceType": "Document"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.275Z",
-      "setCookies": ["sessionid=189; HttpOnly;"],
-      "remoteAddress": "127.0.0.1:64233",
+      "time": "2020-04-14T19:58:53.484Z",
+      "setCookies": ["sessionid=193; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:60550",
       "url": "http://external/results?sessionid=X",
       "originType": "same-origin",
       "referer": "http://external/run-page?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=http://external/run-page?sessionid=X",
         "Host=external",
         "Connection=close"
@@ -3612,18 +3712,18 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.295Z",
-      "setCookies": ["sessionid=189; HttpOnly;"],
-      "remoteAddress": "127.0.0.1:64234",
+      "time": "2020-04-14T19:58:53.499Z",
+      "setCookies": ["sessionid=193; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:60551",
       "url": "http://subdomain/results-redirect?sessionid=X",
       "originType": "cross-site",
       "referer": "http://external/results?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=http://external/results?sessionid=X",
         "Host=subdomain",
         "Connection=close"
@@ -3633,18 +3733,18 @@
       "resourceType": "Redirect"
     },
     {
-      "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+      "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
       "bodyJson": {},
       "cookies": {},
-      "time": "2020-03-25T15:34:42.318Z",
-      "setCookies": ["sessionid=189; HttpOnly;"],
-      "remoteAddress": "127.0.0.1:64235",
+      "time": "2020-04-14T19:58:53.514Z",
+      "setCookies": ["sessionid=193; HttpOnly;"],
+      "remoteAddress": "127.0.0.1:60552",
       "url": "http://main/results-page?sessionid=X",
       "originType": "same-site",
       "referer": "http://subdomain/results-redirect?sessionid=X",
       "method": "GET",
       "headers": [
-        "User-Agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "User-Agent=Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
         "Referer=http://subdomain/results-redirect?sessionid=X",
         "Host=main",
         "Connection=close"
@@ -3654,8 +3754,8 @@
       "resourceType": "Document"
     }
   ],
-  "expectedUseragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-  "useragent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+  "expectedUseragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+  "useragent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
   "parsedUseragent": {
     "family": "Chrome",
     "major": "80",
@@ -3674,5 +3774,5 @@
       "patch": "0"
     }
   },
-  "userUuid": "2564f680-6eae-11ea-a37a-618f9127f5a1"
+  "userUuid": "5dd24770-7e8a-11ea-a11d-1337efaad6a3"
 }

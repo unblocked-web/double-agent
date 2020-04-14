@@ -21,13 +21,13 @@
     "botPct": 70
   },
   "IP Address": {
-    "checks": 112,
+    "checks": 114,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
   },
   "Standard Https Headers": {
-    "checks": 248,
+    "checks": 159,
     "flagged": 7,
     "flaggedChecks": [
       {
@@ -70,7 +70,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept-Language,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Cookie",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language"
       },
       {
         "category": "Standard Https Headers",
@@ -84,7 +84,7 @@
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept-Language,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language"
       },
       {
         "category": "Standard Https Headers",
@@ -93,7 +93,7 @@
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": true,
-        "requestIdx": 53,
+        "requestIdx": 54,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -107,12 +107,12 @@
         "originType": "cross-site",
         "hostDomain": "Sub",
         "secureDomain": true,
-        "requestIdx": 54,
+        "requestIdx": 55,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept-Language,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Cookie",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language"
       },
       {
         "category": "Standard Https Headers",
@@ -121,18 +121,18 @@
         "originType": "cross-site",
         "hostDomain": "Main",
         "secureDomain": true,
-        "requestIdx": 55,
+        "requestIdx": 56,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "value": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept-Language,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Cookie",
-        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language,Cookie"
+        "expected": "Host,Connection,Upgrade-Insecure-Requests,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Sec-Fetch-User,Referer,Accept-Encoding,Accept-Language"
       }
     ],
     "botPct": 85
   },
   "User Agent": {
-    "checks": 114,
+    "checks": 116,
     "flagged": 2,
     "flaggedChecks": [
       {
@@ -145,8 +145,8 @@
         "requestIdx": 0,
         "checkName": "Browser Popularity",
         "description": "Checks that a User Agent is among the most popular \"current\" browsers",
-        "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-        "pctBot": 7
+        "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36",
+        "pctBot": 1
       },
       {
         "category": "User Agent",
@@ -158,15 +158,15 @@
         "requestIdx": 0,
         "checkName": "Operating System Popularity",
         "description": "Checks that a User Agent is among the most popular \"current\" Operating Systems",
-        "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+        "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36",
         "pctBot": 50
       }
     ],
     "botPct": 50
   },
   "Asset Headers": {
-    "checks": 728,
-    "flagged": 19,
+    "checks": 525,
+    "flagged": 21,
     "flaggedChecks": [
       {
         "category": "Asset Headers",
@@ -270,10 +270,24 @@
         "category": "Asset Headers",
         "layer": "http",
         "resourceType": "Script",
+        "originType": "cross-site",
+        "hostDomain": "Main",
+        "secureDomain": true,
+        "requestIdx": 15,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "Host,Connection,Sec-Fetch-Dest,Accept-Language,User-Agent,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Cookie",
+        "expected": "Host,Connection,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Cookie"
+      },
+      {
+        "category": "Asset Headers",
+        "layer": "http",
+        "resourceType": "Script",
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": true,
-        "requestIdx": 15,
+        "requestIdx": 16,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -287,7 +301,7 @@
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": true,
-        "requestIdx": 41,
+        "requestIdx": 42,
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
@@ -298,20 +312,6 @@
         "category": "Asset Headers",
         "layer": "http",
         "resourceType": "Stylesheet",
-        "originType": "same-origin",
-        "hostDomain": "Main",
-        "secureDomain": true,
-        "requestIdx": 56,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Sec-Fetch-Dest,Accept-Language,User-Agent,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Cookie",
-        "expected": "Host,Connection,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Cookie"
-      },
-      {
-        "category": "Asset Headers",
-        "layer": "http",
-        "resourceType": "Script",
         "originType": "same-origin",
         "hostDomain": "Main",
         "secureDomain": true,
@@ -325,11 +325,25 @@
       {
         "category": "Asset Headers",
         "layer": "http",
+        "resourceType": "Script",
+        "originType": "same-origin",
+        "hostDomain": "Main",
+        "secureDomain": true,
+        "requestIdx": 58,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "Host,Connection,Sec-Fetch-Dest,Accept-Language,User-Agent,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Cookie",
+        "expected": "Host,Connection,User-Agent,Sec-Fetch-Dest,Accept,Sec-Fetch-Site,Sec-Fetch-Mode,Referer,Accept-Encoding,Accept-Language,Cookie"
+      },
+      {
+        "category": "Asset Headers",
+        "layer": "http",
         "resourceType": "Stylesheet",
         "originType": "cross-site",
         "hostDomain": "Main",
         "secureDomain": false,
-        "requestIdx": 69,
+        "requestIdx": 70,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -343,7 +357,7 @@
         "originType": "cross-site",
         "hostDomain": "Sub",
         "secureDomain": false,
-        "requestIdx": 70,
+        "requestIdx": 71,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -356,20 +370,6 @@
         "resourceType": "Stylesheet",
         "originType": "same-origin",
         "hostDomain": "External",
-        "secureDomain": false,
-        "requestIdx": 71,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Accept-Language,User-Agent,Accept,Referer,Accept-Encoding,Cookie",
-        "expected": "Host,Connection,User-Agent,Accept,Referer,Accept-Encoding,Accept-Language,Cookie"
-      },
-      {
-        "category": "Asset Headers",
-        "layer": "http",
-        "resourceType": "Script",
-        "originType": "cross-site",
-        "hostDomain": "Main",
         "secureDomain": false,
         "requestIdx": 72,
         "pctBot": 85,
@@ -383,9 +383,23 @@
         "layer": "http",
         "resourceType": "Script",
         "originType": "cross-site",
-        "hostDomain": "Sub",
+        "hostDomain": "Main",
         "secureDomain": false,
         "requestIdx": 73,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "Host,Connection,Accept-Language,User-Agent,Accept,Referer,Accept-Encoding,Cookie",
+        "expected": "Host,Connection,User-Agent,Accept,Referer,Accept-Encoding,Accept-Language,Cookie"
+      },
+      {
+        "category": "Asset Headers",
+        "layer": "http",
+        "resourceType": "Script",
+        "originType": "cross-site",
+        "hostDomain": "Sub",
+        "secureDomain": false,
+        "requestIdx": 74,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -399,7 +413,21 @@
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": false,
-        "requestIdx": 74,
+        "requestIdx": 75,
+        "pctBot": 85,
+        "checkName": "Headers in Correct Order",
+        "description": "Checks if the request headers are in the correct order for the given user agent",
+        "value": "Host,Connection,Accept-Language,User-Agent,Accept,Referer,Accept-Encoding,Cookie",
+        "expected": "Host,Connection,User-Agent,Accept,Referer,Accept-Encoding,Accept-Language,Cookie"
+      },
+      {
+        "category": "Asset Headers",
+        "layer": "http",
+        "resourceType": "Script",
+        "originType": "cross-site",
+        "hostDomain": "Main",
+        "secureDomain": false,
+        "requestIdx": 76,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -413,7 +441,7 @@
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": false,
-        "requestIdx": 100,
+        "requestIdx": 102,
         "description": "Checks if the request headers are in the correct order for the given user agent",
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
@@ -427,7 +455,7 @@
         "originType": "same-origin",
         "hostDomain": "Main",
         "secureDomain": false,
-        "requestIdx": 114,
+        "requestIdx": 116,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -461,9 +489,15 @@
     "flaggedChecks": [],
     "botPct": 0
   },
+  "Xhr Headers": {
+    "checks": 347,
+    "flagged": 0,
+    "flaggedChecks": [],
+    "botPct": 0
+  },
   "Websocket Headers": {
-    "checks": 222,
-    "flagged": 12,
+    "checks": 156,
+    "flagged": 6,
     "flaggedChecks": [
       {
         "category": "Websocket Headers",
@@ -472,21 +506,7 @@
         "originType": "cross-site",
         "hostDomain": "Main",
         "secureDomain": true,
-        "requestIdx": 19,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions",
-        "expected": "Host,Connection,Pragma,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions"
-      },
-      {
-        "category": "Websocket Headers",
-        "layer": "http",
-        "resourceType": "Websocket Upgrade",
-        "originType": "cross-site",
-        "hostDomain": "Main",
-        "secureDomain": true,
-        "requestIdx": 19,
+        "requestIdx": 21,
         "checkName": "Header has a Browser Default Value for: Accept-Language",
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "value": "en-US",
@@ -500,21 +520,7 @@
         "originType": "cross-site",
         "hostDomain": "Sub",
         "secureDomain": true,
-        "requestIdx": 37,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions",
-        "expected": "Host,Connection,Pragma,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions"
-      },
-      {
-        "category": "Websocket Headers",
-        "layer": "http",
-        "resourceType": "Websocket Upgrade",
-        "originType": "cross-site",
-        "hostDomain": "Sub",
-        "secureDomain": true,
-        "requestIdx": 37,
+        "requestIdx": 39,
         "checkName": "Header has a Browser Default Value for: Accept-Language",
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "value": "en-US",
@@ -528,40 +534,12 @@
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": true,
-        "requestIdx": 39,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions",
-        "expected": "Host,Connection,Pragma,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions"
-      },
-      {
-        "category": "Websocket Headers",
-        "layer": "http",
-        "resourceType": "Websocket Upgrade",
-        "originType": "same-origin",
-        "hostDomain": "External",
-        "secureDomain": true,
-        "requestIdx": 39,
+        "requestIdx": 40,
         "checkName": "Header has a Browser Default Value for: Accept-Language",
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "value": "en-US",
         "pctBot": 100,
         "expected": "en-US,en;q=0.9"
-      },
-      {
-        "category": "Websocket Headers",
-        "layer": "http",
-        "resourceType": "Websocket Upgrade",
-        "originType": "cross-site",
-        "hostDomain": "Main",
-        "secureDomain": false,
-        "requestIdx": 81,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions",
-        "expected": "Host,Connection,Pragma,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions"
       },
       {
         "category": "Websocket Headers",
@@ -584,21 +562,7 @@
         "originType": "cross-site",
         "hostDomain": "Sub",
         "secureDomain": false,
-        "requestIdx": 97,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions",
-        "expected": "Host,Connection,Pragma,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions"
-      },
-      {
-        "category": "Websocket Headers",
-        "layer": "http",
-        "resourceType": "Websocket Upgrade",
-        "originType": "cross-site",
-        "hostDomain": "Sub",
-        "secureDomain": false,
-        "requestIdx": 97,
+        "requestIdx": 99,
         "checkName": "Header has a Browser Default Value for: Accept-Language",
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "value": "en-US",
@@ -612,21 +576,7 @@
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": false,
-        "requestIdx": 98,
-        "pctBot": 85,
-        "checkName": "Headers in Correct Order",
-        "description": "Checks if the request headers are in the correct order for the given user agent",
-        "value": "Host,Connection,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions",
-        "expected": "Host,Connection,Pragma,Cache-Control,User-Agent,Upgrade,Origin,Sec-WebSocket-Version,Accept-Encoding,Accept-Language,Cookie,Sec-WebSocket-Key,Sec-WebSocket-Extensions"
-      },
-      {
-        "category": "Websocket Headers",
-        "layer": "http",
-        "resourceType": "Websocket Upgrade",
-        "originType": "same-origin",
-        "hostDomain": "External",
-        "secureDomain": false,
-        "requestIdx": 98,
+        "requestIdx": 100,
         "checkName": "Header has a Browser Default Value for: Accept-Language",
         "description": "Checks if the request has a header value for Accept-Language matching the default values sent for this user agent",
         "value": "en-US",
@@ -636,14 +586,8 @@
     ],
     "botPct": 100
   },
-  "Xhr Headers": {
-    "checks": 532,
-    "flagged": 0,
-    "flaggedChecks": [],
-    "botPct": 0
-  },
   "Cors Preflight Headers": {
-    "checks": 384,
+    "checks": 246,
     "flagged": 0,
     "flaggedChecks": [],
     "botPct": 0
@@ -661,7 +605,7 @@
     "botPct": 0
   },
   "Standard Http Headers": {
-    "checks": 194,
+    "checks": 132,
     "flagged": 7,
     "flaggedChecks": [
       {
@@ -671,7 +615,7 @@
         "originType": "none",
         "hostDomain": "Main",
         "secureDomain": false,
-        "requestIdx": 62,
+        "requestIdx": 63,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -685,7 +629,7 @@
         "originType": "same-origin",
         "hostDomain": "Main",
         "secureDomain": false,
-        "requestIdx": 66,
+        "requestIdx": 67,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -699,7 +643,7 @@
         "originType": "same-site",
         "hostDomain": "Sub",
         "secureDomain": false,
-        "requestIdx": 67,
+        "requestIdx": 68,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -713,7 +657,7 @@
         "originType": "cross-site",
         "hostDomain": "External",
         "secureDomain": false,
-        "requestIdx": 68,
+        "requestIdx": 69,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -727,7 +671,7 @@
         "originType": "same-origin",
         "hostDomain": "External",
         "secureDomain": false,
-        "requestIdx": 111,
+        "requestIdx": 113,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -741,7 +685,7 @@
         "originType": "cross-site",
         "hostDomain": "Sub",
         "secureDomain": false,
-        "requestIdx": 112,
+        "requestIdx": 114,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
@@ -755,7 +699,7 @@
         "originType": "cross-site",
         "hostDomain": "Main",
         "secureDomain": false,
-        "requestIdx": 113,
+        "requestIdx": 115,
         "pctBot": 85,
         "checkName": "Headers in Correct Order",
         "description": "Checks if the request headers are in the correct order for the given user agent",
