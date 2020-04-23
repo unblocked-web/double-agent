@@ -58,40 +58,21 @@
       "audio/flac;codecs=vp9,vorbis",
       "audio/flac;codecs=vp9.0",
       "audio/mp3;codecs=mp3",
-      "audio/mp4;codecs=mp3",
-      "audio/mp4;codecs=mp4a.40.05",
-      "audio/mp4;codecs=mp4a.40.2",
-      "audio/mp4;codecs=mp4a.40.5",
-      "audio/mp4;codecs=opus",
-      "audio/mp4;codecs=vp9",
-      "audio/mp4;codecs=vp9,opus",
-      "audio/mp4;codecs=vp9.0",
       "audio/mpeg;codecs=mp3",
       "audio/ogg;codecs=opus",
       "audio/ogg;codecs=vorbis",
       "audio/wav;codecs=1",
       "audio/webm;codecs=opus",
-      "audio/webm;codecs=vorbis",
-      "audio/x-m4a;codecs=mp3",
-      "audio/x-m4a;codecs=mp4a.40.05",
-      "audio/x-m4a;codecs=mp4a.40.2",
-      "audio/x-m4a;codecs=mp4a.40.5",
-      "audio/x-m4a;codecs=opus",
-      "audio/x-m4a;codecs=vp9",
-      "audio/x-m4a;codecs=vp9,opus",
-      "audio/x-m4a;codecs=vp9.0"
+      "audio/webm;codecs=vorbis"
     ],
     "maybePlays": [
       "application/ogg",
-      "audio/aac",
       "audio/flac",
       "audio/mp3",
-      "audio/mp4",
       "audio/mpeg",
       "audio/ogg",
       "audio/wav",
-      "audio/webm",
-      "audio/x-m4a"
+      "audio/webm"
     ]
   },
   "videoSupport": {
@@ -112,9 +93,6 @@
       "video/mp4;codecs=avc1.640028",
       "video/mp4;codecs=avc1.640029",
       "video/mp4;codecs=mp3",
-      "video/mp4;codecs=mp4a.40.05",
-      "video/mp4;codecs=mp4a.40.2",
-      "video/mp4;codecs=mp4a.40.5",
       "video/mp4;codecs=opus",
       "video/mp4;codecs=vp9",
       "video/mp4;codecs=vp9,opus",
@@ -128,9 +106,6 @@
       "video/quicktime;codecs=avc1.640028",
       "video/quicktime;codecs=avc1.640029",
       "video/quicktime;codecs=mp3",
-      "video/quicktime;codecs=mp4a.40.05",
-      "video/quicktime;codecs=mp4a.40.2",
-      "video/quicktime;codecs=mp4a.40.5",
       "video/quicktime;codecs=opus",
       "video/quicktime;codecs=vp9",
       "video/quicktime;codecs=vp9,opus",
@@ -146,7 +121,13 @@
       "video/webm;codecs=vp9,vorbis",
       "video/webm;codecs=vp9.0"
     ],
-    "maybePlays": ["application/ogg", "video/mp4", "video/ogg", "video/quicktime", "video/webm"]
+    "maybePlays": [
+      "application/ogg",
+      "video/mp4",
+      "video/ogg",
+      "video/quicktime",
+      "video/webm"
+    ]
   },
   "webRtcAudioCodecs": [],
   "webRtcVideoCodecs": [],

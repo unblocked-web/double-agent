@@ -8,6 +8,7 @@ import { getAgentBrowser } from '@double-agent/runner/lib/profileHelper';
 import checkRequestHeaders from './checks/checkRequestHeaders';
 import IRequestDetails from '@double-agent/runner/interfaces/IRequestDetails';
 import HostDomain from '@double-agent/runner/interfaces/HostDomain';
+import { sendJson } from '@double-agent/runner/lib/httpUtils';
 
 export default class HttpHeadersPlugin implements IDetectionPlugin {
   private browserStats = getBrowserProfileStats();
@@ -34,17 +35,22 @@ export default class HttpHeadersPlugin implements IDetectionPlugin {
       ctx.extraScripts.push(`
 <script type="text/javascript">
   const urls = ${JSON.stringify(xhrs)};
-  window.pageQueue.push(...urls.map(x => {
-    if (x.func === 'axios.get') return axios.get(x.url, x.args || {}).catch(console.log);
-    else fetch(x.url, x.args || {}).catch(console.log);
-  }));
+  const promise = new Promise(resolve => {
+    window.addEventListener('load', () => {
+      Promise.all(urls.map(x => {
+        if (x.func === 'axios.get') return axios.get(x.url, x.args || {}).catch(console.log);
+        else fetch(x.url, x.args || {}).catch(console.log);
+      })).then(resolve)
+    });
+  });
+  window.pageQueue.push(promise);
 </script>`);
     }
 
     if (ctx.url.pathname === '/results-page') {
       if (ctx.requestDetails.secureDomain === false) {
         const profile = new HeaderProfile(ctx.session);
-        profile.save();
+        await profile.save();
       }
     }
 
@@ -54,20 +60,7 @@ export default class HttpHeadersPlugin implements IDetectionPlugin {
   public async handleResponse(ctx: IRequestContext): Promise<boolean> {
     const requestUrl = ctx.url;
     if (requestUrl.pathname.includes('headers.json')) {
-      const res = ctx.res;
-
-      if (ctx.req.headers.origin) {
-        res.setHeader('Access-Control-Allow-Origin', ctx.req.headers.origin);
-      } else if (ctx.req.headers.referer) {
-        res.setHeader('Access-Control-Allow-Origin', new URL(ctx.req.headers.referer).origin);
-      }
-
-      res.writeHead(200, {
-        'Content-Type': 'application/json',
-        'X-Content-Type-Options': 'nosniff',
-      });
-
-      res.end(JSON.stringify({ message: true }));
+      sendJson(ctx, { success: true });
       return true;
     }
     return false;

@@ -4,6 +4,7 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 export default function fontScript(ctx: IRequestContext) {
   return `
 <script type="text/javascript">
+(() => {
   // extracted from https://github.com/Valve/fingerprintjs2/
   // a font will be compared against all the three default fonts.
   // and if it doesn't match all 3 then that font is not available.
@@ -43,59 +44,65 @@ export default function fontScript(ctx: IRequestContext) {
     return s;
   }
 
-  const promise = new Promise(resolve => {
-    const defaultWidth = {};
-    const defaultHeight = {};
+  const promise = new Promise(resolve => window.addEventListener('load', resolve))
+    .then(() => new Promise((resolve, reject) => {
+      try {
+        const defaultWidth = {};
+        const defaultHeight = {};
 
-    (function getDefaultDimensions() {
-      const baseFontsSpans = baseFonts.map(createSpan);
+        (function getDefaultDimensions() {
+          const baseFontsSpans = baseFonts.map(createSpan);
 
-      const baseFontsDiv = document.createElement('div');
-      baseFontsDiv.append(...baseFontsSpans);
-      document.body.appendChild(baseFontsDiv);
-      let i = 0;
-      for (const baseFont of baseFonts) {
-        const span = baseFontsSpans[i];
-        defaultWidth[baseFont] = span.offsetWidth;
-        defaultHeight[baseFont] = span.offsetHeight;
-        i += 1;
-      }
-      document.body.removeChild(baseFontsDiv);
-    })();
+          const baseFontsDiv = document.createElement('div');
+          baseFontsDiv.append(...baseFontsSpans);
+          document.body.appendChild(baseFontsDiv);
+          let i = 0;
+          for (const baseFont of baseFonts) {
+            const span = baseFontsSpans[i];
+            defaultWidth[baseFont] = span.offsetWidth;
+            defaultHeight[baseFont] = span.offsetHeight;
+            i += 1;
+          }
+          document.body.removeChild(baseFontsDiv);
+        })();
 
-    const fontsDiv = document.createElement('div');
-    const fontsSpans = {};
-    for (const font of fontList) {
-      fontsSpans[font] = baseFonts.map(baseFont =>
-        fontsDiv.appendChild(createSpan("'" + font + "'," + baseFont)),
-      );
-    }
-    document.body.appendChild(fontsDiv);
-
-    // check available fonts
-    const fonts = fontList.filter(font => {
-      const fontSpans = fontsSpans[font];
-      let i = 0;
-      for (const baseFont of baseFonts) {
-        const isAvailable =
-          fontSpans[i].offsetWidth !== defaultWidth[baseFont] ||
-          fontSpans[i].offsetHeight !== defaultHeight[baseFont];
-        if (isAvailable) {
-          return true;
+        const fontsDiv = document.createElement('div');
+        const fontsSpans = {};
+        for (const font of fontList) {
+          fontsSpans[font] = baseFonts.map(baseFont =>
+            fontsDiv.appendChild(createSpan("'" + font + "'," + baseFont)),
+          );
         }
-        i += 1;
+        document.body.appendChild(fontsDiv);
+
+        // check available fonts
+        const fonts = fontList.filter(font => {
+          const fontSpans = fontsSpans[font];
+          let i = 0;
+          for (const baseFont of baseFonts) {
+            const isAvailable =
+              fontSpans[i].offsetWidth !== defaultWidth[baseFont] ||
+              fontSpans[i].offsetHeight !== defaultHeight[baseFont];
+            if (isAvailable) {
+              return true;
+            }
+            i += 1;
+          }
+          return false;
+        });
+        document.body.removeChild(fontsDiv);
+
+        return fetch("${ctx.trackUrl('/fonts')}", {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ fonts }),
+        }).then(resolve).catch(reject);
+      } catch(err){
+        reject(err);
       }
-      return false;
-    });
-    document.body.removeChild(fontsDiv);
-    
-    return fetch("${ctx.trackUrl('/fonts')}", {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ fonts }),
-    }).then(resolve);
-  });
-  
+    }));
+
   window.pageQueue.push(promise);
+})();
 </script>`;
 }

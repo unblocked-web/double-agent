@@ -1,5 +1,5 @@
 {
-  "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36",
+  "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36",
   "ja3": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0",
   "ja3Md5": "66918128f1b9b03303d77c6f2eefd128",
   "ja3Extended": "771,4865-4866-4867-49195-49199-49196-49200-52393-52392-49171-49172-156-157-47-53-10,0-23-65281-10-11-35-16-5-13-18-51-45-43-27-21,29-23-24,0,1027-2052-1025-1283-2053-1281-2054-1537-513,772-771-770-769,h2-http/1.1,1",
@@ -8,12 +8,12 @@
     "type": "ClientHello",
     "version": "0x303 (TLS 1.2)",
     "random": {
-      "unixTime": "0xC7FFEDFE",
-      "randomBytes": "9DBB971766F10930F710D3AFD34D5DD9DA6C9CBF3350E9EE0E697B1B"
+      "unixTime": "0x7D849A6F",
+      "randomBytes": "CE6C8D4D679CF9ED63C81FB8086F69467603AF5EE59CBD1BC3057AE5"
     },
-    "sessionId": "479B64EF62272D2E12C8AAD4EA5EC81527F10F1FDBBCFBB7C936145BA67588E1",
+    "sessionId": "1F9ED460944131D094C3DE6B22FC1A658A7A468B2D218EEABFC4DCAC98A5FFA1",
     "ciphers": [
-      "{0x6A, 0x6A} GREASE",
+      "{0x7A, 0x7A} GREASE",
       "{0x13, 0x01} TLS_AES_128_GCM_SHA256",
       "{0x13, 0x02} TLS_AES_256_GCM_SHA384",
       "{0x13, 0x03} TLS_CHACHA20_POLY1305_SHA256",
@@ -31,11 +31,13 @@
       "{0x00, 0x35} TLS_RSA_WITH_AES_256_CBC_SHA",
       "{0x00, 0x0A} TLS_RSA_WITH_3DES_EDE_CBC_SHA"
     ],
-    "compressionMethods": ["No Compression (0x00)"],
+    "compressionMethods": [
+      "No Compression (0x00)"
+    ],
     "extensions": [
       {
         "type": "GREASE",
-        "decimal": 19018,
+        "decimal": 23130,
         "values": []
       },
       {
@@ -54,13 +56,15 @@
       {
         "type": "renegotiate",
         "decimal": 65281,
-        "values": ["<EMPTY>"]
+        "values": [
+          "<EMPTY>"
+        ]
       },
       {
         "type": "supported_groups",
         "decimal": 10,
         "values": [
-          "GREASE (23130)",
+          "GREASE (47802)",
           "ecdh_x25519 (29)",
           "secp256r1 (P-256) (23)",
           "secp384r1 (P-384) (24)"
@@ -69,7 +73,9 @@
       {
         "type": "ec_point_formats",
         "decimal": 11,
-        "values": ["uncompressed (0)"]
+        "values": [
+          "uncompressed (0)"
+        ]
       },
       {
         "type": "session_ticket",
@@ -79,12 +85,17 @@
       {
         "type": "application_layer_protocol_negotiation",
         "decimal": 16,
-        "values": ["h2", "http/1.1"]
+        "values": [
+          "h2",
+          "http/1.1"
+        ]
       },
       {
         "type": "status_request",
         "decimal": 5,
-        "values": ["0000 - 01 00 00 00 00                                 ....."]
+        "values": [
+          "0000 - 01 00 00 00 00                                 ....."
+        ]
       },
       {
         "type": "signature_algorithms",
@@ -110,22 +121,24 @@
         "type": "key_share",
         "decimal": 51,
         "values": [
-          "NamedGroup: GREASE (23130)",
+          "NamedGroup: GREASE (47802)",
           "key_exchange:  (len=1): 00",
           "NamedGroup: ecdh_x25519 (29)",
-          "key_exchange:  (len=32): 0786B4EFA7576C0DE7641CEA1A707462D96B2AB3ADC462F7EDE102296FD71C39"
+          "key_exchange:  (len=32): 1CE683A309EC1F24F3A21DFF8743A85BB09E777010DA3A734ACDB3AF1D799212"
         ]
       },
       {
         "type": "psk_key_exchange_modes",
         "decimal": 45,
-        "values": ["psk_dhe_ke (1)"]
+        "values": [
+          "psk_dhe_ke (1)"
+        ]
       },
       {
         "type": "supported_versions",
         "decimal": 43,
         "values": [
-          "GREASE (10794)",
+          "GREASE (19018)",
           "TLS 1.3 (772)",
           "TLS 1.2 (771)",
           "TLS 1.1 (770)",
@@ -135,12 +148,16 @@
       {
         "type": "compress_certificate",
         "decimal": 27,
-        "values": ["0000 - 02 00 02                                       ..."]
+        "values": [
+          "0000 - 02 00 02                                       ..."
+        ]
       },
       {
         "type": "GREASE",
-        "decimal": 47802,
-        "values": ["0000 - 00                                             ."]
+        "decimal": 51914,
+        "values": [
+          "0000 - 00                                             ."
+        ]
       },
       {
         "type": "padding",

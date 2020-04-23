@@ -15,10 +15,10 @@ export default class FingerprintProfile {
     return profiles;
   }
 
-  public static save(useragent: string, data: IFingerprintProfile) {
+  public static async save(useragent: string, data: IFingerprintProfile) {
     const profile = { ...data, useragent };
     if (process.env.GENERATE_PROFILES) {
-      saveUseragentProfile(useragent, profile, profilesDir);
+      await saveUseragentProfile(useragent, profile, profilesDir);
     }
     return profile;
   }

@@ -6,6 +6,7 @@ import OriginType from '../interfaces/OriginType';
 import IDomainset from '../interfaces/IDomainset';
 import ResourceType from '../interfaces/ResourceType';
 import IFlaggedCheck from '../interfaces/IFlaggedCheck';
+import { URL } from 'url';
 
 export function flaggedCheckFromRequest(ctx: IRequestContext, layer: Layer, category: string) {
   const request = ctx.requestDetails;

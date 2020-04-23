@@ -19,7 +19,7 @@ export default async function forEachDirective(
         return;
       }
 
-      console.log('Getting next directive');
+      console.log('Getting next directive', `http://${runnerDomain}:3000`);
       const response = await fetch(`http://${runnerDomain}:3000`, {
         headers: {
           scraper: suiteDir,

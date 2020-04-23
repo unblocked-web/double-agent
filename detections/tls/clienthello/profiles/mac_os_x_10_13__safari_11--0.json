@@ -8,8 +8,8 @@
     "type": "ClientHello",
     "version": "0x303 (TLS 1.2)",
     "random": {
-      "unixTime": "0xD703899E",
-      "randomBytes": "38DA325DF4971AEA841CAD8DAA13055A4AD68B79255E55207627413B"
+      "unixTime": "0xA4406082",
+      "randomBytes": "1F0E464269F0CBDAC707C2AED75650F4B0070CEBC74ED2EDEF694792"
     },
     "sessionId": "",
     "ciphers": [
@@ -34,12 +34,16 @@
       "{0x00, 0x35} TLS_RSA_WITH_AES_256_CBC_SHA",
       "{0x00, 0x2F} TLS_RSA_WITH_AES_128_CBC_SHA"
     ],
-    "compressionMethods": ["No Compression (0x00)"],
+    "compressionMethods": [
+      "No Compression (0x00)"
+    ],
     "extensions": [
       {
         "type": "renegotiate",
         "decimal": 65281,
-        "values": ["<EMPTY>"]
+        "values": [
+          "<EMPTY>"
+        ]
       },
       {
         "type": "server_name",
@@ -72,7 +76,9 @@
       {
         "type": "status_request",
         "decimal": 5,
-        "values": ["0000 - 01 00 00 00 00                                 ....."]
+        "values": [
+          "0000 - 01 00 00 00 00                                 ....."
+        ]
       },
       {
         "type": "next_proto_neg",
@@ -87,12 +93,22 @@
       {
         "type": "application_layer_protocol_negotiation",
         "decimal": 16,
-        "values": ["h2", "h2-16", "h2-15", "h2-14", "spdy/3.1", "spdy/3", "http/1.1"]
+        "values": [
+          "h2",
+          "h2-16",
+          "h2-15",
+          "h2-14",
+          "spdy/3.1",
+          "spdy/3",
+          "http/1.1"
+        ]
       },
       {
         "type": "ec_point_formats",
         "decimal": 11,
-        "values": ["uncompressed (0)"]
+        "values": [
+          "uncompressed (0)"
+        ]
       },
       {
         "type": "supported_groups",

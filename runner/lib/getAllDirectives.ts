@@ -3,6 +3,7 @@ import { getUseragentPath } from './profileHelper';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { IBrowsersToTest } from './generateBrowserTest';
 import { IUseragentPercents } from './userAgentUtils';
+import { URL } from 'url';
 
 export default async function getAllDirectives(
   httpDomains: IDetectionDomains,

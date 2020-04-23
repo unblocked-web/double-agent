@@ -4,7 +4,8 @@ import { diffArrays, diffWords } from 'diff';
 import JSON from 'json5';
 import IFlaggedCheck from '../interfaces/IFlaggedCheck';
 
-export default function(ctx: IRequestContext) {
+const showResultsUI = process.env.SHOW_RESULTS_UI ?? false;
+export default function(ctx: IRequestContext, includeRequestBodies = false) {
   const [botScore] = getBotScoring(ctx);
 
   return `
@@ -37,6 +38,8 @@ ${ctx.session.assetsNotLoaded
   )
   .join('<br>')}</pre>
 </p>
+
+<hr/>
 <p><b>Bot Findings</b></p>
 <table style="box-sizing: border-box; margin:10px 50px 10px 10px">
 <thead><tr>
@@ -48,9 +51,11 @@ ${ctx.session.assetsNotLoaded
 </tr>
 </thead>
 <tbody>
-${ctx.session.flaggedChecks
-  .map(x => {
-    return `<tr>
+${
+  showResultsUI
+    ? ctx.session.flaggedChecks
+        .map(x => {
+          return `<tr>
 <td>${x.requestIdx}</td>
 <td>${x.pctBot}</td>
 <td>${x.secureDomain ? 'Secure ' : ''}${x.hostDomain} ${x.resourceType} (from ${x.originType})</td>
@@ -59,11 +64,12 @@ ${ctx.session.flaggedChecks
 ${x.expected !== undefined ? diffToHtml(x) : x.value}
 </td>
 </tr>`;
-  })
-  .join('')}
+        })
+        .join('')
+    : ''
+}
 </tbody>
 </table>
-
 
 <p><b>Sessions</b></p>
 
@@ -93,30 +99,36 @@ Origin: ${x.origin}
 <td><pre style="white-space: pre">${Object.keys(x.cookies ?? {}).join('\n')}</pre></pre>
 </td>
 <td>
-<pre>${Object.keys(x.bodyJson).length ? JSON.stringify(x.bodyJson, null, 2) : ''}</pre>
+<pre>${
+      includeRequestBodies && Object.keys(x.bodyJson).length
+        ? JSON.stringify(x.bodyJson, null, 2)
+        : ''
+    }</pre>
 </td>
 </tr>`;
   })
   .join('')}
 </tbody>
 </table>
-<hr/>
 
 ${(ctx.extraScripts || []).join('\n')}
 <script>
   function pageLoaded(){
+    document.body.onload = undefined;
     return Promise.all(window.pageQueue)
+      .then(() => window.afterQueueComplete ? window.afterQueueComplete() : null)
       .then(() => fetch('${ctx.trackUrl('/page-loaded?page=results')}'))
       .then(() => {
         document.body.classList.add('ready');
       }).catch(err => {
-        console.log(err);
+        console.log(err.stack);
       });
   }
 </script>
 </body>
 </html>`;
 }
+
 function diffToHtml(check: IFlaggedCheck) {
   const { category, expected, value } = check;
   let diff: string[];

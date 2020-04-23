@@ -79,7 +79,9 @@ Ulixee.org
 ${(ctx.extraScripts || []).join('\n')}
 <script>
   function pageLoaded(){
+    document.body.onload = undefined;
     return Promise.all(window.pageQueue)
+      .then(() => window.afterQueueComplete ? window.afterQueueComplete() : null)
       .then(() => fetch('${ctx.trackUrl('/page-loaded?page=run')}'))
       .then(() => {
         document.getElementById('goto-results-page').classList.add('ready');

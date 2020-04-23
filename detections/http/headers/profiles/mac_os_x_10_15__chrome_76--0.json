@@ -15,7 +15,7 @@
         "Sec-Fetch-User=?1",
         "Accept=text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
         "Sec-Fetch-Site=same-site",
-        "Referer=https://tls.ulixee.org:3058/?sessionid=X",
+        "Referer=https://tls.ulixee.org:3053/?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9"
       ],
@@ -37,14 +37,34 @@
         "Referer=https://main/?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://main/favicon.ico?sessionid=X",
+      "method": "GET",
+      "requestIdx": 2,
+      "resourceType": "Ico",
+      "originType": "same-origin",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=no-cors",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
+        "Sec-Fetch-Site=same-origin",
+        "Referer=https://main/?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0"
       ],
       "secureDomain": true
     },
     {
       "url": "https://subdomain/fetch-samesite-headers.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 2,
+      "requestIdx": 3,
       "resourceType": "Xhr",
       "originType": "same-site",
       "headers": [
@@ -64,7 +84,7 @@
     {
       "url": "https://main/codecs?sessionid=X",
       "method": "POST",
-      "requestIdx": 3,
+      "requestIdx": 4,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
@@ -80,63 +100,20 @@
         "Referer=https://main/?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://main/fonts?sessionid=X",
-      "method": "POST",
-      "requestIdx": 4,
-      "resourceType": "Xhr",
-      "originType": "same-origin",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Content-Length=1124",
-        "Sec-Fetch-Mode=cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "content-type=application/json",
-        "Accept=*/*",
-        "Origin=https://main",
-        "Sec-Fetch-Site=same-origin",
-        "Referer=https://main/?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://main/favicon.ico?sessionid=X",
-      "method": "GET",
-      "requestIdx": 5,
-      "resourceType": "Ico",
-      "originType": "same-origin",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Sec-Fetch-Mode=no-cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
-        "Sec-Fetch-Site=same-origin",
-        "Referer=https://main/?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0"
       ],
       "secureDomain": true
     },
     {
       "url": "https://main/fpres-_?sessionid=X",
       "method": "POST",
-      "requestIdx": 6,
+      "requestIdx": 5,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
-        "Content-Length=49574",
+        "Content-Length=49585",
         "Sec-Fetch-Mode=cors",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=application/json",
@@ -146,14 +123,14 @@
         "Referer=https://main/?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0"
       ],
       "secureDomain": true
     },
     {
       "url": "https://main/page-loaded?page=start&sessionid=X",
       "method": "GET",
-      "requestIdx": 7,
+      "requestIdx": 6,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
@@ -166,14 +143,14 @@
         "Referer=https://main/?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4"
       ],
       "secureDomain": true
     },
     {
       "url": "https://main/run?sessionid=X",
       "method": "GET",
-      "requestIdx": 8,
+      "requestIdx": 7,
       "resourceType": "Redirect",
       "originType": "same-origin",
       "headers": [
@@ -188,14 +165,14 @@
         "Referer=https://main/?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; Main-ToBeExpired=start; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4"
       ],
       "secureDomain": true
     },
     {
       "url": "https://subdomain/run-redirect?sessionid=X",
       "method": "GET",
-      "requestIdx": 9,
+      "requestIdx": 8,
       "resourceType": "Redirect",
       "originType": "same-site",
       "headers": [
@@ -217,7 +194,7 @@
     {
       "url": "https://external/run-page?sessionid=X",
       "method": "GET",
-      "requestIdx": 10,
+      "requestIdx": 9,
       "resourceType": "Document",
       "originType": "cross-site",
       "headers": [
@@ -232,6 +209,26 @@
         "Referer=https://main/?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://subdomain/main.css?sessionid=X",
+      "method": "GET",
+      "requestIdx": 10,
+      "resourceType": "Stylesheet",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=no-cors",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=text/css,*/*;q=0.1",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--Secure=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--Secure-SameSiteNone=0; __Secure-SecureSub--Secure-SecurePrefix=0; __Host-SecureSub--Secure-HostPrefix-RootPath=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
@@ -251,7 +248,7 @@
         "Referer=https://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
@@ -276,29 +273,9 @@
       "secureDomain": true
     },
     {
-      "url": "https://subdomain/main.css?sessionid=X",
-      "method": "GET",
-      "requestIdx": 13,
-      "resourceType": "Stylesheet",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Sec-Fetch-Mode=no-cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=text/css,*/*;q=0.1",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--Secure=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--Secure-SameSiteNone=0; __Secure-SecureSub--Secure-SecurePrefix=0; __Host-SecureSub--Secure-HostPrefix-RootPath=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
-      ],
-      "secureDomain": true
-    },
-    {
       "url": "https://main/main.js?sessionid=X",
       "method": "GET",
-      "requestIdx": 14,
+      "requestIdx": 13,
       "resourceType": "Script",
       "originType": "cross-site",
       "headers": [
@@ -311,34 +288,14 @@
         "Referer=https://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://main/axios.js?sessionid=X",
-      "method": "GET",
-      "requestIdx": 15,
-      "resourceType": "Script",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Sec-Fetch-Mode=no-cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
     {
       "url": "https://subdomain/main.js?sessionid=X",
       "method": "GET",
-      "requestIdx": 16,
+      "requestIdx": 14,
       "resourceType": "Script",
       "originType": "cross-site",
       "headers": [
@@ -356,29 +313,9 @@
       "secureDomain": true
     },
     {
-      "url": "https://main/icon-wildcard.svg?sessionid=X",
-      "method": "GET",
-      "requestIdx": 17,
-      "resourceType": "Image",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Sec-Fetch-Mode=no-cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
-      ],
-      "secureDomain": true
-    },
-    {
       "url": "https://external/main.js?sessionid=X",
       "method": "GET",
-      "requestIdx": 18,
+      "requestIdx": 15,
       "resourceType": "Script",
       "originType": "same-origin",
       "headers": [
@@ -396,9 +333,29 @@
       "secureDomain": true
     },
     {
+      "url": "https://main/axios.js?sessionid=X",
+      "method": "GET",
+      "requestIdx": 16,
+      "resourceType": "Script",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=no-cors",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=*/*",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+      ],
+      "secureDomain": true
+    },
+    {
       "url": "https://subdomain/icon-wildcard.svg?sessionid=X",
       "method": "GET",
-      "requestIdx": 19,
+      "requestIdx": 17,
       "resourceType": "Image",
       "originType": "cross-site",
       "headers": [
@@ -416,9 +373,29 @@
       "secureDomain": true
     },
     {
+      "url": "https://main/icon-wildcard.svg?sessionid=X",
+      "method": "GET",
+      "requestIdx": 18,
+      "resourceType": "Image",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=no-cors",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+      ],
+      "secureDomain": true
+    },
+    {
       "url": "https://external/fpjs-_run_page.js?sessionid=X",
       "method": "GET",
-      "requestIdx": 20,
+      "requestIdx": 19,
       "resourceType": "Script",
       "originType": "same-origin",
       "headers": [
@@ -438,7 +415,7 @@
     {
       "url": "https://external/icon-wildcard.svg?sessionid=X",
       "method": "GET",
-      "requestIdx": 21,
+      "requestIdx": 20,
       "resourceType": "Image",
       "originType": "same-origin",
       "headers": [
@@ -456,9 +433,93 @@
       "secureDomain": true
     },
     {
-      "url": "https://subdomain/fetch-nocustomheaders.json?sessionid=X",
+      "url": "https://external/world.png",
+      "method": "GET",
+      "requestIdx": 21,
+      "resourceType": "Image",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=no-cors",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
+        "Sec-Fetch-Site=same-origin",
+        "Referer=https://external/main.css?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--Secure=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; SecureExternal--Secure-SameSiteLax=0; SecureExternal--Secure-SameSiteStrict=0; SecureExternal--Secure-SameSiteNone=0; __Secure-SecureExternal--Secure-SecurePrefix=0; __Host-SecureExternal--Secure-HostPrefix-RootPath=0"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://main/?sessionid=X",
       "method": "GET",
       "requestIdx": 22,
+      "resourceType": "Websocket Upgrade",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=Upgrade",
+        "Pragma=no-cache",
+        "Cache-Control=no-cache",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Upgrade=websocket",
+        "Origin=https://external",
+        "Sec-WebSocket-Version=13",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0",
+        "Sec-WebSocket-Key=r0ek3p3Qos8wCCpGfROSMw==",
+        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "wss://main/?sessionid=X",
+      "method": null,
+      "requestIdx": 23,
+      "resourceType": "Websocket Message",
+      "originType": "cross-site",
+      "headers": [],
+      "secureDomain": true
+    },
+    {
+      "url": "https://subdomain/?sessionid=X",
+      "method": "GET",
+      "requestIdx": 24,
+      "resourceType": "Websocket Upgrade",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=Upgrade",
+        "Pragma=no-cache",
+        "Cache-Control=no-cache",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Upgrade=websocket",
+        "Origin=https://external",
+        "Sec-WebSocket-Version=13",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--Secure=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--Secure-SameSiteNone=0; __Secure-SecureSub--Secure-SecurePrefix=0; __Host-SecureSub--Secure-HostPrefix-RootPath=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0",
+        "Sec-WebSocket-Key=JBvzsIE7viQPV0Er7/S38Q==",
+        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "wss://subdomain/?sessionid=X",
+      "method": null,
+      "requestIdx": 25,
+      "resourceType": "Websocket Message",
+      "originType": "cross-site",
+      "headers": [],
+      "secureDomain": true
+    },
+    {
+      "url": "https://subdomain/fetch-nocustomheaders.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 26,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
@@ -478,7 +539,7 @@
     {
       "url": "https://external/fetch-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 23,
+      "requestIdx": 27,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
@@ -498,13 +559,13 @@
     {
       "url": "https://external/fetch-post-nocustomheaders.json?sessionid=X",
       "method": "POST",
-      "requestIdx": 24,
+      "requestIdx": 28,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=external",
         "Connection=keep-alive",
-        "Content-Length=85",
+        "Content-Length=84",
         "Sec-Fetch-Mode=cors",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=text/plain;charset=UTF-8",
@@ -521,16 +582,16 @@
     {
       "url": "https://external/fetch-headers.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 25,
+      "requestIdx": 29,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=external",
         "Connection=keep-alive",
+        "v7novintbna=1",
         "Sec-Fetch-Mode=cors",
-        "y428smkf8ik=1",
-        "X-HeaDer-sessionid=eh594ijpnwk",
-        "x-lower-sessionid=35kv2z5polp",
+        "X-HeaDer-sessionid=0ohaysrzd7ms",
+        "x-lower-sessionid=6p5sahoj8bq",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Accept=*/*",
         "Sec-Fetch-Site=same-origin",
@@ -542,15 +603,41 @@
       "secureDomain": true
     },
     {
+      "url": "https://external/fetch-post-headers.json?sessionid=X",
+      "method": "POST",
+      "requestIdx": 30,
+      "resourceType": "Xhr",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=keep-alive",
+        "Content-Length=83",
+        "Sec-Fetch-Mode=cors",
+        "0zxbbl8flx2r=1",
+        "X-HeaDer-sessionid=61ub10zgk86",
+        "x-lower-sessionid=5i99gnaq6x2",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Content-Type=text/plain;charset=UTF-8",
+        "Accept=*/*",
+        "Origin=https://external",
+        "Sec-Fetch-Site=same-origin",
+        "Referer=https://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--Secure=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; SecureExternal--Secure-SameSiteLax=0; SecureExternal--Secure-SameSiteStrict=0; SecureExternal--Secure-SameSiteNone=0; __Secure-SecureExternal--Secure-SecurePrefix=0; __Host-SecureExternal--Secure-HostPrefix-RootPath=0"
+      ],
+      "secureDomain": true
+    },
+    {
       "url": "https://subdomain/fetch-post-nocustomheaders.json?sessionid=X",
       "method": "POST",
-      "requestIdx": 26,
+      "requestIdx": 31,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
         "Host=subdomain",
         "Connection=keep-alive",
-        "Content-Length=83",
+        "Content-Length=85",
         "Sec-Fetch-Mode=cors",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=text/plain;charset=UTF-8",
@@ -564,35 +651,32 @@
       "secureDomain": true
     },
     {
-      "url": "https://external/fetch-post-headers.json?sessionid=X",
-      "method": "POST",
-      "requestIdx": 27,
-      "resourceType": "Xhr",
+      "url": "https://external/?sessionid=X",
+      "method": "GET",
+      "requestIdx": 32,
+      "resourceType": "Websocket Upgrade",
       "originType": "same-origin",
       "headers": [
         "Host=external",
-        "Connection=keep-alive",
-        "Content-Length=83",
-        "Sec-Fetch-Mode=cors",
-        "X-HeaDer-sessionid=6104scohygr",
-        "x-lower-sessionid=i2xnx5k3om",
-        "Content-Type=text/plain;charset=UTF-8",
+        "Connection=Upgrade",
+        "Pragma=no-cache",
+        "Cache-Control=no-cache",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "35p5cd5jyl3=1",
-        "Accept=*/*",
+        "Upgrade=websocket",
         "Origin=https://external",
-        "Sec-Fetch-Site=same-origin",
-        "Referer=https://external/run-page?sessionid=X",
+        "Sec-WebSocket-Version=13",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--Secure=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; SecureExternal--Secure-SameSiteLax=0; SecureExternal--Secure-SameSiteStrict=0; SecureExternal--Secure-SameSiteNone=0; __Secure-SecureExternal--Secure-SecurePrefix=0; __Host-SecureExternal--Secure-HostPrefix-RootPath=0"
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--Secure=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; SecureExternal--Secure-SameSiteLax=0; SecureExternal--Secure-SameSiteStrict=0; SecureExternal--Secure-SameSiteNone=0; __Secure-SecureExternal--Secure-SecurePrefix=0; __Host-SecureExternal--Secure-HostPrefix-RootPath=0",
+        "Sec-WebSocket-Key=D2G2A/EFNfTbdUouyxvnJA==",
+        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
       ],
       "secureDomain": true
     },
     {
       "url": "https://external/axios-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 28,
+      "requestIdx": 33,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
@@ -612,16 +696,16 @@
     {
       "url": "https://external/axios-headers.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 29,
+      "requestIdx": 34,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=external",
         "Connection=keep-alive",
+        "d8lu37thq2u=1",
         "Accept=application/json, text/plain, */*",
-        "jvr5jatcmun=1",
-        "X-HeaDer-sessionid=py7d84hs00l",
-        "x-lower-sessionid=a8c6euy0x7i",
+        "X-HeaDer-sessionid=6xzpz1e82b4",
+        "x-lower-sessionid=gpv4vt85yrs",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Sec-Fetch-Mode=cors",
         "Sec-Fetch-Site=same-origin",
@@ -633,32 +717,9 @@
       "secureDomain": true
     },
     {
-      "url": "https://main/?sessionid=X",
-      "method": "GET",
-      "requestIdx": 30,
-      "resourceType": "Websocket Upgrade",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=Upgrade",
-        "Pragma=no-cache",
-        "Cache-Control=no-cache",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Upgrade=websocket",
-        "Origin=https://external",
-        "Sec-WebSocket-Version=13",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0",
-        "Sec-WebSocket-Key=gzRGFVs/9oLhGih8UYAGQw==",
-        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
-      ],
-      "secureDomain": true
-    },
-    {
       "url": "https://main/fetch-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 31,
+      "requestIdx": 35,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
@@ -678,13 +739,13 @@
     {
       "url": "https://main/fetch-post-nocustomheaders.json?sessionid=X",
       "method": "POST",
-      "requestIdx": 32,
+      "requestIdx": 36,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
-        "Content-Length=84",
+        "Content-Length=81",
         "Sec-Fetch-Mode=cors",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=text/plain;charset=UTF-8",
@@ -700,98 +761,18 @@
     {
       "url": "https://main/fetch-headers.json?sessionid=X",
       "method": "OPTIONS",
-      "requestIdx": 33,
-      "resourceType": "Preflight",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=uu4y2cjedka,x-header-sessionid,x-lower-sessionid",
-        "Origin=https://external",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://main/fetch-post-headers.json?sessionid=X",
-      "method": "OPTIONS",
-      "requestIdx": 34,
-      "resourceType": "Preflight",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Access-Control-Request-Method=POST",
-        "Access-Control-Request-Headers=5zz8w6zevzx,x-header-sessionid,x-lower-sessionid",
-        "Origin=https://external",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://subdomain/fetch-headers.json?sessionid=X",
-      "method": "OPTIONS",
-      "requestIdx": 35,
-      "resourceType": "Preflight",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=3b4twzufqi4,x-header-sessionid,x-lower-sessionid",
-        "Origin=https://external",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://subdomain/fetch-post-headers.json?sessionid=X",
-      "method": "OPTIONS",
-      "requestIdx": 36,
-      "resourceType": "Preflight",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Access-Control-Request-Method=POST",
-        "Access-Control-Request-Headers=x-header-sessionid,x-lower-sessionid,zie8i93ouh",
-        "Origin=https://external",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://subdomain/axios-nocustomheaders.json?sessionid=X",
-      "method": "GET",
       "requestIdx": 37,
-      "resourceType": "Xhr",
+      "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
-        "Host=subdomain",
+        "Host=main",
         "Connection=keep-alive",
-        "Accept=application/json, text/plain, */*",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Sec-Fetch-Mode=cors",
+        "Access-Control-Request-Method=GET",
+        "Access-Control-Request-Headers=t6648ct24vb,x-header-sessionid,x-lower-sessionid",
         "Origin=https://external",
         "Sec-Fetch-Site=cross-site",
         "Referer=https://external/run-page?sessionid=X",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9"
       ],
@@ -807,7 +788,27 @@
         "Host=subdomain",
         "Connection=keep-alive",
         "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=phoipy5o4m,x-header-sessionid,x-lower-sessionid",
+        "Access-Control-Request-Headers=dr1ytbzqpe9,x-header-sessionid,x-lower-sessionid",
+        "Origin=https://external",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://subdomain/fetch-headers.json?sessionid=X",
+      "method": "OPTIONS",
+      "requestIdx": 39,
+      "resourceType": "Preflight",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=keep-alive",
+        "Access-Control-Request-Method=GET",
+        "Access-Control-Request-Headers=1u6wynch7zg,x-header-sessionid,x-lower-sessionid",
         "Origin=https://external",
         "Sec-Fetch-Site=cross-site",
         "Referer=https://external/run-page?sessionid=X",
@@ -820,7 +821,7 @@
     {
       "url": "https://main/axios-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 39,
+      "requestIdx": 40,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
@@ -840,14 +841,14 @@
     {
       "url": "https://main/axios-headers.json?sessionid=X",
       "method": "OPTIONS",
-      "requestIdx": 40,
+      "requestIdx": 41,
       "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
         "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=lnlzj2nmyr,x-header-sessionid,x-lower-sessionid",
+        "Access-Control-Request-Headers=q5roksxblt,x-header-sessionid,x-lower-sessionid",
         "Origin=https://external",
         "Sec-Fetch-Site=cross-site",
         "Referer=https://external/run-page?sessionid=X",
@@ -858,20 +859,37 @@
       "secureDomain": true
     },
     {
-      "url": "https://main/fetch-headers.json?sessionid=X",
+      "url": "https://subdomain/fetch-post-headers.json?sessionid=X",
+      "method": "OPTIONS",
+      "requestIdx": 42,
+      "resourceType": "Preflight",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=keep-alive",
+        "Access-Control-Request-Method=POST",
+        "Access-Control-Request-Headers=jkic089tw8,x-header-sessionid,x-lower-sessionid",
+        "Origin=https://external",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://subdomain/axios-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 41,
+      "requestIdx": 43,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
-        "Host=main",
+        "Host=subdomain",
         "Connection=keep-alive",
-        "Sec-Fetch-Mode=cors",
-        "X-HeaDer-sessionid=rb4ujnyw3jc",
-        "x-lower-sessionid=n11bm3fw0l",
+        "Accept=application/json, text/plain, */*",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "uu4y2cjedka=1",
-        "Accept=*/*",
+        "Sec-Fetch-Mode=cors",
         "Origin=https://external",
         "Sec-Fetch-Site=cross-site",
         "Referer=https://external/run-page?sessionid=X",
@@ -882,72 +900,19 @@
     },
     {
       "url": "https://main/fetch-post-headers.json?sessionid=X",
-      "method": "POST",
-      "requestIdx": 42,
-      "resourceType": "Xhr",
+      "method": "OPTIONS",
+      "requestIdx": 44,
+      "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
-        "Content-Length=82",
-        "Sec-Fetch-Mode=cors",
-        "X-HeaDer-sessionid=np4qiigneec",
-        "5zz8w6zevzx=1",
-        "x-lower-sessionid=gqm2wu2nzxf",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Content-Type=text/plain;charset=UTF-8",
-        "Accept=*/*",
+        "Access-Control-Request-Method=POST",
+        "Access-Control-Request-Headers=x-header-sessionid,x-lower-sessionid,z4v6x2pbbla",
         "Origin=https://external",
         "Sec-Fetch-Site=cross-site",
         "Referer=https://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://subdomain/fetch-headers.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 43,
-      "resourceType": "Xhr",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Sec-Fetch-Mode=cors",
-        "x-lower-sessionid=1fbemurprk5h",
-        "X-HeaDer-sessionid=racl1od1vbr",
-        "3b4twzufqi4=1",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
-        "Origin=https://external",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://subdomain/fetch-post-headers.json?sessionid=X",
-      "method": "POST",
-      "requestIdx": 44,
-      "resourceType": "Xhr",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Content-Length=85",
-        "Sec-Fetch-Mode=cors",
-        "X-HeaDer-sessionid=5mj2hs23q75",
-        "x-lower-sessionid=wln1fsidk7o",
-        "zie8i93ouh=1",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Content-Type=text/plain;charset=UTF-8",
-        "Accept=*/*",
-        "Origin=https://external",
-        "Sec-Fetch-Site=cross-site",
-        "Referer=https://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9"
       ],
@@ -963,11 +928,34 @@
         "Host=subdomain",
         "Connection=keep-alive",
         "Accept=application/json, text/plain, */*",
-        "X-HeaDer-sessionid=xyiard3s3f",
-        "phoipy5o4m=1",
-        "x-lower-sessionid=v6yo42oc0wr",
+        "X-HeaDer-sessionid=xqtdp8yhrri",
+        "dr1ytbzqpe9=1",
+        "x-lower-sessionid=f4x4tze0dq",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Sec-Fetch-Mode=cors",
+        "Origin=https://external",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://subdomain/fetch-headers.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 46,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=cors",
+        "X-HeaDer-sessionid=8xh9m6kfxky",
+        "x-lower-sessionid=8bfuf4wy0ro",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "1u6wynch7zg=1",
+        "Accept=*/*",
         "Origin=https://external",
         "Sec-Fetch-Site=cross-site",
         "Referer=https://external/run-page?sessionid=X",
@@ -979,16 +967,16 @@
     {
       "url": "https://main/axios-headers.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 46,
+      "requestIdx": 47,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
         "Accept=application/json, text/plain, */*",
-        "X-HeaDer-sessionid=8u2pe77u26o",
-        "x-lower-sessionid=em8ubvruqc7",
-        "lnlzj2nmyr=1",
+        "X-HeaDer-sessionid=r1zyzj0m0s",
+        "q5roksxblt=1",
+        "x-lower-sessionid=o7pfxc0riqr",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Sec-Fetch-Mode=cors",
         "Origin=https://external",
@@ -1000,61 +988,88 @@
       "secureDomain": true
     },
     {
-      "url": "https://subdomain/?sessionid=X",
-      "method": "GET",
-      "requestIdx": 47,
-      "resourceType": "Websocket Upgrade",
+      "url": "https://subdomain/fetch-post-headers.json?sessionid=X",
+      "method": "POST",
+      "requestIdx": 48,
+      "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
         "Host=subdomain",
-        "Connection=Upgrade",
-        "Pragma=no-cache",
-        "Cache-Control=no-cache",
+        "Connection=keep-alive",
+        "Content-Length=83",
+        "Sec-Fetch-Mode=cors",
+        "X-HeaDer-sessionid=t2uxksg1v08",
+        "jkic089tw8=1",
+        "x-lower-sessionid=ex7zmk0ldim",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Upgrade=websocket",
+        "Content-Type=text/plain;charset=UTF-8",
+        "Accept=*/*",
         "Origin=https://external",
-        "Sec-WebSocket-Version=13",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--Secure=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--Secure-SameSiteNone=0; __Secure-SecureSub--Secure-SecurePrefix=0; __Host-SecureSub--Secure-HostPrefix-RootPath=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteNone=0",
-        "Sec-WebSocket-Key=FE3KdCcE28rSkPtBC5k3/A==",
-        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+        "Accept-Language=en-US,en;q=0.9"
       ],
       "secureDomain": true
     },
     {
-      "url": "https://external/?sessionid=X",
+      "url": "https://main/fetch-headers.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 48,
-      "resourceType": "Websocket Upgrade",
-      "originType": "same-origin",
+      "requestIdx": 49,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
       "headers": [
-        "Host=external",
-        "Connection=Upgrade",
-        "Pragma=no-cache",
-        "Cache-Control=no-cache",
+        "Host=main",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=cors",
+        "X-HeaDer-sessionid=aj20eoneacg",
+        "x-lower-sessionid=d6lmvjux014",
+        "t6648ct24vb=1",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Upgrade=websocket",
+        "Accept=*/*",
         "Origin=https://external",
-        "Sec-WebSocket-Version=13",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--Secure=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; SecureExternal--Secure-SameSiteLax=0; SecureExternal--Secure-SameSiteStrict=0; SecureExternal--Secure-SameSiteNone=0; __Secure-SecureExternal--Secure-SecurePrefix=0; __Host-SecureExternal--Secure-HostPrefix-RootPath=0",
-        "Sec-WebSocket-Key=c8gR85JmTXKEhxhB29I1hg==",
-        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+        "Accept-Language=en-US,en;q=0.9"
       ],
       "secureDomain": true
     },
     {
-      "url": "https://external/codecs?sessionid=X",
+      "url": "https://main/fetch-post-headers.json?sessionid=X",
       "method": "POST",
-      "requestIdx": 49,
+      "requestIdx": 50,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Content-Length=85",
+        "Sec-Fetch-Mode=cors",
+        "X-HeaDer-sessionid=oq860jmq0j",
+        "z4v6x2pbbla=1",
+        "x-lower-sessionid=ghng15yonpj",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Content-Type=text/plain;charset=UTF-8",
+        "Accept=*/*",
+        "Origin=https://external",
+        "Sec-Fetch-Site=cross-site",
+        "Referer=https://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://external/fonts?sessionid=X",
+      "method": "POST",
+      "requestIdx": 51,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=external",
         "Connection=keep-alive",
-        "Content-Length=5729",
+        "Content-Length=1124",
         "Sec-Fetch-Mode=cors",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "content-type=application/json",
@@ -1069,10 +1084,19 @@
       "secureDomain": true
     },
     {
-      "url": "https://external/world.png",
+      "url": "wss://external/?sessionid=X",
+      "method": null,
+      "requestIdx": 52,
+      "resourceType": "Websocket Message",
+      "originType": "same-origin",
+      "headers": [],
+      "secureDomain": true
+    },
+    {
+      "url": "https://external/favicon.ico?sessionid=X",
       "method": "GET",
-      "requestIdx": 50,
-      "resourceType": "Image",
+      "requestIdx": 53,
+      "resourceType": "Ico",
       "originType": "same-origin",
       "headers": [
         "Host=external",
@@ -1081,38 +1105,11 @@
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
         "Sec-Fetch-Site=same-origin",
-        "Referer=https://external/main.css?sessionid=X",
+        "Referer=https://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
         "Cookie=sessionid=X; SecureExternal=0; SecureExternal--Secure=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; SecureExternal--Secure-SameSiteLax=0; SecureExternal--Secure-SameSiteStrict=0; SecureExternal--Secure-SameSiteNone=0; __Secure-SecureExternal--Secure-SecurePrefix=0; __Host-SecureExternal--Secure-HostPrefix-RootPath=0"
       ],
-      "secureDomain": true
-    },
-    {
-      "url": "wss://subdomain/?sessionid=X",
-      "method": null,
-      "requestIdx": 51,
-      "resourceType": "Websocket Message",
-      "originType": "cross-site",
-      "headers": [],
-      "secureDomain": true
-    },
-    {
-      "url": "wss://main/?sessionid=X",
-      "method": null,
-      "requestIdx": 52,
-      "resourceType": "Websocket Message",
-      "originType": "cross-site",
-      "headers": [],
-      "secureDomain": true
-    },
-    {
-      "url": "wss://external/?sessionid=X",
-      "method": null,
-      "requestIdx": 53,
-      "resourceType": "Websocket Message",
-      "originType": "same-origin",
-      "headers": [],
       "secureDomain": true
     },
     {
@@ -1124,7 +1121,7 @@
       "headers": [
         "Host=external",
         "Connection=keep-alive",
-        "Content-Length=49574",
+        "Content-Length=49585",
         "Sec-Fetch-Mode=cors",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=application/json",
@@ -1159,29 +1156,9 @@
       "secureDomain": true
     },
     {
-      "url": "https://external/favicon.ico?sessionid=X",
-      "method": "GET",
-      "requestIdx": 56,
-      "resourceType": "Ico",
-      "originType": "same-origin",
-      "headers": [
-        "Host=external",
-        "Connection=keep-alive",
-        "Sec-Fetch-Mode=no-cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
-        "Sec-Fetch-Site=same-origin",
-        "Referer=https://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--Secure=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; SecureExternal--Secure-SameSiteLax=0; SecureExternal--Secure-SameSiteStrict=0; SecureExternal--Secure-SameSiteNone=0; __Secure-SecureExternal--Secure-SecurePrefix=0; __Host-SecureExternal--Secure-HostPrefix-RootPath=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4"
-      ],
-      "secureDomain": true
-    },
-    {
       "url": "https://external/results?sessionid=X",
       "method": "GET",
-      "requestIdx": 57,
+      "requestIdx": 56,
       "resourceType": "Redirect",
       "originType": "same-origin",
       "headers": [
@@ -1203,7 +1180,7 @@
     {
       "url": "https://subdomain/results-redirect?sessionid=X",
       "method": "GET",
-      "requestIdx": 58,
+      "requestIdx": 57,
       "resourceType": "Redirect",
       "originType": "cross-site",
       "headers": [
@@ -1225,7 +1202,7 @@
     {
       "url": "https://main/results-page?sessionid=X",
       "method": "GET",
-      "requestIdx": 59,
+      "requestIdx": 58,
       "resourceType": "Document",
       "originType": "cross-site",
       "headers": [
@@ -1240,7 +1217,27 @@
         "Referer=https://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://main/fpjs-_results_page.js?sessionid=X",
+      "method": "GET",
+      "requestIdx": 59,
+      "resourceType": "Script",
+      "originType": "same-origin",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Sec-Fetch-Mode=no-cors",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=*/*",
+        "Sec-Fetch-Site=same-origin",
+        "Referer=https://main/results-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
@@ -1260,34 +1257,14 @@
         "Referer=https://main/results-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://main/fpjs-_results_page.js?sessionid=X",
-      "method": "GET",
-      "requestIdx": 61,
-      "resourceType": "Script",
-      "originType": "same-origin",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Sec-Fetch-Mode=no-cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
-        "Sec-Fetch-Site=same-origin",
-        "Referer=https://main/results-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
     {
       "url": "https://main/world.png",
       "method": "GET",
-      "requestIdx": 62,
+      "requestIdx": 61,
       "resourceType": "Image",
       "originType": "same-origin",
       "headers": [
@@ -1300,43 +1277,20 @@
         "Referer=https://main/result.css?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
-      ],
-      "secureDomain": true
-    },
-    {
-      "url": "https://main/codecs?sessionid=X",
-      "method": "POST",
-      "requestIdx": 63,
-      "resourceType": "Xhr",
-      "originType": "same-origin",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Content-Length=5729",
-        "Sec-Fetch-Mode=cors",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "content-type=application/json",
-        "Accept=*/*",
-        "Origin=https://main",
-        "Sec-Fetch-Site=same-origin",
-        "Referer=https://main/results-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate, br",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
     {
       "url": "https://main/fpres-_results_page?sessionid=X",
       "method": "POST",
-      "requestIdx": 64,
+      "requestIdx": 62,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
-        "Content-Length=49574",
+        "Content-Length=49585",
         "Sec-Fetch-Mode=cors",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=application/json",
@@ -1346,14 +1300,37 @@
         "Referer=https://main/results-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+      ],
+      "secureDomain": true
+    },
+    {
+      "url": "https://main/dom?sessionid=X",
+      "method": "POST",
+      "requestIdx": 63,
+      "resourceType": "Xhr",
+      "originType": "same-origin",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Content-Length=2200656",
+        "Sec-Fetch-Mode=cors",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Content-Type=application/json",
+        "Accept=*/*",
+        "Origin=https://main",
+        "Sec-Fetch-Site=same-origin",
+        "Referer=https://main/results-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate, br",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
     {
       "url": "https://main/page-loaded?page=results&sessionid=X",
       "method": "GET",
-      "requestIdx": 65,
+      "requestIdx": 64,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
@@ -1366,14 +1343,14 @@
         "Referer=https://main/results-page?sessionid=X",
         "Accept-Encoding=gzip, deflate, br",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=uuid=7e41a240-7f60-11ea-b74c-09f60b522ac9; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
+        "Cookie=uuid=4553dbe0-8cbe-11ea-acf5-f540bb59e532; sessionid=X; SecureMain=0; SecureMain--Secure=0; SecureMain--HttpOnly=0; SecureMain--SameSiteLax=0; SecureMain--SameSiteStrict=0; SecureMain--SameSiteNone=0; SecureMain--Secure-SameSiteLax=0; SecureMain--Secure-SameSiteStrict=0; SecureMain--Secure-SameSiteNone=0; __Secure-SecureMain--Secure-SecurePrefix=0; __Host-SecureMain--Secure-HostPrefix-RootPath=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; SecureMain--RootDomain-Secure-SameSiteLax=0; SecureMain--RootDomain-Secure-SameSiteStrict=0; SecureMain--RootDomain-Secure-SameSiteNone=0; Main-JsCookies=0; inconspicuous-cookie=04b4933065dd23f143e22d3dbfc60fd4; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; SecureSub--RootDomain-Secure-SameSiteLax=0; SecureSub--RootDomain-Secure-SameSiteStrict=0; SecureSub--RootDomain-Secure-SameSiteNone=0"
       ],
       "secureDomain": true
     },
     {
       "url": "http://main/?sessionid=X",
       "method": "GET",
-      "requestIdx": 66,
+      "requestIdx": 65,
       "resourceType": "Document",
       "originType": "none",
       "headers": [
@@ -1391,7 +1368,7 @@
     {
       "url": "http://subdomain/fetch-samesite-headers.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 67,
+      "requestIdx": 66,
       "resourceType": "Xhr",
       "originType": "same-site",
       "headers": [
@@ -1407,17 +1384,17 @@
       "secureDomain": false
     },
     {
-      "url": "http://main/codecs?sessionid=X",
+      "url": "http://main/windowKeys?sessionid=X",
       "method": "POST",
-      "requestIdx": 68,
+      "requestIdx": 67,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
-        "Content-Length=5729",
+        "Content-Length=13387",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "content-type=application/json",
+        "Content-Type=application/json",
         "Accept=*/*",
         "Origin=http://main",
         "Referer=http://main/?sessionid=X",
@@ -1430,7 +1407,7 @@
     {
       "url": "http://main/favicon.ico?sessionid=X",
       "method": "GET",
-      "requestIdx": 69,
+      "requestIdx": 68,
       "resourceType": "Ico",
       "originType": "same-origin",
       "headers": [
@@ -1448,7 +1425,7 @@
     {
       "url": "http://main/page-loaded?page=start&sessionid=X",
       "method": "GET",
-      "requestIdx": 70,
+      "requestIdx": 69,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
@@ -1466,7 +1443,7 @@
     {
       "url": "http://main/run?sessionid=X",
       "method": "GET",
-      "requestIdx": 71,
+      "requestIdx": 70,
       "resourceType": "Redirect",
       "originType": "same-origin",
       "headers": [
@@ -1485,7 +1462,7 @@
     {
       "url": "http://subdomain/run-redirect?sessionid=X",
       "method": "GET",
-      "requestIdx": 72,
+      "requestIdx": 71,
       "resourceType": "Redirect",
       "originType": "same-site",
       "headers": [
@@ -1504,7 +1481,7 @@
     {
       "url": "http://external/run-page?sessionid=X",
       "method": "GET",
-      "requestIdx": 73,
+      "requestIdx": 72,
       "resourceType": "Document",
       "originType": "cross-site",
       "headers": [
@@ -1523,7 +1500,7 @@
     {
       "url": "http://main/main.css?sessionid=X",
       "method": "GET",
-      "requestIdx": 74,
+      "requestIdx": 73,
       "resourceType": "Stylesheet",
       "originType": "cross-site",
       "headers": [
@@ -1541,7 +1518,7 @@
     {
       "url": "http://main/main.js?sessionid=X",
       "method": "GET",
-      "requestIdx": 75,
+      "requestIdx": 74,
       "resourceType": "Script",
       "originType": "cross-site",
       "headers": [
@@ -1553,6 +1530,24 @@
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9",
         "Cookie=sessionid=X; SecureMain=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; Main-JsCookies=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main=0; Main--HttpOnly=0; Main--SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://external/main.css?sessionid=X",
+      "method": "GET",
+      "requestIdx": 75,
+      "resourceType": "Stylesheet",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=keep-alive",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=text/css,*/*;q=0.1",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
       ],
       "secureDomain": false
     },
@@ -1575,20 +1570,20 @@
       "secureDomain": false
     },
     {
-      "url": "http://external/main.css?sessionid=X",
+      "url": "http://subdomain/main.js?sessionid=X",
       "method": "GET",
       "requestIdx": 77,
-      "resourceType": "Stylesheet",
-      "originType": "same-origin",
+      "resourceType": "Script",
+      "originType": "cross-site",
       "headers": [
-        "Host=external",
+        "Host=subdomain",
         "Connection=keep-alive",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=text/css,*/*;q=0.1",
+        "Accept=*/*",
         "Referer=http://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
+        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub=0; Sub--HttpOnly=0; Sub--SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0"
       ],
       "secureDomain": false
     },
@@ -1611,45 +1606,27 @@
       "secureDomain": false
     },
     {
-      "url": "http://subdomain/main.js?sessionid=X",
+      "url": "http://subdomain/icon-wildcard.svg?sessionid=X",
       "method": "GET",
       "requestIdx": 79,
-      "resourceType": "Script",
+      "resourceType": "Image",
       "originType": "cross-site",
       "headers": [
         "Host=subdomain",
         "Connection=keep-alive",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
+        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
         "Referer=http://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9",
         "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub=0; Sub--HttpOnly=0; Sub--SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://main/axios.js?sessionid=X",
-      "method": "GET",
-      "requestIdx": 80,
-      "resourceType": "Script",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureMain=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; Main-JsCookies=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main=0; Main--HttpOnly=0; Main--SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0"
       ],
       "secureDomain": false
     },
     {
       "url": "http://main/icon-wildcard.svg?sessionid=X",
       "method": "GET",
-      "requestIdx": 81,
+      "requestIdx": 80,
       "resourceType": "Image",
       "originType": "cross-site",
       "headers": [
@@ -1665,27 +1642,27 @@
       "secureDomain": false
     },
     {
-      "url": "http://subdomain/icon-wildcard.svg?sessionid=X",
+      "url": "http://main/axios.js?sessionid=X",
       "method": "GET",
-      "requestIdx": 82,
-      "resourceType": "Image",
+      "requestIdx": 81,
+      "resourceType": "Script",
       "originType": "cross-site",
       "headers": [
-        "Host=subdomain",
+        "Host=main",
         "Connection=keep-alive",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
+        "Accept=*/*",
         "Referer=http://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub=0; Sub--HttpOnly=0; Sub--SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0"
+        "Cookie=sessionid=X; SecureMain=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; Main-JsCookies=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main=0; Main--HttpOnly=0; Main--SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0"
       ],
       "secureDomain": false
     },
     {
       "url": "http://external/icon-wildcard.svg?sessionid=X",
       "method": "GET",
-      "requestIdx": 83,
+      "requestIdx": 82,
       "resourceType": "Image",
       "originType": "same-origin",
       "headers": [
@@ -1701,9 +1678,123 @@
       "secureDomain": false
     },
     {
-      "url": "http://subdomain/fetch-nocustomheaders.json?sessionid=X",
+      "url": "http://external/world.png",
+      "method": "GET",
+      "requestIdx": 83,
+      "resourceType": "Image",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=keep-alive",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
+        "Referer=http://external/main.css?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://main/?sessionid=X",
       "method": "GET",
       "requestIdx": 84,
+      "resourceType": "Websocket Upgrade",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=Upgrade",
+        "Pragma=no-cache",
+        "Cache-Control=no-cache",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Upgrade=websocket",
+        "Origin=http://external",
+        "Sec-WebSocket-Version=13",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureMain=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; Main-JsCookies=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main=0; Main--HttpOnly=0; Main--SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0",
+        "Sec-WebSocket-Key=ob/g9ff9TGFdFGRytc027w==",
+        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "ws://main/?sessionid=X",
+      "method": null,
+      "requestIdx": 85,
+      "resourceType": "Websocket Message",
+      "originType": "cross-site",
+      "headers": [],
+      "secureDomain": false
+    },
+    {
+      "url": "http://subdomain/?sessionid=X",
+      "method": "GET",
+      "requestIdx": 86,
+      "resourceType": "Websocket Upgrade",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=Upgrade",
+        "Pragma=no-cache",
+        "Cache-Control=no-cache",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Upgrade=websocket",
+        "Origin=http://external",
+        "Sec-WebSocket-Version=13",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub=0; Sub--HttpOnly=0; Sub--SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0",
+        "Sec-WebSocket-Key=A4OnwOSut6f4M4H+IJPUMg==",
+        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "ws://subdomain/?sessionid=X",
+      "method": null,
+      "requestIdx": 87,
+      "resourceType": "Websocket Message",
+      "originType": "cross-site",
+      "headers": [],
+      "secureDomain": false
+    },
+    {
+      "url": "http://external/?sessionid=X",
+      "method": "GET",
+      "requestIdx": 88,
+      "resourceType": "Websocket Upgrade",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=Upgrade",
+        "Pragma=no-cache",
+        "Cache-Control=no-cache",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Upgrade=websocket",
+        "Origin=http://external",
+        "Sec-WebSocket-Version=13",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0",
+        "Sec-WebSocket-Key=X3tDGF6Gw2vf44+FV13bHg==",
+        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "ws://external/?sessionid=X",
+      "method": null,
+      "requestIdx": 89,
+      "resourceType": "Websocket Message",
+      "originType": "same-origin",
+      "headers": [],
+      "secureDomain": false
+    },
+    {
+      "url": "http://subdomain/fetch-nocustomheaders.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 90,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
@@ -1721,13 +1812,13 @@
     {
       "url": "http://external/fetch-post-nocustomheaders.json?sessionid=X",
       "method": "POST",
-      "requestIdx": 85,
+      "requestIdx": 91,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=external",
         "Connection=keep-alive",
-        "Content-Length=85",
+        "Content-Length=84",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=text/plain;charset=UTF-8",
         "Accept=*/*",
@@ -1740,32 +1831,27 @@
       "secureDomain": false
     },
     {
-      "url": "http://main/?sessionid=X",
+      "url": "http://external/fetch-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 86,
-      "resourceType": "Websocket Upgrade",
-      "originType": "cross-site",
+      "requestIdx": 92,
+      "resourceType": "Xhr",
+      "originType": "same-origin",
       "headers": [
-        "Host=main",
-        "Connection=Upgrade",
-        "Pragma=no-cache",
-        "Cache-Control=no-cache",
+        "Host=external",
+        "Connection=keep-alive",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Upgrade=websocket",
-        "Origin=http://external",
-        "Sec-WebSocket-Version=13",
+        "Accept=*/*",
+        "Referer=http://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureMain=0; SecureMain--HttpOnly=0; SecureMain--SameSiteNone=0; SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; Main-JsCookies=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main=0; Main--HttpOnly=0; Main--SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0",
-        "Sec-WebSocket-Key=ozU9OeLal2CJnNjFKZIHBA==",
-        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
       ],
       "secureDomain": false
     },
     {
       "url": "http://main/fetch-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 87,
+      "requestIdx": 93,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
@@ -1781,20 +1867,19 @@
       "secureDomain": false
     },
     {
-      "url": "http://main/fetch-post-nocustomheaders.json?sessionid=X",
-      "method": "POST",
-      "requestIdx": 88,
-      "resourceType": "Xhr",
+      "url": "http://main/fetch-post-headers.json?sessionid=X",
+      "method": "OPTIONS",
+      "requestIdx": 94,
+      "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
-        "Content-Length=81",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Content-Type=text/plain;charset=UTF-8",
-        "Accept=*/*",
+        "Access-Control-Request-Method=POST",
+        "Access-Control-Request-Headers=37hn9lbdbz7,x-header-sessionid,x-lower-sessionid",
         "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9"
       ],
@@ -1803,14 +1888,14 @@
     {
       "url": "http://main/fetch-headers.json?sessionid=X",
       "method": "OPTIONS",
-      "requestIdx": 89,
+      "requestIdx": 95,
       "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
         "Host=main",
         "Connection=keep-alive",
         "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=0inww1kepz3e,x-header-sessionid,x-lower-sessionid",
+        "Access-Control-Request-Headers=b5b8ah7hdpv,x-header-sessionid,x-lower-sessionid",
         "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
@@ -1820,43 +1905,20 @@
       "secureDomain": false
     },
     {
-      "url": "http://external/fetch-post-headers.json?sessionid=X",
+      "url": "http://main/fetch-post-nocustomheaders.json?sessionid=X",
       "method": "POST",
-      "requestIdx": 90,
+      "requestIdx": 96,
       "resourceType": "Xhr",
-      "originType": "same-origin",
+      "originType": "cross-site",
       "headers": [
-        "Host=external",
+        "Host=main",
         "Connection=keep-alive",
-        "Content-Length=84",
-        "X-HeaDer-sessionid=qqw90hunr2f",
-        "n6gbgvn8an=1",
-        "x-lower-sessionid=ir5wgws5sv",
+        "Content-Length=85",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=text/plain;charset=UTF-8",
         "Accept=*/*",
         "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://main/fetch-post-headers.json?sessionid=X",
-      "method": "OPTIONS",
-      "requestIdx": 91,
-      "resourceType": "Preflight",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Access-Control-Request-Method=POST",
-        "Access-Control-Request-Headers=x-header-sessionid,x-lower-sessionid,ybjbx0jk48",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9"
       ],
@@ -1865,13 +1927,13 @@
     {
       "url": "http://subdomain/fetch-post-nocustomheaders.json?sessionid=X",
       "method": "POST",
-      "requestIdx": 92,
+      "requestIdx": 97,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
         "Host=subdomain",
         "Connection=keep-alive",
-        "Content-Length=81",
+        "Content-Length=82",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Content-Type=text/plain;charset=UTF-8",
         "Accept=*/*",
@@ -1885,14 +1947,14 @@
     {
       "url": "http://subdomain/fetch-headers.json?sessionid=X",
       "method": "OPTIONS",
-      "requestIdx": 93,
+      "requestIdx": 98,
       "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
         "Host=subdomain",
         "Connection=keep-alive",
         "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=wkpumlyzgkd,x-header-sessionid,x-lower-sessionid",
+        "Access-Control-Request-Headers=o8w4ydia1p,x-header-sessionid,x-lower-sessionid",
         "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
@@ -1904,109 +1966,14 @@
     {
       "url": "http://subdomain/fetch-post-headers.json?sessionid=X",
       "method": "OPTIONS",
-      "requestIdx": 94,
-      "resourceType": "Preflight",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Access-Control-Request-Method=POST",
-        "Access-Control-Request-Headers=fl0lxvksy7c,x-header-sessionid,x-lower-sessionid",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://main/axios-headers.json?sessionid=X",
-      "method": "OPTIONS",
-      "requestIdx": 95,
-      "resourceType": "Preflight",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=1f3yrl18kg2,x-header-sessionid,x-lower-sessionid",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://external/fetch-nocustomheaders.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 96,
-      "resourceType": "Xhr",
-      "originType": "same-origin",
-      "headers": [
-        "Host=external",
-        "Connection=keep-alive",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://external/fetch-headers.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 97,
-      "resourceType": "Xhr",
-      "originType": "same-origin",
-      "headers": [
-        "Host=external",
-        "Connection=keep-alive",
-        "X-HeaDer-sessionid=fxj2mhpz9di",
-        "x-lower-sessionid=ncf8uwd86ti",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "i6294nqzfr8=1",
-        "Accept=*/*",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://main/axios-nocustomheaders.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 98,
-      "resourceType": "Xhr",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Accept=application/json, text/plain, */*",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://subdomain/axios-headers.json?sessionid=X",
-      "method": "OPTIONS",
       "requestIdx": 99,
       "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
         "Host=subdomain",
         "Connection=keep-alive",
-        "Access-Control-Request-Method=GET",
-        "Access-Control-Request-Headers=2t5nizyxbjb,x-header-sessionid,x-lower-sessionid",
+        "Access-Control-Request-Method=POST",
+        "Access-Control-Request-Headers=52m2mrdvabj,x-header-sessionid,x-lower-sessionid",
         "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
@@ -2016,9 +1983,30 @@
       "secureDomain": false
     },
     {
-      "url": "http://external/axios-nocustomheaders.json?sessionid=X",
+      "url": "http://external/fetch-headers.json?sessionid=X",
       "method": "GET",
       "requestIdx": 100,
+      "resourceType": "Xhr",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=keep-alive",
+        "x-lower-sessionid=gcc15j2ep7i",
+        "X-HeaDer-sessionid=vlaf9jlglwm",
+        "b0jaeciowx6=1",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=*/*",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://external/axios-nocustomheaders.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 101,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
@@ -2036,7 +2024,7 @@
     {
       "url": "http://subdomain/axios-nocustomheaders.json?sessionid=X",
       "method": "GET",
-      "requestIdx": 101,
+      "requestIdx": 102,
       "resourceType": "Xhr",
       "originType": "cross-site",
       "headers": [
@@ -2052,63 +2040,22 @@
       "secureDomain": false
     },
     {
-      "url": "http://main/fetch-headers.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 102,
-      "resourceType": "Xhr",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "X-HeaDer-sessionid=7l6edb2wre5",
-        "x-lower-sessionid=8g95n6rnygk",
-        "0inww1kepz3e=1",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://main/fetch-post-headers.json?sessionid=X",
+      "url": "http://external/fetch-post-headers.json?sessionid=X",
       "method": "POST",
       "requestIdx": 103,
-      "resourceType": "Xhr",
-      "originType": "cross-site",
-      "headers": [
-        "Host=main",
-        "Connection=keep-alive",
-        "Content-Length=83",
-        "X-HeaDer-sessionid=mlukvh4fui",
-        "ybjbx0jk48=1",
-        "x-lower-sessionid=5npev50r7po",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Content-Type=text/plain;charset=UTF-8",
-        "Accept=*/*",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://external/axios-headers.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 104,
       "resourceType": "Xhr",
       "originType": "same-origin",
       "headers": [
         "Host=external",
         "Connection=keep-alive",
-        "Accept=application/json, text/plain, */*",
-        "X-HeaDer-sessionid=drhpj2wzfjv",
-        "x-lower-sessionid=t8qeg3eopy9",
+        "Content-Length=85",
+        "4l06178w2w=1",
+        "X-HeaDer-sessionid=yya25sc5wle",
+        "x-lower-sessionid=xbf85w5s5q9",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "wyijte9q5mj=1",
+        "Content-Type=text/plain;charset=UTF-8",
+        "Accept=*/*",
+        "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9",
@@ -2117,21 +2064,19 @@
       "secureDomain": false
     },
     {
-      "url": "http://subdomain/fetch-headers.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 105,
-      "resourceType": "Xhr",
+      "url": "http://subdomain/axios-headers.json?sessionid=X",
+      "method": "OPTIONS",
+      "requestIdx": 104,
+      "resourceType": "Preflight",
       "originType": "cross-site",
       "headers": [
         "Host=subdomain",
         "Connection=keep-alive",
-        "X-HeaDer-sessionid=pohxbrzwtej",
-        "x-lower-sessionid=gzp8zvr8fxo",
-        "wkpumlyzgkd=1",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
+        "Access-Control-Request-Method=GET",
+        "Access-Control-Request-Headers=qft4xoneva,x-header-sessionid,x-lower-sessionid",
         "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9"
       ],
@@ -2139,6 +2084,25 @@
     },
     {
       "url": "http://main/axios-headers.json?sessionid=X",
+      "method": "OPTIONS",
+      "requestIdx": 105,
+      "resourceType": "Preflight",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Access-Control-Request-Method=GET",
+        "Access-Control-Request-Headers=hpiwgpwn5mh,x-header-sessionid,x-lower-sessionid",
+        "Origin=http://external",
+        "Referer=http://external/run-page?sessionid=X",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://main/axios-nocustomheaders.json?sessionid=X",
       "method": "GET",
       "requestIdx": 106,
       "resourceType": "Xhr",
@@ -2147,195 +2111,18 @@
         "Host=main",
         "Connection=keep-alive",
         "Accept=application/json, text/plain, */*",
-        "X-HeaDer-sessionid=tydjh5efgmr",
-        "x-lower-sessionid=l3qs6u4w07",
-        "1f3yrl18kg2=1",
         "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
         "Origin=http://external",
         "Referer=http://external/run-page?sessionid=X",
         "Accept-Encoding=gzip, deflate",
         "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://subdomain/fetch-post-headers.json?sessionid=X",
-      "method": "POST",
-      "requestIdx": 107,
-      "resourceType": "Xhr",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Content-Length=80",
-        "fl0lxvksy7c=1",
-        "X-HeaDer-sessionid=fu08085mitv",
-        "x-lower-sessionid=fu7ewgjg134",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Content-Type=text/plain;charset=UTF-8",
-        "Accept=*/*",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://subdomain/axios-headers.json?sessionid=X",
-      "method": "GET",
-      "requestIdx": 108,
-      "resourceType": "Xhr",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=keep-alive",
-        "Accept=application/json, text/plain, */*",
-        "X-HeaDer-sessionid=6k0oc1btu3",
-        "x-lower-sessionid=f775zh5c7g",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "2t5nizyxbjb=1",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://subdomain/?sessionid=X",
-      "method": "GET",
-      "requestIdx": 109,
-      "resourceType": "Websocket Upgrade",
-      "originType": "cross-site",
-      "headers": [
-        "Host=subdomain",
-        "Connection=Upgrade",
-        "Pragma=no-cache",
-        "Cache-Control=no-cache",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Upgrade=websocket",
-        "Origin=http://external",
-        "Sec-WebSocket-Version=13",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=SecureMain--HttpOnly-RootDomain=0; SecureMain--RootDomain-SameSiteNone=0; sessionid=X; SecureSub=0; SecureSub--HttpOnly=0; SecureSub--SameSiteNone=0; SecureSub--HttpOnly-RootDomain=0; SecureSub--RootDomain-SameSiteNone=0; Main--HttpOnly-RootDomain=0; Main--RootDomain-SameSiteNone=0; Sub=0; Sub--HttpOnly=0; Sub--SameSiteNone=0; Sub--HttpOnly-RootDomain=0; Sub--RootDomain-SameSiteNone=0",
-        "Sec-WebSocket-Key=0AWmUcDBocCCuMBmFkyjug==",
-        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://external/?sessionid=X",
-      "method": "GET",
-      "requestIdx": 110,
-      "resourceType": "Websocket Upgrade",
-      "originType": "same-origin",
-      "headers": [
-        "Host=external",
-        "Connection=Upgrade",
-        "Pragma=no-cache",
-        "Cache-Control=no-cache",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Upgrade=websocket",
-        "Origin=http://external",
-        "Sec-WebSocket-Version=13",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0",
-        "Sec-WebSocket-Key=wIbE72Bx9AFtu43VXGV7sQ==",
-        "Sec-WebSocket-Extensions=permessage-deflate; client_max_window_bits"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://external/codecs?sessionid=X",
-      "method": "POST",
-      "requestIdx": 111,
-      "resourceType": "Xhr",
-      "originType": "same-origin",
-      "headers": [
-        "Host=external",
-        "Connection=keep-alive",
-        "Content-Length=5729",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "content-type=application/json",
-        "Accept=*/*",
-        "Origin=http://external",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "http://external/world.png",
-      "method": "GET",
-      "requestIdx": 112,
-      "resourceType": "Image",
-      "originType": "same-origin",
-      "headers": [
-        "Host=external",
-        "Connection=keep-alive",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=image/webp,image/apng,image/*,*/*;q=0.8",
-        "Referer=http://external/main.css?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
-      ],
-      "secureDomain": false
-    },
-    {
-      "url": "ws://main/?sessionid=X",
-      "method": null,
-      "requestIdx": 113,
-      "resourceType": "Websocket Message",
-      "originType": "cross-site",
-      "headers": [],
-      "secureDomain": false
-    },
-    {
-      "url": "ws://subdomain/?sessionid=X",
-      "method": null,
-      "requestIdx": 114,
-      "resourceType": "Websocket Message",
-      "originType": "cross-site",
-      "headers": [],
-      "secureDomain": false
-    },
-    {
-      "url": "ws://external/?sessionid=X",
-      "method": null,
-      "requestIdx": 115,
-      "resourceType": "Websocket Message",
-      "originType": "same-origin",
-      "headers": [],
-      "secureDomain": false
-    },
-    {
-      "url": "http://external/page-loaded?page=run&sessionid=X",
-      "method": "GET",
-      "requestIdx": 116,
-      "resourceType": "Xhr",
-      "originType": "same-origin",
-      "headers": [
-        "Host=external",
-        "Connection=keep-alive",
-        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
-        "Accept=*/*",
-        "Referer=http://external/run-page?sessionid=X",
-        "Accept-Encoding=gzip, deflate",
-        "Accept-Language=en-US,en;q=0.9",
-        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
       ],
       "secureDomain": false
     },
     {
       "url": "http://external/favicon.ico?sessionid=X",
       "method": "GET",
-      "requestIdx": 117,
+      "requestIdx": 107,
       "resourceType": "Ico",
       "originType": "same-origin",
       "headers": [
@@ -2351,9 +2138,178 @@
       "secureDomain": false
     },
     {
+      "url": "http://external/axios-headers.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 108,
+      "resourceType": "Xhr",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=keep-alive",
+        "Accept=application/json, text/plain, */*",
+        "X-HeaDer-sessionid=lcjfj5k83t8",
+        "x-lower-sessionid=8eurguco63x",
+        "qr3febixx3p=1",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://main/fetch-post-headers.json?sessionid=X",
+      "method": "POST",
+      "requestIdx": 109,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Content-Length=84",
+        "X-HeaDer-sessionid=4crz0aa4gww",
+        "x-lower-sessionid=actz0hanme8",
+        "Content-Type=text/plain;charset=UTF-8",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "37hn9lbdbz7=1",
+        "Accept=*/*",
+        "Origin=http://external",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://main/fetch-headers.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 110,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "X-HeaDer-sessionid=55a2npzajyc",
+        "b5b8ah7hdpv=1",
+        "x-lower-sessionid=0g6e8x9accic",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=*/*",
+        "Origin=http://external",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://subdomain/fetch-headers.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 111,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=keep-alive",
+        "x-lower-sessionid=seq0yi96twh",
+        "X-HeaDer-sessionid=hcfuckeiqw",
+        "o8w4ydia1p=1",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=*/*",
+        "Origin=http://external",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://subdomain/fetch-post-headers.json?sessionid=X",
+      "method": "POST",
+      "requestIdx": 112,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=keep-alive",
+        "Content-Length=85",
+        "X-HeaDer-sessionid=qdcey19yjjc",
+        "x-lower-sessionid=49a1o7jqjzb",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "52m2mrdvabj=1",
+        "Content-Type=text/plain;charset=UTF-8",
+        "Accept=*/*",
+        "Origin=http://external",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://subdomain/axios-headers.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 113,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=subdomain",
+        "Connection=keep-alive",
+        "Accept=application/json, text/plain, */*",
+        "X-HeaDer-sessionid=skohzj59w9",
+        "qft4xoneva=1",
+        "x-lower-sessionid=acxqdame4h",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Origin=http://external",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://main/axios-headers.json?sessionid=X",
+      "method": "GET",
+      "requestIdx": 114,
+      "resourceType": "Xhr",
+      "originType": "cross-site",
+      "headers": [
+        "Host=main",
+        "Connection=keep-alive",
+        "Accept=application/json, text/plain, */*",
+        "hpiwgpwn5mh=1",
+        "x-lower-sessionid=c0m6qdrm01s",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "X-HeaDer-sessionid=scv04jriy6e",
+        "Origin=http://external",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9"
+      ],
+      "secureDomain": false
+    },
+    {
+      "url": "http://external/page-loaded?page=run&sessionid=X",
+      "method": "GET",
+      "requestIdx": 115,
+      "resourceType": "Xhr",
+      "originType": "same-origin",
+      "headers": [
+        "Host=external",
+        "Connection=keep-alive",
+        "User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.87 Safari/537.36",
+        "Accept=*/*",
+        "Referer=http://external/run-page?sessionid=X",
+        "Accept-Encoding=gzip, deflate",
+        "Accept-Language=en-US,en;q=0.9",
+        "Cookie=sessionid=X; SecureExternal=0; SecureExternal--HttpOnly=0; SecureExternal--SameSiteLax=0; SecureExternal--SameSiteStrict=0; SecureExternal--SameSiteNone=0; External=0; External--HttpOnly=0; External--SameSiteLax=0; External--SameSiteStrict=0; External--SameSiteNone=0"
+      ],
+      "secureDomain": false
+    },
+    {
       "url": "http://external/results?sessionid=X",
       "method": "GET",
-      "requestIdx": 118,
+      "requestIdx": 116,
       "resourceType": "Redirect",
       "originType": "same-origin",
       "headers": [
@@ -2372,7 +2328,7 @@
     {
       "url": "http://subdomain/results-redirect?sessionid=X",
       "method": "GET",
-      "requestIdx": 119,
+      "requestIdx": 117,
       "resourceType": "Redirect",
       "originType": "cross-site",
       "headers": [
@@ -2391,7 +2347,7 @@
     {
       "url": "http://main/results-page?sessionid=X",
       "method": "GET",
-      "requestIdx": 120,
+      "requestIdx": 118,
       "resourceType": "Document",
       "originType": "cross-site",
       "headers": [

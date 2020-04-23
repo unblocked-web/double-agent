@@ -15,9 +15,9 @@ export default class ClientHelloProfile {
   } = {};
   public static confirmedOperatingSystems: OperatingSystem[];
 
-  public static saveProfile(profile: IJa3BrowserProfile) {
+  public static async saveProfile(profile: IJa3BrowserProfile) {
     if (!process.env.GENERATE_PROFILES) return;
-    saveUseragentProfile(profile.useragent, profile, profilesDir);
+    await saveUseragentProfile(profile.useragent, profile, profilesDir);
   }
 
   public static isConfirmedJa3(userAgent: string, ja3Extended: IJa3) {

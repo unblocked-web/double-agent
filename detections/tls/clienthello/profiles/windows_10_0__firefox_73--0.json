@@ -8,10 +8,10 @@
     "type": "ClientHello",
     "version": "0x303 (TLS 1.2)",
     "random": {
-      "unixTime": "0x5021EB8B",
-      "randomBytes": "C6F3E83D40AFAECAC62ABA0F82C172001E08DF103187E1D30DA97BCB"
+      "unixTime": "0x6F823DE2",
+      "randomBytes": "A53DCE92C00C70462E75CC3EA82BA28FD162B00C2848211CAFA50815"
     },
-    "sessionId": "AACBB64107FAE21F5F0EBC864C76303FC182F4F4121AF9093AC1A275822BA671",
+    "sessionId": "C94B886A0F4C1AAC6C78E82E5CD19DDB83AE50DFB012C2CEF63E5F7B2ACFD7EC",
     "ciphers": [
       "{0x13, 0x01} TLS_AES_128_GCM_SHA256",
       "{0x13, 0x03} TLS_CHACHA20_POLY1305_SHA256",
@@ -32,7 +32,9 @@
       "{0x00, 0x35} TLS_RSA_WITH_AES_256_CBC_SHA",
       "{0x00, 0x0A} TLS_RSA_WITH_3DES_EDE_CBC_SHA"
     ],
-    "compressionMethods": ["No Compression (0x00)"],
+    "compressionMethods": [
+      "No Compression (0x00)"
+    ],
     "extensions": [
       {
         "type": "server_name",
@@ -50,7 +52,9 @@
       {
         "type": "renegotiate",
         "decimal": 65281,
-        "values": ["<EMPTY>"]
+        "values": [
+          "<EMPTY>"
+        ]
       },
       {
         "type": "supported_groups",
@@ -67,7 +71,9 @@
       {
         "type": "ec_point_formats",
         "decimal": 11,
-        "values": ["uncompressed (0)"]
+        "values": [
+          "uncompressed (0)"
+        ]
       },
       {
         "type": "session_ticket",
@@ -77,27 +83,37 @@
       {
         "type": "application_layer_protocol_negotiation",
         "decimal": 16,
-        "values": ["h2", "http/1.1"]
+        "values": [
+          "h2",
+          "http/1.1"
+        ]
       },
       {
         "type": "status_request",
         "decimal": 5,
-        "values": ["0000 - 01 00 00 00 00                                 ....."]
+        "values": [
+          "0000 - 01 00 00 00 00                                 ....."
+        ]
       },
       {
         "type": "key_share",
         "decimal": 51,
         "values": [
           "NamedGroup: ecdh_x25519 (29)",
-          "key_exchange:  (len=32): 03743BBA3C118FE1B377CB7B38C3216854EC9E13550D7A43E48B75D2B4203D65",
+          "key_exchange:  (len=32): 04C210D94F9E277DD440F79E5C004BD8D99E372FFD5C920072C4CFA9BD3F813F",
           "NamedGroup: secp256r1 (P-256) (23)",
-          "key_exchange:  (len=65): 04B6AF4E2529878C92DAC1FC29CB4DF48EAB956202D7F24E488E16806DE3A54D530B87C07A90A74D5530BB2A5FCE18CC01F64518392E310726D6EBD1A288249223"
+          "key_exchange:  (len=65): 049E9A72B0B9528A4BB43C487F00FC5FF21230B3D22FBC63B2BFBB7B725C2A540B79FC43F04134D1FE47DC84159295926D23D8EFF6E9379BC64CAC23C2737F6126"
         ]
       },
       {
         "type": "supported_versions",
         "decimal": 43,
-        "values": ["TLS 1.3 (772)", "TLS 1.2 (771)", "TLS 1.1 (770)", "TLS 1.0 (769)"]
+        "values": [
+          "TLS 1.3 (772)",
+          "TLS 1.2 (771)",
+          "TLS 1.1 (770)",
+          "TLS 1.0 (769)"
+        ]
       },
       {
         "type": "signature_algorithms",
@@ -119,12 +135,16 @@
       {
         "type": "psk_key_exchange_modes",
         "decimal": 45,
-        "values": ["psk_dhe_ke (1)"]
+        "values": [
+          "psk_dhe_ke (1)"
+        ]
       },
       {
         "type": "record_size_limit",
         "decimal": 28,
-        "values": ["0000 - 40 01                                          @."]
+        "values": [
+          "0000 - 40 01                                          @."
+        ]
       },
       {
         "type": "padding",

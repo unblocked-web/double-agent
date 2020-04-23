@@ -19,7 +19,7 @@ export default class CookieProfile {
     this.requests = ctx.session.requests.map(x => CookieProfile.processRequestDetails(x, ctx));
   }
 
-  public save() {
+  public async save() {
     if (!process.env.GENERATE_PROFILES) return;
 
     const data = {
@@ -27,7 +27,7 @@ export default class CookieProfile {
       useragent: this.useragent,
     } as ICookieProfile;
 
-    saveUseragentProfile(this.useragent, data, profilesDir);
+    await saveUseragentProfile(this.useragent, data, profilesDir);
   }
 
   public static processRequestDetails(x: IRequestDetails, ctx: IRequestContext) {

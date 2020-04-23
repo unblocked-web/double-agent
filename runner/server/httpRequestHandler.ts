@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import * as fs from 'fs';
 import runPage from '../views/runPage';
+import { URL } from 'url';
 import startPage from '../views/startPage';
 import IDetectionPlugin from '../interfaces/IDetectionPlugin';
 import IRequestContext from '../interfaces/IRequestContext';
@@ -83,6 +84,8 @@ export default function httpRequestHandler(
         preflight(ctx);
       } else if (requestUrl.pathname === '/axios.js') {
         sendAxios(ctx);
+      } else if (requestUrl.pathname === '/axios.min.map') {
+        sendAxiosMap(ctx);
       } else if (serveFiles[requestUrl.pathname]) {
         sendAsset(ctx);
       } else if (await pluginDelegate.handleResponse(ctx)) {
@@ -174,9 +177,18 @@ function sendAsset(ctx: IRequestContext) {
 
 function sendAxios(ctx: IRequestContext) {
   ctx.res.writeHead(200, {
-    'Content-Type': serveFiles['/main.js'],
+    'Content-Type': 'application/javascript',
   });
-  fs.createReadStream(require.resolve('axios/dist/axios.js')).pipe(ctx.res, {
+  fs.createReadStream(require.resolve('axios/dist/axios.min.js')).pipe(ctx.res, {
+    end: true,
+  });
+}
+
+function sendAxiosMap(ctx: IRequestContext) {
+  ctx.res.writeHead(200, {
+    'Content-Type': 'application/octet-stream',
+  });
+  fs.createReadStream(require.resolve('axios/dist/axios.min.map')).pipe(ctx.res, {
     end: true,
   });
 }

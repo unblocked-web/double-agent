@@ -7,10 +7,14 @@
     "build": "tsc --build",
     "watch": "tsc -w",
     "docs": "node docs/generator",
+    "test": "node scrapers/lib/runAll.js",
     "profile": "yarn workspace @double-agent/profiler start",
     "cleanProfiles": "rm -rf detections/*/*/profiles/*.json",
+    "lintProfiles": "prettier --write detections/*/*/profiles/**.json",
     "start": "yarn workspace @double-agent/runner start",
-    "prod": "yarn workspace @double-agent/runner prod"
+    "prod": "yarn workspace @double-agent/runner prod",
+    "updateUseragent": "node node_modules/useragent/bin/update.js",
+    "postinstall": "yarn updateUseragent"
   },
   "author": "Data Liberation Foundation",
   "license": "ISC",
@@ -28,6 +32,8 @@
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
+    "request": "^2.88.2",
+    "yamlparser": "0.0.x",
     "@types/cookie": "^0.3.3",
     "@types/useragent": "^2.1.1",
     "p-queue": "^6.2.1",
@@ -66,7 +72,9 @@
       ]
     },
     "ignore": [
-      "**/fingerprint/profiles/**/*.json",
+      "**/**/profiles/*.json",
+      "scrapers/**/sessions/*.json",
+      "scrapers/**/browser-flags/*.json",
       "**/types/*.js",
       "**/types/*.d.ts",
       "**/results/*.json"

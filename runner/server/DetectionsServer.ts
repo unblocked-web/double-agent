@@ -1,6 +1,7 @@
 import http from 'http';
 import https from 'https';
 import { existsSync, promises as fs } from 'fs';
+import { URL } from 'url';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import httpRequestHandler from './httpRequestHandler';
 import webServicesHandler from './websocketHandler';
@@ -18,6 +19,7 @@ import { inspect } from 'util';
 import UserBucketStats from '../lib/UserBucketStats';
 import IDetectionContext from '../interfaces/IDetectionContext';
 import DetectionSession from '../lib/DetectionSession';
+import * as zlib from 'zlib';
 
 const certPath = process.env.LETSENCRYPT
   ? '/etc/letsencrypt/live/headers.ulixee.org'
@@ -29,7 +31,11 @@ const domains = {
   main: process.env.MAIN_DOMAIN ?? 'a0.ulixee-test.org',
 };
 
-const browsersToTest = 50;
+let browsersToTest = 50;
+
+if (process.env.TOP_ONLY) {
+  browsersToTest = 0;
+}
 
 export default class DetectionsServer {
   private httpServer: http.Server;
@@ -131,12 +137,16 @@ export default class DetectionsServer {
       await fs.mkdir(scraperDir + '/sessions', {
         recursive: true,
       });
+    } else {
+      await cleanDirectory(scraperDir + '/sessions');
     }
 
     if (!existsSync(scraperDir + '/browser-flags')) {
       await fs.mkdir(scraperDir + '/browser-flags', {
         recursive: true,
       });
+    } else {
+      await cleanDirectory(scraperDir + '/browser-flags');
     }
 
     const botDetectionResults = new BotDetectionResults();
@@ -158,16 +168,20 @@ export default class DetectionsServer {
       identityResults.trackDirectiveResults(directive, session);
 
       await fs.writeFile(
-        `${scraperDir}/sessions/${directive.browserGrouping}.json`,
-        JSON.stringify(session, null, 2),
+        `${scraperDir}/sessions/${directive.browserGrouping}.json.gz`,
+        await this.gzipJson(session),
       );
     }
 
     const botStats = botDetectionResults.toJSON();
     for (const [browser, categories] of Object.entries(botStats.browserFindings)) {
+      // remove legacy file if exists
+      if (existsSync(`${scraperDir}/browser-flags/${browser}.json`)) {
+        await fs.unlink(`${scraperDir}/browser-flags/${browser}.json`);
+      }
       await fs.writeFile(
-        `${scraperDir}/browser-flags/${browser}.json`,
-        JSON.stringify(categories, null, 2),
+        `${scraperDir}/browser-flags/${browser}.json.gz`,
+        await this.gzipJson(categories),
       );
       for (const [category, entry] of Object.entries(categories)) {
         categories[category] = {
@@ -188,6 +202,16 @@ export default class DetectionsServer {
     this.httpServer.close();
     this.httpsServer.close();
     await this.pluginDelegate.stop();
+  }
+
+  private gzipJson(json: any): Promise<Buffer> {
+    return new Promise((resolve, reject) => {
+      const buffer = Buffer.from(JSON.stringify(json, null, 2));
+      zlib.gzip(buffer, (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      });
+    });
   }
 
   private async activateDirective(directive: IDirective, useragent: string) {
@@ -254,4 +278,14 @@ function addSessionIdToUrl(url: string, sessionid: string) {
   const startUrl = new URL(url);
   startUrl.searchParams.set('sessionid', sessionid);
   return startUrl.href;
+}
+
+async function cleanDirectory(directory) {
+  try {
+    const files = await fs.readdir(directory);
+    const unlinkPromises = files.map(filename => fs.unlink(`${directory}/${filename}`));
+    return Promise.all(unlinkPromises);
+  } catch (err) {
+    console.log(err);
+  }
 }

@@ -23,7 +23,7 @@ export default class HeaderProfile {
     this.requests = session.requests.map(x => HeaderProfile.processRequestDetails(x, session));
   }
 
-  public save() {
+  public async save() {
     if (!process.env.GENERATE_PROFILES) return;
 
     const data = {
@@ -31,7 +31,7 @@ export default class HeaderProfile {
       useragent: this.useragent,
     } as IProfile;
 
-    saveUseragentProfile(this.useragent, data, profilesDir);
+    await saveUseragentProfile(this.useragent, data, profilesDir);
   }
 
   public static processRequestDetails(x: IRequestDetails, session: IDetectionSession) {

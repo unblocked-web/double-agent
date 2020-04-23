@@ -8,10 +8,10 @@
     "type": "ClientHello",
     "version": "0x303 (TLS 1.2)",
     "random": {
-      "unixTime": "0xCCA69707",
-      "randomBytes": "26F57F9283681E2037B6BC0BBAA7EC778D0669BCE3672F4E2382257F"
+      "unixTime": "0xC2CE92CE",
+      "randomBytes": "7385C70050E25218E92716DDC806CA20C998AC52591C5BD256FA20B0"
     },
-    "sessionId": "135C09849DBDA7A722F17E138F301A97E53EF734A3AAA9354FF9BBA6CB018C60",
+    "sessionId": "C2B0200DDFEE303113C307D17518053EF5812D59FF836607DA9A6C8A30414A80",
     "ciphers": [
       "{0x13, 0x03} TLS_CHACHA20_POLY1305_SHA256",
       "{0x13, 0x01} TLS_AES_128_GCM_SHA256",
@@ -40,12 +40,16 @@
       "{0xC0, 0x12} TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA",
       "{0x00, 0x0A} TLS_RSA_WITH_3DES_EDE_CBC_SHA"
     ],
-    "compressionMethods": ["No Compression (0x00)"],
+    "compressionMethods": [
+      "No Compression (0x00)"
+    ],
     "extensions": [
       {
         "type": "renegotiate",
         "decimal": 65281,
-        "values": ["<EMPTY>"]
+        "values": [
+          "<EMPTY>"
+        ]
       },
       {
         "type": "server_name",
@@ -80,7 +84,9 @@
       {
         "type": "status_request",
         "decimal": 5,
-        "values": ["0000 - 01 00 00 00 00                                 ....."]
+        "values": [
+          "0000 - 01 00 00 00 00                                 ....."
+        ]
       },
       {
         "type": "next_proto_neg",
@@ -95,30 +101,47 @@
       {
         "type": "application_layer_protocol_negotiation",
         "decimal": 16,
-        "values": ["h2", "h2-16", "h2-15", "h2-14", "spdy/3.1", "spdy/3", "http/1.1"]
+        "values": [
+          "h2",
+          "h2-16",
+          "h2-15",
+          "h2-14",
+          "spdy/3.1",
+          "spdy/3",
+          "http/1.1"
+        ]
       },
       {
         "type": "ec_point_formats",
         "decimal": 11,
-        "values": ["uncompressed (0)"]
+        "values": [
+          "uncompressed (0)"
+        ]
       },
       {
         "type": "key_share",
         "decimal": 51,
         "values": [
           "NamedGroup: ecdh_x25519 (29)",
-          "key_exchange:  (len=32): 239D84B1D5821B71D1F839FE5B00DE8D5F214EAF1E1AA1D1B6EB8E985EE1395B"
+          "key_exchange:  (len=32): DA679260ED2210BFDB0693D77BA715271F4DC2F2CAE5F7022601E7848B63232E"
         ]
       },
       {
         "type": "psk_key_exchange_modes",
         "decimal": 45,
-        "values": ["psk_dhe_ke (1)"]
+        "values": [
+          "psk_dhe_ke (1)"
+        ]
       },
       {
         "type": "supported_versions",
         "decimal": 43,
-        "values": ["TLS 1.3 (772)", "TLS 1.2 (771)", "TLS 1.1 (770)", "TLS 1.0 (769)"]
+        "values": [
+          "TLS 1.3 (772)",
+          "TLS 1.2 (771)",
+          "TLS 1.1 (770)",
+          "TLS 1.0 (769)"
+        ]
       },
       {
         "type": "supported_groups",

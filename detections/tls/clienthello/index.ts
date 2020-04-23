@@ -8,6 +8,7 @@ import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import ClientHelloProfile from './lib/ClientHelloProfile';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
+import { URL } from 'url';
 
 let tlsPort = Number(process.env.PORT ?? 3002);
 const tlsDomain = `https://${process.env.TLS_DOMAIN ?? 'tls.ulixee-test.org'}`;
@@ -88,11 +89,11 @@ export default class TlsClientHelloPlugin implements IDetectionPlugin {
     ctx.session.pluginsRun.push(`tls/clienthello`);
   }
 
-  private onTlsResult(message: ITlsResult, sessionid: string) {
+  private async onTlsResult(message: ITlsResult, sessionid: string) {
     if (!message.useragent || this.sessionTlsResults.has(sessionid)) {
       return;
     }
-    ClientHelloProfile.saveProfile({
+    await ClientHelloProfile.saveProfile({
       useragent: message.useragent,
       ja3: message.ja3,
       ja3Md5: message.ja3Md5,

@@ -18,10 +18,10 @@ export default class FontProfile {
     return profiles;
   }
 
-  public static save(useragent: string, fonts: string[]) {
+  public static async save(useragent: string, fonts: string[]) {
     const profile = { fonts, useragent };
     if (process.env.GENERATE_PROFILES) {
-      saveUseragentProfile(useragent, profile, profilesDir);
+      await saveUseragentProfile(useragent, profile, profilesDir);
     }
     return profile;
   }

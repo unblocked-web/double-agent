@@ -5,6 +5,7 @@ import IRequestDetails from '../interfaces/IRequestDetails';
 import HostDomain from '../interfaces/HostDomain';
 import IDomainset from '../interfaces/IDomainset';
 import OriginType from '../interfaces/OriginType';
+import { URL } from 'url';
 
 export default async function extractRequestDetails(
   req: http.IncomingMessage,

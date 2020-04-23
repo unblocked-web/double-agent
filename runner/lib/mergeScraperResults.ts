@@ -4,6 +4,7 @@ import { inspect } from 'util';
 import { IBrowserPercents } from '../interfaces/IBrowserFindings';
 import IUserBucketAverages from '../interfaces/IUserBucketAverages';
 import IScraperTestResult from '../interfaces/IScraperTestResult';
+import { gunzipSync, unzipSync } from 'zlib';
 
 const scraperDir = path.resolve(__dirname, '../../scrapers');
 
@@ -29,7 +30,7 @@ export default async function mergeScraperResults(print = true) {
 
     const bucketStats = getJson<IUserBucketAverages>(`${scraperDir}/${scraper}/bucketStats.json`);
 
-    const scraperResults = (scrapers[scraper.replace('.json', '')] = {
+    const scraperResults = (scrapers[scraper.replace('.json.gz', '').replace('.json', '')] = {
       scraper,
       ...baseEntry[scraper],
       browserFindings: {},
@@ -39,8 +40,8 @@ export default async function mergeScraperResults(print = true) {
     } as IScraperTestResult);
 
     for (const browser of readdirSync(`${scraperDir}/${scraper}/browser-flags`)) {
-      if (browser === '.DS_Store' || !browser.endsWith('.json')) continue;
-      const browserKey = browser.replace('.json', '');
+      if (browser === '.DS_Store' || !browser.includes('.json')) continue;
+      const browserKey = browser.replace('.json.gz', '').replace('.json', '');
       scraperResults.browserFindings[browserKey] = getJson(
         `${scraperDir}/${scraper}/browser-flags/${browser}`,
       );
@@ -52,5 +53,9 @@ export default async function mergeScraperResults(print = true) {
 }
 
 function getJson<T>(filepath: string) {
-  return JSON.parse(readFileSync(filepath, 'utf8')) as T;
+  let contents = readFileSync(filepath);
+  if (filepath.endsWith('.gz')) {
+    contents = gunzipSync(contents);
+  }
+  return JSON.parse(contents.toString('utf8')) as T;
 }

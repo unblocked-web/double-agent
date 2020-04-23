@@ -5,11 +5,12 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 export default function codecPageScript(ctx: IRequestContext) {
   return `
 <script type="text/javascript">
-const videoMimes = ${JSON.stringify(videoMimes)};
-const audioMimes = ${JSON.stringify(audioMimes)};
-const codecs = ${JSON.stringify(codecs)};
+  const videoMimes = ${JSON.stringify(videoMimes)};
+  const audioMimes = ${JSON.stringify(audioMimes)};
+  const codecs = ${JSON.stringify(codecs)};
 </script>
 <script type="text/javascript">
+(() => {
   const videoSupport = {
     recordingFormats: [],
     probablyPlays: [],
@@ -25,56 +26,64 @@ const codecs = ${JSON.stringify(codecs)};
   let webRtcVideoCodecs = [];
   
   function testCodecs() {
-    return new Promise(resolve => {
-      const videoElt = document.createElement('video');
-      const audioElt = document.createElement('audio');
-      if (window["RTCRtpSender"] && RTCRtpSender.getCapabilities) {
-        webRtcAudioCodecs = RTCRtpSender.getCapabilities("audio").codecs || [];
-        webRtcVideoCodecs = RTCRtpSender.getCapabilities("video").codecs || [];
+    const videoElt = document.createElement('video');
+    const audioElt = document.createElement('audio');
+    if (window["RTCRtpSender"] && RTCRtpSender.getCapabilities) {
+      webRtcAudioCodecs = RTCRtpSender.getCapabilities("audio").codecs || [];
+      webRtcVideoCodecs = RTCRtpSender.getCapabilities("video").codecs || [];
+    }
+    for (const format of audioMimes) {
+      {
+        const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(format);
+        if (isTypeAllowed) audioSupport.recordingFormats.push(format);
+        const canPlay = audioElt.canPlayType(format);
+        if (canPlay === 'probably') audioSupport.probablyPlays.push(format);
+        if (canPlay === 'maybe') audioSupport.maybePlays.push(format);
+          
       }
-      for (const format of audioMimes) {
-        {
-          const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(format);
-          if (isTypeAllowed) audioSupport.recordingFormats.push(format);
-          const canPlay = audioElt.canPlayType(format);
-          if (canPlay === 'probably') audioSupport.probablyPlays.push(format);
-          if (canPlay === 'maybe') audioSupport.maybePlays.push(format);
-            
-        }
-    
-        for (const codec of codecs) {
-          const formatPlusCodec= format + ';codecs=' + codec;
-          const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(formatPlusCodec);
-          if (isTypeAllowed) audioSupport.recordingFormats.push(formatPlusCodec);
-          const canPlay = audioElt.canPlayType(formatPlusCodec);
-          if (canPlay === 'probably') audioSupport.probablyPlays.push(formatPlusCodec);
-          if (canPlay === 'maybe') audioSupport.maybePlays.push(formatPlusCodec);
-        }
+  
+      for (const codec of codecs) {
+        const formatPlusCodec= format + ';codecs=' + codec;
+        const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(formatPlusCodec);
+        if (isTypeAllowed) audioSupport.recordingFormats.push(formatPlusCodec);
+        const canPlay = audioElt.canPlayType(formatPlusCodec);
+        if (canPlay === 'probably') audioSupport.probablyPlays.push(formatPlusCodec);
+        if (canPlay === 'maybe') audioSupport.maybePlays.push(formatPlusCodec);
       }
-      
-      for (const format of videoMimes) {
-        {
-          const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(format);
-          if (isTypeAllowed) videoSupport.recordingFormats.push(format);
-          const canPlay = videoElt.canPlayType(format);
-          if (canPlay === 'probably') videoSupport.probablyPlays.push(format);
-          if (canPlay === 'maybe') videoSupport.maybePlays.push(format);
-            
-        }
-    
-        for (const codec of codecs) {
-          const formatPlusCodec= format + ';codecs=' + codec;
-          const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(formatPlusCodec);
-          if (isTypeAllowed) videoSupport.recordingFormats.push(formatPlusCodec);
-          const canPlay = videoElt.canPlayType(formatPlusCodec);
-          if (canPlay === 'probably') videoSupport.probablyPlays.push(formatPlusCodec);
-          if (canPlay === 'maybe') videoSupport.maybePlays.push(formatPlusCodec);
-        }
+    }
+    for (const format of videoMimes) {
+      {
+        const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(format);
+        if (isTypeAllowed) videoSupport.recordingFormats.push(format);
+        const canPlay = videoElt.canPlayType(format);
+        if (canPlay === 'probably') videoSupport.probablyPlays.push(format);
+        if (canPlay === 'maybe') videoSupport.maybePlays.push(format);
+          
       }
-      resolve();
-    });
+  
+      for (const codec of codecs) {
+        const formatPlusCodec= format + ';codecs=' + codec;
+        const isTypeAllowed = window["MediaRecorder"] && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(formatPlusCodec);
+        if (isTypeAllowed) videoSupport.recordingFormats.push(formatPlusCodec);
+        const canPlay = videoElt.canPlayType(formatPlusCodec);
+        if (canPlay === 'probably') videoSupport.probablyPlays.push(formatPlusCodec);
+        if (canPlay === 'maybe') videoSupport.maybePlays.push(formatPlusCodec);
+      }
+    }
   }
-  const done = testCodecs().then(() =>
+  const done = new Promise(resolve => {  
+    if (window.requestIdleCallback) {
+      requestIdleCallback(() => {
+        testCodecs();
+        resolve();
+      });
+    } else {
+      setTimeout(() => {
+        testCodecs();
+        resolve();
+      }, 100);
+    }
+  }).then(() =>
     fetch('${ctx.trackUrl('/codecs')}', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -82,7 +91,7 @@ const codecs = ${JSON.stringify(codecs)};
     }),
   );
   window.pageQueue.push(done);
-
+})();
 </script>`;
 }
 

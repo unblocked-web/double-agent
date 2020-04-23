@@ -8,7 +8,7 @@ export default class TcpProfile {
   public static allowedHops = 20;
   constructor(readonly useragent: string, readonly ttl: number, readonly windowSize: number) {}
 
-  public save() {
+  public async save() {
     if (!process.env.GENERATE_PROFILES) return;
 
     const data = {
@@ -18,7 +18,7 @@ export default class TcpProfile {
       useragent: this.useragent,
     };
 
-    saveUseragentProfile(this.useragent, data, profilesDir);
+    await saveUseragentProfile(this.useragent, data, profilesDir);
   }
 
   public static findUniqueProfiles(): ITcpGrouping[] {

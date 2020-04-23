@@ -8,6 +8,7 @@ import IUserIdentifier from '../interfaces/IUserIdentifier';
 import IDomainset from '../interfaces/IDomainset';
 import ICheckCounter from '../interfaces/ICheckCounter';
 import { assetFromURL } from './flagUtils';
+import { URL } from 'url';
 
 export default class DetectionSession implements IDetectionSession {
   public readonly assetsNotLoaded: IAsset[] = [];
@@ -38,17 +39,26 @@ export default class DetectionSession implements IDetectionSession {
     return url;
   }
 
-  public recordCheck(flagCheck: boolean, flaggedCheck: IFlaggedCheck) {
+  public recordCheck(
+    flagCheck: boolean,
+    flaggedCheck: IFlaggedCheck,
+    skipPreviousRecordingCheck = false,
+  ) {
     if (flagCheck) {
       this.flaggedChecks.push(flaggedCheck);
     }
-    this.recordCheckRun(flaggedCheck);
+    this.recordCheckRun(flaggedCheck, skipPreviousRecordingCheck);
     return flaggedCheck;
   }
 
-  private recordCheckRun(check: Pick<IFlaggedCheck, 'category' | 'layer' | 'checkName'>) {
+  private recordCheckRun(
+    check: Pick<IFlaggedCheck, 'category' | 'layer' | 'checkName'>,
+    skipPreviousRecordingCheck = false,
+  ) {
     const { checkName, category, layer } = check;
-    let entry = this.checks.find(x => x.checkName === checkName && x.category === category);
+    let entry = skipPreviousRecordingCheck
+      ? null
+      : this.checks.find(x => x.checkName === checkName && x.category === category);
     if (!entry) {
       entry = { checkName, category, layer, count: 0 };
       this.checks.push(entry);

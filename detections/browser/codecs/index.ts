@@ -7,6 +7,7 @@ import codecPageScript from './codecPageScript';
 import ICodecProfile from './interfaces/ICodecProfile';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
+import { sendJson } from '@double-agent/runner/lib/httpUtils';
 
 export default class BrowserCodecsPlugin implements IDetectionPlugin {
   private static pluginName = 'browser/codecs';
@@ -28,23 +29,14 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
         ctx.requestDetails.useragent,
         ctx.requestDetails.bodyJson as ICodecProfile,
       );
+      ctx.session.pluginsRun.push(BrowserCodecsPlugin.pluginName);
 
       if (process.env.GENERATE_PROFILES) {
-        saveUseragentProfile(agentProfile.useragent, agentProfile, __dirname + '/profiles');
+        await saveUseragentProfile(agentProfile.useragent, agentProfile, __dirname + '/profiles');
       }
       this.checkProfile(ctx, agentProfile);
 
-      if (ctx.req.headers.origin) {
-        res.setHeader('Access-Control-Allow-Origin', ctx.req.headers.origin);
-      } else if (ctx.req.headers.referer) {
-        res.setHeader('Access-Control-Allow-Origin', new URL(ctx.req.headers.referer).origin);
-      }
-      res.writeHead(200, {
-        'Content-Type': 'application/json',
-        'X-Content-Type-Options': 'nosniff',
-      });
-
-      res.end(JSON.stringify({ success: true }));
+      sendJson(ctx, { success: true });
       return true;
     }
     return false;
@@ -97,7 +89,6 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
         value,
         expected,
       });
-      ctx.session.pluginsRun.push('browser/codecs');
     }
   }
 }

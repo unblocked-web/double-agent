@@ -110,6 +110,7 @@ async function getKnownUseragentStrings() {
   const agentStrings = new Set<string>();
   for (const detectorDir of detectorDirs) {
     if (!existsSync(`${detectorDir}/profiles`)) continue;
+    if (detectorDir.endsWith('browser/dom')) continue; // files too big to load these (should be same as others anyway)
     for (const profilePath of await fs.readdir(`${detectorDir}/profiles`)) {
       if (!profilePath.endsWith('.json')) continue;
       const contents = await fs.readFile(`${detectorDir}/profiles/${profilePath}`, 'utf8');

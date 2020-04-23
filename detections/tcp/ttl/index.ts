@@ -75,9 +75,9 @@ export default class TcpPlugin implements IDetectionPlugin {
       category: 'TCP Layer',
       checkName: 'Packet WindowSize',
       description:
-        'Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values)',
+        'Check that the Operating System tcp packet window size value matches expected OS values (NOTE: tcp packets routed through proxies can change these values as can a scaled window size)',
       value: windowSize,
-      pctBot: 70,
+      pctBot: 40,
       expected: expectedOsWindowSizes?.join(',') ?? 'Unknown OS',
     });
     ctx.session.pluginsRun.push(`tcp/ttl`);

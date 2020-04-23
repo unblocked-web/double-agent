@@ -8,8 +8,8 @@
     "type": "ClientHello",
     "version": "0x303 (TLS 1.2)",
     "random": {
-      "unixTime": "0x5E977C02",
-      "randomBytes": "ECDD1BDB4E6D164650B3D06B1330D9F1D10ECA52E6571BA8B5C44020"
+      "unixTime": "0x5EADE881",
+      "randomBytes": "1A3F901AF6731312AFB98A9D539E3D31893B24751FB95A6B010A2070"
     },
     "sessionId": "",
     "ciphers": [
@@ -33,7 +33,9 @@
       "{0x00, 0x2F} TLS_RSA_WITH_AES_128_CBC_SHA",
       "{0x00, 0x0A} TLS_RSA_WITH_3DES_EDE_CBC_SHA"
     ],
-    "compressionMethods": ["No Compression (0x00)"],
+    "compressionMethods": [
+      "No Compression (0x00)"
+    ],
     "extensions": [
       {
         "type": "server_name",
@@ -46,17 +48,25 @@
       {
         "type": "status_request",
         "decimal": 5,
-        "values": ["0000 - 01 00 00 00 00                                 ....."]
+        "values": [
+          "0000 - 01 00 00 00 00                                 ....."
+        ]
       },
       {
         "type": "supported_groups",
         "decimal": 10,
-        "values": ["ecdh_x25519 (29)", "secp256r1 (P-256) (23)", "secp384r1 (P-384) (24)"]
+        "values": [
+          "ecdh_x25519 (29)",
+          "secp256r1 (P-256) (23)",
+          "secp384r1 (P-384) (24)"
+        ]
       },
       {
         "type": "ec_point_formats",
         "decimal": 11,
-        "values": ["uncompressed (0)"]
+        "values": [
+          "uncompressed (0)"
+        ]
       },
       {
         "type": "signature_algorithms",
@@ -81,7 +91,10 @@
       {
         "type": "application_layer_protocol_negotiation",
         "decimal": 16,
-        "values": ["h2", "http/1.1"]
+        "values": [
+          "h2",
+          "http/1.1"
+        ]
       },
       {
         "type": "extended_master_secret",
@@ -91,12 +104,16 @@
       {
         "type": "token_binding",
         "decimal": 24,
-        "values": ["0000 - 00 10 03 02 01 00                              ......"]
+        "values": [
+          "0000 - 00 10 03 02 01 00                              ......"
+        ]
       },
       {
         "type": "renegotiate",
         "decimal": 65281,
-        "values": ["<EMPTY>"]
+        "values": [
+          "<EMPTY>"
+        ]
       }
     ]
   }

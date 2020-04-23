@@ -8,15 +8,16 @@ http/headers | * Standard Http Headers<br/><br/>* Standard Https Headers<br/><br
 http/loaded-assets | * Loads All Page Assets | Does a request load expected assets? (css, images, ad networks) | :white_check_mark:
 http/user-agent | * User Agent | Checks how common a user agent is | :white_check_mark:
 browser/codecs | * Audio Codecs Supported<br/><br/>* Video Codecs Supported<br/><br/>* WebRTC Audio Codecs Supported<br/><br/>* WebRTC Video Codecs Supported | Test that the audio, video and WebRTC codecs match the given user agent | :white_check_mark:
+browser/dom | * Dom Features Match Version | Test that the list of browser dom features matches the user agent | :white_check_mark:
 browser/fingerprint | * Browser Fingerprint | Is the browser fingerprint the same on every execution? | :white_check_mark:
+browser/fonts | * Fonts Supported | Does the font fingerprint match the operating system | :white_check_mark:
 visits/over-time | * Hits Per Second<br/><br/>* Hits Per Minute<br/><br/>* Hits Per Hour | Checks counts of hits from the same user agent buckets | :white_check_mark:
 http/cache | * Cache Headers | Http caching headers sent in different conditions vs default user agent behavior |  
-http/navigate | * Sec Navigate Header | Looks at SEC- http headers for user initiated navigation and referrers |  
 http/referrers | * Referrers | Referrer headers indicate browser came from a legitimate source |  
-browser/features | * Dom Features Match Version | Test that the list of browser features matches the user agent |  
-browser/fonts | * Fonts Supported | Does the font fingerprint match the operating system |  
 browser/javascript | * Is Javascript Enabled?<br/><br/>* EMCA Support Matches Browser | Tests that javascript is enabled and has all/only EMCA features expected |  
+browser/render | * Browser Rendering | Detect nuances and capabilities for each browser rendering engine |  
 browser/tampering | * Dom Features Tampered With | Detect when features have been tampered with to simulate a real browser |  
 browser/vm | * Virtual Machine Used | Detect when a browser is running in a VM |  
+browser/webgl | * WebGl Parameters | Detect webGL graphics card and capabilities |  
 user/interaction | * Time Between User Actions<br/><br/>* Time to Interact with Page<br/><br/>* Repeated Interaction Steps | Recording of order of exact steps performed (pages loaded, mouse movements/clicks, element interaction, typing) |  
 user/mouse | * Mouse Movement | Does the mouse move (scrolling, clicking, movement)? |  

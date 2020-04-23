@@ -39,7 +39,7 @@ export default class HttpCookiesPlugin implements IDetectionPlugin {
         ctx.requestDetails.setCookies.push(...getSetCookies(ctx, cookieDomain));
         break;
       case '/results-page':
-        this.testResults(ctx);
+        await this.testResults(ctx);
         break;
       default:
         break;
@@ -50,10 +50,10 @@ export default class HttpCookiesPlugin implements IDetectionPlugin {
     }
   }
 
-  private testResults(ctx: IRequestContext) {
+  private async testResults(ctx: IRequestContext) {
     const profile = new CookieProfile(ctx);
     if (ctx.requestDetails.secureDomain === false) {
-      profile.save();
+      await profile.save();
     }
 
     checkCookieProfile(profile, ctx);

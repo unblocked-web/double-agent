@@ -1,9 +1,11 @@
 function navigatorTest() {
   //language
   //resolution
+  // screen size /offset is possible (fingerprint this?)
   //platform
   //timezone
   //webgl driver
+  //memory/heap size is possible
   //vendor
   //subproduct
   //https://github.com/ghostwords/chameleon/blob/a1a6c20616a56b4896240536aafef76cd6cde0ca/src/js/injected.js#L142

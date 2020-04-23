@@ -1,6 +1,7 @@
 export default function fingerprintScript(dest: string) {
   return `
 <script type="text/javascript">
+(() => {
   const browserIgnoredAttributes = ${JSON.stringify(browserIgnoredAttributes)};
   const sessionIgnoredAttributes = ${JSON.stringify(sessionIgnoredAttributes)};
   let fingerprintResolved;
@@ -59,6 +60,7 @@ export default function fingerprintScript(dest: string) {
   } else {
     setTimeout(fingerprint, 100);
   }
+})();
 </script>`;
 }
 

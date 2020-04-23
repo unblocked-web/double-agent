@@ -4,7 +4,7 @@
       "url": "https://main/?sessionid=X",
       "cookieNames": [],
       "setCookies": [
-        "uuid=4af26910-7f60-11ea-b74c-09f60b522ac9; Secure; SameSite=None; HttpOnly;",
+        "uuid=52e067d0-8406-11ea-8c19-d7df204b14d1; Secure; SameSite=None; HttpOnly;",
         "sessionid=X; HttpOnly;",
         "Main-ToBeExpired=start;",
         "SecureMain=0",
@@ -195,27 +195,25 @@
       "hostDomain": "External"
     },
     {
-      "url": "https://main/main.css?sessionid=X",
+      "url": "https://subdomain/main.css?sessionid=X",
       "cookieNames": [
-        "uuid",
-        "sessionid",
-        "SecureMain",
-        "SecureMain--Secure",
-        "SecureMain--HttpOnly",
-        "SecureMain--SameSiteLax",
-        "SecureMain--SameSiteStrict",
-        "SecureMain--SameSiteNone",
-        "SecureMain--Secure-SameSiteLax",
-        "SecureMain--Secure-SameSiteStrict",
-        "SecureMain--Secure-SameSiteNone",
-        "__Secure-SecureMain--Secure-SecurePrefix",
-        "__Host-SecureMain--Secure-HostPrefix-RootPath",
         "SecureMain--HttpOnly-RootDomain",
         "SecureMain--RootDomain-SameSiteNone",
         "SecureMain--RootDomain-Secure-SameSiteLax",
         "SecureMain--RootDomain-Secure-SameSiteStrict",
         "SecureMain--RootDomain-Secure-SameSiteNone",
-        "Main-JsCookies",
+        "sessionid",
+        "SecureSub",
+        "SecureSub--Secure",
+        "SecureSub--HttpOnly",
+        "SecureSub--SameSiteLax",
+        "SecureSub--SameSiteStrict",
+        "SecureSub--SameSiteNone",
+        "SecureSub--Secure-SameSiteLax",
+        "SecureSub--Secure-SameSiteStrict",
+        "SecureSub--Secure-SameSiteNone",
+        "__Secure-SecureSub--Secure-SecurePrefix",
+        "__Host-SecureSub--Secure-HostPrefix-RootPath",
         "SecureSub--HttpOnly-RootDomain",
         "SecureSub--RootDomain-SameSiteNone",
         "SecureSub--RootDomain-Secure-SameSiteLax",
@@ -226,7 +224,7 @@
       "originType": "cross-site",
       "secureDomain": true,
       "resourceType": "Stylesheet",
-      "hostDomain": "Main"
+      "hostDomain": "Sub"
     },
     {
       "url": "https://main/main.js?sessionid=X",
@@ -263,25 +261,27 @@
       "hostDomain": "Main"
     },
     {
-      "url": "https://subdomain/main.css?sessionid=X",
+      "url": "https://main/main.css?sessionid=X",
       "cookieNames": [
+        "uuid",
+        "sessionid",
+        "SecureMain",
+        "SecureMain--Secure",
+        "SecureMain--HttpOnly",
+        "SecureMain--SameSiteLax",
+        "SecureMain--SameSiteStrict",
+        "SecureMain--SameSiteNone",
+        "SecureMain--Secure-SameSiteLax",
+        "SecureMain--Secure-SameSiteStrict",
+        "SecureMain--Secure-SameSiteNone",
+        "__Secure-SecureMain--Secure-SecurePrefix",
+        "__Host-SecureMain--Secure-HostPrefix-RootPath",
         "SecureMain--HttpOnly-RootDomain",
         "SecureMain--RootDomain-SameSiteNone",
         "SecureMain--RootDomain-Secure-SameSiteLax",
         "SecureMain--RootDomain-Secure-SameSiteStrict",
         "SecureMain--RootDomain-Secure-SameSiteNone",
-        "sessionid",
-        "SecureSub",
-        "SecureSub--Secure",
-        "SecureSub--HttpOnly",
-        "SecureSub--SameSiteLax",
-        "SecureSub--SameSiteStrict",
-        "SecureSub--SameSiteNone",
-        "SecureSub--Secure-SameSiteLax",
-        "SecureSub--Secure-SameSiteStrict",
-        "SecureSub--Secure-SameSiteNone",
-        "__Secure-SecureSub--Secure-SecurePrefix",
-        "__Host-SecureSub--Secure-HostPrefix-RootPath",
+        "Main-JsCookies",
         "SecureSub--HttpOnly-RootDomain",
         "SecureSub--RootDomain-SameSiteNone",
         "SecureSub--RootDomain-Secure-SameSiteLax",
@@ -292,7 +292,7 @@
       "originType": "cross-site",
       "secureDomain": true,
       "resourceType": "Stylesheet",
-      "hostDomain": "Sub"
+      "hostDomain": "Main"
     },
     {
       "url": "https://external/main.css?sessionid=X",
@@ -317,39 +317,7 @@
       "hostDomain": "External"
     },
     {
-      "url": "https://subdomain/main.js?sessionid=X",
-      "cookieNames": [
-        "SecureMain--HttpOnly-RootDomain",
-        "SecureMain--RootDomain-SameSiteNone",
-        "SecureMain--RootDomain-Secure-SameSiteLax",
-        "SecureMain--RootDomain-Secure-SameSiteStrict",
-        "SecureMain--RootDomain-Secure-SameSiteNone",
-        "sessionid",
-        "SecureSub",
-        "SecureSub--Secure",
-        "SecureSub--HttpOnly",
-        "SecureSub--SameSiteLax",
-        "SecureSub--SameSiteStrict",
-        "SecureSub--SameSiteNone",
-        "SecureSub--Secure-SameSiteLax",
-        "SecureSub--Secure-SameSiteStrict",
-        "SecureSub--Secure-SameSiteNone",
-        "__Secure-SecureSub--Secure-SecurePrefix",
-        "__Host-SecureSub--Secure-HostPrefix-RootPath",
-        "SecureSub--HttpOnly-RootDomain",
-        "SecureSub--RootDomain-SameSiteNone",
-        "SecureSub--RootDomain-Secure-SameSiteLax",
-        "SecureSub--RootDomain-Secure-SameSiteStrict",
-        "SecureSub--RootDomain-Secure-SameSiteNone"
-      ],
-      "setCookies": [],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Script",
-      "hostDomain": "Sub"
-    },
-    {
-      "url": "https://external/fpjs-_run_page.js?sessionid=X",
+      "url": "https://external/main.js?sessionid=X",
       "cookieNames": [
         "sessionid",
         "SecureExternal",
@@ -405,26 +373,36 @@
       "hostDomain": "Main"
     },
     {
-      "url": "https://external/main.js?sessionid=X",
+      "url": "https://subdomain/main.js?sessionid=X",
       "cookieNames": [
+        "SecureMain--HttpOnly-RootDomain",
+        "SecureMain--RootDomain-SameSiteNone",
+        "SecureMain--RootDomain-Secure-SameSiteLax",
+        "SecureMain--RootDomain-Secure-SameSiteStrict",
+        "SecureMain--RootDomain-Secure-SameSiteNone",
         "sessionid",
-        "SecureExternal",
-        "SecureExternal--Secure",
-        "SecureExternal--HttpOnly",
-        "SecureExternal--SameSiteLax",
-        "SecureExternal--SameSiteStrict",
-        "SecureExternal--SameSiteNone",
-        "SecureExternal--Secure-SameSiteLax",
-        "SecureExternal--Secure-SameSiteStrict",
-        "SecureExternal--Secure-SameSiteNone",
-        "__Secure-SecureExternal--Secure-SecurePrefix",
-        "__Host-SecureExternal--Secure-HostPrefix-RootPath"
+        "SecureSub",
+        "SecureSub--Secure",
+        "SecureSub--HttpOnly",
+        "SecureSub--SameSiteLax",
+        "SecureSub--SameSiteStrict",
+        "SecureSub--SameSiteNone",
+        "SecureSub--Secure-SameSiteLax",
+        "SecureSub--Secure-SameSiteStrict",
+        "SecureSub--Secure-SameSiteNone",
+        "__Secure-SecureSub--Secure-SecurePrefix",
+        "__Host-SecureSub--Secure-HostPrefix-RootPath",
+        "SecureSub--HttpOnly-RootDomain",
+        "SecureSub--RootDomain-SameSiteNone",
+        "SecureSub--RootDomain-Secure-SameSiteLax",
+        "SecureSub--RootDomain-Secure-SameSiteStrict",
+        "SecureSub--RootDomain-Secure-SameSiteNone"
       ],
       "setCookies": [],
-      "originType": "same-origin",
+      "originType": "cross-site",
       "secureDomain": true,
       "resourceType": "Script",
-      "hostDomain": "External"
+      "hostDomain": "Sub"
     },
     {
       "url": "https://main/icon-wildcard.svg?sessionid=X",
@@ -459,6 +437,28 @@
       "secureDomain": true,
       "resourceType": "Image",
       "hostDomain": "Main"
+    },
+    {
+      "url": "https://external/fpjs-_run_page.js?sessionid=X",
+      "cookieNames": [
+        "sessionid",
+        "SecureExternal",
+        "SecureExternal--Secure",
+        "SecureExternal--HttpOnly",
+        "SecureExternal--SameSiteLax",
+        "SecureExternal--SameSiteStrict",
+        "SecureExternal--SameSiteNone",
+        "SecureExternal--Secure-SameSiteLax",
+        "SecureExternal--Secure-SameSiteStrict",
+        "SecureExternal--Secure-SameSiteNone",
+        "__Secure-SecureExternal--Secure-SecurePrefix",
+        "__Host-SecureExternal--Secure-HostPrefix-RootPath"
+      ],
+      "setCookies": [],
+      "originType": "same-origin",
+      "secureDomain": true,
+      "resourceType": "Script",
+      "hostDomain": "External"
     },
     {
       "url": "https://subdomain/icon-wildcard.svg?sessionid=X",
@@ -515,15 +515,6 @@
       "hostDomain": "External"
     },
     {
-      "url": "https://main/fetch-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Xhr",
-      "hostDomain": "Main"
-    },
-    {
       "url": "https://subdomain/fetch-post-nocustomheaders.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
@@ -531,6 +522,15 @@
       "secureDomain": true,
       "resourceType": "Xhr",
       "hostDomain": "Sub"
+    },
+    {
+      "url": "https://main/fetch-nocustomheaders.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": true,
+      "resourceType": "Xhr",
+      "hostDomain": "Main"
     },
     {
       "url": "https://external/axios-nocustomheaders.json?sessionid=X",
@@ -577,15 +577,6 @@
       "hostDomain": "External"
     },
     {
-      "url": "https://main/fetch-post-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Xhr",
-      "hostDomain": "Main"
-    },
-    {
       "url": "https://subdomain/fetch-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
@@ -593,6 +584,15 @@
       "secureDomain": true,
       "resourceType": "Preflight",
       "hostDomain": "Sub"
+    },
+    {
+      "url": "https://main/fetch-post-nocustomheaders.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": true,
+      "resourceType": "Xhr",
+      "hostDomain": "Main"
     },
     {
       "url": "https://external/world.png",
@@ -615,33 +615,6 @@
       "secureDomain": true,
       "resourceType": "Image",
       "hostDomain": "External"
-    },
-    {
-      "url": "https://main/fetch-post-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Preflight",
-      "hostDomain": "Main"
-    },
-    {
-      "url": "https://main/axios-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Xhr",
-      "hostDomain": "Main"
-    },
-    {
-      "url": "https://subdomain/fetch-post-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Preflight",
-      "hostDomain": "Sub"
     },
     {
       "url": "https://main/?sessionid=X",
@@ -697,15 +670,6 @@
       "hostDomain": "Main"
     },
     {
-      "url": "https://external/fetch-post-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "same-origin",
-      "secureDomain": true,
-      "resourceType": "Xhr",
-      "hostDomain": "External"
-    },
-    {
       "url": "https://main/fetch-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
@@ -715,13 +679,22 @@
       "hostDomain": "Main"
     },
     {
-      "url": "https://main/axios-headers.json?sessionid=X",
+      "url": "https://subdomain/fetch-post-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "cross-site",
       "secureDomain": true,
       "resourceType": "Preflight",
-      "hostDomain": "Main"
+      "hostDomain": "Sub"
+    },
+    {
+      "url": "https://external/fetch-post-nocustomheaders.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "same-origin",
+      "secureDomain": true,
+      "resourceType": "Xhr",
+      "hostDomain": "External"
     },
     {
       "url": "https://subdomain/fetch-nocustomheaders.json?sessionid=X",
@@ -733,6 +706,24 @@
       "hostDomain": "Sub"
     },
     {
+      "url": "https://external/fetch-post-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "same-origin",
+      "secureDomain": true,
+      "resourceType": "Xhr",
+      "hostDomain": "External"
+    },
+    {
+      "url": "https://main/axios-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": true,
+      "resourceType": "Preflight",
+      "hostDomain": "Main"
+    },
+    {
       "url": "https://subdomain/axios-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
@@ -740,6 +731,33 @@
       "secureDomain": true,
       "resourceType": "Preflight",
       "hostDomain": "Sub"
+    },
+    {
+      "url": "https://main/fetch-post-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": true,
+      "resourceType": "Preflight",
+      "hostDomain": "Main"
+    },
+    {
+      "url": "https://main/axios-nocustomheaders.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": true,
+      "resourceType": "Xhr",
+      "hostDomain": "Main"
+    },
+    {
+      "url": "https://external/fetch-nocustomheaders.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "same-origin",
+      "secureDomain": true,
+      "resourceType": "Xhr",
+      "hostDomain": "External"
     },
     {
       "url": "https://subdomain/axios-nocustomheaders.json?sessionid=X",
@@ -760,24 +778,6 @@
       "hostDomain": "Sub"
     },
     {
-      "url": "https://external/fetch-post-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "same-origin",
-      "secureDomain": true,
-      "resourceType": "Xhr",
-      "hostDomain": "External"
-    },
-    {
-      "url": "https://external/fetch-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "same-origin",
-      "secureDomain": true,
-      "resourceType": "Xhr",
-      "hostDomain": "External"
-    },
-    {
       "url": "https://external/fetch-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
@@ -795,7 +795,7 @@
       "hostDomain": "Main"
     },
     {
-      "url": "https://main/fetch-post-headers.json?sessionid=X",
+      "url": "https://main/fetch-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "cross-site",
@@ -811,15 +811,6 @@
       "secureDomain": true,
       "resourceType": "Xhr",
       "hostDomain": "Sub"
-    },
-    {
-      "url": "https://main/fetch-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Xhr",
-      "hostDomain": "Main"
     },
     {
       "url": "https://main/axios-headers.json?sessionid=X",
@@ -838,6 +829,15 @@
       "secureDomain": true,
       "resourceType": "Xhr",
       "hostDomain": "Sub"
+    },
+    {
+      "url": "https://main/fetch-post-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": true,
+      "resourceType": "Xhr",
+      "hostDomain": "Main"
     },
     {
       "url": "https://subdomain/?sessionid=X",
@@ -891,6 +891,14 @@
       "hostDomain": "Sub"
     },
     {
+      "url": "wss://subdomain/?sessionid=X",
+      "cookieNames": [],
+      "originType": "cross-site",
+      "secureDomain": true,
+      "resourceType": "Websocket Message",
+      "hostDomain": "Sub"
+    },
+    {
       "url": "https://external/favicon.ico?sessionid=X",
       "cookieNames": [
         "sessionid",
@@ -911,14 +919,6 @@
       "secureDomain": true,
       "resourceType": "Ico",
       "hostDomain": "External"
-    },
-    {
-      "url": "wss://subdomain/?sessionid=X",
-      "cookieNames": [],
-      "originType": "cross-site",
-      "secureDomain": true,
-      "resourceType": "Websocket Message",
-      "hostDomain": "Sub"
     },
     {
       "url": "https://external/?sessionid=X",
@@ -1062,40 +1062,6 @@
       "hostDomain": "Main"
     },
     {
-      "url": "https://main/fpjs-_results_page.js?sessionid=X",
-      "cookieNames": [
-        "uuid",
-        "sessionid",
-        "SecureMain",
-        "SecureMain--Secure",
-        "SecureMain--HttpOnly",
-        "SecureMain--SameSiteLax",
-        "SecureMain--SameSiteStrict",
-        "SecureMain--SameSiteNone",
-        "SecureMain--Secure-SameSiteLax",
-        "SecureMain--Secure-SameSiteStrict",
-        "SecureMain--Secure-SameSiteNone",
-        "__Secure-SecureMain--Secure-SecurePrefix",
-        "__Host-SecureMain--Secure-HostPrefix-RootPath",
-        "SecureMain--HttpOnly-RootDomain",
-        "SecureMain--RootDomain-SameSiteNone",
-        "SecureMain--RootDomain-Secure-SameSiteLax",
-        "SecureMain--RootDomain-Secure-SameSiteStrict",
-        "SecureMain--RootDomain-Secure-SameSiteNone",
-        "Main-JsCookies",
-        "SecureSub--HttpOnly-RootDomain",
-        "SecureSub--RootDomain-SameSiteNone",
-        "SecureSub--RootDomain-Secure-SameSiteLax",
-        "SecureSub--RootDomain-Secure-SameSiteStrict",
-        "SecureSub--RootDomain-Secure-SameSiteNone"
-      ],
-      "setCookies": [],
-      "originType": "same-origin",
-      "secureDomain": true,
-      "resourceType": "Script",
-      "hostDomain": "Main"
-    },
-    {
       "url": "https://main/result.css?sessionid=X",
       "cookieNames": [
         "uuid",
@@ -1127,6 +1093,40 @@
       "originType": "same-origin",
       "secureDomain": true,
       "resourceType": "Stylesheet",
+      "hostDomain": "Main"
+    },
+    {
+      "url": "https://main/fpjs-_results_page.js?sessionid=X",
+      "cookieNames": [
+        "uuid",
+        "sessionid",
+        "SecureMain",
+        "SecureMain--Secure",
+        "SecureMain--HttpOnly",
+        "SecureMain--SameSiteLax",
+        "SecureMain--SameSiteStrict",
+        "SecureMain--SameSiteNone",
+        "SecureMain--Secure-SameSiteLax",
+        "SecureMain--Secure-SameSiteStrict",
+        "SecureMain--Secure-SameSiteNone",
+        "__Secure-SecureMain--Secure-SecurePrefix",
+        "__Host-SecureMain--Secure-HostPrefix-RootPath",
+        "SecureMain--HttpOnly-RootDomain",
+        "SecureMain--RootDomain-SameSiteNone",
+        "SecureMain--RootDomain-Secure-SameSiteLax",
+        "SecureMain--RootDomain-Secure-SameSiteStrict",
+        "SecureMain--RootDomain-Secure-SameSiteNone",
+        "Main-JsCookies",
+        "SecureSub--HttpOnly-RootDomain",
+        "SecureSub--RootDomain-SameSiteNone",
+        "SecureSub--RootDomain-Secure-SameSiteLax",
+        "SecureSub--RootDomain-Secure-SameSiteStrict",
+        "SecureSub--RootDomain-Secure-SameSiteNone"
+      ],
+      "setCookies": [],
+      "originType": "same-origin",
+      "secureDomain": true,
+      "resourceType": "Script",
       "hostDomain": "Main"
     },
     {
@@ -1213,6 +1213,15 @@
       "hostDomain": "Main"
     },
     {
+      "url": "http://subdomain/fetch-samesite-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "same-site",
+      "secureDomain": false,
+      "resourceType": "Xhr",
+      "hostDomain": "Sub"
+    },
+    {
       "url": "http://main/favicon.ico?sessionid=X",
       "cookieNames": [
         "sessionid",
@@ -1240,15 +1249,6 @@
       "secureDomain": false,
       "resourceType": "Ico",
       "hostDomain": "Main"
-    },
-    {
-      "url": "http://subdomain/fetch-samesite-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "same-site",
-      "secureDomain": false,
-      "resourceType": "Xhr",
-      "hostDomain": "Sub"
     },
     {
       "url": "http://main/page-loaded?page=start&sessionid=X",
@@ -1447,33 +1447,25 @@
       "hostDomain": "Main"
     },
     {
-      "url": "http://subdomain/main.js?sessionid=X",
+      "url": "http://external/main.css?sessionid=X",
       "cookieNames": [
-        "SecureMain--HttpOnly-RootDomain",
-        "SecureMain--RootDomain-SameSiteNone",
         "sessionid",
-        "SecureSub",
-        "SecureSub--HttpOnly",
-        "SecureSub--SameSiteLax",
-        "SecureSub--SameSiteStrict",
-        "SecureSub--SameSiteNone",
-        "SecureSub--HttpOnly-RootDomain",
-        "SecureSub--RootDomain-SameSiteNone",
-        "Main--HttpOnly-RootDomain",
-        "Main--RootDomain-SameSiteNone",
-        "Sub",
-        "Sub--HttpOnly",
-        "Sub--SameSiteLax",
-        "Sub--SameSiteStrict",
-        "Sub--SameSiteNone",
-        "Sub--HttpOnly-RootDomain",
-        "Sub--RootDomain-SameSiteNone"
+        "SecureExternal",
+        "SecureExternal--HttpOnly",
+        "SecureExternal--SameSiteLax",
+        "SecureExternal--SameSiteStrict",
+        "SecureExternal--SameSiteNone",
+        "External",
+        "External--HttpOnly",
+        "External--SameSiteLax",
+        "External--SameSiteStrict",
+        "External--SameSiteNone"
       ],
       "setCookies": [],
-      "originType": "cross-site",
+      "originType": "same-origin",
       "secureDomain": false,
-      "resourceType": "Script",
-      "hostDomain": "Sub"
+      "resourceType": "Stylesheet",
+      "hostDomain": "External"
     },
     {
       "url": "http://main/axios.js?sessionid=X",
@@ -1506,25 +1498,33 @@
       "hostDomain": "Main"
     },
     {
-      "url": "http://external/main.css?sessionid=X",
+      "url": "http://subdomain/main.js?sessionid=X",
       "cookieNames": [
+        "SecureMain--HttpOnly-RootDomain",
+        "SecureMain--RootDomain-SameSiteNone",
         "sessionid",
-        "SecureExternal",
-        "SecureExternal--HttpOnly",
-        "SecureExternal--SameSiteLax",
-        "SecureExternal--SameSiteStrict",
-        "SecureExternal--SameSiteNone",
-        "External",
-        "External--HttpOnly",
-        "External--SameSiteLax",
-        "External--SameSiteStrict",
-        "External--SameSiteNone"
+        "SecureSub",
+        "SecureSub--HttpOnly",
+        "SecureSub--SameSiteLax",
+        "SecureSub--SameSiteStrict",
+        "SecureSub--SameSiteNone",
+        "SecureSub--HttpOnly-RootDomain",
+        "SecureSub--RootDomain-SameSiteNone",
+        "Main--HttpOnly-RootDomain",
+        "Main--RootDomain-SameSiteNone",
+        "Sub",
+        "Sub--HttpOnly",
+        "Sub--SameSiteLax",
+        "Sub--SameSiteStrict",
+        "Sub--SameSiteNone",
+        "Sub--HttpOnly-RootDomain",
+        "Sub--RootDomain-SameSiteNone"
       ],
       "setCookies": [],
-      "originType": "same-origin",
+      "originType": "cross-site",
       "secureDomain": false,
-      "resourceType": "Stylesheet",
-      "hostDomain": "External"
+      "resourceType": "Script",
+      "hostDomain": "Sub"
     },
     {
       "url": "http://main/icon-wildcard.svg?sessionid=X",
@@ -1688,24 +1688,6 @@
       "hostDomain": "External"
     },
     {
-      "url": "http://main/fetch-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": false,
-      "resourceType": "Preflight",
-      "hostDomain": "Main"
-    },
-    {
-      "url": "http://subdomain/fetch-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": false,
-      "resourceType": "Preflight",
-      "hostDomain": "Sub"
-    },
-    {
       "url": "http://main/?sessionid=X",
       "cookieNames": [
         "sessionid",
@@ -1755,16 +1737,16 @@
       "hostDomain": "Main"
     },
     {
-      "url": "http://external/fetch-post-nocustomheaders.json?sessionid=X",
+      "url": "http://main/axios-nocustomheaders.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "same-origin",
+      "originType": "cross-site",
       "secureDomain": false,
       "resourceType": "Xhr",
-      "hostDomain": "External"
+      "hostDomain": "Main"
     },
     {
-      "url": "http://main/fetch-post-headers.json?sessionid=X",
+      "url": "http://main/fetch-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "cross-site",
@@ -1773,34 +1755,16 @@
       "hostDomain": "Main"
     },
     {
-      "url": "http://subdomain/fetch-post-headers.json?sessionid=X",
+      "url": "http://subdomain/fetch-nocustomheaders.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "cross-site",
       "secureDomain": false,
-      "resourceType": "Preflight",
+      "resourceType": "Xhr",
       "hostDomain": "Sub"
     },
     {
-      "url": "http://external/fetch-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "same-origin",
-      "secureDomain": false,
-      "resourceType": "Xhr",
-      "hostDomain": "External"
-    },
-    {
-      "url": "http://external/fetch-post-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "same-origin",
-      "secureDomain": false,
-      "resourceType": "Xhr",
-      "hostDomain": "External"
-    },
-    {
-      "url": "http://external/fetch-headers.json?sessionid=X",
+      "url": "http://external/fetch-post-nocustomheaders.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "same-origin",
@@ -1818,12 +1782,30 @@
       "hostDomain": "Main"
     },
     {
-      "url": "http://subdomain/fetch-nocustomheaders.json?sessionid=X",
+      "url": "http://main/fetch-post-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "cross-site",
       "secureDomain": false,
-      "resourceType": "Xhr",
+      "resourceType": "Preflight",
+      "hostDomain": "Main"
+    },
+    {
+      "url": "http://subdomain/fetch-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": false,
+      "resourceType": "Preflight",
+      "hostDomain": "Sub"
+    },
+    {
+      "url": "http://subdomain/fetch-post-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": false,
+      "resourceType": "Preflight",
       "hostDomain": "Sub"
     },
     {
@@ -1833,33 +1815,6 @@
       "originType": "cross-site",
       "secureDomain": false,
       "resourceType": "Preflight",
-      "hostDomain": "Sub"
-    },
-    {
-      "url": "http://main/axios-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": false,
-      "resourceType": "Xhr",
-      "hostDomain": "Main"
-    },
-    {
-      "url": "http://main/axios-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": false,
-      "resourceType": "Preflight",
-      "hostDomain": "Main"
-    },
-    {
-      "url": "http://subdomain/axios-nocustomheaders.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": false,
-      "resourceType": "Xhr",
       "hostDomain": "Sub"
     },
     {
@@ -1884,24 +1839,6 @@
       "hostDomain": "External"
     },
     {
-      "url": "http://main/fetch-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": false,
-      "resourceType": "Xhr",
-      "hostDomain": "Main"
-    },
-    {
-      "url": "http://subdomain/fetch-headers.json?sessionid=X",
-      "cookieNames": [],
-      "setCookies": ["sessionid=X; HttpOnly;"],
-      "originType": "cross-site",
-      "secureDomain": false,
-      "resourceType": "Xhr",
-      "hostDomain": "Sub"
-    },
-    {
       "url": "ws://main/?sessionid=X",
       "cookieNames": [],
       "originType": "cross-site",
@@ -1910,13 +1847,31 @@
       "hostDomain": "Main"
     },
     {
-      "url": "http://main/fetch-post-headers.json?sessionid=X",
+      "url": "http://external/fetch-nocustomheaders.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "same-origin",
+      "secureDomain": false,
+      "resourceType": "Xhr",
+      "hostDomain": "External"
+    },
+    {
+      "url": "http://subdomain/axios-nocustomheaders.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "cross-site",
       "secureDomain": false,
       "resourceType": "Xhr",
-      "hostDomain": "Main"
+      "hostDomain": "Sub"
+    },
+    {
+      "url": "http://external/fetch-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "same-origin",
+      "secureDomain": false,
+      "resourceType": "Xhr",
+      "hostDomain": "External"
     },
     {
       "url": "http://subdomain/fetch-post-headers.json?sessionid=X",
@@ -1937,12 +1892,48 @@
       "hostDomain": "Sub"
     },
     {
-      "url": "http://main/axios-headers.json?sessionid=X",
+      "url": "http://main/fetch-headers.json?sessionid=X",
       "cookieNames": [],
       "setCookies": ["sessionid=X; HttpOnly;"],
       "originType": "cross-site",
       "secureDomain": false,
       "resourceType": "Xhr",
+      "hostDomain": "Main"
+    },
+    {
+      "url": "http://main/fetch-post-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": false,
+      "resourceType": "Xhr",
+      "hostDomain": "Main"
+    },
+    {
+      "url": "http://subdomain/fetch-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": false,
+      "resourceType": "Xhr",
+      "hostDomain": "Sub"
+    },
+    {
+      "url": "http://external/fetch-post-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "same-origin",
+      "secureDomain": false,
+      "resourceType": "Xhr",
+      "hostDomain": "External"
+    },
+    {
+      "url": "http://main/axios-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": false,
+      "resourceType": "Preflight",
       "hostDomain": "Main"
     },
     {
@@ -1992,6 +1983,15 @@
       "secureDomain": false,
       "resourceType": "Websocket Upgrade",
       "hostDomain": "Sub"
+    },
+    {
+      "url": "http://main/axios-headers.json?sessionid=X",
+      "cookieNames": [],
+      "setCookies": ["sessionid=X; HttpOnly;"],
+      "originType": "cross-site",
+      "secureDomain": false,
+      "resourceType": "Xhr",
+      "hostDomain": "Main"
     },
     {
       "url": "ws://subdomain/?sessionid=X",

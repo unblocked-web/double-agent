@@ -1,5 +1,6 @@
 import { By, Key, until, WebDriver, WebElement } from 'selenium-webdriver';
 import IDirective from '@double-agent/runner/interfaces/IDirective';
+import IDirectivePage from '@double-agent/runner/interfaces/IDirectivePage';
 
 export default async function runDirectiveInWebDriver(
   driver: WebDriver,
@@ -9,13 +10,13 @@ export default async function runDirectiveInWebDriver(
 ) {
   const needsEnterKey = browserName == 'Safari' && parseInt(browserVersion, 10) >= 13;
 
+  let prev: IDirectivePage;
   for (const page of directive.pages) {
     let currentUrl = await driver.getCurrentUrl();
-    if (currentUrl && page.url !== currentUrl) {
-      try {
-        await driver.wait(until.urlIs(page.url), 1e3);
-        currentUrl = await driver.getCurrentUrl();
-      } catch (err) {}
+    if (prev && prev.clickSelector && page.url !== currentUrl) {
+      // edge 18 takes forever to test codecs.. so need to wait a long time for page to load
+      await driver.wait(until.urlIs(page.url), 120e3);
+      currentUrl = await driver.getCurrentUrl();
     }
 
     if (page.url !== currentUrl) {
@@ -37,6 +38,7 @@ export default async function runDirectiveInWebDriver(
 
       await clickElement(elem, driver, needsEnterKey);
     }
+    prev = page;
   }
 }
 

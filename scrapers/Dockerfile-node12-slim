@@ -12,9 +12,8 @@ WORKDIR /app
 
 COPY . /app/
 
-RUN cd /app/lib && yarn --frozen-lockfile
+RUN cd /app/lib && yarn
 
-# Add user so we don't need --no-sandbox.
 # Add user so we don't need --no-sandbox.
 # same layer as npm install to keep re-chowned files from using up several hundred MBs more space
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
@@ -22,4 +21,4 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /app
 
-ENV RUNNER_DOMAIN=ulixee-test.org
+ENV RUNNER_DOMAIN=a0.ulixee-test.org

@@ -6,6 +6,7 @@ import IRequestDetails from '../interfaces/IRequestDetails';
 import IDetectorModule from '../interfaces/IDetectorModule';
 import HitTracker from './HitTracker';
 import moment from 'moment';
+import { URL } from 'url';
 
 export default class UserBucketTracker {
   private combinedIdTrackers: UserBucket[][] = [];

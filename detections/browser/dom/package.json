@@ -6,7 +6,8 @@
   "checkCategories": [
     "Dom Features Match Version"
   ],
-  "description": "Test that the list of browser dom features matches the user agent",
-  "dependencies": {},
-  "devDependencies": {}
+  "scripts": {
+    "export": "node -e 'require(\"./lib/exportProfiles\").default()'"
+  },
+  "description": "Test that the list of browser dom features matches the user agent"
 }

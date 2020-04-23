@@ -46,7 +46,7 @@ export default function browserWeightedBotScore(
   const browsers = agentsType === 'intoli' ? scraper.intoliBrowsers : scraper.topBrowsers;
   for (const category of activeCategories) {
     const weightedAverage = getWeightedAverageForBrowsers(
-      scraper.browserFindings,
+      scraper,
       category,
       browsers,
       botMultiplier,
@@ -66,7 +66,7 @@ export default function browserWeightedBotScore(
 }
 
 function getWeightedAverageForBrowsers(
-  findings: IBrowserFindings,
+  scraper: IScraperTestResult,
   category: string,
   browsers: IBrowserPercents[],
   botMultiplier: number,
@@ -74,7 +74,10 @@ function getWeightedAverageForBrowsers(
   if (!browsers.length) return 0;
   let avg = 0;
   for (const browser of browsers) {
-    const results = findings[browser.browser];
+    const results = scraper.browserFindings[browser.browser];
+    if (!results) {
+      continue;
+    }
     if (!results[category]) continue;
     const pct = results[category].botPct;
     avg += pct * (browser.percentUsed / 100);

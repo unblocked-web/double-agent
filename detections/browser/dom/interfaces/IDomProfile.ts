@@ -1,4 +1,8 @@
 export default interface IDomProfile {
   useragent: string;
-  dom: object;
+  dom: {
+    window: any;
+    detached: any;
+  };
+  httpWindowKeys?: string[];
 }

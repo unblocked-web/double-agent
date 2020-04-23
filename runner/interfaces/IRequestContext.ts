@@ -4,6 +4,7 @@ import IDomainset from './IDomainset';
 import HostDomain from './HostDomain';
 import UserBucketTracker from '../lib/UserBucketTracker';
 import DetectionSession from '../lib/DetectionSession';
+import { URL } from 'url';
 
 export default interface IRequestContext {
   req: IncomingMessage;

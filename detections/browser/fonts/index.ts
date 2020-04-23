@@ -1,20 +1,19 @@
 import IDetectionPlugin from '@double-agent/runner/interfaces/IDetectionPlugin';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
-import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import fontScript from './fontScript';
 import IFontProfile from './interfaces/IFontProfile';
 import FontProfile from './lib/FontProfile';
 import crypto from 'crypto';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
-import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
+import { sendJson } from '@double-agent/runner/lib/httpUtils';
 
 export default class BrowserFontsPlugin implements IDetectionPlugin {
   private static pluginName = 'browser/fonts';
   public async onRequest(ctx: IRequestContext) {
     // only load on the secure domain
     if (
-      !ctx.session.pluginsRun.includes(BrowserFontsPlugin.pluginName) &&
-      ctx.requestDetails.resourceType === ResourceType.Document
+      ctx.url.pathname === '/run-page' &&
+      !ctx.session.pluginsRun.includes(BrowserFontsPlugin.pluginName)
     ) {
       ctx.extraScripts.push(fontScript(ctx));
     }
@@ -25,23 +24,12 @@ export default class BrowserFontsPlugin implements IDetectionPlugin {
     if (requestUrl.pathname === '/fonts') {
       ctx.session.pluginsRun.push(BrowserFontsPlugin.pluginName);
 
-      const res = ctx.res;
       const body = ctx.requestDetails.bodyJson as { fonts: string[] };
-      const agentProfile = FontProfile.save(ctx.requestDetails.useragent, body?.fonts);
+      const agentProfile = await FontProfile.save(ctx.requestDetails.useragent, body?.fonts);
 
       this.checkProfile(ctx, agentProfile);
 
-      if (ctx.req.headers.origin) {
-        res.setHeader('Access-Control-Allow-Origin', ctx.req.headers.origin);
-      } else if (ctx.req.headers.referer) {
-        res.setHeader('Access-Control-Allow-Origin', new URL(ctx.req.headers.referer).origin);
-      }
-      res.writeHead(200, {
-        'Content-Type': 'application/json',
-        'X-Content-Type-Options': 'nosniff',
-      });
-
-      res.end(JSON.stringify({ success: true }));
+      sendJson(ctx, { success: true });
       return true;
     }
     return false;
@@ -76,6 +64,5 @@ export default class BrowserFontsPlugin implements IDetectionPlugin {
     //   value: fontProfile.fonts.join(', '),
     //   expected: browserFonts.join(', '),
     // });
-    ctx.session.pluginsRun.push('browser/fonts');
   }
 }

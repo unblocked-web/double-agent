@@ -21,14 +21,16 @@ export default function(ctx: IRequestContext) {
 ${(ctx.extraScripts || []).join('\n')}
 <script>
 function pageLoaded(){
-  Promise.all(window.pageQueue)
+   document.body.onload = undefined;
+   Promise.all(window.pageQueue)
+      .then(() => window.afterQueueComplete ? window.afterQueueComplete() : null)
       .then(() => fetch('${ctx.trackUrl('/page-loaded?page=start')}'))
-    .then(function() {
-      document.getElementById('goto-run-page').classList.add('ready');
-      document.getElementById('goto-run-page').style.display = 'block';
-    }).catch(function(err) {
-      console.log(err);
-    })
+      .then(function() {
+        document.getElementById('goto-run-page').classList.add('ready');
+        document.getElementById('goto-run-page').style.display = 'block';
+      }).catch(function(err) {
+        console.log(err);
+      });
 }
 </script>
 </body>

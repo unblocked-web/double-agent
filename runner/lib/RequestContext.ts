@@ -6,6 +6,7 @@ import HostDomain from '../interfaces/HostDomain';
 import { getOriginType } from '../server/extractRequestDetails';
 import UserBucketTracker from './UserBucketTracker';
 import DetectionSession from './DetectionSession';
+import { URL } from 'url';
 
 export default class RequestContext implements IRequestContext {
   constructor(

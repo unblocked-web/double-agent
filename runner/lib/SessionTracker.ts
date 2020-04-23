@@ -4,6 +4,7 @@ import { v1 } from 'uuid';
 import HostDomain from '../interfaces/HostDomain';
 import UserBucket from '../interfaces/UserBucket';
 import DetectionSession from './DetectionSession';
+import { URL } from 'url';
 
 let sessionIdCounter = 0;
 export default class SessionTracker {
