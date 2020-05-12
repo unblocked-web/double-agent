@@ -1,7 +1,7 @@
 <template lang="pug">
     .Home.Page
         .wrapper
-            h1 A Detailed Analysis of Browser Detection Methods.
+            h1 A Detailed Analysis of Bot Detection Methods.
             .intro
                 | This website is a compilation of various research projects at the #[a(href="https://dataliberationfoundation.org") Data Liberation Foundation].
                 | We spent the last few years studying web browser automation and various techniques to block data

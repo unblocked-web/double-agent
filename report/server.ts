@@ -15,6 +15,9 @@ http
     if (req.method === 'OPTIONS') {
       return res.end();
     }
+    // if (filePath.endsWith('.gz')) {
+    //   res.setHeader('Content-Encoding', 'gzip');
+    // }
     return createReadStream(filePath, { autoClose: true }).pipe(res);
   })
   .listen(2000);

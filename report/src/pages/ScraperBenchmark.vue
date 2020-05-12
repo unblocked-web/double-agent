@@ -52,23 +52,30 @@
                                     span.missing red = missing
                             th.botScoreHeader(width="100px") Bot Score
                     tbody
-                        tr(v-for="flag in categoryFlags(category)" v-tooltip="flag.description")
+                        tr(v-for="(flag, index) in categoryFlags(category)" v-tooltip="flag.description" v-if="index <= checksToLoad")
                             td {{flag.checkName}}
                             td.resource {{flag.secureDomain ? 'Secure' : 'Http'}} {{flag.resourceType}}
                             td.expected
                                 Diff(:value="flag.value" :expected="flag.expected" :showAsList="showFlagAsList(flag)")
                             td
                                 Stat(:value="flag.pctBot")
+                        tr(v-if="categoryFlags(category).length > checksToLoad")
+                            td#loadMore(colspan=4 align=center)
+                                a(@click.prevent="checksToLoad += 20" href="#") Load 20 of {{categoryFlags(category).length-checksToLoad}} more
+      div.waiting(v-else) Loading
+
 
 </template>
 
 <script lang="ts">
-import { scrapers, categories } from '../data';
+import { categories, scrapers } from '../data';
+import pako from 'pako';
 import Stat from '@/components/Stat.vue';
 import Diff from '@/components/Diff.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
+import { json } from '../../../../ulixee/shared/types';
 
 @Component({
   components: {
@@ -82,12 +89,13 @@ export default class ScraperBenchmark extends Vue {
   @Prop()
   private browserKey!: string;
 
+  private checksToLoad = 50;
   private botScore = 0;
+  private categoryBotScores: { [category: string]: number } = {};
+  private categoryCheckCounts: { [category: string]: number } = {};
 
   private get checks() {
-    return (this.session.checks ?? []).reduce((a, b) => {
-      return a + b.count;
-    }, 0);
+    return Object.values(this.categoryCheckCounts).reduce((a, b) => a + b, 0);
   }
 
   private get flags() {
@@ -115,24 +123,15 @@ export default class ScraperBenchmark extends Vue {
   }
 
   categoryBotScore(category: string) {
-    let maxBotScore = 0;
-    for (const flag of this.session.flaggedChecks ?? []) {
-      if (flag.category !== category) continue;
-      maxBotScore = Math.max(flag.pctBot, maxBotScore);
-    }
-    return maxBotScore;
+    return this.categoryBotScores[category] ?? 0;
   }
 
   categoryFlagCount(category: string) {
-    return (this.session.flaggedChecks ?? []).filter(x => x.category === category).length;
+    return this.flagsByCategory[category]?.length ?? 0;
   }
 
   categoryChecks(category: string) {
-    return (this.session.checks ?? [])
-      .filter(x => x.category === category)
-      .reduce((a, b) => {
-        return a + b.count;
-      }, 0);
+    return this.categoryCheckCounts[category] ?? 0;
   }
 
   private categoryKeys = Object.keys(categories).filter(x => categories[x].implemented);
@@ -173,26 +172,54 @@ export default class ScraperBenchmark extends Vue {
     this.$http
       .get(
         process.env.VUE_APP_DATA_HOST +
-          `/scrapers/${this.scraperKey}/sessions/${this.browserKey}.json`,
+          `/scrapers/${this.scraperKey}/sessions/${this.browserKey}.json.gz`,
+        { responseType: 'arraybuffer' },
       )
-      .then(x => x.json())
-      .then(session => {
-        this.session = session || {};
-        this.botScore = 0;
-        this.flagsByCategory = {};
-        for (const flag of this.session.flaggedChecks ?? []) {
-          if (!this.flagsByCategory[flag.category]) this.flagsByCategory[flag.category] = [];
-          const flags = this.flagsByCategory[flag.category];
-          if (!flags.some(x => x.checkName === flag.checkName && x.value === flag.value))
+      .then(x => {
+        const jsonBody = pako.ungzip((x as any).body, { to: 'string' });
+        return JSON.parse(jsonBody);
+      })
+      .then((session: any) => {
+        let botScore = 0;
+        const flagsByCategory: { [category: string]: IFlaggedCheck[] } = {};
+        const categoryChecks: { [category: string]: number } = {};
+        const categoryBotScores: { [category: string]: number } = {};
+        for (const flag of session.flaggedChecks ?? []) {
+          const category = flag.category;
+          if (!flagsByCategory[category]) {
+            flagsByCategory[category] = [];
+            categoryBotScores[category] = 0;
+          }
+
+          const flags = flagsByCategory[category];
+          // too many to traverse
+          if (category === 'Dom Features Match Version') {
             flags.push(flag);
-          if (flag.pctBot > this.botScore) this.botScore = flag.pctBot;
+          } else if (!flags.some(x => x.checkName === flag.checkName && x.value === flag.value)) {
+            flags.push(flag);
+          }
+          if (flag.pctBot > botScore) {
+            botScore = flag.pctBot;
+          }
+          if (flag.pctBot > categoryBotScores[category]) {
+            categoryBotScores[category] = flag.pctBot;
+          }
         }
-        this.$forceUpdate();
+
+        for (const check of session.checks) {
+          if (!categoryChecks[check.category]) categoryChecks[check.category] = 0;
+          categoryChecks[check.category] += check.count;
+        }
+
+        this.botScore = botScore;
+        this.flagsByCategory = flagsByCategory;
+        this.categoryCheckCounts = categoryChecks;
+        this.categoryBotScores = categoryBotScores;
+        this.session = session || {};
 
         const hash = document.location.hash;
         if (hash) {
           setTimeout(() => {
-            console.log('scrolling to ', hash);
             const elem = document.querySelector(hash);
             if (elem) {
               elem.scrollIntoView({
@@ -347,6 +374,30 @@ export default class ScraperBenchmark extends Vue {
       .part {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
       }
+    }
+  }
+  .waiting {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    &:after {
+      content: ' ';
+      display: block;
+      width: 30px;
+      height: 30px;
+      margin: 8px;
+      border-radius: 50%;
+      border: 6px solid #f0f3f4;
+      border-color: #f0f3f4 transparent #f0f3f4 transparent;
+      animation: waiting 1.2s linear infinite;
+    }
+  }
+  @keyframes waiting {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }

@@ -89,11 +89,6 @@
     "module": "cache",
     "implemented": false
   },
-  "Sec Navigate Header": {
-    "layer": "http",
-    "module": "navigate",
-    "implemented": false
-  },
   "Referrers": {
     "layer": "http",
     "module": "referrers",
@@ -119,20 +114,20 @@
     "module": "codecs",
     "implemented": true
   },
+  "Dom Features Match Version": {
+    "layer": "browser",
+    "module": "dom",
+    "implemented": true
+  },
   "Browser Fingerprint": {
     "layer": "browser",
     "module": "fingerprint",
     "implemented": true
   },
-  "Dom Features Match Version": {
-    "layer": "browser",
-    "module": "features",
-    "implemented": false
-  },
   "Fonts Supported": {
     "layer": "browser",
     "module": "fonts",
-    "implemented": false
+    "implemented": true
   },
   "Is Javascript Enabled?": {
     "layer": "browser",
@@ -144,6 +139,11 @@
     "module": "javascript",
     "implemented": false
   },
+  "Browser Rendering": {
+    "layer": "browser",
+    "module": "render",
+    "implemented": false
+  },
   "Dom Features Tampered With": {
     "layer": "browser",
     "module": "tampering",
@@ -152,6 +152,11 @@
   "Virtual Machine Used": {
     "layer": "browser",
     "module": "vm",
+    "implemented": false
+  },
+  "WebGl Parameters": {
+    "layer": "browser",
+    "module": "webgl",
     "implemented": false
   },
   "Time Between User Actions": {

@@ -11,7 +11,7 @@
                     tooltip="always"
                     tooltip-placement="right")
             .customizeLink
-                a(v-if="!customizeScraper" href="#" @click.prevent="customizeScraper = true") Customize Scraper
+                a(v-if="!customizeScraper" href="#" @click.prevent="customizeScraper = true") Customize Scraper IP & User Agents
                 a(v-else href="#" @click.prevent="customizeScraper = false") Done
             #customize-scraper-options(:class="{ showing: customizeScraper }")
                 .box
