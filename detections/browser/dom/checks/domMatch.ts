@@ -20,7 +20,7 @@ export default function domMatch(
     'Checks that the full scope of a property matches, including values, types, invocation, and proto hierarchy';
   const comparison = deepDiff(browserProfile.dom, profile.dom);
 
-  console.log('DOM comparison complete (pre-filtering)', {
+  console.log('Session %s, DOM comparison complete (pre-filtering)', ctx.session.id, {
     added: comparison.added.length,
     missing: comparison.missing.length,
     changed: comparison.changed.length,

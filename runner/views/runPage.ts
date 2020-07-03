@@ -66,7 +66,9 @@ Ulixee.org
         }, function(){});
         resolve();
       };
-      ws.onmessage = console.log;
+      ws.onmessage = function(message) {
+        console.log('Websocket message received %s from %s', message.data, message.origin)
+      } 
     });
   }
   window.pageQueue.push(
@@ -86,6 +88,8 @@ ${(ctx.extraScripts || []).join('\n')}
       .then(() => {
         document.getElementById('goto-results-page').classList.add('ready');
         document.getElementById('goto-results-page').style.display = 'block';
+      }).catch(err => {
+        console.log(err);
       });
   }
 </script>

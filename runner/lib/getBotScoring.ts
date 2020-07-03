@@ -10,7 +10,7 @@ export default function getBotScoring(ctx: IRequestContext) {
   }
 
   const botScore = Math.max(...botScores);
-  const status = `[bot: ${botScore}, requests: ${ctx.session.requests.length}]`;
+  const status = `[bot: ${botScore}, requests: ${ctx.session.requests.length}, id: ${ctx.session.id}]`;
 
   const extras: any = {};
   if (ctx.url.pathname.includes('-page')) {

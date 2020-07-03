@@ -26,7 +26,7 @@ export default function domScript(
 ) {
   return `
   <script type="text/javascript">
-(function() {
+(function browserDomProbe() {
     const skipProps = ${JSON.stringify(skipProps)};
     const skipValues = ${JSON.stringify(skipValues)};
     const doNotInvoke = ${JSON.stringify(doNotInvoke)};

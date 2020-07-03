@@ -12,7 +12,7 @@ import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 
-const filepath = require.resolve('fingerprintjs2/dist/fingerprint2.min.js');
+const fingerprintJs = fs.readFileSync(require.resolve('fingerprintjs2/dist/fingerprint2.min.js'));
 
 export default class BrowserFingerprintPlugin implements IDetectionPlugin {
   private pluginName = 'browser/fingerprint';
@@ -37,9 +37,7 @@ export default class BrowserFingerprintPlugin implements IDetectionPlugin {
       ctx.res.writeHead(200, {
         'Content-Type': 'text/javascript',
       });
-      fs.createReadStream(filepath).pipe(ctx.res, {
-        end: true,
-      });
+      ctx.res.end(fingerprintJs);
       return true;
     }
 

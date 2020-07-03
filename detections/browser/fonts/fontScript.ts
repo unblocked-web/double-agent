@@ -4,7 +4,7 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 export default function fontScript(ctx: IRequestContext) {
   return `
 <script type="text/javascript">
-(() => {
+(function browserFontProbe() {
   // extracted from https://github.com/Valve/fingerprintjs2/
   // a font will be compared against all the three default fonts.
   // and if it doesn't match all 3 then that font is not available.

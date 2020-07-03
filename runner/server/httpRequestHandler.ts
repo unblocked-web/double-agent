@@ -164,33 +164,33 @@ function preflight(ctx: IRequestContext) {
   ctx.res.end('');
 }
 
+const assets: { [path: string]: Buffer } = {};
 function sendAsset(ctx: IRequestContext) {
   let pathname = ctx.url.pathname;
   if (pathname === '/result.css') pathname = '/main.css';
   ctx.res.writeHead(200, {
     'Content-Type': serveFiles[pathname],
   });
-  fs.createReadStream(__dirname + '/../public' + pathname).pipe(ctx.res, {
-    end: true,
-  });
+  if (!assets[pathname]) {
+    assets[pathname] = fs.readFileSync(__dirname + '/../public' + pathname);
+  }
+  ctx.res.end(assets[pathname]);
 }
 
+const axios = fs.readFileSync(require.resolve('axios/dist/axios.min.js'));
 function sendAxios(ctx: IRequestContext) {
   ctx.res.writeHead(200, {
     'Content-Type': 'application/javascript',
   });
-  fs.createReadStream(require.resolve('axios/dist/axios.min.js')).pipe(ctx.res, {
-    end: true,
-  });
+  ctx.res.end(axios);
 }
 
+const axiosMap = fs.readFileSync(require.resolve('axios/dist/axios.min.map'));
 function sendAxiosMap(ctx: IRequestContext) {
   ctx.res.writeHead(200, {
     'Content-Type': 'application/octet-stream',
   });
-  fs.createReadStream(require.resolve('axios/dist/axios.min.map')).pipe(ctx.res, {
-    end: true,
-  });
+  ctx.res.end(axiosMap);
 }
 
 function sendMessageReply(res: ServerResponse, statusCode: number, message: string) {

@@ -10,7 +10,7 @@ export default function codecPageScript(ctx: IRequestContext) {
   const codecs = ${JSON.stringify(codecs)};
 </script>
 <script type="text/javascript">
-(() => {
+(function browserCodecProbe() {
   const videoSupport = {
     recordingFormats: [],
     probablyPlays: [],

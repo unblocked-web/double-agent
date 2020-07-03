@@ -31,7 +31,13 @@ export default async function forEachDirective(
         const instruction = json.directive as IDirective;
 
         queueDirective();
-        console.log('Running agent [%s]', instruction.useragent);
+        console.log(
+          '[%s._] Running %s directive (%s)',
+          instruction.sessionid,
+          instruction.testType,
+          instruction.browserGrouping,
+          instruction.useragent,
+        );
         await runDirective(instruction);
       } else {
         done = true;
@@ -48,4 +54,12 @@ export default async function forEachDirective(
   });
   const json = await response.json();
   console.log('------ Test Complete --------', inspect(json, false, null, true));
+
+  const summary = json.result.browserFindings;
+  for (const flags of Object.values(summary)) {
+    for (const [key, value] of Object.entries(flags)) {
+      if (value.botPct === 0) delete flags[key];
+    }
+  }
+  console.log('------ Summary --------', inspect(summary, false, null, true));
 }

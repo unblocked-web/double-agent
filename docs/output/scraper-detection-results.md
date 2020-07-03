@@ -8,4 +8,4 @@ Puppeteer 2.0 - Chromium 79 + Incognito Mode | 96 | 98
 Puppeteer 2.1 - Chromium 80 | 89 | 98
 Puppeteer 2.1 - Chrome 80 | 89 | 97
 Puppeteer 2.1 - Chrome 80 + Stealth Plugin | 89 | 98
-Secret Agent 0.2.8 | 39 | 41
+Secret Agent 0.2.8 | 30 | 41

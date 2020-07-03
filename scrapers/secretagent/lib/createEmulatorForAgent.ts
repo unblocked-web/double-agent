@@ -1,22 +1,25 @@
-import { EmulatorPlugin, EmulatorPluginStatics, UserAgents } from 'secret-agent/emulators';
-import IUserAgent from 'secret-agent/emulators/interfaces/IUserAgent';
-import IHttpRequestModifierDelegate from 'secret-agent/shared/commons/interfaces/IHttpRequestModifierDelegate';
-import IPageOverride from 'secret-agent/emulators/interfaces/IPageOverride';
+import { EmulatorPlugin, EmulatorPluginStatics, UserAgents } from '@secret-agent/emulators';
+import IHttpRequestModifierDelegate from '@secret-agent/commons/interfaces/IHttpRequestModifierDelegate';
+import IPageOverride from '@secret-agent/emulators/interfaces/IPageOverride';
 import { lookup } from 'useragent';
+import tcpVars from '@secret-agent/emulator-plugins-shared/tcpVars';
 
 export default function createEmulatorForAgent(useragent: string) {
-  const agent = findUserAgentProfile(useragent);
+  const agentProfile = buildUserAgentProfile(useragent);
 
   @EmulatorPluginStatics
   class GenericEmulator extends EmulatorPlugin {
-    public static key = useragent;
+    public static emulatorId = useragent;
     public static browser = '';
     public static chromiumEngines = [80];
-    public delegate: IHttpRequestModifierDelegate = {};
-    public static userAgent: IUserAgent;
+    public delegate: IHttpRequestModifierDelegate;
+    public readonly userAgent = agentProfile;
 
     constructor() {
-      super(agent);
+      super();
+      this.delegate = {
+        tcpVars: tcpVars(this.userAgent.os),
+      };
     }
 
     async generatePageOverrides(): Promise<IPageOverride[]> {
@@ -26,24 +29,27 @@ export default function createEmulatorForAgent(useragent: string) {
   return GenericEmulator;
 }
 
-function findUserAgentProfile(useragent: string) {
+export function buildUserAgentProfile(useragent: string) {
   const userAgent = lookup(useragent);
   const matchingProfile = UserAgents.findOne({
     deviceCategory: 'desktop',
     family: userAgent.family,
     versionMajor: Number(userAgent.major),
+    operatingSystems: [
+      {
+        versionMinor: userAgent.os.minor,
+        versionMajor: userAgent.os.major,
+        family: userAgent.os.family as any,
+      },
+    ],
   });
   if (matchingProfile) return matchingProfile;
 
   return UserAgents.convertAgent(userAgent, {
     deviceCategory: 'desktop',
     userAgent: useragent,
-    platform:
-      userAgent.os.family === 'Windows'
-        ? 'Win32'
-        : userAgent.os.family === 'Linux'
-        ? 'Linux x86_64'
-        : 'MacIntel',
+    // linux seems to use win32 too
+    platform: userAgent.os.family === 'Mac OS X' ? 'MacIntel' : 'Win32',
     vendor: 'Google Inc.',
   });
 }

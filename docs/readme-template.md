@@ -38,16 +38,14 @@ This project leverages yarn workspaces. To get started, run `yarn` from the root
 
 If you'd like to test out your scraper stack:
 
-1. Navigate to the `/runner` directory and run `yarn start`.
+1. Navigate to the `/runner` directory and run `yarn start`. Follow setup directions print onto the console from this command. 
 
-2. The API at `http://localhost:3000` will return directives one at a time until all tests have been run. Include a scraper engine you're testing with
+2. The API will return directives one at a time until all tests have been run. Include a scraper engine you're testing with
    a query string or header called "scraper". Directive format can be found at `/runner/interfaces/IDirective.ts`.
 
 3. Once all tests are run, results will be output to the same directory as your scraper engine.
 
-4. Run `yarn analyze` to see final results compared to other popular scrapers
+4. To explore results, you can go to the `report` directory and run `yarn start`
 
-You can run tests in the detections directory individually by navigating to directories and following directions after
-booting servers using `yarn start`.
 
 Popular scraper examples can be found in the `/scrapers` directory.

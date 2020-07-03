@@ -72,6 +72,7 @@ export function buildDirective(
       },
       {
         url: new URL('/results-page', httpDomains.main).href,
+        waitForElementSelector: 'body.ready',
       },
     ],
     sessionid: '',
