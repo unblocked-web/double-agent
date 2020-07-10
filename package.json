@@ -14,7 +14,8 @@
     "start": "yarn workspace @double-agent/runner start",
     "prod": "yarn workspace @double-agent/runner prod",
     "updateUseragent": "node node_modules/useragent/bin/update.js",
-    "postinstall": "yarn updateUseragent"
+    "postinstall": "yarn updateUseragent",
+    "clean": "tsc -b --clean"
   },
   "author": "Data Liberation Foundation",
   "license": "ISC",

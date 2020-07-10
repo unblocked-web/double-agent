@@ -31,10 +31,10 @@ const domains = {
   main: process.env.MAIN_DOMAIN ?? 'a0.ulixee-test.org',
 };
 
-let browsersToTest = 50;
+let browserCountToTest = 50;
 
 if (process.env.TOP_ONLY) {
-  browsersToTest = 0;
+  browserCountToTest = 0;
 }
 
 export default class DetectionsServer {
@@ -82,7 +82,7 @@ export default class DetectionsServer {
     this.httpServer = await this.buildServer();
     this.httpsServer = (await this.buildServer(true)) as https.Server;
     await this.pluginDelegate.start(this.httpDomains, this.httpsDomains, this.bucketTracker);
-    this.browsersToTest = await generateBrowserTest(browsersToTest, 2);
+    this.browsersToTest = await generateBrowserTest(browserCountToTest, 2);
     console.log(inspect(this.browsersToTest, false, null, true));
     return this;
   }

@@ -2,6 +2,7 @@ import IDirective from '@double-agent/runner/interfaces/IDirective';
 
 export default class Pool<T extends ICloseable> {
   private collection: Promise<T>[] = [];
+
   constructor(readonly count: number, readonly create: () => Promise<T>) {
     this.collection = Array(this.count)
       .fill(0)
