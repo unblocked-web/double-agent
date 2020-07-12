@@ -62,23 +62,13 @@
     "profiler"
   ],
   "lint-staged": {
-    "linters": {
-      "./**/*.ts": [
-        "tslint --format verbose",
-        "git add"
-      ],
-      "./**/*.json": [
-        "prettier --write",
-        "git add"
-      ]
-    },
-    "ignore": [
-      "**/**/profiles/*.json",
-      "scrapers/**/sessions/*.json",
-      "scrapers/**/browser-flags/*.json",
-      "**/types/*.js",
-      "**/types/*.d.ts",
-      "**/results/*.json"
+    "./**/*.ts": [
+      "tslint --format verbose",
+      "git add"
+    ],
+    "./**/*.json": [
+      "prettier --write",
+      "git add"
     ]
   }
 }
