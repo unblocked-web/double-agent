@@ -14,8 +14,7 @@
   "description": "Compares header order, capitalization and default values to normal (recorded) user agent values",
   "scripts": {
     "profile": "yarn workspace @double-agent/profiler start",
-    "analyze": "PRINT=1 node -e 'require(\"./lib/getBrowserProfileStats\").default()'",
-    "export": "PRINT=1 node -e 'require(\"./lib/exportProfiles\").default()'"
+    "analyze": "PRINT=1 node -e 'require(\"./lib/getBrowserProfileStats\").default()'"
   },
   "dependencies": {
     "useragent": "^2.3.0",

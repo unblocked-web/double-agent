@@ -8,12 +8,12 @@ export default async function runDirectiveInWebDriver(
   browserName: string,
   browserVersion: string,
 ) {
-  const needsEnterKey = browserName == 'Safari' && parseInt(browserVersion, 10) >= 13;
+  const needsEnterKey = browserName == 'Safari' && browserVersion === '13.0';
 
   let prev: IDirectivePage;
   for (const page of directive.pages) {
     let currentUrl = await driver.getCurrentUrl();
-    if (prev && prev.clickSelector && page.url !== currentUrl) {
+    if (prev && prev.clickSelector && currentUrl !== page.url) {
       // edge 18 takes forever to test codecs.. so need to wait a long time for page to load
       await driver.wait(until.urlIs(page.url), 120e3);
       currentUrl = await driver.getCurrentUrl();
@@ -28,6 +28,7 @@ export default async function runDirectiveInWebDriver(
       console.log('Wait for element %s on %s', page.waitForElementSelector, page.url);
       await waitForElement(driver, page.waitForElementSelector);
     } else {
+      console.log('Wait for body on %s', page.url);
       await waitForElement(driver, 'body');
     }
 
@@ -43,7 +44,12 @@ export default async function runDirectiveInWebDriver(
 }
 
 async function waitForElement(driver: WebDriver, cssSelector: string) {
+  // try {
   return driver.wait(until.elementLocated(By.css(cssSelector)));
+  // } catch(error) {
+  //   console.log(`waitForElement Error: ${cssSelector}... `, error);
+  //   await new Promise(r => setTimeout(r, 5000));
+  // }
 }
 
 async function clickElement(elem: WebElement, driver: WebDriver, needsEnterKey: boolean) {
@@ -54,9 +60,16 @@ async function clickElement(elem: WebElement, driver: WebDriver, needsEnterKey: 
       .mouseMove(elem)
       .click(elem)
       .perform();
-    await elem.click();
-
-    await elem.sendKeys(Key.RETURN);
+    try {
+      await elem.click();
+    } catch (error) {
+      console.log('Error: could not click')
+    }
+    try {
+      await elem.sendKeys(Key.RETURN);
+    } catch (error) {
+      console.log('Error: could not sendKeys')
+    }
   } else {
     await elem.click();
   }

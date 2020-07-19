@@ -23,7 +23,7 @@ let httpsPort = Number(process.env.HTTPS_PORT ?? 3002);
       console.log(
         `
 NOTE if not using dockers:
-1. Go to the test-suite/certs directory and run generate.sh
+1. Go to the runner/certs directory and run generate.sh
 2. To run the https tests, you will need to install trusted certificates onto your machine.
    --> On a mac, click on certs/fullchain.pem and add to your System certs and then set Trust to "Secure Sockets Layer" -> Always Trust
    --> On windows... lmgtfy?? sorry..

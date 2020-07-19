@@ -18,13 +18,13 @@ import { Browser } from 'puppeteer';
     locale: 'en-US,en',
   });
   puppeteer.use(ua);
-  const pool = new Pool(6, () => {
+  const pool = new Pool<Browser>(6, () => {
     return puppeteer.launch({
       ignoreHTTPSErrors: true,
       executablePath:
         process.env.PUPPETEER_EXECUTABLE_PATH ??
         '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    });
+    }) as Promise<Browser>;
   });
 
   async function run(puppBrowser: Browser, directive: IDirective) {

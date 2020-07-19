@@ -10,7 +10,7 @@ import { dirname } from 'path';
 import resultPage from './resultPage';
 import * as http from 'http';
 import url from 'url';
-import ClienthelloProfile from './ClientHelloProfile';
+import ClientHelloProfile from './ClientHelloProfile';
 
 const messages: IClientHelloMessage[] = [];
 process.on('message', m => messages.push(m));
@@ -76,7 +76,7 @@ try {
           ([key, val]) => `${key}: ${val.join(', ')}`,
         );
 
-        const isConfirmed = ClienthelloProfile.isConfirmedJa3(userAgent, message.ja3Extended);
+        const isConfirmed = ClientHelloProfile.isConfirmedJa3(userAgent, message.ja3Extended);
         const responseMessage: ITlsResult = {
           match: !!isConfirmed,
           useragent: userAgent,

@@ -5,7 +5,7 @@ import IJa3Details from '../interfaces/IJa3Details';
 import IJa3 from '../interfaces/IJa3';
 
 /**
- * The Ulixee extension aims to identify when fields are left out for specifically identifying
+ * Theis extension aims to identify when fields are left out for specifically identifying
  * user useragents purporting to be Chrome, but missing key attributes.
  *
  * Ja3 extended adds to the fields of Ja3, but instead of fully removing Greased values, it includes

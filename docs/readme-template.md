@@ -45,7 +45,4 @@ If you'd like to test out your scraper stack:
 
 3. Once all tests are run, results will be output to the same directory as your scraper engine.
 
-4. To explore results, you can go to the `report` directory and run `yarn start`
-
-
 Popular scraper examples can be found in the `/scrapers` directory.

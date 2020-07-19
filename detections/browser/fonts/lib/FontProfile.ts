@@ -1,27 +1,20 @@
 import IFontProfile from '../interfaces/IFontProfile';
-import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
-import fs from 'fs';
 import { Agent, lookup } from 'useragent';
+import ProfilerData from '@double-agent/profiler/data';
 
-const profilesDir = `${__dirname}/../profiles`;
 const fontGroupings: IFontGrouping[] = [];
 
 export default class FontProfile {
   public static readAll() {
-    const profiles: IFontProfile[] = [];
-    for (const filepath of fs.readdirSync(profilesDir)) {
-      if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
-      const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
-      const json = JSON.parse(file) as IFontProfile;
-      profiles.push(json);
-    }
+    const profiles: IFontProfile[] = ProfilerData.getByPluginId('browser/fonts');
+
     return profiles;
   }
 
   public static async save(useragent: string, fonts: string[]) {
     const profile = { fonts, useragent };
     if (process.env.GENERATE_PROFILES) {
-      await saveUseragentProfile(useragent, profile, profilesDir);
+      await ProfilerData.saveProfile('browser/fonts', useragent, profile);
     }
     return profile;
   }

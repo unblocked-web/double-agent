@@ -1,6 +1,5 @@
 import IDetectionPlugin from '@double-agent/runner/interfaces/IDetectionPlugin';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
-import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import { cleanProfile, convertWebRtcCodecsToString, getProfileForUa } from './lib/CodecProfile';
 import ICodecSupport from './interfaces/ICodecSupport';
 import codecPageScript from './codecPageScript';
@@ -8,6 +7,7 @@ import ICodecProfile from './interfaces/ICodecProfile';
 import IFlaggedCheck from '@double-agent/runner/interfaces/IFlaggedCheck';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import { sendJson } from '@double-agent/runner/lib/httpUtils';
+import ProfilerData from '@double-agent/profiler/data';
 
 export default class BrowserCodecsPlugin implements IDetectionPlugin {
   private static pluginName = 'browser/codecs';
@@ -32,7 +32,7 @@ export default class BrowserCodecsPlugin implements IDetectionPlugin {
       ctx.session.pluginsRun.push(BrowserCodecsPlugin.pluginName);
 
       if (process.env.GENERATE_PROFILES) {
-        await saveUseragentProfile(agentProfile.useragent, agentProfile, __dirname + '/profiles');
+        await ProfilerData.saveProfile('browser/codecs', agentProfile.useragent, agentProfile);
       }
       this.checkProfile(ctx, agentProfile);
 

@@ -3,27 +3,28 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "export $(cat .env | xargs) && node index.js",
-    "intoliStats": "node -e 'require(\"./lib/intoliBrowserStats.js\").default()'",
+    "start": "export $(cat .env | xargs) && node run.js",
     "getBrowsers": "node -e 'require(\"./lib/getBrowsersToProfile.js\").default()'",
-    "updateStats": "node -e 'require(\"./lib/statcounterStats.js\").default()'"
+    "generateBrowsersToTest": "node -e 'require(\"./lib/generateBrowsersToTest.js\").default()'",
+    "printIntoliStats": "node -e 'require(\"./scripts/printIntoliStats.js\").default()'",
+    "updateStatscounterData": "node -e 'require(\"./scripts/updateStatscounterData.js\").default()'"
   },
   "dependencies": {
-    "useragent": "^2.3.0",
-    "user-agents": "latest",
-    "node-fetch": "^2.6.0",
-    "source-map-support": "^0.5.16",
-    "p-queue": "^6.3.0",
-    "moment": "^2.24.0",
+    "@types/selenium-webdriver": "^3.0.16",
     "axios": "^0.19.2",
     "csv-parser": "^2.3.2",
+    "moment": "^2.24.0",
+    "node-fetch": "^2.6.0",
+    "p-queue": "^6.3.0",
     "selenium-webdriver": "^3.6.0",
-    "@types/selenium-webdriver": "^3.0.16"
+    "source-map-support": "^0.5.16",
+    "user-agents": "latest",
+    "useragent": "^2.3.0"
   },
   "devDependencies": {
-    "@types/useragent": "^2.1.1",
-    "@types/user-agents": "^1.0.0",
+    "@types/axios": "^0.14.0",
     "@types/moment": "^2.13.0",
-    "@types/axios": "^0.14.0"
+    "@types/user-agents": "^1.0.0",
+    "@types/useragent": "^2.1.1"
   }
 }

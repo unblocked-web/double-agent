@@ -1,10 +1,7 @@
-import fs from 'fs';
 import IJa3BrowserProfile from '../interfaces/IJa3BrowserProfile';
-import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import useragent, { Agent, OperatingSystem } from 'useragent';
 import IJa3 from '../interfaces/IJa3';
-
-const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
+import ProfilerData from '@double-agent/profiler/data';
 
 export default class ClientHelloProfile {
   public static allProfiles: IJa3BrowserProfile[];
@@ -17,7 +14,7 @@ export default class ClientHelloProfile {
 
   public static async saveProfile(profile: IJa3BrowserProfile) {
     if (!process.env.GENERATE_PROFILES) return;
-    await saveUseragentProfile(profile.useragent, profile, profilesDir);
+    await ProfilerData.saveProfile('tls/clienthello', profile.useragent, profile);
   }
 
   public static isConfirmedJa3(userAgent: string, ja3Extended: IJa3) {
@@ -46,13 +43,7 @@ export default class ClientHelloProfile {
 }
 
 (function init() {
-  let entries: IJa3BrowserProfile[] = [];
-  for (const filepath of fs.readdirSync(profilesDir)) {
-    if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
-    const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
-    const json = JSON.parse(file) as IJa3BrowserProfile;
-    entries.push(json);
-  }
+  const entries: IJa3BrowserProfile[] = ProfilerData.getByPluginId('tls/clienthello');
   ClientHelloProfile.allProfiles = entries;
   ClientHelloProfile.confirmedJa3s = entries.map(x => {
     return {

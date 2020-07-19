@@ -1,11 +1,10 @@
-import fs from 'fs';
-import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import { inspect } from 'util';
+import ProfilerData from '@double-agent/profiler/data';
 
-const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
+const pluginId = 'ip/address';
 
 export default class IpProfile {
   constructor(readonly useragent: string, readonly requests: IIpRequest[]) {}
@@ -13,7 +12,7 @@ export default class IpProfile {
   public save() {
     if (!process.env.GENERATE_PROFILES) return;
     const data = { useragent: this.useragent, requests: this.requests } as IIpProfile;
-    saveUseragentProfile(this.useragent, data, profilesDir);
+    ProfilerData.saveProfile(pluginId, this.useragent, data);
   }
 
   public static fromContext(ctx: IRequestContext) {
@@ -125,15 +124,8 @@ export default class IpProfile {
     );
   }
 
-  public static getAllProfiles() {
-    const entries: IIpProfile[] = [];
-    for (const filepath of fs.readdirSync(profilesDir)) {
-      if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
-      const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
-      const json = JSON.parse(file) as IIpProfile;
-      entries.push(json);
-    }
-    return entries;
+  public static getAllProfiles(): IIpProfile[] {
+    return ProfilerData.getByPluginId(pluginId);
   }
 }
 
