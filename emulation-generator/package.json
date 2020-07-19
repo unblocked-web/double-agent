@@ -1,0 +1,14 @@
+{
+  "name": "@double-agent/emulation-generator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "exportClienthello": "PRINT=1 node -e 'require(\"./scripts/exportClienthelloProfiles\").default()'",
+    "exportCodec": "PRINT=1 node -e 'require(\"./scripts/exportCodecProfiles\").default()'",
+    "exportDom": "PRINT=1 node -e 'require(\"./scripts/exportDomProfiles\").default()'",
+    "exportHeader": "PRINT=1 node -e 'require(\"./scripts/exportHeaderProfiles\").default()'",
+    "export": "yarn exportClienthello && yarn exportCodex && yarn exportDom && yarn exportHeader"
+  },
+  "description": "Generates data that can be used to emulate browsers"
+}
