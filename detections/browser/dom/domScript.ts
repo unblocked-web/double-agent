@@ -22,7 +22,23 @@ export default function domScript(
     'requestPermission',
     'screenshot',
     'pageLoaded',
+
+    'write',
+    'writeln',
+    'replaceWith',
+    'remove',
+
+    'window.history.back',
+    'window.history.forward',
+    'window.history.go',
+    'window.history.pushState',
+    'window.history.replaceState',
   ],
+  doNotAccess = [
+    'window.CSSAnimation.prototype.timeline', // crashes Safari
+    'window.Animation.prototype.timeline',    // crashes Safari
+    'window.CSSTransition.prototype.timeline' // crashes Safari
+  ]
 ) {
   return `
   <script type="text/javascript">
@@ -30,6 +46,7 @@ export default function domScript(
     const skipProps = ${JSON.stringify(skipProps)};
     const skipValues = ${JSON.stringify(skipValues)};
     const doNotInvoke = ${JSON.stringify(doNotInvoke)};
+    const doNotAccess = ${JSON.stringify(doNotAccess)};
     const loadedObjects = new Map([[window, 'window']]);
     const hierarchyNav = new Map();
     const detached = {};
@@ -64,7 +81,6 @@ export default function domScript(
         newObj._skipped = 'SKIPPED ELEMENT';
         return newObj;
       }
-      
       
       if (parentPath.includes('new()') && parentPath.endsWith('.ownerElement')) {
         newObj._skipped = 'SKIPPED ELEMENT';
@@ -122,6 +138,10 @@ export default function domScript(
           continue;
         }
         
+        if (doNotAccess.includes(path)) {
+          continue;
+        }
+        
         try {
           const value = await extractPropValue(obj, key, path);
           const isOwnProp = obj.hasOwnProperty && obj.hasOwnProperty(key);
@@ -134,7 +154,6 @@ export default function domScript(
         } catch (err) {
           newObj[prop] = err.toString();
         }
-        
       }
       try {
         if (obj.prototype) {
@@ -226,7 +245,7 @@ export default function domScript(
       if (value && (typeof value === 'object' || typeof value === 'function')) {
         details = await extractPropsFromObject(value, path);
       } 
-      const descriptor = await getDescriptor(obj, key, accessException);
+      const descriptor = await getDescriptor(obj, key, accessException, path);
       
       if (!Object.keys(descriptor).length && !Object.keys(details).length) return undefined;
       const prop = Object.assign(details, descriptor);
@@ -236,7 +255,7 @@ export default function domScript(
       return prop;
     }
 
-    async function getDescriptor(obj, key, accessException) {
+    async function getDescriptor(obj, key, accessException, path) {
       const objDesc = Object.getOwnPropertyDescriptor(obj, key);
 
       if (!objDesc) {
@@ -254,7 +273,7 @@ export default function domScript(
         let type = typeof value;
         if (value && Array.isArray(value)) type = 'array';
         
-        const functionDetails = await getFunctionDetails(value, obj, key, type);
+        const functionDetails = await getFunctionDetails(value, obj, key, type, path);
         plainObject._type = functionDetails.type;
         plainObject._value = getValueString(value, key);
         plainObject._func = functionDetails.func;
@@ -272,7 +291,7 @@ export default function domScript(
         
         let type = typeof value;
         value = getValueString(value, key);
-        const functionDetails = await getFunctionDetails(value, obj, key, type);
+        const functionDetails = await getFunctionDetails(value, obj, key, type, path);
         type = functionDetails.type;
        
         const flags = [];
@@ -295,7 +314,7 @@ export default function domScript(
       }
     }
     
-    async function getFunctionDetails(value, obj, key, type) {
+    async function getFunctionDetails(value, obj, key, type, path) {
       let func;
       let invocation;
       if (type === 'undefined') type = undefined;
@@ -307,7 +326,7 @@ export default function domScript(
           func = err.toString();
         }
         try {
-          if (!doNotInvoke.includes(key) && !value.prototype) {
+          if (!doNotInvoke.includes(key) && !doNotInvoke.includes(path) && !value.prototype) {
             invocation = await new Promise(async (resolve, reject) => {
               const c = setTimeout(() => reject('Promise-like'), 250);
               let didReply = false;
@@ -319,7 +338,7 @@ export default function domScript(
                   })
                 }
                 answer = await answer;
-                
+               
                 if (didReply) return;
                 clearTimeout(c);
                 didReply = true;
@@ -420,7 +439,7 @@ export default function domScript(
         return name + '.prototype';
       } catch (err) {}
     }
-
+    
     window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
       console.log(promiseRejectionEvent);
     });

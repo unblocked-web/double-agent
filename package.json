@@ -9,7 +9,7 @@
     "docs": "node docs/generator",
     "test": "node scrapers/lib/runAll.js",
     "profile": "yarn workspace @double-agent/profiler start",
-    "cleanProfiles": "rm -rf detections/*/*/profiles/*.json",
+    "cleanProfiles": "rm -rf profiler/data/profiles",
     "lintProfiles": "prettier --write detections/*/*/profiles/**.json",
     "start": "yarn workspace @double-agent/runner start",
     "prod": "yarn workspace @double-agent/runner prod",
@@ -58,6 +58,7 @@
   },
   "workspaces": [
     "detections/*/*",
+    "emulation-generator",
     "runner",
     "profiler"
   ],

@@ -1,11 +1,9 @@
-import fs from 'fs';
-import { getUseragentPath, saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
+import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
 import IRequestDetails from '@double-agent/runner/interfaces/IRequestDetails';
-
-const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
+import ProfilerData from '@double-agent/profiler/data';
 
 export default class HeaderProfile {
   public readonly agentGrouping: string;
@@ -31,7 +29,7 @@ export default class HeaderProfile {
       useragent: this.useragent,
     } as IProfile;
 
-    await saveUseragentProfile(this.useragent, data, profilesDir);
+    await ProfilerData.saveProfile('http/headers', this.useragent, data);
   }
 
   public static processRequestDetails(x: IRequestDetails, session: IDetectionSession) {
@@ -48,12 +46,9 @@ export default class HeaderProfile {
 
   public static getAllProfiles() {
     const entries: IProfile[] = [];
-    for (const filepath of fs.readdirSync(profilesDir)) {
-      if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
-      const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
-      const json = JSON.parse(file) as IProfile;
-      entries.push({ requests: json.requests, useragent: json.useragent });
-    }
+    ProfilerData.getByPluginId('http/headers').forEach(entry => {
+      entries.push({ requests: entry.requests, useragent: entry.useragent });
+    });
     return entries;
   }
 }

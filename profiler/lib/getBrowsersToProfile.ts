@@ -1,7 +1,7 @@
-import browserVersions from '../data/browser_version.json';
-import macVersions from '../data/macos_version.json';
-import osVersionsRaw from '../data/os_combined.json';
-import winVersions from '../data/windows_version.json';
+import browserVersions from '../data/statcounter/browser_version.json';
+import macVersions from '../data/statcounter/macos_version.json';
+import osVersionsRaw from '../data/statcounter/os_combined.json';
+import winVersions from '../data/statcounter/windows_version.json';
 import { lookup } from 'useragent';
 import IStatcounterOs from '../interfaces/IStatcounterOs';
 import IStatcounterBrowser from '../interfaces/IStatcounterBrowser';
@@ -141,15 +141,14 @@ export function osToAgentOs(os: Pick<IStatcounterOs, 'os' | 'version'>) {
   return uaOs;
 }
 
-export function toLooseAgent(
+export function toAgentKey(
   browser: Pick<IStatcounterBrowser, 'browser' | 'version'>,
   os: Pick<IStatcounterOs, 'os' | 'version'>,
 ) {
-  return {
-    os: osToAgentOs(os),
-    major: browser.version.split('.').shift(),
-    family: browser.browser,
-  };
+  const agentOs = osToAgentOs(os);
+  const major = browser.version.split('.').shift();
+  const family = browser.browser;
+  return `${agentOs.family.replace(/\s/g, '_')}_${agentOs.major}_${agentOs.minor}__${family}_${major}`.toLowerCase();
 }
 
 function averagePercent(counts: string[]) {

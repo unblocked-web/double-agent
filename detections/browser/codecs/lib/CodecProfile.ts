@@ -1,12 +1,11 @@
-import fs from 'fs';
 import ICodecProfile from '../interfaces/ICodecProfile';
 import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import ICodecSupport from '../interfaces/ICodecSupport';
 import IWebRTCCodec from '../interfaces/IWebRTCCodec';
+import ProfilerData from '@double-agent/profiler/data';
 
-const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
-
-const entries: { [browserName: string]: ICodecProfile[] } = {};
+const pluginId = 'browser/codecs';
+const profilesByAgentKey: { [browserName: string]: ICodecProfile[] } = {};
 
 export function cleanProfile(useragent: string, data: ICodecProfile) {
   data.useragent = useragent;
@@ -22,19 +21,15 @@ export function cleanProfile(useragent: string, data: ICodecProfile) {
 }
 
 export default function getAllProfiles() {
-  if (Object.keys(entries).length) return entries;
+  if (Object.keys(profilesByAgentKey).length) return profilesByAgentKey;
 
-  for (const filepath of fs.readdirSync(profilesDir)) {
-    if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
-    const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
-    const json = JSON.parse(file) as ICodecProfile;
-    const browserName = filepath.split('--').shift();
-    if (!entries[browserName]) {
-      entries[browserName] = [];
-    }
-    entries[browserName].push(json);
-  }
-  return entries;
+  ProfilerData.getByPluginId<ICodecProfile>(pluginId).forEach(profile => {
+    const agentKey = getUseragentPath(profile.useragent);
+    profilesByAgentKey[agentKey] = profilesByAgentKey[agentKey] || [];
+    profilesByAgentKey[agentKey].push(profile);
+  });
+
+  return profilesByAgentKey;
 }
 
 export function getProfileForUa(userAgent: string): ICodecProfile {
@@ -75,59 +70,6 @@ function getWebRtcString(codec: IWebRTCCodec | any) {
 
 export function convertWebRtcCodecsToString(codecs: IWebRTCCodec[]) {
   return [...new Set(codecs.map(getWebRtcString))].sort().toString();
-}
-
-export function findUniqueWebRTCProfiles() {
-  const uniqueProfiles: {
-    profile: { videoMimes: string; audioMimes: string };
-    uaGroups: string[];
-    useragents: string[];
-  }[] = [];
-  for (const [browser, profiles] of Object.entries(getAllProfiles())) {
-    for (const profile of profiles) {
-      const audioMimes = convertWebRtcCodecsToString(profile.webRtcAudioCodecs);
-      const videoMimes = convertWebRtcCodecsToString(profile.webRtcVideoCodecs);
-
-      let existing = uniqueProfiles.find(
-        x => x.profile.audioMimes === audioMimes && x.profile.videoMimes === videoMimes,
-      );
-      if (!existing) {
-        existing = {
-          useragents: [],
-          uaGroups: [],
-          profile: { videoMimes, audioMimes },
-        };
-        uniqueProfiles.push(existing);
-      }
-      if (!existing.uaGroups.includes(browser)) {
-        existing.uaGroups.push(browser);
-        existing.useragents.push(profile.useragent);
-      }
-    }
-  }
-  return uniqueProfiles;
-}
-
-export function findUniqueProfiles() {
-  const uniqueProfiles: {
-    profile: Omit<ICodecProfile, 'useragent'>;
-    uaGroups: string[];
-    useragents: string[];
-  }[] = [];
-  for (const [browser, profiles] of Object.entries(getAllProfiles())) {
-    for (const profile of profiles) {
-      let existing = uniqueProfiles.find(x => equalProfiles(x.profile, profile));
-      if (!existing) {
-        existing = { uaGroups: [], profile, useragents: [] };
-        uniqueProfiles.push(existing);
-      }
-      if (!existing.uaGroups.includes(browser)) {
-        existing.uaGroups.push(browser);
-        existing.useragents.push(profile.useragent);
-      }
-    }
-  }
-  return uniqueProfiles;
 }
 
 function webRtcSort(a: IWebRTCCodec, b: IWebRTCCodec) {

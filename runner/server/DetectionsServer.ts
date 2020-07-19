@@ -2,6 +2,7 @@ import http from 'http';
 import https from 'https';
 import { existsSync, promises as fs } from 'fs';
 import { URL } from 'url';
+import { getBrowsersToTest, IBrowsersToTest } from '@double-agent/profiler';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import httpRequestHandler from './httpRequestHandler';
 import webServicesHandler from './websocketHandler';
@@ -13,7 +14,6 @@ import IDirective from '../interfaces/IDirective';
 import IDomainset from '../interfaces/IDomainset';
 import BotDetectionResults from '../lib/BotDetectionResults';
 import IDetectorModule from '../interfaces/IDetectorModule';
-import generateBrowserTest, { IBrowsersToTest } from '../lib/generateBrowserTest';
 import UserBucketTracker from '../lib/UserBucketTracker';
 import { inspect } from 'util';
 import UserBucketStats from '../lib/UserBucketStats';
@@ -30,12 +30,6 @@ const domains = {
   crossSite: process.env.CROSS_SITE_DOMAIN ?? 'a1.dlf.org',
   main: process.env.MAIN_DOMAIN ?? 'a0.ulixee-test.org',
 };
-
-let browserCountToTest = 50;
-
-if (process.env.TOP_ONLY) {
-  browserCountToTest = 0;
-}
 
 export default class DetectionsServer {
   private httpServer: http.Server;
@@ -81,8 +75,8 @@ export default class DetectionsServer {
     console.log('\n\n\nBooting up...');
     this.httpServer = await this.buildServer();
     this.httpsServer = (await this.buildServer(true)) as https.Server;
+    this.browsersToTest = await getBrowsersToTest();
     await this.pluginDelegate.start(this.httpDomains, this.httpsDomains, this.bucketTracker);
-    this.browsersToTest = await generateBrowserTest(browserCountToTest, 2);
     console.log(inspect(this.browsersToTest, false, null, true));
     return this;
   }

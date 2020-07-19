@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rsync -rvmh --exclude-from '.importignore' --include '/detections/***/profiles/*.json' root@$REMOTE:~/double-agent/ ./
+rsync -rvmh -e "ssh -i $HOME/.ssh/id_rsa_ulixee_digital_ocean" --exclude-from '.importignore' root@$REMOTE:~/double-agent/profiler/data ./profiler

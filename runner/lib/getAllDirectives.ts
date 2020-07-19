@@ -1,8 +1,8 @@
+import IUseragentPercents from '@double-agent/profiler/interfaces/IUseragentPercents';
+import IBrowsersToTest from '@double-agent/profiler/interfaces/IBrowsersToTest';
 import IDirective from '../interfaces/IDirective';
 import { getUseragentPath } from './profileHelper';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
-import { IBrowsersToTest } from './generateBrowserTest';
-import { IUseragentPercents } from './userAgentUtils';
 import { URL } from 'url';
 
 export default async function getAllDirectives(

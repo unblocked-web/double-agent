@@ -11,8 +11,7 @@
   ],
   "description": "Test that the audio, video and WebRTC codecs match the given user agent",
   "scripts": {
-    "profile": "yarn workspace @double-agent/profiler start",
-    "export": "node -e 'require(\"./lib/exportProfiles\").default()'"
+    "profile": "yarn workspace @double-agent/profiler start"
   },
   "dependencies": {
     "useragent": "^2.3.0",

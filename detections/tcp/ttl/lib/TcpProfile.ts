@@ -1,8 +1,7 @@
-import fs from 'fs';
-import { saveUseragentProfile } from '@double-agent/runner/lib/profileHelper';
 import Useragent, { lookup } from 'useragent';
+import ProfilerData from '@double-agent/profiler/data';
 
-const profilesDir = process.env.PROFILES_DIR ?? `${__dirname}/../profiles`;
+const pluginId = 'tcp/tls';
 
 export default class TcpProfile {
   public static allowedHops = 20;
@@ -18,31 +17,15 @@ export default class TcpProfile {
       useragent: this.useragent,
     };
 
-    await saveUseragentProfile(this.useragent, data, profilesDir);
-  }
-
-  public static findUniqueProfiles(): ITcpGrouping[] {
-    const profiles = this.getAllProfiles();
-    const groupings: { [key: string]: ITcpGrouping } = {};
-    for (const profile of profiles) {
-      const key = `${profile.windowSize}_${profile.ttl}`;
-      if (!groupings[key])
-        groupings[key] = { useragents: [], ttl: profile.ttl, windowSize: profile.windowSize };
-
-      groupings[key].useragents.push(profile.useragent);
-    }
-    return Object.values(groupings);
+    await ProfilerData.saveProfile(pluginId, this.useragent, data);
   }
 
   public static getAllProfiles() {
     const entries: (ITcpProfile & { userAgent: Useragent.Agent })[] = [];
-    for (const filepath of fs.readdirSync(profilesDir)) {
-      if (!filepath.endsWith('json') || filepath.startsWith('_')) continue;
-      const file = fs.readFileSync(`${profilesDir}/${filepath}`, 'utf8');
-      const json = JSON.parse(file) as ITcpProfile & { userAgent: Useragent.Agent };
-      json.userAgent = lookup(json.useragent);
-      entries.push(json);
-    }
+    ProfilerData.getByPluginId(pluginId).forEach(entry => {
+      entry.userAgent = lookup(entry.useragent);
+      entries.push(entry);
+    });
     return entries;
   }
 }
