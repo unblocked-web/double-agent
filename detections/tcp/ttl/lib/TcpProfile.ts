@@ -1,7 +1,7 @@
 import Useragent, { lookup } from 'useragent';
 import ProfilerData from '@double-agent/profiler/data';
 
-const pluginId = 'tcp/tls';
+const pluginId = 'tcp/ttl';
 
 export default class TcpProfile {
   public static allowedHops = 20;
