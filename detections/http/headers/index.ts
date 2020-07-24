@@ -4,11 +4,11 @@ import generateXhrTests from './lib/generateXhrTests';
 import HeaderProfile from './lib/HeaderProfile';
 import getBrowserProfileStats from './lib/getBrowserProfileStats';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
-import { getAgentBrowser } from '@double-agent/runner/lib/profileHelper';
 import checkRequestHeaders from './checks/checkRequestHeaders';
 import IRequestDetails from '@double-agent/runner/interfaces/IRequestDetails';
 import HostDomain from '@double-agent/runner/interfaces/HostDomain';
 import { sendJson } from '@double-agent/runner/lib/httpUtils';
+import { createBrowserKeyFromUseragent } from '@double-agent/profiler/lib/BrowserUtils';
 
 export default class HttpHeadersPlugin implements IDetectionPlugin {
   private browserStats = getBrowserProfileStats();
@@ -109,8 +109,8 @@ export default class HttpHeadersPlugin implements IDetectionPlugin {
     const pluginName = ctx.requestDetails.secureDomain ? 'https/headers' : 'http/headers';
     if (!ctx.session.pluginsRun.includes(pluginName)) ctx.session.pluginsRun.push(pluginName);
 
-    const browserVersion = getAgentBrowser(ctx.session.parsedUseragent);
-    const browserStats = this.browserStats.statsByBrowserVersion[browserVersion];
+    const browserKey = createBrowserKeyFromUseragent(ctx.session.useragent);
+    const browserStats = this.browserStats.statsByBrowserKey[browserKey];
 
     checkRequestHeaders(
       ctx,

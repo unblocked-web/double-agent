@@ -35,7 +35,7 @@ export default async function forEachDirective(
           '[%s._] Running %s directive (%s)',
           instruction.sessionid,
           instruction.testType,
-          instruction.browserGrouping,
+          instruction.profileDirName,
           instruction.useragent,
         );
         await runDirective(instruction);

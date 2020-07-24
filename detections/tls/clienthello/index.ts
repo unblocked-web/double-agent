@@ -4,11 +4,11 @@ import ForkedServerRunner from './lib/ForkedServerRunner';
 import ITlsResult from './interfaces/ITlsResult';
 import { isGreased } from './lib/buildJa3Extended';
 import IDirective from '@double-agent/runner/interfaces/IDirective';
-import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import ClientHelloProfile from './lib/ClientHelloProfile';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 import { URL } from 'url';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 let tlsPort = Number(process.env.PORT ?? 3002);
 const tlsDomain = `https://${process.env.TLS_DOMAIN ?? 'tls.ulixee-test.org'}`;
@@ -54,7 +54,7 @@ export default class TlsClientHelloPlugin implements IDetectionPlugin {
 
     this.sessionTlsResults.delete(ctx.session.id);
     const expected = ClientHelloProfile.confirmedJa3s.find(
-      x => getUseragentPath(x.useragent) === getUseragentPath(tlsResult.useragent),
+      x => getProfileDirNameFromUseragent(x.useragent) === getProfileDirNameFromUseragent(tlsResult.useragent),
     );
     if (!expected) {
       console.log('No tls profile for user agent', tlsResult.useragent);

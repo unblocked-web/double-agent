@@ -6,7 +6,7 @@ import https from 'https';
 import { resolve } from 'path';
 import { IncomingMessage } from 'http';
 import domScript from '@double-agent/browser-dom/domScript';
-import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 const options = {
   key: fs.readFileSync(`${__dirname}/../../runner/certs/privkey.pem`),
@@ -83,7 +83,7 @@ afterQueueComplete();
 </body></html>`;
 
 async function captureDump(req: IncomingMessage) {
-  const agentPath = getUseragentPath(req.headers['user-agent']);
+  const profileDirName = getProfileDirNameFromUseragent(req.headers['user-agent']);
   if (!existsSync(`${dataDir}/dom-dumps`)) {
     mkdirSync(`${dataDir}/dom-dumps`);
   }
@@ -92,9 +92,9 @@ async function captureDump(req: IncomingMessage) {
   for await (const chunk of req) body += chunk.toString();
   const json = JSON.parse(body);
 
-  const outputPath = `${dataDir}/dom-dumps/${agentPath}.json`;
+  const outputPath = `${dataDir}/dom-dumps/${profileDirName}.json`;
   await fs.promises.writeFile(
-    `${dataDir}/dom-dumps/${agentPath}.json`,
+    `${dataDir}/dom-dumps/${profileDirName}.json`,
     JSON.stringify(json, null, 2),
   );
   console.log('Wrote dump to %s', resolve(outputPath));

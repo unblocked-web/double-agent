@@ -1,7 +1,7 @@
 import axios from 'axios';
 import IBrowserstackAgent from '../interfaces/IBrowserstackAgent';
 import webdriver from 'selenium-webdriver';
-import {IBrowser} from "./Browsers";
+import IBrowser from '../interfaces/IBrowser';
 import {IOperatingSystem} from "./Oses";
 
 export default class BrowserStack {

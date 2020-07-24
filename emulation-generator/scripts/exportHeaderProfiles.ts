@@ -1,9 +1,8 @@
 import * as Fs from 'fs';
-import { lookup } from 'useragent';
 import HeaderProfile from '@double-agent/http-headers/lib/HeaderProfile';
 import getDefaultHeaderOrder from '@double-agent/http-headers/lib/getDefaultHeaderOrder';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
-import { getUseragentPath } from "@double-agent/runner/lib/profileHelper";
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 const browserKeys: string[] = require('../browserKeys.json');
 
 const emulationsDir = process.env.PLUGIN_DIR ?? `${__dirname}/../data/emulations`;
@@ -22,11 +21,10 @@ export default async function exportHeaderProfiles() {
     };
   } = {};
   for (const profile of profiles) {
-    const agentKey = getUseragentPath(profile.useragent);
-    const ua = lookup(profile.useragent);
-    const browserKey = browserKeys.find(x => agentKey.includes(x));
+    const profileDirName = getProfileDirNameFromUseragent(profile.useragent);
+    const browserKey = browserKeys.find(x => profileDirName.includes(x));
     if (!browserKey) {
-      console.log(`-- SKIPPING ${agentKey}`);
+      console.log(`-- SKIPPING ${profileDirName}`);
       continue;
     }
 

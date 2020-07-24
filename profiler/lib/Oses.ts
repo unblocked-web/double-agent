@@ -1,7 +1,5 @@
-import { Agent } from 'useragent';
-import { createOsKey } from './OsGenerator';
-import * as Path from 'path';
 import * as Fs from 'fs';
+import * as Path from 'path';
 
 export const FILE_PATH = Path.join(__dirname, '../data/oses.json');
 

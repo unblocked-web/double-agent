@@ -2,7 +2,7 @@ import IDirectivePage from './IDirectivePage';
 
 export default interface IDirective {
   useragent: string;
-  browserGrouping: string;
+  profileDirName: string;
   percentOfTraffic: number;
   testType: 'intoli' | 'topBrowsers';
   pages: IDirectivePage[];

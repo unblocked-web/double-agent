@@ -1,6 +1,6 @@
-import 'source-map-support/register';
 import * as Fs from 'fs';
 import * as Path from 'path';
+import 'source-map-support/register';
 import DomProfile from '@double-agent/browser-dom/lib/DomProfile';
 import deepDiff, { IObjectComparison } from '@double-agent/browser-dom/lib/deepDiff';
 import IDomProfile from '@double-agent/browser-dom/interfaces/IDomProfile';
@@ -10,9 +10,8 @@ import {
   isWebdriverProp,
 } from '@double-agent/browser-dom/checks/domMatch';
 import ProfilerData from '@double-agent/profiler/data';
-import {getAgentOs, getUseragentPath} from "@double-agent/runner/lib/profileHelper";
-import Useragent from "useragent";
-import fs from "fs";
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
+import {createOsKeyFromUseragent} from '@double-agent/profiler/lib/OsUtils';
 
 const browserKeys: string[] = require('../browserKeys.json');
 
@@ -27,7 +26,7 @@ export default async function exportDomProfiles() {
 
   let targetProfile: IDomProfile;
   if (basePolyfillPath) {
-    const file = fs.readFileSync(`${dataDir}/dom-dumps/${basePolyfillPath}`, 'utf8');
+    const file = Fs.readFileSync(`${dataDir}/dom-dumps/${basePolyfillPath}`, 'utf8');
     targetProfile = JSON.parse(file) as IDomProfile;
   }
 
@@ -36,8 +35,8 @@ export default async function exportDomProfiles() {
   const browserPolyfills: IBrowserPolyfills = {};
 
   for (const useragent of ProfilerData.useragents) {
-    const agentKey = getUseragentPath(useragent);
-    const browserKey = browserKeys.find(x => agentKey.includes(x));
+    const profileDirName = getProfileDirNameFromUseragent(useragent);
+    const browserKey = browserKeys.find(x => profileDirName.includes(x));
     if (!browserKey) {
       continue;
     }
@@ -47,19 +46,18 @@ export default async function exportDomProfiles() {
       continue;
     }
 
-    const userAgent = Useragent.lookup(useragent);
-    const os = getAgentOs(userAgent);
+    const osKey = createOsKeyFromUseragent(useragent);
 
     browserChromes[browserKey] = browserChromes[browserKey] || [];
     browserNavigators[browserKey] = browserNavigators[browserKey] || [];
-    browserNavigators[browserKey].push({ os, navigator: profile.dom.window.navigator });
+    browserNavigators[browserKey].push({ osKey, navigator: profile.dom.window.navigator });
 
     if (profile.dom.window.chrome) {
       const keys = Object.keys(profile.dom.window);
       const index = keys.indexOf('chrome');
       const prevProperty = keys[index - 1];
       browserChromes[browserKey].push({
-        os,
+        osKey,
         chrome: profile.dom.window.chrome,
         prevProperty,
       });
@@ -253,7 +251,7 @@ export default async function exportDomProfiles() {
 
         browserPolyfills[browserKey] = browserPolyfills[browserKey] || [];
         browserPolyfills[browserKey].push({
-          os,
+          osKey,
           removals,
           additions,
           order: orderChanges,
@@ -272,7 +270,7 @@ export default async function exportDomProfiles() {
         console.log(
           'WARN: Browser navigator has added props for this OS',
           browserKey,
-          entry.os,
+          entry.osKey,
           navigatorDiff.added,
         );
       }
@@ -280,7 +278,7 @@ export default async function exportDomProfiles() {
         console.log(
           'WARN: Browser navigator has removed props for this OS',
           browserKey,
-          entry.os,
+          entry.osKey,
           navigatorDiff.missing,
         );
       }
@@ -290,9 +288,9 @@ export default async function exportDomProfiles() {
     for (const entry of chromes.slice(1)) {
       if (entry.prevProperty !== firstChrome.prevProperty) {
         console.log(
-          'WARN: Browser chrome has different prev property by os',
+          'WARN: Browser chrome has different prev property by osKey',
           browserKey,
-          entry.os,
+          entry.osKey,
           entry.prevProperty,
           firstChrome.prevProperty,
         );
@@ -302,7 +300,7 @@ export default async function exportDomProfiles() {
         console.log(
           'WARN: Browser chrome has added props for this OS',
           browserKey,
-          entry.os,
+          entry.osKey,
           diff.added,
         );
       }
@@ -310,7 +308,7 @@ export default async function exportDomProfiles() {
         console.log(
           'WARN: Browser chrome has removed props for this OS',
           browserKey,
-          entry.os,
+          entry.osKey,
           diff.missing,
         );
       }
@@ -318,7 +316,7 @@ export default async function exportDomProfiles() {
 
     const polys = browserPolyfills[browserKey] ?? [];
     const firstPoly = polys[0];
-    delete firstPoly.os;
+    delete firstPoly.osKey;
     const finalPolys = [firstPoly];
     for (const entry of polys.slice(1)) {
       const addDiff = deepDiff(firstPoly.additions, entry.additions);
@@ -344,7 +342,7 @@ export default async function exportDomProfiles() {
     const emulationName = browserKey.toLowerCase().replace('_', '-');
     const basePath = Path.join(emulationsDir, `emulate-${emulationName}`);
     for (const poly of finalPolys) {
-      const polyfillName = poly.os ? `_${poly.os}` : '';
+      const polyfillName = poly.osKey ? `_${poly.osKey}` : '';
       Fs.writeFileSync(
         `${basePath}/polyfill${polyfillName}.json`,
         JSON.stringify(poly, null, 2),
@@ -389,7 +387,7 @@ function get(obj: any, path: string) {
 
 interface IBrowserPolyfills {
   [browserKey: string]: {
-    os: string;
+    osKey: string;
     removals: string[];
     additions: { path: string; property: any; propertyName: string; prevProperty: string }[];
     order: {
@@ -403,9 +401,9 @@ interface IBrowserPolyfills {
 }
 
 interface IBrowserChromes {
-  [browserKey: string]: { os: string; chrome: any; prevProperty: string }[];
+  [browserKey: string]: { osKey: string; chrome: any; prevProperty: string }[];
 }
 
 interface IBrowserNavigators {
-  [browserKey: string]: { os: string; navigator: any }[]
+  [browserKey: string]: { osKey: string; navigator: any }[]
 }
