@@ -1,7 +1,6 @@
 import Fs from 'fs';
 import Path from 'path';
 import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
-import getKnownUseragentStrings from './lib/getKnownUseragentStrings';
 
 const dataDir = Path.join(__dirname, 'data');
 const profilesDir = Path.join(dataDir, 'profiles');
@@ -42,7 +41,7 @@ export default class ProfilerData {
   }
 
   static get useragents() {
-    useragentStrings = useragentStrings || getKnownUseragentStrings();
+    useragentStrings = useragentStrings || this.getByPluginId('tcp/ttl').map(p => p.useragent);
     return [...useragentStrings];
   }
 

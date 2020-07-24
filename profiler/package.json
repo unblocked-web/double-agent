@@ -4,10 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "export $(cat .env | xargs) && node run.js",
-    "getBrowsers": "node -e 'require(\"./lib/getBrowsersToProfile.js\").default()'",
-    "generateBrowsersToTest": "node -e 'require(\"./lib/generateBrowsersToTest.js\").default()'",
     "printIntoliStats": "node -e 'require(\"./scripts/printIntoliStats.js\").default()'",
-    "updateStatscounterData": "node -e 'require(\"./scripts/updateStatscounterData.js\").default()'"
+    "updateStatscounterData": "node -e 'require(\"./scripts/updateStatscounterData.js\").default()'",
+    "updateBrowserData": "export $(cat .env | xargs) && node -e 'require(\"./scripts/updateBrowserData.js\").default()'"
   },
   "dependencies": {
     "@types/selenium-webdriver": "^3.0.16",

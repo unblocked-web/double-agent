@@ -1,48 +1,55 @@
-import IUseragentPercents from '@double-agent/profiler/interfaces/IUseragentPercents';
-import IBrowsersToTest from '@double-agent/profiler/interfaces/IBrowsersToTest';
 import IDirective from '../interfaces/IDirective';
 import { getUseragentPath } from './profileHelper';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { URL } from 'url';
+import BrowsersToTest, { IBrowserToTestTest } from "@double-agent/profiler/lib/BrowsersToTest";
 
 export default async function getAllDirectives(
   httpDomains: IDetectionDomains,
   httpsDomains: IDetectionDomains,
-  browsersToTest: IBrowsersToTest,
+  browsersToTest: BrowsersToTest,
 ) {
-  const topBrowserDirectives = browsersToTest.topBrowsers.map(agentDistribution =>
-    buildDirective(
-      httpDomains,
-      httpsDomains,
-      false,
-      agentDistribution,
-      getUseragentPath(agentDistribution.useragent),
-    ),
-  );
+  const directives = [];
 
-  const intoliDirectives = browsersToTest.intoliBrowsers.map(agentDistribution =>
-    buildDirective(
-      httpDomains,
-      httpsDomains,
-      true,
-      agentDistribution,
-      getUseragentPath(agentDistribution.useragent),
-    ),
-  );
+  browsersToTest.majority.forEach(browserToTest => {
+    browserToTest.tests.forEach(browserTest => {
+      const directive = buildDirective(
+        httpDomains,
+        httpsDomains,
+        false,
+        browserTest,
+        getUseragentPath(browserTest.useragent),
+      );
+      directives.push(directive);
+    })
+  });
 
-  return topBrowserDirectives.concat(intoliDirectives);
+  browsersToTest.intoli.forEach(browserToTest => {
+    browserToTest.tests.forEach(browserTest => {
+      const directive = buildDirective(
+        httpDomains,
+        httpsDomains,
+        true,
+        browserTest,
+        getUseragentPath(browserTest.useragent),
+      );
+      directives.push(directive);
+    })
+  });
+
+  return directives;
 }
 
 export function buildDirective(
   httpDomains: IDetectionDomains,
   secureDomains: IDetectionDomains,
   isIntoliUseragent = false,
-  agentDistribution?: IUseragentPercents,
+  browserTest?: IBrowserToTestTest,
   browserGrouping?: string,
 ) {
   return {
-    useragent: agentDistribution?.useragent,
-    percentOfTraffic: agentDistribution?.percent,
+    useragent: browserTest?.useragent,
+    percentOfTraffic: browserTest?.usagePercent,
     browserGrouping,
     testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [
