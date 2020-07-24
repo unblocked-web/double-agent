@@ -1,6 +1,6 @@
 import * as Path from 'path';
 import * as Fs from 'fs';
-import {IOperatingSystem} from "./Oses";
+import IBrowserVersion from '../interfaces/IBrowserVersion';
 
 export const FILE_PATH = Path.join(__dirname, '../data/browsers.json');
 
@@ -41,11 +41,6 @@ export interface IBrowserOperatingSystem {
     string: string;
     sources: string[];
   }[];
-}
-
-export interface IBrowserVersion {
-  major: string,
-  minor: string,
 }
 
 export interface IByKey {

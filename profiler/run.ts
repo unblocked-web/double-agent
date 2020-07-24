@@ -7,8 +7,9 @@ import runDirectiveInWebDriver, { createNewWindow } from './lib/runDirectiveInWe
 import IBrowserstackAgent from './interfaces/IBrowserstackAgent';
 import { WebDriver } from 'selenium-webdriver';
 import ProfilerData from './data';
-import Browsers, {IBrowser} from "./lib/Browsers";
-import Oses, {IOperatingSystem} from "./lib/Oses";
+import Browsers from './lib/Browsers';
+import Oses from './lib/Oses';
+import { getProfileDirName } from './index';
 
 const runnerDomain = 'a1.ulixee.org';
 const drivers: WebDriver[] = [];
@@ -33,11 +34,11 @@ process.on('exit', () => {
         continue;
       }
       const os = oses.getByKey(browserOs.key);
-      const profileFilename = toProfileFilename(browser, os);
+      const profileDirName = getProfileDirName(os, browser);
 
       // check if profile exists
-      if (ProfilerData.agentKeys.includes(profileFilename)) {
-        console.log('Profile exists', profileFilename);
+      if (ProfilerData.agentKeys.includes(profileDirName)) {
+        console.log('Profile exists', profileDirName);
         continue;
       }
 
@@ -70,17 +71,12 @@ function getRunnerForAgent(agent: IBrowserstackAgent) {
           await createNewWindow(driver);
         }
       }
+    } catch (error) {
+      console.log(error);
     } finally {
       const idx = drivers.indexOf(driver);
       if (idx >= 0) drivers.splice(idx, 1);
       await driver.quit();
     }
   };
-}
-
-function toProfileFilename(
-    browser: IBrowser,
-    os: IOperatingSystem,
-) {
-  return `${os.name.replace(/\s/g, '_')}_${os.version.major}_${os.version.minor || 0}__${browser.name}_${browser.version.major}`.toLowerCase();
 }

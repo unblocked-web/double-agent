@@ -4,8 +4,8 @@ import Browsers from '@double-agent/profiler/lib/Browsers';
 import Oses from '@double-agent/profiler/lib/Oses';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
-import { createOsKeyFromUseragent } from '@double-agent/profiler/lib/OsGenerator';
-import { createBrowserKeyFromUseragent } from '@double-agent/profiler/lib/BrowserGenerator';
+import { createOsKeyFromUseragent } from '@double-agent/profiler/lib/OsUtils';
+import { createBrowserKeyFromUseragent } from '@double-agent/profiler/lib/BrowserUtils';
 
 export default class Plugin implements IDetectionPlugin {
   public async onRequest(ctx: IRequestContext) {

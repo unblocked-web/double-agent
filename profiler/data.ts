@@ -1,11 +1,11 @@
 import Fs from 'fs';
 import Path from 'path';
-import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
+import { getProfileDirNameFromUseragent } from './index';
 
 const dataDir = Path.join(__dirname, 'data');
 const profilesDir = Path.join(dataDir, 'profiles');
 const profilePathsMap: { [pluginId: string]: { [agentKey: string]: string[] } } = {};
-const agentKeys: Set<string> = new Set();
+const profileDirNames: Set<string> = new Set();
 
 if (!Fs.existsSync(profilesDir)) {
   Fs.mkdirSync(profilesDir);
@@ -15,20 +15,20 @@ let useragentStrings;
 
 // LOAD DATA ////////////////////////////////////////////////////////////////////////////////////
 
-for (const agentKey of Fs.readdirSync(profilesDir)) {
-  const agentDir = Path.join(profilesDir, agentKey);
-  const isDirectory = Fs.lstatSync(agentDir).isDirectory()
+for (const profileDirName of Fs.readdirSync(profilesDir)) {
+  const profileDir = Path.join(profilesDir, profileDirName);
+  const isDirectory = Fs.lstatSync(profileDir).isDirectory()
   if (!isDirectory) continue;
-  for (const fileName of Fs.readdirSync(agentDir)) {
+  for (const fileName of Fs.readdirSync(profileDir)) {
     if (!fileName.endsWith('.json') || fileName.startsWith('_')) continue;
     const fileNameParts = fileName.replace('.json', '').split('--');
     const counter = fileNameParts[1];
     const pluginId = fileNameParts[0].replace('-', '/');
-    const profilePath = `${agentDir}/${fileName}`;
+    const profilePath = `${profileDir}/${fileName}`;
     profilePathsMap[pluginId] = profilePathsMap[pluginId] || {};
-    profilePathsMap[pluginId][agentKey] = profilePathsMap[pluginId][agentKey] || [];
-    profilePathsMap[pluginId][agentKey][counter] = profilePath;
-    agentKeys.add(agentKey);
+    profilePathsMap[pluginId][profileDirName] = profilePathsMap[pluginId][profileDirName] || [];
+    profilePathsMap[pluginId][profileDirName][counter] = profilePath;
+    profileDirNames.add(profileDirName);
   }
 }
 
@@ -37,7 +37,7 @@ for (const agentKey of Fs.readdirSync(profilesDir)) {
 export default class ProfilerData {
 
   static get agentKeys() {
-    return Array.from(agentKeys);
+    return Array.from(profileDirNames);
   }
 
   static get useragents() {
@@ -61,11 +61,11 @@ export default class ProfilerData {
   }
 
   static async getLatestProfile<TProfile = any>(pluginId: string, useragent: string) {
-    const agentKey = getUseragentPath(useragent);
-    const profilePathsByAgentKey = profilePathsMap[pluginId];
-    if (!profilePathsByAgentKey) return;
+    const profileDirName = getProfileDirNameFromUseragent(useragent);
+    const profilePathsByDirName = profilePathsMap[pluginId];
+    if (!profilePathsByDirName) return;
 
-    const profilePaths = profilePathsByAgentKey[agentKey];
+    const profilePaths = profilePathsByDirName[profileDirName];
     if (!profilePaths) return;
 
     const latestProfilePath = profilePaths[profilePaths.length - 1];
@@ -84,18 +84,18 @@ export default class ProfilerData {
     // http requests from webdriver sometimes have ruby profiles
     if (!useragent || useragent.startsWith('Ruby')) return;
 
-    const agentKey = getUseragentPath(useragent);
-    const agentDir = Path.join(profilesDir, agentKey);
-    if (!Fs.existsSync(agentDir)) {
-      Fs.mkdirSync(agentDir);
+    const profileDirName = getProfileDirNameFromUseragent(useragent);
+    const profileDir = Path.join(profilesDir, profileDirName);
+    if (!Fs.existsSync(profileDir)) {
+      Fs.mkdirSync(profileDir);
     }
 
     const fileName = pluginId.replace('/', '-');
     let counter = 0;
-    let filePath = Path.join(agentDir, `${fileName}--${counter}.json`);
+    let filePath = Path.join(profileDir, `${fileName}--${counter}.json`);
     while (Fs.existsSync(filePath)) {
       counter += 1;
-      filePath = Path.join(agentDir, `${fileName}--${counter}.json`);
+      filePath = Path.join(profileDir, `${fileName}--${counter}.json`);
     }
     Fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 

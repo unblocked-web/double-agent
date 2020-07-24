@@ -1,12 +1,13 @@
 import Oses, { IOperatingSystem } from './Oses';
-import { IBrowser, IBrowserVersion, IByKey, FILE_PATH } from './Browsers';
+import { IBrowser, IByKey, FILE_PATH } from './Browsers';
 import browserVersions from '../data/statcounter/browser_version.json';
 import ProfilerData from '../data';
 import IntoliAgents from 'user-agents';
 import { lookup } from 'useragent';
 import BrowserStack from './BrowserStack';
 import Fs from 'fs';
-import { createOsKeyFromUseragent } from './OsGenerator';
+import { createOsKeyFromUseragent } from './OsUtils';
+import { createBrowserKey } from './BrowserUtils';
 
 interface IUseragentSources {
   [useragent: string]: string[];
@@ -112,15 +113,6 @@ function extractPercentMap() {
   }
 
   return percentMap;
-}
-
-export function createBrowserKey(name: string, version: IBrowserVersion) {
-  return `${name.replace(/\s/g, '_')}_${version.major}_${version.minor}`.toLowerCase()
-}
-
-export function createBrowserKeyFromUseragent(useragent: string) {
-  const userAgent = lookup(useragent);
-  return `${userAgent.family}_${userAgent.major}_${userAgent.minor}`
 }
 
 async function extractBrowser(
