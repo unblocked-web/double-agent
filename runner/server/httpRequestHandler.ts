@@ -9,11 +9,11 @@ import HostDomain from '../interfaces/HostDomain';
 import resultsPage from '../views/resultsPage';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import extractRequestDetails from './extractRequestDetails';
-import { getUseragentPath } from '../lib/profileHelper';
 import getBotScoring from '../lib/getBotScoring';
 import IDomainset from '../interfaces/IDomainset';
 import RequestContext from '../lib/RequestContext';
 import IDetectionContext from '../interfaces/IDetectionContext';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default function httpRequestHandler(
   domains: IDomainset,
@@ -69,7 +69,7 @@ export default function httpRequestHandler(
         requestDetails.method,
         requestDetails.url,
         requestDetails.remoteAddress,
-        getUseragentPath(req.headers['user-agent']),
+        getProfileDirNameFromUseragent(req.headers['user-agent']),
         ...botScore,
       );
 

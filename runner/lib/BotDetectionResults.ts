@@ -1,7 +1,7 @@
 import IDirective from '../interfaces/IDirective';
 import IDetectionSession from '../interfaces/IDetectionSession';
-import { getUseragentPath } from './profileHelper';
 import IBrowserFindings, { IBrowserPercents } from '../interfaces/IBrowserFindings';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default class BotDetectionResults {
   private browserFindings: IBrowserFindings = {};
@@ -10,12 +10,12 @@ export default class BotDetectionResults {
 
   public trackDirectiveResults(directive: IDirective, session: IDetectionSession) {
     if (!session.useragent) return;
-    const browserPath = getUseragentPath(session.useragent);
+    const profileDirName = getProfileDirNameFromUseragent(session.useragent);
 
-    if (!this.browserFindings[browserPath]) {
-      this.browserFindings[browserPath] = {};
+    if (!this.browserFindings[profileDirName]) {
+      this.browserFindings[profileDirName] = {};
 
-      const browserFinding = this.browserFindings[browserPath];
+      const browserFinding = this.browserFindings[profileDirName];
       for (const check of session.checks) {
         let entry = browserFinding[check.category];
         if (!entry) {
@@ -39,9 +39,9 @@ export default class BotDetectionResults {
     }
 
     const browserList = directive.testType === 'intoli' ? this.intoliBrowsers : this.topBrowsers;
-    let existing = browserList.find(x => x.browser === browserPath);
+    let existing = browserList.find(x => x.browser === profileDirName);
     if (!existing) {
-      existing = { browser: browserPath, percentUsed: 0, agentStrings: 0 };
+      existing = { browser: profileDirName, percentUsed: 0, agentStrings: 0 };
       browserList.push(existing);
     }
     existing.agentStrings += 1;

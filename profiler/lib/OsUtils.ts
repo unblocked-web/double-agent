@@ -1,9 +1,9 @@
-import { IOperatingSystemVersion } from './Oses';
+import {IOperatingSystem} from './Oses';
 import { lookup } from 'useragent';
 
-export function createOsKey(name: string, version: IOperatingSystemVersion) {
-  let tmpKey = `${name.replace(/\s/g, '_')}_${version.major}`;
-  if (version.minor) tmpKey += `_${version.minor}`;
+export function createOsKey(os: Pick<IOperatingSystem, 'name' | 'version'>) {
+  let tmpKey = `${os.name.replace(/\s/g, '_')}_${os.version.major}`;
+  if (os.version.minor) tmpKey += `_${os.version.minor}`;
 
   return tmpKey.toLowerCase()
 }
@@ -17,5 +17,5 @@ export function createOsKeyFromUseragent(useragent: string) {
     minor: userAgentOs.minor === '0' ? null : userAgentOs.minor,
   };
 
-  return createOsKey(name, version);
+  return createOsKey({ name, version });
 }

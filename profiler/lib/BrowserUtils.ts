@@ -1,8 +1,8 @@
-import IBrowserVersion from '../interfaces/IBrowserVersion';
+import IBrowser from '../interfaces/IBrowser';
 import { lookup } from 'useragent';
 
-export function createBrowserKey(name: string, version: IBrowserVersion) {
-  return `${name.replace(/\s/g, '_')}_${version.major}_${version.minor}`.toLowerCase()
+export function createBrowserKey(browser: Pick<IBrowser, 'name' | 'version'>) {
+  return `${browser.name.replace(/\s/g, '_')}_${browser.version.major}_${browser.version.minor}`.toLowerCase()
 }
 
 export function createBrowserKeyFromUseragent(useragent: string) {
@@ -12,5 +12,5 @@ export function createBrowserKeyFromUseragent(useragent: string) {
     major: userAgent.major,
     minor: userAgent.minor,
   };
-  return createBrowserKey(name, version);
+  return createBrowserKey({ name, version });
 }

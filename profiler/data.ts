@@ -36,7 +36,7 @@ for (const profileDirName of Fs.readdirSync(profilesDir)) {
 
 export default class ProfilerData {
 
-  static get agentKeys() {
+  static get profileDirNames() {
     return Array.from(profileDirNames);
   }
 

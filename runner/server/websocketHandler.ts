@@ -6,7 +6,7 @@ import IDomainset from '../interfaces/IDomainset';
 import RequestContext from '../lib/RequestContext';
 import * as net from 'net';
 import IDetectionContext from '../interfaces/IDetectionContext';
-import { getUseragentPath } from '../lib/profileHelper';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default function(domains: IDomainset, detectionContext: IDetectionContext) {
   const wss = new WebSocket.Server({ clientTracking: false, noServer: true });
@@ -24,7 +24,7 @@ export default function(domains: IDomainset, detectionContext: IDetectionContext
       requestDetails.method,
       requestDetails.url,
       requestDetails.remoteAddress,
-      getUseragentPath(request.headers['user-agent']),
+      getProfileDirNameFromUseragent(request.headers['user-agent']),
     );
 
     const session = sessionTracker.recordRequest(requestDetails, requestUrl);

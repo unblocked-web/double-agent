@@ -41,7 +41,7 @@ function extractOs(rawOsString: string, rawValues: string[], osPct: number): IOp
   const osString = cleanOsString(rawOsString);
   const name = extractName(osString);
   const version = extractVersion(osString);
-  const osKey = createOsKey(name, version);
+  const osKey = createOsKey({ name, version });
   const desktopPercents = rawValues.map(x => (Number(x) * osPct) / 100);
   const desktopPercent = averagePercent(desktopPercents);
   return {

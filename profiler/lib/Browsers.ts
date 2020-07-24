@@ -1,6 +1,7 @@
 import * as Path from 'path';
 import * as Fs from 'fs';
 import IBrowserVersion from '../interfaces/IBrowserVersion';
+import IBrowser from '../interfaces/IBrowser';
 
 export const FILE_PATH = Path.join(__dirname, '../data/browsers.json');
 
@@ -22,26 +23,6 @@ export default class Browsers {
 }
 
 // INTERFACES
-
-export interface IBrowser {
-  key: string;
-  name: string;
-  desktopPercent: number;
-  version: IBrowserVersion;
-  byOsKey: {
-    [key: string]: IBrowserOperatingSystem;
-  }
-}
-
-export interface IBrowserOperatingSystem {
-  key: string;
-  desktopPercent: number;
-  hasBrowserStackSupport: boolean;
-  useragents: {
-    string: string;
-    sources: string[];
-  }[];
-}
 
 export interface IByKey {
   [key: string]: IBrowser

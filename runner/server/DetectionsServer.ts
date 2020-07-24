@@ -159,7 +159,7 @@ export default class DetectionsServer {
       identityResults.trackDirectiveResults(directive, session);
 
       await fs.writeFile(
-        `${scraperDir}/sessions/${directive.browserGrouping}.json.gz`,
+        `${scraperDir}/sessions/${directive.profileDirName}.json.gz`,
         await this.gzipJson(session),
       );
     }

@@ -1,4 +1,4 @@
-import { getStatsKey, IHeaderStats } from '../lib/getBrowserProfileStats';
+import { getStatsType, IHeaderStats } from '../lib/getBrowserProfileStats';
 import checkHeaderOrderAndCase from './checkHeaderOrderAndCase';
 import checkDefaultValues from './checkDefaultValues';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
@@ -17,7 +17,7 @@ export default function checkRequestHeaders(
   const session = ctx.session;
 
   try {
-    const key = getStatsKey(
+    const key = getStatsType(
       ctx.requestDetails.secureDomain,
       ctx.requestDetails.originType,
       ctx.requestDetails.resourceType,

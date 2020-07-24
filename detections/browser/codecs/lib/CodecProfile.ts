@@ -1,11 +1,11 @@
 import ICodecProfile from '../interfaces/ICodecProfile';
-import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import ICodecSupport from '../interfaces/ICodecSupport';
 import IWebRTCCodec from '../interfaces/IWebRTCCodec';
 import ProfilerData from '@double-agent/profiler/data';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 const pluginId = 'browser/codecs';
-const profilesByAgentKey: { [browserName: string]: ICodecProfile[] } = {};
+const profilesByDirName: { [dirName: string]: ICodecProfile[] } = {};
 
 export function cleanProfile(useragent: string, data: ICodecProfile) {
   data.useragent = useragent;
@@ -21,20 +21,20 @@ export function cleanProfile(useragent: string, data: ICodecProfile) {
 }
 
 export default function getAllProfiles() {
-  if (Object.keys(profilesByAgentKey).length) return profilesByAgentKey;
+  if (Object.keys(profilesByDirName).length) return profilesByDirName;
 
   ProfilerData.getByPluginId<ICodecProfile>(pluginId).forEach(profile => {
-    const agentKey = getUseragentPath(profile.useragent);
-    profilesByAgentKey[agentKey] = profilesByAgentKey[agentKey] || [];
-    profilesByAgentKey[agentKey].push(profile);
+    const profileDirName = getProfileDirNameFromUseragent(profile.useragent);
+    profilesByDirName[profileDirName] = profilesByDirName[profileDirName] || [];
+    profilesByDirName[profileDirName].push(profile);
   });
 
-  return profilesByAgentKey;
+  return profilesByDirName;
 }
 
-export function getProfileForUa(userAgent: string): ICodecProfile {
-  const uaGroup = getUseragentPath(userAgent);
-  const browserProfile = getAllProfiles()[uaGroup];
+export function getProfileForUa(useragent: string): ICodecProfile {
+  const profileDirName = getProfileDirNameFromUseragent(useragent);
+  const browserProfile = getAllProfiles()[profileDirName];
   if (browserProfile?.length) return browserProfile[0];
   return null;
 }

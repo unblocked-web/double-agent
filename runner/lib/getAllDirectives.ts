@@ -1,8 +1,8 @@
 import IDirective from '../interfaces/IDirective';
-import { getUseragentPath } from './profileHelper';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { URL } from 'url';
-import BrowsersToTest, { IBrowserToTestTest } from "@double-agent/profiler/lib/BrowsersToTest";
+import BrowsersToTest, { IBrowserToTestTest } from '@double-agent/profiler/lib/BrowsersToTest';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default async function getAllDirectives(
   httpDomains: IDetectionDomains,
@@ -16,9 +16,8 @@ export default async function getAllDirectives(
       const directive = buildDirective(
         httpDomains,
         httpsDomains,
-        false,
         browserTest,
-        getUseragentPath(browserTest.useragent),
+        false,
       );
       directives.push(directive);
     })
@@ -29,9 +28,8 @@ export default async function getAllDirectives(
       const directive = buildDirective(
         httpDomains,
         httpsDomains,
-        true,
         browserTest,
-        getUseragentPath(browserTest.useragent),
+        true,
       );
       directives.push(directive);
     })
@@ -43,14 +41,14 @@ export default async function getAllDirectives(
 export function buildDirective(
   httpDomains: IDetectionDomains,
   secureDomains: IDetectionDomains,
+  browserTest: IBrowserToTestTest = null,
   isIntoliUseragent = false,
-  browserTest?: IBrowserToTestTest,
-  browserGrouping?: string,
 ) {
+  const profileDirName = browserTest ? getProfileDirNameFromUseragent(browserTest.useragent) : null;
   return {
     useragent: browserTest?.useragent,
     percentOfTraffic: browserTest?.usagePercent,
-    browserGrouping,
+    profileDirName: profileDirName,
     testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [
       {

@@ -1,8 +1,8 @@
 import IDirective from '../interfaces/IDirective';
 import IDetectionSession from '../interfaces/IDetectionSession';
-import { getUseragentPath } from './profileHelper';
 import { average } from './utils';
 import IUserBucketAverages from '../interfaces/IUserBucketAverages';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default class UserBucketStats {
   private samples = 0;
@@ -13,7 +13,7 @@ export default class UserBucketStats {
     session: Pick<IDetectionSession, 'identifiers'>,
   ) {
     this.samples += 1;
-    const browser = getUseragentPath(directive.useragent);
+    const profileDirName = getProfileDirNameFromUseragent(directive.useragent);
     for (const id of session.identifiers) {
       let tracker = this.buckets[id.bucket.toString()];
       if (!tracker) {
@@ -23,15 +23,15 @@ export default class UserBucketStats {
       const matchingId = tracker.find(x => x.id === id.id);
       if (matchingId) {
         matchingId.seenCount += 1;
-        if (!matchingId.browsers.includes(browser)) {
-          matchingId.browsers.push(browser);
+        if (!matchingId.browsers.includes(profileDirName)) {
+          matchingId.browsers.push(profileDirName);
         }
       } else {
         tracker.push({
           id: id.id,
           category: id.category,
           seenCount: 1,
-          browsers: [browser],
+          browsers: [profileDirName],
         });
       }
     }

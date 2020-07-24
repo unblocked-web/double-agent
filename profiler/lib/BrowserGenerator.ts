@@ -1,5 +1,6 @@
 import Oses, { IOperatingSystem } from './Oses';
-import { IBrowser, IByKey, FILE_PATH } from './Browsers';
+import IBrowser from '../interfaces/IBrowser';
+import { IByKey, FILE_PATH } from './Browsers';
 import browserVersions from '../data/statcounter/browser_version.json';
 import ProfilerData from '../data';
 import IntoliAgents from 'user-agents';
@@ -107,7 +108,7 @@ function extractPercentMap() {
       major: versionArray[0],
       minor: versionArray[1],
     }
-    const browserKey = createBrowserKey(name, version);
+    const browserKey = createBrowserKey({ name, version });
     const percent = averagePercent(rawValues.map(v => Number(v)));
     percentMap[browserKey] = percent;
   }
@@ -125,7 +126,7 @@ async function extractBrowser(
     major: userAgent.major,
     minor: userAgent.minor,
   };
-  const browserKey = createBrowserKey(name, version);
+  const browserKey = createBrowserKey({ name, version });
   const desktopPercent = percentMap[browserKey];
 
   return {

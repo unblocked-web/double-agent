@@ -36,8 +36,7 @@ process.on('exit', () => {
       const os = oses.getByKey(browserOs.key);
       const profileDirName = getProfileDirName(os, browser);
 
-      // check if profile exists
-      if (ProfilerData.agentKeys.includes(profileDirName)) {
+      if (ProfilerData.profileDirNames.includes(profileDirName)) {
         console.log('Profile exists', profileDirName);
         continue;
       }

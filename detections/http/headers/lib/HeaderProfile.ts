@@ -1,22 +1,22 @@
-import { getUseragentPath } from '@double-agent/runner/lib/profileHelper';
 import OriginType from '@double-agent/runner/interfaces/OriginType';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
 import IRequestDetails from '@double-agent/runner/interfaces/IRequestDetails';
 import ProfilerData from '@double-agent/profiler/data';
+import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default class HeaderProfile {
-  public readonly agentGrouping: string;
+  public readonly profileDirName: string;
   public readonly requests: IHeadersRequest[];
   public readonly useragent: string;
 
   public get browserAndVersion() {
-    return this.agentGrouping.split('__').pop();
+    return this.profileDirName.split('__').pop();
   }
 
   constructor(readonly session: IDetectionSession) {
     this.useragent = session.useragent;
-    this.agentGrouping = getUseragentPath(session.useragent);
+    this.profileDirName = getProfileDirNameFromUseragent(session.useragent);
 
     this.requests = session.requests.map(x => HeaderProfile.processRequestDetails(x, session));
   }
