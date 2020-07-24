@@ -1,11 +1,11 @@
 import IDetectionPlugin from '@double-agent/runner/interfaces/IDetectionPlugin';
 import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
-import getBrowsersToProfile, { osToAgentOs } from '@double-agent/profiler/lib/getBrowsersToProfile';
-import { lookup } from 'useragent';
+import Browsers from '@double-agent/profiler/lib/Browsers';
+import Oses from '@double-agent/profiler/lib/Oses';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
-
-const browserPopularity = getBrowsersToProfile(0.5, 0.5);
+import { createOsKeyFromUseragent } from '@double-agent/profiler/lib/OsGenerator';
+import { createBrowserKeyFromUseragent } from '@double-agent/profiler/lib/BrowserGenerator';
 
 export default class Plugin implements IDetectionPlugin {
   public async onRequest(ctx: IRequestContext) {
@@ -31,23 +31,12 @@ export default class Plugin implements IDetectionPlugin {
     });
 
     const useragent = ctx.session.useragent;
-    const parseUa = lookup(useragent);
-    const { browsers, os } = await browserPopularity;
 
-    const browserPct =
-      browsers.find(
-        x => x.browser === parseUa.family && x.version.split('.').shift() === parseUa.major,
-      )?.averagePercent ?? 0.1;
+    const browserKey = createBrowserKeyFromUseragent(useragent);
+    const browserPct = new Browsers().getByKey(browserKey)?.desktopPercent ?? 0.1;
 
-    const osPct =
-      os.find(x => {
-        const uaOs = osToAgentOs(x);
-        return (
-          uaOs.family === parseUa.os.family &&
-          uaOs.minor === parseUa.os.minor &&
-          uaOs.major === parseUa.os.major
-        );
-      })?.averagePercent ?? 0.1;
+    const osKey = createOsKeyFromUseragent(useragent);
+    const osPct = new Oses().getByKey(osKey)?.desktopPercent ?? 0.1;
 
     // 2% frequency means 2 in 100 requests, ie, 50% chance a single request is a bot
     // 1% frequency means 1 in 100, ie 100/1 = 100%

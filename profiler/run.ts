@@ -2,12 +2,13 @@ import 'source-map-support/register';
 import IDirective from '@double-agent/runner/interfaces/IDirective';
 import Queue from 'p-queue';
 import fetch from 'node-fetch';
-import getBrowsersToProfile, { toAgentKey } from './lib/getBrowsersToProfile';
 import BrowserStack from './lib/BrowserStack';
 import runDirectiveInWebDriver, { createNewWindow } from './lib/runDirectiveInWebDriver';
 import IBrowserstackAgent from './interfaces/IBrowserstackAgent';
 import { WebDriver } from 'selenium-webdriver';
 import ProfilerData from './data';
+import Browsers, {IBrowser} from "./lib/Browsers";
+import Oses, {IOperatingSystem} from "./lib/Oses";
 
 const runnerDomain = 'a1.ulixee.org';
 const drivers: WebDriver[] = [];
@@ -17,35 +18,31 @@ process.on('exit', () => {
 });
 
 (async () => {
+  const browsers = new Browsers();
+  const oses = new Oses();
   const queue = new Queue({ concurrency: 5 });
-  const browsersToProfile = await getBrowsersToProfile(0.5, 3);
-  for (const browserToProfile of browsersToProfile.browsers) {
-    const { browser: browserName, version: browser_version } = browserToProfile;
-    if (browserName === 'IE' || (browserName === 'Chrome' && browser_version === '49.0')) continue; // no support for Promises, lambdas... detections need refactor for support
-
-    for (const osToProfile of browsersToProfile.os) {
-      const { os, version: os_version } = osToProfile;
-      const agent = {
-        browserName,
-        browser_version,
-        os,
-        os_version,
-      };
-
-      const isSupported = await BrowserStack.isBrowserSupported(agent);
-      if (!isSupported) {
-        console.log("BrowserStack doesn't support agent", agent);
+  for (const browser of browsers.toArray()) {
+    if (browser.name === 'IE' || (browser.name === 'Chrome' && Number(browser.version.major) < 58)) {
+      // no support for Promises, lambdas... detections need refactor for support
+      console.log("DoubleAgent doesn't support", browser.key);
+      continue;
+    }
+    for (const browserOs of Object.values(browser.byOsKey)) {
+      if (!browserOs.hasBrowserStackSupport) {
+        console.log("BrowserStack doesn't support", browser.key, browserOs.key);
         continue;
       }
-      const agentKey = toAgentKey(browserToProfile, osToProfile);
+      const os = oses.getByKey(browserOs.key);
+      const profileFilename = toProfileFilename(browser, os);
 
       // check if profile exists
-      if (ProfilerData.agentKeys.includes(agentKey)) {
-        console.log('Profile already exists', agentKey);
+      if (ProfilerData.agentKeys.includes(profileFilename)) {
+        console.log('Profile exists', profileFilename);
         continue;
       }
 
-      queue.add(getRunnerForAgent(agent));
+      const browserStackAgent = BrowserStack.createAgent(browser, os);
+      queue.add(getRunnerForAgent(browserStackAgent));
     }
   }
   await queue.onIdle();
@@ -79,4 +76,11 @@ function getRunnerForAgent(agent: IBrowserstackAgent) {
       await driver.quit();
     }
   };
+}
+
+function toProfileFilename(
+    browser: IBrowser,
+    os: IOperatingSystem,
+) {
+  return `${os.name.replace(/\s/g, '_')}_${os.version.major}_${os.version.minor || 0}__${browser.name}_${browser.version.major}`.toLowerCase();
 }

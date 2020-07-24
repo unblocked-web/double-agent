@@ -2,7 +2,6 @@ import http from 'http';
 import https from 'https';
 import { existsSync, promises as fs } from 'fs';
 import { URL } from 'url';
-import { getBrowsersToTest, IBrowsersToTest } from '@double-agent/profiler';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import httpRequestHandler from './httpRequestHandler';
 import webServicesHandler from './websocketHandler';
@@ -15,11 +14,11 @@ import IDomainset from '../interfaces/IDomainset';
 import BotDetectionResults from '../lib/BotDetectionResults';
 import IDetectorModule from '../interfaces/IDetectorModule';
 import UserBucketTracker from '../lib/UserBucketTracker';
-import { inspect } from 'util';
 import UserBucketStats from '../lib/UserBucketStats';
 import IDetectionContext from '../interfaces/IDetectionContext';
 import DetectionSession from '../lib/DetectionSession';
 import * as zlib from 'zlib';
+import BrowsersToTest from '@double-agent/profiler/lib/BrowsersToTest';
 
 const certPath = process.env.LETSENCRYPT
   ? '/etc/letsencrypt/live/headers.ulixee.org'
@@ -43,7 +42,7 @@ export default class DetectionsServer {
   public sessionTracker: SessionTracker;
   public bucketTracker: UserBucketTracker;
 
-  public browsersToTest: IBrowsersToTest;
+  public browsersToTest = new BrowsersToTest();
 
   public scraperDirectives: {
     [agent: string]: {
@@ -75,9 +74,7 @@ export default class DetectionsServer {
     console.log('\n\n\nBooting up...');
     this.httpServer = await this.buildServer();
     this.httpsServer = (await this.buildServer(true)) as https.Server;
-    this.browsersToTest = await getBrowsersToTest();
     await this.pluginDelegate.start(this.httpDomains, this.httpsDomains, this.bucketTracker);
-    console.log(inspect(this.browsersToTest, false, null, true));
     return this;
   }
 

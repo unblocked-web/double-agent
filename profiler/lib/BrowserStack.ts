@@ -1,6 +1,8 @@
 import axios from 'axios';
 import IBrowserstackAgent from '../interfaces/IBrowserstackAgent';
 import webdriver from 'selenium-webdriver';
+import {IBrowser} from "./Browsers";
+import {IOperatingSystem} from "./Oses";
 
 export default class BrowserStack {
   static supportedCapabilities = [];
@@ -19,6 +21,20 @@ export default class BrowserStack {
     }
 
     return null;
+  }
+
+  public static createAgent(browser: IBrowser, os: IOperatingSystem) {
+    let osVersion = os.version.name;
+    if (!osVersion) {
+      osVersion = os.version.major;
+      if (os.version.minor) osVersion += `.${os.version.minor}`;
+    }
+    return {
+      browserName: browser.name.toLowerCase(),
+      browser_version: `${browser.version.major}.${browser.version.minor}`,
+      os: os.name.replace('Mac ', ''),
+      os_version: osVersion,
+    };
   }
 
   public static async isBrowserSupported(agent: IBrowserstackAgent) {
