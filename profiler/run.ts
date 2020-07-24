@@ -22,10 +22,14 @@ process.on('exit', () => {
   const oses = new Oses();
   const queue = new Queue({ concurrency: 5 });
   for (const browser of browsers.toArray()) {
-    if (browser.name === 'IE' || (browser.name === 'Chrome' && browser.version.major === '49')) continue; // no support for Promises, lambdas... detections need refactor for support
+    if (browser.name === 'IE' || (browser.name === 'Chrome' && Number(browser.version.major) < 58)) {
+      // no support for Promises, lambdas... detections need refactor for support
+      console.log("DoubleAgent doesn't support", browser.key);
+      continue;
+    }
     for (const browserOs of Object.values(browser.byOsKey)) {
       if (!browserOs.hasBrowserStackSupport) {
-        console.log("BrowserStack doesn't support agent", browser.key, browserOs.key);
+        console.log("BrowserStack doesn't support", browser.key, browserOs.key);
         continue;
       }
       const os = oses.getByKey(browserOs.key);
@@ -33,7 +37,7 @@ process.on('exit', () => {
 
       // check if profile exists
       if (ProfilerData.agentKeys.includes(profileFilename)) {
-        console.log('Profile already exists', profileFilename);
+        console.log('Profile exists', profileFilename);
         continue;
       }
 
