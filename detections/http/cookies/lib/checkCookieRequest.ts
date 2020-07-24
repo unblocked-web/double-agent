@@ -4,7 +4,6 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import CookieProfile from './CookieProfile';
 import { diffArrays } from 'diff';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
-import { isAgent } from '@double-agent/runner/lib/userAgentUtils';
 import HostDomain from '@double-agent/runner/interfaces/HostDomain';
 
 export default function checkCookieRequest(ctx: IRequestContext) {
@@ -49,7 +48,8 @@ export default function checkCookieRequest(ctx: IRequestContext) {
 
   let flagHeader = !!browserProfileRequest && userCookies.join(',') !== profileCookies.join(',');
   // chrome 80 still seems to be toggling on/off requiring secure cookies for SameSiteNone
-  if (flagHeader && isAgent(ctx.session.parsedUseragent, 'Chrome', 80)) {
+  const isChrome80 = ctx.session.parsedUseragent.family === 'Chrome' && ctx.session.parsedUseragent.major === '80';
+  if (flagHeader && isChrome80) {
     flagHeader = !allDifferencesFromNonSecureSameNoneCookies(profileCookies, userCookies);
   }
 
