@@ -10,7 +10,7 @@ export function getProfileDirNameFromUseragent(useragent: string) {
 }
 
 export function getProfileDirName(os: IOperatingSystem, browser: IBrowser) {
-  const osKey = `${os.name.replace(/\s/g, '_')}_${os.version.major}_${os.version.minor || 0}`.toLowerCase(); //createOsKey(os);
+  const osKey = createOsKey(os);
   const browserKey = createBrowserKey(browser);
   return `${osKey}__${browserKey}`;
 }
