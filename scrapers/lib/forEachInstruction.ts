@@ -1,25 +1,25 @@
-import IDirective from '@double-agent/runner/interfaces/IDirective';
+import IInstruction from '@double-agent/runner/interfaces/IInstruction';
 import fetch from 'node-fetch';
 import { inspect } from 'util';
 import Queue from 'p-queue';
 
 const runnerDomain = process.env.RUNNER_DOMAIN ?? 'localhost';
 
-export default async function forEachDirective(
+export default async function forEachInstruction(
   suiteDir: string,
-  runDirective: (directive: IDirective) => Promise<void>,
+  runInstruction: (instruction: IInstruction) => Promise<void>,
   concurrency = 5,
 ) {
   const queue = new Queue({ concurrency });
 
   let done = false;
-  function queueDirective() {
+  function queueInstruction() {
     return queue.add(async () => {
       if (done) {
         return;
       }
 
-      console.log('Getting next directive', `http://${runnerDomain}:3000`);
+      console.log('Getting next instruction', `http://${runnerDomain}:3000`);
       const response = await fetch(`http://${runnerDomain}:3000`, {
         headers: {
           scraper: suiteDir,
@@ -27,25 +27,25 @@ export default async function forEachDirective(
       });
       const json = await response.json();
 
-      if (json.directive) {
-        const instruction = json.directive as IDirective;
+      if (json.instruction) {
+        const instruction = json.instruction as IInstruction;
 
-        queueDirective();
+        queueInstruction();
         console.log(
-          '[%s._] Running %s directive (%s)',
+          '[%s._] Running %s instruction (%s)',
           instruction.sessionid,
           instruction.testType,
           instruction.profileDirName,
           instruction.useragent,
         );
-        await runDirective(instruction);
+        await runInstruction(instruction);
       } else {
         done = true;
         console.log('Done: ', json);
       }
     });
   }
-  await queueDirective();
+  await queueInstruction();
   await queue.onIdle();
   const response = await fetch(`http://${runnerDomain}:3000/results`, {
     headers: {

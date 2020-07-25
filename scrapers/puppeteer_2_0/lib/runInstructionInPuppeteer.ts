@@ -1,9 +1,9 @@
-import IDirective from '@double-agent/runner/interfaces/IDirective';
+import IInstruction from '@double-agent/runner/interfaces/IInstruction';
 import puppeteer from 'puppeteer';
 
-export default async function runDirectiveInPuppeteer(
+export default async function runInstructionInPuppeteer(
   page: puppeteer.Page,
-  instruction: IDirective,
+  instruction: IInstruction,
   setUseragent = true,
 ) {
   if (setUseragent === true) {

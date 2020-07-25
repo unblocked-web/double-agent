@@ -1,8 +1,8 @@
-import IBrowserFindings, { IBrowserPercents } from '../interfaces/IBrowserFindings';
-import UserBucket from '../interfaces/UserBucket';
+import { IBrowserPercents } from '@double-agent/runner/interfaces/IBrowserFindings';
+import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { getActiveBucketChecks } from '@double-agent/visits-over-time/lib/bucketChecks';
 import { getVisitLimit } from '@double-agent/visits-over-time/lib/visitLimits';
-import IScraperTestResult from '../interfaces/IScraperTestResult';
+import IScraperTestResult from '@double-agent/runner/interfaces/IScraperTestResult';
 
 export default function browserWeightedBotScore(
   scraper: IScraperTestResult,

@@ -1,10 +1,10 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import * as path from 'path';
 import { inspect } from 'util';
-import { IBrowserPercents } from '../interfaces/IBrowserFindings';
-import IUserBucketAverages from '../interfaces/IUserBucketAverages';
-import IScraperTestResult from '../interfaces/IScraperTestResult';
-import { gunzipSync, unzipSync } from 'zlib';
+import { IBrowserPercents } from '@double-agent/runner/interfaces/IBrowserFindings';
+import IUserBucketAverages from '@double-agent/runner/interfaces/IUserBucketAverages';
+import IScraperTestResult from '@double-agent/runner/interfaces/IScraperTestResult';
+import { gunzipSync } from 'zlib';
 
 const scraperDir = path.resolve(__dirname, '../../scrapers');
 

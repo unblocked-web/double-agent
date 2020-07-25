@@ -72,8 +72,8 @@ If you'd like to test out your scraper stack:
 
 1. Navigate to the `/runner` directory and run `yarn start`. Follow setup directions print onto the console from this command. 
 
-2. The API will return directives one at a time until all tests have been run. Include a scraper engine you're testing with
-   a query string or header called "scraper". Directive format can be found at `/runner/interfaces/IDirective.ts`.
+2. The API will return instructions one at a time until all tests have been run. Include a scraper engine you're testing with
+   a query string or header called "scraper". Instruction format can be found at `/runner/interfaces/IInstruction.ts`.
 
 3. Once all tests are run, results will be output to the same directory as your scraper engine.
 

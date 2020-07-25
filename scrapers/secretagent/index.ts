@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import forEachDirective from '../lib/forEachDirective';
+import forEachInstruction from '../lib/forEachInstruction';
 import { basename } from 'path';
 import SecretAgent from 'secret-agent';
 import { lookup } from 'useragent';
@@ -9,7 +9,7 @@ import Chrome79 from '@secret-agent/emulate-chrome-79';
 import Chrome80 from '@secret-agent/emulate-chrome-80';
 import Safari13 from '@secret-agent/emulate-safari-13';
 import createEmulatorForAgent, { buildUserAgentProfile } from './lib/createEmulatorForAgent';
-import IDirectivePage from '@double-agent/runner/interfaces/IDirectivePage';
+import IInstructionPage from '@double-agent/runner/interfaces/IInstructionPage';
 import Browser from '@secret-agent/client/lib/Browser';
 
 process.env.MITM_ALLOW_INSECURE = 'true';
@@ -17,11 +17,11 @@ process.env.MITM_ALLOW_INSECURE = 'true';
   await SecretAgent.start({ maxActiveSessionCount: 10, localProxyPortStart: 3500 });
 
   try {
-    await forEachDirective(
+    await forEachInstruction(
       basename(__dirname),
       async instruction => {
         let browser: Browser;
-        let lastPage: IDirectivePage;
+        let lastPage: IInstructionPage;
         try {
           const emulatorId = getEmulator(instruction.useragent);
 

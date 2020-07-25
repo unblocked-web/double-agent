@@ -1,7 +1,7 @@
-import IDirective from './IDirective';
+import IInstruction from './IInstruction';
 
 export default interface IDetectionResult {
-  directive: IDirective;
+  instruction: IInstruction;
   success: boolean;
   category: string;
   name?: string;

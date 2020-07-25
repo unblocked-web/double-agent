@@ -1,5 +1,5 @@
 import { Curl } from 'node-libcurl';
-import forEachDirective from '../lib/forEachDirective';
+import forEachInstruction from '../lib/forEachInstruction';
 import { basename } from 'path';
 import { promises as fs } from 'fs';
 
@@ -10,16 +10,16 @@ import { promises as fs } from 'fs';
   await fs.writeFile(`${__dirname}/../scrapers.json`, JSON.stringify(scrapers, null, 2))
 })();
 
-forEachDirective(basename(__dirname), async directive => {
+forEachInstruction(basename(__dirname), async instruction => {
   const curl = new Curl();
-  curl.setOpt('USERAGENT', directive.useragent);
+  curl.setOpt('USERAGENT', instruction.useragent);
   curl.setOpt('SSL_VERIFYPEER', 0);
   curl.setOpt('COOKIEJAR', __dirname + '/cookiejar.txt');
   curl.setOpt('COOKIESESSION', 1);
   curl.setOpt('FOLLOWLOCATION', 1);
   curl.setOpt('AUTOREFERER', 1);
 
-  for (const page of directive.pages) {
+  for (const page of instruction.pages) {
     if (curl.getInfo(Curl.info.EFFECTIVE_URL) !== page.url) {
       console.log('GET ', page.url);
       await httpGet(curl, page.url);

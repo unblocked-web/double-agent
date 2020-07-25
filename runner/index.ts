@@ -1,8 +1,8 @@
 import 'source-map-support/register';
 import DetectionsServer from './server/DetectionsServer';
-import DirectiveServer from './server/DirectiveServer';
+import InstructionServer from './server/InstructionServer';
 
-let directivesPort = Number(process.env.PORT ?? 3000);
+let instructionsPort = Number(process.env.PORT ?? 3000);
 let httpPort = Number(process.env.HTTP_PORT ?? 3001);
 let httpsPort = Number(process.env.HTTPS_PORT ?? 3002);
 
@@ -11,9 +11,9 @@ let httpsPort = Number(process.env.HTTPS_PORT ?? 3002);
   const detectionsServer = await new DetectionsServer(httpPort, httpsPort).start();
 
   // this server simply provides instructions for a scraper to follow to "test" their stack
-  const directiveServer = new DirectiveServer(detectionsServer);
-  directiveServer
-    .listen(directivesPort, () => {
+  const instructionServer = new InstructionServer(detectionsServer);
+  instructionServer
+    .listen(instructionsPort, () => {
       const domains = detectionsServer.httpsDomains;
       if (process.env.GENERATE_PROFILES) {
         console.log('\n\nGenerate Profiles mode activated');
@@ -35,7 +35,7 @@ NOTE if not using dockers:
 127.0.0.1      ${process.env.TLS_DOMAIN || 'tls.ulixee-test.org'}
 
 Run the suite:
-4. Point your scraper at http://a1.ulixee-test.org:${directivesPort} to get your first instruction.
+4. Point your scraper at http://a1.ulixee-test.org:${instructionsPort} to get your first instruction.
 5. Follow the instruction, and then ask this same url for your next instruction. Instructions will be returned until the test suite is completed.`,
       );
     })

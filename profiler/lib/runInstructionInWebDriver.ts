@@ -1,17 +1,17 @@
 import { By, Key, until, WebDriver, WebElement } from 'selenium-webdriver';
-import IDirective from '@double-agent/runner/interfaces/IDirective';
-import IDirectivePage from '@double-agent/runner/interfaces/IDirectivePage';
+import IInstruction from '@double-agent/runner/interfaces/IInstruction';
+import IInstructionPage from '@double-agent/runner/interfaces/IInstructionPage';
 
-export default async function runDirectiveInWebDriver(
+export default async function runInstructionInWebDriver(
   driver: WebDriver,
-  directive: IDirective,
+  instruction: IInstruction,
   browserName: string,
   browserVersion: string,
 ) {
   const needsEnterKey = browserName == 'Safari' && browserVersion === '13.0';
 
-  let prev: IDirectivePage;
-  for (const page of directive.pages) {
+  let prev: IInstructionPage;
+  for (const page of instruction.pages) {
     let currentUrl = await driver.getCurrentUrl();
     if (prev && prev.clickSelector && currentUrl !== page.url) {
       // edge 18 takes forever to test codecs.. so need to wait a long time for page to load

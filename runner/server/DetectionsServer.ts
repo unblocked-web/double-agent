@@ -7,9 +7,9 @@ import httpRequestHandler from './httpRequestHandler';
 import webServicesHandler from './websocketHandler';
 import getAllDetectors from '../lib/getAllDetectors';
 import DetectorPluginDelegate from './DetectorPluginDelegate';
-import getAllDirectives, { buildDirective } from '../lib/getAllDirectives';
+import getAllInstructions, { buildInstruction } from '../lib/getAllInstructions';
 import SessionTracker from '../lib/SessionTracker';
-import IDirective from '../interfaces/IDirective';
+import IInstruction from '../interfaces/IInstruction';
 import IDomainset from '../interfaces/IDomainset';
 import BotDetectionResults from '../lib/BotDetectionResults';
 import IDetectorModule from '../interfaces/IDetectorModule';
@@ -44,9 +44,9 @@ export default class DetectionsServer {
 
   public browsersToTest = new BrowsersToTest();
 
-  public scraperDirectives: {
+  public scraperInstructions: {
     [agent: string]: {
-      directives: IDirective[];
+      instructions: IInstruction[];
       index: number;
     };
   } = {};
@@ -78,27 +78,27 @@ export default class DetectionsServer {
     return this;
   }
 
-  public async createSessionDirectives(scraper: string) {
-    if (!this.scraperDirectives[scraper]) {
-      this.scraperDirectives[scraper] = {
-        directives: [],
+  public async createSessionInstructions(scraper: string) {
+    if (!this.scraperInstructions[scraper]) {
+      this.scraperInstructions[scraper] = {
+        instructions: [],
         index: -1,
       };
     }
 
-    const directive = buildDirective(this.httpDomains, this.httpsDomains);
-    this.scraperDirectives[scraper].directives.push(directive);
-    this.scraperDirectives[scraper].index = this.scraperDirectives[scraper].directives.length - 1;
+    const instruction = buildInstruction(this.httpDomains, this.httpsDomains);
+    this.scraperInstructions[scraper].instructions.push(instruction);
+    this.scraperInstructions[scraper].index = this.scraperInstructions[scraper].instructions.length - 1;
 
-    await this.activateDirective(directive, 'freeform');
+    await this.activateInstruction(instruction, 'freeform');
 
-    return directive;
+    return instruction;
   }
 
-  public async nextDirective(scraper: string) {
-    if (!this.scraperDirectives[scraper]) {
-      this.scraperDirectives[scraper] = {
-        directives: await getAllDirectives(
+  public async nextInstruction(scraper: string) {
+    if (!this.scraperInstructions[scraper]) {
+      this.scraperInstructions[scraper] = {
+        instructions: await getAllInstructions(
           this.httpDomains,
           this.httpsDomains,
           this.browsersToTest,
@@ -107,20 +107,20 @@ export default class DetectionsServer {
       };
     }
 
-    const details = this.scraperDirectives[scraper];
+    const details = this.scraperInstructions[scraper];
     details.index += 1;
-    if (details.index >= details.directives.length) {
+    if (details.index >= details.instructions.length) {
       // no more
       return null;
     }
-    const activeDirective = details.directives[details.index];
-    await this.activateDirective(activeDirective, activeDirective.useragent);
+    const activeInstruction = details.instructions[details.index];
+    await this.activateInstruction(activeInstruction, activeInstruction.useragent);
 
-    return activeDirective;
+    return activeInstruction;
   }
 
   public async saveScraperResults(scraper: string, scraperDir: string) {
-    const directives = this.scraperDirectives[scraper]?.directives;
+    const instructions = this.scraperInstructions[scraper]?.instructions;
 
     console.log('Saving results for %s', scraper);
 
@@ -141,25 +141,25 @@ export default class DetectionsServer {
     }
 
     const botDetectionResults = new BotDetectionResults();
-    if (!directives) return botDetectionResults;
+    if (!instructions) return botDetectionResults;
     const identityResults = new UserBucketStats();
 
-    for (const directive of directives) {
+    for (const instruction of instructions) {
       let session: DetectionSession;
       let tries = 0;
       while (!session) {
-        session = this.sessionTracker.getSession(directive.sessionid);
+        session = this.sessionTracker.getSession(instruction.sessionid);
         if (!session && tries < 200) {
           tries += 1;
           await new Promise(resolve => setTimeout(resolve, 200));
         }
       }
 
-      botDetectionResults.trackDirectiveResults(directive, session);
-      identityResults.trackDirectiveResults(directive, session);
+      botDetectionResults.trackInstructionResults(instruction, session);
+      identityResults.trackInstructionResults(instruction, session);
 
       await fs.writeFile(
-        `${scraperDir}/sessions/${directive.profileDirName}.json.gz`,
+        `${scraperDir}/sessions/${instruction.profileDirName}.json.gz`,
         await this.gzipJson(session),
       );
     }
@@ -185,7 +185,7 @@ export default class DetectionsServer {
     await fs.writeFile(`${scraperDir}/botStats.json`, JSON.stringify(botStats, null, 2));
     await fs.writeFile(`${scraperDir}/bucketStats.json`, JSON.stringify(identityResults, null, 2));
 
-    delete this.scraperDirectives[scraper];
+    delete this.scraperInstructions[scraper];
     return botDetectionResults;
   }
 
@@ -205,12 +205,12 @@ export default class DetectionsServer {
     });
   }
 
-  private async activateDirective(directive: IDirective, useragent: string) {
+  private async activateInstruction(instruction: IInstruction, useragent: string) {
     const session = this.sessionTracker.createSession(useragent);
 
-    addSessionIdToDirective(directive, session.id);
+    addSessionIdToInstruction(instruction, session.id);
 
-    await this.pluginDelegate.onNewDirective(directive);
+    await this.pluginDelegate.onNewInstruction(instruction);
   }
 
   private getNow() {
@@ -256,9 +256,9 @@ export default class DetectionsServer {
   }
 }
 
-function addSessionIdToDirective(directive: IDirective, sessionid: string) {
-  directive.sessionid = sessionid;
-  for (const page of directive.pages) {
+function addSessionIdToInstruction(instruction: IInstruction, sessionid: string) {
+  instruction.sessionid = sessionid;
+  for (const page of instruction.pages) {
     page.url = addSessionIdToUrl(page.url, sessionid);
     page.clickDestinationUrl = addSessionIdToUrl(page.clickDestinationUrl, sessionid);
   }

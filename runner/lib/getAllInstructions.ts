@@ -1,44 +1,44 @@
-import IDirective from '../interfaces/IDirective';
+import IInstruction from '../interfaces/IInstruction';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { URL } from 'url';
 import BrowsersToTest, { IBrowserToTestTest } from '@double-agent/profiler/lib/BrowsersToTest';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
-export default async function getAllDirectives(
+export default async function getAllInstructions(
   httpDomains: IDetectionDomains,
   httpsDomains: IDetectionDomains,
   browsersToTest: BrowsersToTest,
 ) {
-  const directives = [];
+  const instructions = [];
 
   browsersToTest.majority.forEach(browserToTest => {
     browserToTest.tests.forEach(browserTest => {
-      const directive = buildDirective(
+      const instruction = buildInstruction(
         httpDomains,
         httpsDomains,
         browserTest,
         false,
       );
-      directives.push(directive);
+      instructions.push(instruction);
     })
   });
 
   browsersToTest.intoli.forEach(browserToTest => {
     browserToTest.tests.forEach(browserTest => {
-      const directive = buildDirective(
+      const instruction = buildInstruction(
         httpDomains,
         httpsDomains,
         browserTest,
         true,
       );
-      directives.push(directive);
+      instructions.push(instruction);
     })
   });
 
-  return directives;
+  return instructions;
 }
 
-export function buildDirective(
+export function buildInstruction(
   httpDomains: IDetectionDomains,
   secureDomains: IDetectionDomains,
   browserTest: IBrowserToTestTest = null,
@@ -81,5 +81,5 @@ export function buildDirective(
       },
     ],
     sessionid: '',
-  } as IDirective;
+  } as IInstruction;
 }
