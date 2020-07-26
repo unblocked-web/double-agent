@@ -1,9 +1,9 @@
 import 'source-map-support/register';
-import IInstruction from '@double-agent/runner/interfaces/IInstruction';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 import Queue from 'p-queue';
 import fetch from 'node-fetch';
 import BrowserStack from './lib/BrowserStack';
-import runInstructionInWebDriver, { createNewWindow } from './lib/runInstructionInWebDriver';
+import runAssignmentInWebDriver, { createNewWindow } from './lib/runAssignmentInWebDriver';
 import IBrowserstackAgent from './interfaces/IBrowserstackAgent';
 import { WebDriver } from 'selenium-webdriver';
 import ProfilerData from './data';
@@ -56,16 +56,16 @@ function getRunnerForAgent(agent: IBrowserstackAgent) {
       },
     });
     const json = await response.json();
-    const instruction = json?.instruction as IInstruction;
+    const assignment = json?.assignment as IAssignment;
     console.log('Running agent [%s]', agent);
 
     const times = 1;
-    // const times = instruction.hits ?? 1;
+    // const times = assignment.hits ?? 1;
     const driver = await BrowserStack.buildWebDriver(agent);
     drivers.push(driver);
     try {
       for (let i = 0; i < times; i += 1) {
-        await runInstructionInWebDriver(driver, instruction, agent.browserName, agent.browser_version);
+        await runAssignmentInWebDriver(driver, assignment, agent.browserName, agent.browser_version);
         if (times > 1) {
           await createNewWindow(driver);
         }

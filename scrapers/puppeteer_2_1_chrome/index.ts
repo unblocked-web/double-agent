@@ -1,10 +1,10 @@
 import puppeteer from 'puppeteer';
-import runInstructionInPuppeteer from '../puppeteer_2_0/lib/runInstructionInPuppeteer';
+import runAssignmentInPuppeteer from '../puppeteer_2_0/lib/runAssignmentInPuppeteer';
 import cleanPageCache from '../puppeteer_2_0/lib/cleanPageCache';
-import forEachInstruction from '../lib/forEachInstruction';
+import forEachAssignment from '../lib/forEachAssignment';
 import { basename } from 'path';
 import Pool from '../lib/Pool';
-import IInstruction from '@double-agent/runner/interfaces/IInstruction';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 
 (async function() {
   const pool = new Pool(6, () =>
@@ -16,17 +16,17 @@ import IInstruction from '@double-agent/runner/interfaces/IInstruction';
     }),
   );
 
-  async function run(puppBrowser: puppeteer.Browser, instruction: IInstruction) {
+  async function run(puppBrowser: puppeteer.Browser, assignment: IAssignment) {
     const page = await puppBrowser.newPage();
 
     await cleanPageCache(page);
-    await runInstructionInPuppeteer(page, instruction);
+    await runAssignmentInPuppeteer(page, assignment);
     // don't wait for close
     page.close().catch();
   }
 
   try {
-    await forEachInstruction(basename(__dirname), dir => pool.run(run, dir), pool.count);
+    await forEachAssignment(basename(__dirname), dir => pool.run(run, dir), pool.count);
   } finally {
     await pool.stop();
   }

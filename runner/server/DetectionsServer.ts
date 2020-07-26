@@ -7,9 +7,9 @@ import httpRequestHandler from './httpRequestHandler';
 import webServicesHandler from './websocketHandler';
 import getAllDetectors from '../lib/getAllDetectors';
 import DetectorPluginDelegate from './DetectorPluginDelegate';
-import getAllInstructions, { buildInstruction } from '../lib/getAllInstructions';
+import getAllAssignments, { buildAssignment } from '../lib/getAllAssignments';
 import SessionTracker from '../lib/SessionTracker';
-import IInstruction from '../interfaces/IInstruction';
+import IAssignment from '../interfaces/IAssignment';
 import IDomainset from '../interfaces/IDomainset';
 import BotDetectionResults from '../lib/BotDetectionResults';
 import IDetectorModule from '../interfaces/IDetectorModule';
@@ -44,9 +44,9 @@ export default class DetectionsServer {
 
   public browsersToTest = new BrowsersToTest();
 
-  public scraperInstructions: {
+  public scraperAssignments: {
     [agent: string]: {
-      instructions: IInstruction[];
+      assignments: IAssignment[];
       index: number;
     };
   } = {};
@@ -78,27 +78,27 @@ export default class DetectionsServer {
     return this;
   }
 
-  public async createSessionInstructions(scraper: string) {
-    if (!this.scraperInstructions[scraper]) {
-      this.scraperInstructions[scraper] = {
-        instructions: [],
+  public async createSessionAssignments(scraper: string) {
+    if (!this.scraperAssignments[scraper]) {
+      this.scraperAssignments[scraper] = {
+        assignments: [],
         index: -1,
       };
     }
 
-    const instruction = buildInstruction(this.httpDomains, this.httpsDomains);
-    this.scraperInstructions[scraper].instructions.push(instruction);
-    this.scraperInstructions[scraper].index = this.scraperInstructions[scraper].instructions.length - 1;
+    const assignment = buildAssignment(this.httpDomains, this.httpsDomains);
+    this.scraperAssignments[scraper].assignments.push(assignment);
+    this.scraperAssignments[scraper].index = this.scraperAssignments[scraper].assignments.length - 1;
 
-    await this.activateInstruction(instruction, 'freeform');
+    await this.activateAssignment(assignment, 'freeform');
 
-    return instruction;
+    return assignment;
   }
 
-  public async nextInstruction(scraper: string) {
-    if (!this.scraperInstructions[scraper]) {
-      this.scraperInstructions[scraper] = {
-        instructions: await getAllInstructions(
+  public async nextAssignment(scraper: string) {
+    if (!this.scraperAssignments[scraper]) {
+      this.scraperAssignments[scraper] = {
+        assignments: await getAllAssignments(
           this.httpDomains,
           this.httpsDomains,
           this.browsersToTest,
@@ -107,20 +107,20 @@ export default class DetectionsServer {
       };
     }
 
-    const details = this.scraperInstructions[scraper];
+    const details = this.scraperAssignments[scraper];
     details.index += 1;
-    if (details.index >= details.instructions.length) {
+    if (details.index >= details.assignments.length) {
       // no more
       return null;
     }
-    const activeInstruction = details.instructions[details.index];
-    await this.activateInstruction(activeInstruction, activeInstruction.useragent);
+    const activeAssignment = details.assignments[details.index];
+    await this.activateAssignment(activeAssignment, activeAssignment.useragent);
 
-    return activeInstruction;
+    return activeAssignment;
   }
 
   public async saveScraperResults(scraper: string, scraperDir: string) {
-    const instructions = this.scraperInstructions[scraper]?.instructions;
+    const assignments = this.scraperAssignments[scraper]?.assignments;
 
     console.log('Saving results for %s', scraper);
 
@@ -141,25 +141,25 @@ export default class DetectionsServer {
     }
 
     const botDetectionResults = new BotDetectionResults();
-    if (!instructions) return botDetectionResults;
+    if (!assignments) return botDetectionResults;
     const identityResults = new UserBucketStats();
 
-    for (const instruction of instructions) {
+    for (const assignment of assignments) {
       let session: DetectionSession;
       let tries = 0;
       while (!session) {
-        session = this.sessionTracker.getSession(instruction.sessionid);
+        session = this.sessionTracker.getSession(assignment.sessionid);
         if (!session && tries < 200) {
           tries += 1;
           await new Promise(resolve => setTimeout(resolve, 200));
         }
       }
 
-      botDetectionResults.trackInstructionResults(instruction, session);
-      identityResults.trackInstructionResults(instruction, session);
+      botDetectionResults.trackAssignmentResults(assignment, session);
+      identityResults.trackAssignmentResults(assignment, session);
 
       await fs.writeFile(
-        `${scraperDir}/sessions/${instruction.profileDirName}.json.gz`,
+        `${scraperDir}/sessions/${assignment.profileDirName}.json.gz`,
         await this.gzipJson(session),
       );
     }
@@ -185,7 +185,7 @@ export default class DetectionsServer {
     await fs.writeFile(`${scraperDir}/botStats.json`, JSON.stringify(botStats, null, 2));
     await fs.writeFile(`${scraperDir}/bucketStats.json`, JSON.stringify(identityResults, null, 2));
 
-    delete this.scraperInstructions[scraper];
+    delete this.scraperAssignments[scraper];
     return botDetectionResults;
   }
 
@@ -205,12 +205,12 @@ export default class DetectionsServer {
     });
   }
 
-  private async activateInstruction(instruction: IInstruction, useragent: string) {
+  private async activateAssignment(assignment: IAssignment, useragent: string) {
     const session = this.sessionTracker.createSession(useragent);
 
-    addSessionIdToInstruction(instruction, session.id);
+    addSessionIdToAssignment(assignment, session.id);
 
-    await this.pluginDelegate.onNewInstruction(instruction);
+    await this.pluginDelegate.onNewAssignment(assignment);
   }
 
   private getNow() {
@@ -256,9 +256,9 @@ export default class DetectionsServer {
   }
 }
 
-function addSessionIdToInstruction(instruction: IInstruction, sessionid: string) {
-  instruction.sessionid = sessionid;
-  for (const page of instruction.pages) {
+function addSessionIdToAssignment(assignment: IAssignment, sessionid: string) {
+  assignment.sessionid = sessionid;
+  for (const page of assignment.pages) {
     page.url = addSessionIdToUrl(page.url, sessionid);
     page.clickDestinationUrl = addSessionIdToUrl(page.clickDestinationUrl, sessionid);
   }

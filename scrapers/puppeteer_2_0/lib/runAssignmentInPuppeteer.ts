@@ -1,16 +1,16 @@
-import IInstruction from '@double-agent/runner/interfaces/IInstruction';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 import puppeteer from 'puppeteer';
 
-export default async function runInstructionInPuppeteer(
+export default async function runAssignmentInPuppeteer(
   page: puppeteer.Page,
-  instruction: IInstruction,
+  assignment: IAssignment,
   setUseragent = true,
 ) {
   if (setUseragent === true) {
-    await page.setUserAgent(instruction.useragent);
+    await page.setUserAgent(assignment.useragent);
   }
 
-  for (const instrPage of instruction.pages) {
+  for (const instrPage of assignment.pages) {
     if (instrPage.url !== page.url()) {
       await page.goto(instrPage.url, { waitUntil: 'networkidle0' });
     }

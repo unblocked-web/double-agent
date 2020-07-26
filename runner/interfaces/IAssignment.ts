@@ -1,10 +1,10 @@
-import IInstructionPage from './IInstructionPage';
+import IAssignmentPage from './IAssignmentPage';
 
-export default interface IInstruction {
+export default interface IAssignment {
   useragent: string;
   profileDirName: string;
   percentOfTraffic: number;
   testType: 'intoli' | 'topBrowsers';
-  pages: IInstructionPage[];
+  pages: IAssignmentPage[];
   sessionid: string;
 }

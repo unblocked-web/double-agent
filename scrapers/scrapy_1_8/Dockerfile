@@ -9,4 +9,4 @@ COPY /scrapy_1_8 .
 # Install Scrapy specified in requirements.txt.
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-CMD scrapy runspider instructions_spider.py
+CMD scrapy runspider assignments_spider.py

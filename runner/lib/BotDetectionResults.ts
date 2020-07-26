@@ -1,4 +1,4 @@
-import IInstruction from '../interfaces/IInstruction';
+import IAssignment from '../interfaces/IAssignment';
 import IDetectionSession from '../interfaces/IDetectionSession';
 import IBrowserFindings, { IBrowserPercents } from '../interfaces/IBrowserFindings';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
@@ -8,7 +8,7 @@ export default class BotDetectionResults {
   private intoliBrowsers: IBrowserPercents[] = [];
   private topBrowsers: IBrowserPercents[] = [];
 
-  public trackInstructionResults(instruction: IInstruction, session: IDetectionSession) {
+  public trackAssignmentResults(assignment: IAssignment, session: IDetectionSession) {
     if (!session.useragent) return;
     const profileDirName = getProfileDirNameFromUseragent(session.useragent);
 
@@ -38,14 +38,14 @@ export default class BotDetectionResults {
       }
     }
 
-    const browserList = instruction.testType === 'intoli' ? this.intoliBrowsers : this.topBrowsers;
+    const browserList = assignment.testType === 'intoli' ? this.intoliBrowsers : this.topBrowsers;
     let existing = browserList.find(x => x.browser === profileDirName);
     if (!existing) {
       existing = { browser: profileDirName, percentUsed: 0, agentStrings: 0 };
       browserList.push(existing);
     }
     existing.agentStrings += 1;
-    existing.percentUsed += instruction.percentOfTraffic;
+    existing.percentUsed += assignment.percentOfTraffic;
   }
 
   public toJSON() {

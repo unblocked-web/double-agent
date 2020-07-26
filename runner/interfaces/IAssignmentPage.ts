@@ -1,4 +1,4 @@
-export default interface IInstructionPage {
+export default interface IAssignmentPage {
   url: string;
   clickSelector?: string;
   clickDestinationUrl?: string; // if click loads a url, this is what it will be

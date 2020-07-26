@@ -1,17 +1,17 @@
 import http from 'http';
 import https from 'https';
-import forEachInstruction from '../lib/forEachInstruction';
+import forEachAssignment from '../lib/forEachAssignment';
 import { basename } from 'path';
 
-forEachInstruction(basename(__dirname), async instruction => {
+forEachAssignment(basename(__dirname), async assignment => {
   let referer = null;
-  for (const page of instruction.pages) {
+  for (const page of assignment.pages) {
     if (referer !== page.url) {
-      const finalUrl = await httpGet(page.url, instruction.useragent, referer);
+      const finalUrl = await httpGet(page.url, assignment.useragent, referer);
       referer = finalUrl ?? page.url;
     }
     if (page.clickDestinationUrl && referer !== page.clickDestinationUrl) {
-      const finalRes = await httpGet(page.clickDestinationUrl, instruction.useragent, referer);
+      const finalRes = await httpGet(page.clickDestinationUrl, assignment.useragent, referer);
       referer = finalRes ?? page.clickDestinationUrl;
     }
   }

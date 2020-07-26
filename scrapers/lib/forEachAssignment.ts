@@ -1,25 +1,25 @@
-import IInstruction from '@double-agent/runner/interfaces/IInstruction';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 import fetch from 'node-fetch';
 import { inspect } from 'util';
 import Queue from 'p-queue';
 
 const runnerDomain = process.env.RUNNER_DOMAIN ?? 'localhost';
 
-export default async function forEachInstruction(
+export default async function forEachAssignment(
   suiteDir: string,
-  runInstruction: (instruction: IInstruction) => Promise<void>,
+  runAssignment: (assignment: IAssignment) => Promise<void>,
   concurrency = 5,
 ) {
   const queue = new Queue({ concurrency });
 
   let done = false;
-  function queueInstruction() {
+  function queueAssignment() {
     return queue.add(async () => {
       if (done) {
         return;
       }
 
-      console.log('Getting next instruction', `http://${runnerDomain}:3000`);
+      console.log('Getting next assignment', `http://${runnerDomain}:3000`);
       const response = await fetch(`http://${runnerDomain}:3000`, {
         headers: {
           scraper: suiteDir,
@@ -27,25 +27,25 @@ export default async function forEachInstruction(
       });
       const json = await response.json();
 
-      if (json.instruction) {
-        const instruction = json.instruction as IInstruction;
+      if (json.assignment) {
+        const assignment = json.assignment as IAssignment;
 
-        queueInstruction();
+        queueAssignment();
         console.log(
-          '[%s._] Running %s instruction (%s)',
-          instruction.sessionid,
-          instruction.testType,
-          instruction.profileDirName,
-          instruction.useragent,
+          '[%s._] Running %s assignment (%s)',
+          assignment.sessionid,
+          assignment.testType,
+          assignment.profileDirName,
+          assignment.useragent,
         );
-        await runInstruction(instruction);
+        await runAssignment(assignment);
       } else {
         done = true;
         console.log('Done: ', json);
       }
     });
   }
-  await queueInstruction();
+  await queueAssignment();
   await queue.onIdle();
   const response = await fetch(`http://${runnerDomain}:3000/results`, {
     headers: {

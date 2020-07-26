@@ -1,13 +1,13 @@
-import runInstructionInPuppeteer from '../puppeteer_2_0/lib/runInstructionInPuppeteer';
+import runAssignmentInPuppeteer from '../puppeteer_2_0/lib/runAssignmentInPuppeteer';
 import cleanPageCache from '../puppeteer_2_0/lib/cleanPageCache';
-import forEachInstruction from '../lib/forEachInstruction';
+import forEachAssignment from '../lib/forEachAssignment';
 import { basename } from 'path';
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import UserAgentOverride from 'puppeteer-extra-plugin-stealth/evasions/user-agent-override';
 import { lookup } from 'useragent';
 import Pool from '../lib/Pool';
-import IInstruction from '@double-agent/runner/interfaces/IInstruction';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 import { Browser } from 'puppeteer';
 
 (async function() {
@@ -27,21 +27,21 @@ import { Browser } from 'puppeteer';
     }) as Promise<Browser>;
   });
 
-  async function run(puppBrowser: Browser, instruction: IInstruction) {
-    const useragent = lookup(instruction.useragent);
-    ua.opts.userAgent = instruction.useragent;
+  async function run(puppBrowser: Browser, assignment: IAssignment) {
+    const useragent = lookup(assignment.useragent);
+    ua.opts.userAgent = assignment.useragent;
     ua.opts.platform = useragent.os.family === 'Windows' ? 'Win32' : 'MacIntel';
 
     const page = await puppBrowser.newPage();
 
     await cleanPageCache(page);
-    await runInstructionInPuppeteer(page, instruction, false);
+    await runAssignmentInPuppeteer(page, assignment, false);
     // don't wait for close
     page.close().catch();
   }
 
   try {
-    await forEachInstruction(basename(__dirname), dir => pool.run(run, dir), pool.count);
+    await forEachAssignment(basename(__dirname), dir => pool.run(run, dir), pool.count);
   } finally {
     await pool.stop();
   }

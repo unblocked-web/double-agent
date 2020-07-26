@@ -1,44 +1,44 @@
-import IInstruction from '../interfaces/IInstruction';
+import IAssignment from '../interfaces/IAssignment';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { URL } from 'url';
 import BrowsersToTest, { IBrowserToTestAgent } from '@double-agent/profiler/lib/BrowsersToTest';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
-export default async function getAllInstructions(
+export default async function getAllAssignments(
   httpDomains: IDetectionDomains,
   httpsDomains: IDetectionDomains,
   browsersToTest: BrowsersToTest,
 ) {
-  const instructions = [];
+  const assignments = [];
 
   browsersToTest.majority.forEach(browserToTest => {
     browserToTest.agents.forEach(agent => {
-      const instruction = buildInstruction(
+      const assignment = buildAssignment(
         httpDomains,
         httpsDomains,
         agent,
         false,
       );
-      instructions.push(instruction);
+      assignments.push(assignment);
     })
   });
 
   browsersToTest.intoli.forEach(browserToTest => {
     browserToTest.agents.forEach(agent => {
-      const instruction = buildInstruction(
+      const assignment = buildAssignment(
         httpDomains,
         httpsDomains,
         agent,
         true,
       );
-      instructions.push(instruction);
+      assignments.push(assignment);
     })
   });
 
-  return instructions;
+  return assignments;
 }
 
-export function buildInstruction(
+export function buildAssignment(
   httpDomains: IDetectionDomains,
   secureDomains: IDetectionDomains,
   agent: IBrowserToTestAgent = null,
@@ -81,5 +81,5 @@ export function buildInstruction(
       },
     ],
     sessionid: '',
-  } as IInstruction;
+  } as IAssignment;
 }

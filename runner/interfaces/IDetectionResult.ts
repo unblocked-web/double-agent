@@ -1,7 +1,7 @@
-import IInstruction from './IInstruction';
+import IAssignment from './IAssignment';
 
 export default interface IDetectionResult {
-  instruction: IInstruction;
+  assignment: IAssignment;
   success: boolean;
   category: string;
   name?: string;

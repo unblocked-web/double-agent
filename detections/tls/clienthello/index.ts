@@ -3,7 +3,7 @@ import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
 import ForkedServerRunner from './lib/ForkedServerRunner';
 import ITlsResult from './interfaces/ITlsResult';
 import { isGreased } from './lib/buildJa3Extended';
-import IInstruction from '@double-agent/runner/interfaces/IInstruction';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 import ClientHelloProfile from './lib/ClientHelloProfile';
 import UserBucket from '@double-agent/runner/interfaces/UserBucket';
 import { flaggedCheckFromRequest } from '@double-agent/runner/lib/flagUtils';
@@ -17,17 +17,17 @@ export default class TlsClientHelloPlugin implements IDetectionPlugin {
   private forkedServers = new Map<string, ForkedServerRunner>();
   private sessionTlsResults = new Map<string, ITlsResult>();
 
-  public async onNewInstruction(instruction: IInstruction) {
+  public async onNewAssignment(assignment: IAssignment) {
     const forkedServer = new ForkedServerRunner();
     const presitePort = (tlsPort += 1);
-    const sessionid = instruction.sessionid;
+    const sessionid = assignment.sessionid;
     await forkedServer.start(
       presitePort,
       result => this.onTlsResult(result, sessionid),
-      instruction.pages[0].url,
+      assignment.pages[0].url,
     );
     this.forkedServers.set(sessionid, forkedServer);
-    instruction.pages.unshift({
+    assignment.pages.unshift({
       url: new URL(`${tlsDomain}:${presitePort}/?sessionid=${sessionid}`).href,
       clickSelector: '#goto-start-page',
     });
