@@ -3,11 +3,11 @@ import { IncomingMessage, Server, ServerResponse } from 'http';
 import url from 'url';
 import DetectionsServer from './DetectionsServer';
 
-export default class DirectiveServer {
+export default class AssignmentServer {
   private readonly server: http.Server;
   private readonly routes = {
-    '/': this.nextDirective.bind(this),
-    '/create': this.createDirective.bind(this),
+    '/': this.nextAssignment.bind(this),
+    '/create': this.createAssignment.bind(this),
     '/results': this.getResults.bind(this),
   };
 
@@ -26,7 +26,7 @@ export default class DirectiveServer {
       return res.writeHead(200).end();
     }
 
-    console.log('Directives %s', req.url);
+    console.log('Assignments %s', req.url);
     const scraperDir = req.headers.scraper ?? requestUrl.query.scraper;
     if (!scraperDir) {
       return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
@@ -46,14 +46,14 @@ export default class DirectiveServer {
     sendJson(res, { result });
   }
 
-  private async nextDirective(_, res: ServerResponse, scraperDir: string) {
-    const directive = await this.detectionsServer.nextDirective(scraperDir);
-    sendJson(res, { directive });
+  private async nextAssignment(_, res: ServerResponse, scraperDir: string) {
+    const assignment = await this.detectionsServer.nextAssignment(scraperDir);
+    sendJson(res, { assignment });
   }
 
-  private async createDirective(_, res: ServerResponse, scraperName: string) {
-    const directive = await this.detectionsServer.createSessionDirectives(scraperName);
-    sendJson(res, { directive });
+  private async createAssignment(_, res: ServerResponse, scraperName: string) {
+    const assignment = await this.detectionsServer.createSessionAssignments(scraperName);
+    sendJson(res, { assignment });
   }
 }
 

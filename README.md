@@ -32,7 +32,7 @@ Secret Agent 0.2.8 | 30 | 41
 This suite is broken up by the layers of an http request. Each layer has one or more plugins that tie into an overall set of pages loaded by a test runner. Each plugin first generates "profiles" of how known browsers behave loading the test pages. Any scraper is then compared to these "profiles" to find discrepancies. These checks are given a "bot score", or likelihood that the flagged check indicates the user agent is actually a bot.
 
 - `/detections`: suite of tests
-- `/runner`: a server that can generate step-by-step instructions for a scraper to run all tests
+- `/runner`: a server that can generate step-by-step assignments for a scraper to run all tests
 - `/scrapers`: some default scraping stacks running the suite
 - `/profiler`: create profiles of real browsers running through the pages 
 
@@ -72,8 +72,8 @@ If you'd like to test out your scraper stack:
 
 1. Navigate to the `/runner` directory and run `yarn start`. Follow setup directions print onto the console from this command. 
 
-2. The API will return directives one at a time until all tests have been run. Include a scraper engine you're testing with
-   a query string or header called "scraper". Directive format can be found at `/runner/interfaces/IDirective.ts`.
+2. The API will return assignments one at a time until all tests have been run. Include a scraper engine you're testing with
+   a query string or header called "scraper". Assignment format can be found at `/runner/interfaces/IAssignment.ts`.
 
 3. Once all tests are run, results will be output to the same directory as your scraper engine.
 

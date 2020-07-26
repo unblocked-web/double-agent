@@ -1,4 +1,4 @@
-import IDirective from '../interfaces/IDirective';
+import IAssignment from '../interfaces/IAssignment';
 import IDetectionSession from '../interfaces/IDetectionSession';
 import { average } from './utils';
 import IUserBucketAverages from '../interfaces/IUserBucketAverages';
@@ -8,12 +8,12 @@ export default class UserBucketStats {
   private samples = 0;
   private buckets: IUserBucketStats = {};
 
-  public trackDirectiveResults(
-    directive: Pick<IDirective, 'useragent'>,
+  public trackAssignmentResults(
+    assignment: Pick<IAssignment, 'useragent'>,
     session: Pick<IDetectionSession, 'identifiers'>,
   ) {
     this.samples += 1;
-    const profileDirName = getProfileDirNameFromUseragent(directive.useragent);
+    const profileDirName = getProfileDirNameFromUseragent(assignment.useragent);
     for (const id of session.identifiers) {
       let tracker = this.buckets[id.bucket.toString()];
       if (!tracker) {

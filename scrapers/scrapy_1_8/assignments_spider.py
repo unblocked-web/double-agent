@@ -4,8 +4,8 @@ from scrapy import signals
 from collections import namedtuple
 import urllib.request
 
-class DirectivesSpider(scrapy.Spider):
-    name = "directives"
+class AssignmentsSpider(scrapy.Spider):
+    name = "assignments"
     start_urls = ['http://a0.ulixee-test.org:3000/?scraper=scrapy_1_8']
     end_urls = ['http://a0.ulixee-test.org:3000/results?scraper=scrapy_1_8']
 
@@ -16,7 +16,7 @@ class DirectivesSpider(scrapy.Spider):
 
     @classmethod
     def from_crawler(cls, crawler, *args, **kwargs):
-        spider = super(DirectivesSpider, cls).from_crawler(crawler, *args, **kwargs)
+        spider = super(AssignmentsSpider, cls).from_crawler(crawler, *args, **kwargs)
         crawler.signals.connect(spider.spider_idle, signal=signals.spider_idle)
         return spider
 
@@ -29,18 +29,18 @@ class DirectivesSpider(scrapy.Spider):
 
     def parse(self, response):
         jsonresponse = json.loads(response.text)
-        if "directive" in jsonresponse and jsonresponse["directive"] is not None:
-            directive = jsonresponse['directive']
-            print(directive)
+        if "assignment" in jsonresponse and jsonresponse["assignment"] is not None:
+            assignment = jsonresponse['assignment']
+            print(assignment)
             yield scrapy.Request(
-                url = directive['pages'][0]['url'],
+                url = assignment['pages'][0]['url'],
                 callback = self.extract_page,
-                cb_kwargs = directive,
+                cb_kwargs = assignment,
                 meta = { "referrer_policy" : 'no-referrer'},
-                headers = {'User-Agent': directive['useragent'] }
+                headers = {'User-Agent': assignment['useragent'] }
               )
 
-    def extract_page(self, response, **directive):
+    def extract_page(self, response, **assignment):
         for link in response.css('script'):
             if "src" in link.attrib:
                 print("Following script", link.attrib['src'])
@@ -56,7 +56,7 @@ class DirectivesSpider(scrapy.Spider):
 
         still_on_pages = False
         url_was_last_page = False
-        for page in directive['pages']:
+        for page in assignment['pages']:
             print("Check url", page['url'], response.url)
             if url_was_last_page:
                 url = page["url"]
@@ -64,8 +64,8 @@ class DirectivesSpider(scrapy.Spider):
                 print("Load url", url)
                 yield response.follow(
                    url,
-                   headers = {'User-Agent': directive["useragent"]},
-                   cb_kwargs = directive,
+                   headers = {'User-Agent': assignment["useragent"]},
+                   cb_kwargs = assignment,
                    callback = self.extract_page
                 )
             elif page['url'] == response.url:
@@ -76,8 +76,8 @@ class DirectivesSpider(scrapy.Spider):
                     still_on_pages = True
                     yield response.follow(
                        url,
-                       headers = {'User-Agent': directive["useragent"]},
-                       cb_kwargs = directive,
+                       headers = {'User-Agent': assignment["useragent"]},
+                       cb_kwargs = assignment,
                        callback = self.extract_page
                     )
                 else:
@@ -85,10 +85,10 @@ class DirectivesSpider(scrapy.Spider):
 
 
         if not still_on_pages:
-            yield from self.next_directive(response)
+            yield from self.next_assignment(response)
 
-    def next_directive(self, response):
-        print("Next Directive")
+    def next_assignment(self, response):
+        print("Next Assignment")
         yield scrapy.Request(self.start_urls[0], self.parse)
 
     def no_extract(self, response):

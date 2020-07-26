@@ -50,7 +50,7 @@ export default class BrowsersToTestGenerator {
       this.byType.majority.push({
         browserKey: instance.browserKey,
         osKey: instance.osKey,
-        tests: useragentObjs.map(useragentObj => {
+        agents: useragentObjs.map(useragentObj => {
           return {
             useragent: useragentObj.string,
             usagePercent: instance.desktopPercent / useragentObjs.length,
@@ -64,7 +64,7 @@ export default class BrowsersToTestGenerator {
       this.byType.intoli.push({
         browserKey: instance.browserKey,
         osKey: instance.osKey,
-        tests: useragentObjs.map(useragentObj => {
+        agents: useragentObjs.map(useragentObj => {
           return {
             useragent: useragentObj.string,
             usagePercent: useragentObj.sources.filter(x => x === 'Intoli').length * 2,

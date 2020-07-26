@@ -1,10 +1,10 @@
-import IDirectivePage from './IDirectivePage';
+import IAssignmentPage from './IAssignmentPage';
 
-export default interface IDirective {
+export default interface IAssignment {
   useragent: string;
   profileDirName: string;
   percentOfTraffic: number;
   testType: 'intoli' | 'topBrowsers';
-  pages: IDirectivePage[];
+  pages: IAssignmentPage[];
   sessionid: string;
 }

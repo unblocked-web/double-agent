@@ -1,7 +1,7 @@
-import IDirective from './IDirective';
+import IAssignment from './IAssignment';
 
 export default interface IDetectionResult {
-  directive: IDirective;
+  assignment: IAssignment;
   success: boolean;
   category: string;
   name?: string;

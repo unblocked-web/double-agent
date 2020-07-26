@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
-import runDirectiveInPuppeteer from '../puppeteer_2_0/lib/runDirectiveInPuppeteer';
-import forEachDirective from '../lib/forEachDirective';
+import runAssignmentInPuppeteer from '../puppeteer_2_0/lib/runAssignmentInPuppeteer';
+import forEachAssignment from '../lib/forEachAssignment';
 import { basename } from 'path';
 
 (async function() {
@@ -8,11 +8,11 @@ import { basename } from 'path';
     ignoreHTTPSErrors: true,
   });
 
-  await forEachDirective(basename(__dirname), async directive => {
+  await forEachAssignment(basename(__dirname), async assignment => {
     const session = await puppBrowser.createIncognitoBrowserContext();
     const page = await session.newPage();
 
-    await runDirectiveInPuppeteer(page, directive);
+    await runAssignmentInPuppeteer(page, assignment);
     // don't wait for close
     session.close().catch();
   });

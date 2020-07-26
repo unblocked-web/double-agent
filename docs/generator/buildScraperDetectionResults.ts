@@ -1,7 +1,7 @@
 import getAllDetectors from '@double-agent/runner/lib/getAllDetectors';
 import * as fs from 'fs';
-import mergeScraperResults from '@double-agent/runner/lib/mergeScraperResults';
-import browserWeightedBotScore from '@double-agent/runner/lib/browserWeightedBotScore';
+import mergeScraperResults from '../lib/mergeScraperResults';
+import browserWeightedBotScore from '../lib/browserWeightedBotScore';
 
 const outputFile = __dirname + '/../output/scraper-detection-results.md';
 

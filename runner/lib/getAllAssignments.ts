@@ -1,53 +1,53 @@
-import IDirective from '../interfaces/IDirective';
+import IAssignment from '../interfaces/IAssignment';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { URL } from 'url';
-import BrowsersToTest, { IBrowserToTestTest } from '@double-agent/profiler/lib/BrowsersToTest';
+import BrowsersToTest, { IBrowserToTestAgent } from '@double-agent/profiler/lib/BrowsersToTest';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
-export default async function getAllDirectives(
+export default async function getAllAssignments(
   httpDomains: IDetectionDomains,
   httpsDomains: IDetectionDomains,
   browsersToTest: BrowsersToTest,
 ) {
-  const directives = [];
+  const assignments = [];
 
   browsersToTest.majority.forEach(browserToTest => {
-    browserToTest.tests.forEach(browserTest => {
-      const directive = buildDirective(
+    browserToTest.agents.forEach(agent => {
+      const assignment = buildAssignment(
         httpDomains,
         httpsDomains,
-        browserTest,
+        agent,
         false,
       );
-      directives.push(directive);
+      assignments.push(assignment);
     })
   });
 
   browsersToTest.intoli.forEach(browserToTest => {
-    browserToTest.tests.forEach(browserTest => {
-      const directive = buildDirective(
+    browserToTest.agents.forEach(agent => {
+      const assignment = buildAssignment(
         httpDomains,
         httpsDomains,
-        browserTest,
+        agent,
         true,
       );
-      directives.push(directive);
+      assignments.push(assignment);
     })
   });
 
-  return directives;
+  return assignments;
 }
 
-export function buildDirective(
+export function buildAssignment(
   httpDomains: IDetectionDomains,
   secureDomains: IDetectionDomains,
-  browserTest: IBrowserToTestTest = null,
+  agent: IBrowserToTestAgent = null,
   isIntoliUseragent = false,
 ) {
-  const profileDirName = browserTest ? getProfileDirNameFromUseragent(browserTest.useragent) : null;
+  const profileDirName = agent ? getProfileDirNameFromUseragent(agent.useragent) : null;
   return {
-    useragent: browserTest?.useragent,
-    percentOfTraffic: browserTest?.usagePercent,
+    useragent: agent?.useragent,
+    percentOfTraffic: agent?.usagePercent,
     profileDirName: profileDirName,
     testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [
@@ -81,5 +81,5 @@ export function buildDirective(
       },
     ],
     sessionid: '',
-  } as IDirective;
+  } as IAssignment;
 }

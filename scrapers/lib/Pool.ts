@@ -1,4 +1,4 @@
-import IDirective from '@double-agent/runner/interfaces/IDirective';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 
 export default class Pool<T extends ICloseable> {
   private collection: Promise<T>[] = [];
@@ -9,11 +9,11 @@ export default class Pool<T extends ICloseable> {
       .map(() => this.create());
   }
 
-  async run(cb: (client: T, directive: IDirective) => Promise<void>, directive: IDirective) {
+  async run(cb: (client: T, assignment: IAssignment) => Promise<void>, assignment: IAssignment) {
     const entry = this.collection.shift();
     const client = await entry;
     try {
-      await cb(client, directive);
+      await cb(client, assignment);
     } finally {
       this.collection.push(entry);
     }

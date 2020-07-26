@@ -1,9 +1,9 @@
 import puppeteer from 'puppeteer';
-import runDirectiveInPuppeteer from './lib/runDirectiveInPuppeteer';
+import runAssignmentInPuppeteer from './lib/runAssignmentInPuppeteer';
 import cleanPageCache from './lib/cleanPageCache';
-import forEachDirective from '../lib/forEachDirective';
+import forEachAssignment from '../lib/forEachAssignment';
 import { basename } from 'path';
-import IDirective from '@double-agent/runner/interfaces/IDirective';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 import Pool from '../lib/Pool';
 
 (async function() {
@@ -13,17 +13,17 @@ import Pool from '../lib/Pool';
     }),
   );
 
-  async function run(puppBrowser: puppeteer.Browser, directive: IDirective) {
+  async function run(puppBrowser: puppeteer.Browser, assignment: IAssignment) {
     const page = await puppBrowser.newPage();
 
     await cleanPageCache(page);
-    await runDirectiveInPuppeteer(page, directive);
+    await runAssignmentInPuppeteer(page, assignment);
     // don't wait for close
     page.close().catch();
   }
 
   try {
-    await forEachDirective(basename(__dirname), dir => pool.run(run, dir), pool.count);
+    await forEachAssignment(basename(__dirname), dir => pool.run(run, dir), pool.count);
   } finally {
     await pool.stop();
   }

@@ -1,17 +1,17 @@
 import http from 'http';
 import https from 'https';
-import forEachDirective from '../lib/forEachDirective';
+import forEachAssignment from '../lib/forEachAssignment';
 import { basename } from 'path';
 
-forEachDirective(basename(__dirname), async directive => {
+forEachAssignment(basename(__dirname), async assignment => {
   let referer = null;
-  for (const page of directive.pages) {
+  for (const page of assignment.pages) {
     if (referer !== page.url) {
-      const finalUrl = await httpGet(page.url, directive.useragent, referer);
+      const finalUrl = await httpGet(page.url, assignment.useragent, referer);
       referer = finalUrl ?? page.url;
     }
     if (page.clickDestinationUrl && referer !== page.clickDestinationUrl) {
-      const finalRes = await httpGet(page.clickDestinationUrl, directive.useragent, referer);
+      const finalRes = await httpGet(page.clickDestinationUrl, assignment.useragent, referer);
       referer = finalRes ?? page.clickDestinationUrl;
     }
   }

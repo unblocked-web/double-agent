@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import forEachDirective from '../lib/forEachDirective';
+import forEachAssignment from '../lib/forEachAssignment';
 import { basename } from 'path';
 import SecretAgent from 'secret-agent';
 import { lookup } from 'useragent';
@@ -9,7 +9,7 @@ import Chrome79 from '@secret-agent/emulate-chrome-79';
 import Chrome80 from '@secret-agent/emulate-chrome-80';
 import Safari13 from '@secret-agent/emulate-safari-13';
 import createEmulatorForAgent, { buildUserAgentProfile } from './lib/createEmulatorForAgent';
-import IDirectivePage from '@double-agent/runner/interfaces/IDirectivePage';
+import IAssignmentPage from '@double-agent/runner/interfaces/IAssignmentPage';
 import Browser from '@secret-agent/client/lib/Browser';
 
 process.env.MITM_ALLOW_INSECURE = 'true';
@@ -17,13 +17,13 @@ process.env.MITM_ALLOW_INSECURE = 'true';
   await SecretAgent.start({ maxActiveSessionCount: 10, localProxyPortStart: 3500 });
 
   try {
-    await forEachDirective(
+    await forEachAssignment(
       basename(__dirname),
-      async instruction => {
+      async assignment => {
         let browser: Browser;
-        let lastPage: IDirectivePage;
+        let lastPage: IAssignmentPage;
         try {
-          const emulatorId = getEmulator(instruction.useragent);
+          const emulatorId = getEmulator(assignment.useragent);
 
           browser = await SecretAgent.createBrowser({
             emulatorId,
@@ -32,9 +32,9 @@ process.env.MITM_ALLOW_INSECURE = 'true';
           let isFirst = true;
 
           let counter = 0;
-          for (const page of instruction.pages) {
+          for (const page of assignment.pages) {
             lastPage = page;
-            const step = `[${instruction.sessionid}.${counter}]`;
+            const step = `[${assignment.sessionid}.${counter}]`;
             if (isFirst || page.url !== (await browser.url)) {
               console.log('%s Load -- %s', step, page.url);
               await browser.goto(page.url);
@@ -57,9 +57,9 @@ process.env.MITM_ALLOW_INSECURE = 'true';
             }
             counter += 1;
           }
-          console.log('[%s.✔] Done', instruction.sessionid);
+          console.log('[%s.✔] Done', assignment.sessionid);
         } catch (err) {
-          console.log('[%s.x] Error on %s', instruction.sessionid, lastPage?.url, err);
+          console.log('[%s.x] Error on %s', assignment.sessionid, lastPage?.url, err);
         } finally {
           if (browser) {
             await browser.close();

@@ -11,7 +11,7 @@ export default async function updateBrowserData() {
   await browserGenerator.run();
   await browserGenerator.save();
 
-  const browserTestGenerator = new BrowsersToTestGenerator();
-  await browserTestGenerator.run();
-  await browserTestGenerator.save();
+  const browsersToTestGenerator = new BrowsersToTestGenerator();
+  await browsersToTestGenerator.run();
+  await browsersToTestGenerator.save();
 }

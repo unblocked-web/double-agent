@@ -2,18 +2,18 @@ import IDetectionPlugin from '../interfaces/IDetectionPlugin';
 import IRequestContext from '../interfaces/IRequestContext';
 import IDetectorModule from '../interfaces/IDetectorModule';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
-import IDirective from '../interfaces/IDirective';
+import IAssignment from '../interfaces/IAssignment';
 import IDetectionSession from '../interfaces/IDetectionSession';
 import UserBucketTracker from '../lib/UserBucketTracker';
 
 export default class DetectorPluginDelegate implements IDetectionPlugin {
   constructor(readonly detectors: IDetectorModule[]) {}
 
-  async onNewDirective(directive: IDirective) {
+  async onNewAssignment(assignment: IAssignment) {
     for (const detector of this.detectors) {
-      if (!detector.plugin || !detector.plugin.onNewDirective) continue;
+      if (!detector.plugin || !detector.plugin.onNewAssignment) continue;
 
-      await detector.plugin.onNewDirective(directive);
+      await detector.plugin.onNewAssignment(assignment);
     }
   }
 
