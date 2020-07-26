@@ -25,10 +25,10 @@ export default class BrowsersToTest {
 export interface IBrowserToTest {
   browserKey: string;
   osKey: string;
-  tests: IBrowserToTestTest[];
+  agents: IBrowserToTestAgent[];
 }
 
-export interface IBrowserToTestTest {
+export interface IBrowserToTestAgent {
   useragent: string;
   usagePercent: number;
 }

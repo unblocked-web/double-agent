@@ -1,7 +1,7 @@
 import IInstruction from '../interfaces/IInstruction';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { URL } from 'url';
-import BrowsersToTest, { IBrowserToTestTest } from '@double-agent/profiler/lib/BrowsersToTest';
+import BrowsersToTest, { IBrowserToTestAgent } from '@double-agent/profiler/lib/BrowsersToTest';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default async function getAllInstructions(
@@ -12,11 +12,11 @@ export default async function getAllInstructions(
   const instructions = [];
 
   browsersToTest.majority.forEach(browserToTest => {
-    browserToTest.tests.forEach(browserTest => {
+    browserToTest.agents.forEach(agent => {
       const instruction = buildInstruction(
         httpDomains,
         httpsDomains,
-        browserTest,
+        agent,
         false,
       );
       instructions.push(instruction);
@@ -24,11 +24,11 @@ export default async function getAllInstructions(
   });
 
   browsersToTest.intoli.forEach(browserToTest => {
-    browserToTest.tests.forEach(browserTest => {
+    browserToTest.agents.forEach(agent => {
       const instruction = buildInstruction(
         httpDomains,
         httpsDomains,
-        browserTest,
+        agent,
         true,
       );
       instructions.push(instruction);
@@ -41,13 +41,13 @@ export default async function getAllInstructions(
 export function buildInstruction(
   httpDomains: IDetectionDomains,
   secureDomains: IDetectionDomains,
-  browserTest: IBrowserToTestTest = null,
+  agent: IBrowserToTestAgent = null,
   isIntoliUseragent = false,
 ) {
-  const profileDirName = browserTest ? getProfileDirNameFromUseragent(browserTest.useragent) : null;
+  const profileDirName = agent ? getProfileDirNameFromUseragent(agent.useragent) : null;
   return {
-    useragent: browserTest?.useragent,
-    percentOfTraffic: browserTest?.usagePercent,
+    useragent: agent?.useragent,
+    percentOfTraffic: agent?.usagePercent,
     profileDirName: profileDirName,
     testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [
