@@ -17,6 +17,7 @@ export default function trackRemoteTcpVars(port: string | number, securePort: st
 
   const emitter = new EventEmitter();
   let pcapSession: pcap.PcapSession;
+  let hasError;
   try {
     const tcpTracker = new pcap.TCPTracker();
     // @ts-ignore
@@ -53,7 +54,9 @@ export default function trackRemoteTcpVars(port: string | number, securePort: st
       tcpTracker.track_packet(packet);
     });
   } catch (err) {
+    hasError = true;
     console.log(err);
+
   }
 
   async function getPacket(addr: string) {
@@ -67,6 +70,7 @@ export default function trackRemoteTcpVars(port: string | number, securePort: st
     return packet;
   }
   return {
+    hasError,
     getPacket,
     stop: () => {
       pcapSession.close();

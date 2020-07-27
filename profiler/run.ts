@@ -55,8 +55,7 @@ function getRunnerForAgent(agent: IBrowserstackAgent) {
         scraper: 'profiler',
       },
     });
-    const json = await response.json();
-    const assignment = json?.assignment as IAssignment;
+    const assignment: IAssignment = await response.json();
     console.log('Running agent [%s]', agent);
 
     const times = 1;

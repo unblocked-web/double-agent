@@ -7,4 +7,5 @@ export default interface IAssignment {
   testType: 'intoli' | 'topBrowsers';
   pages: IAssignmentPage[];
   sessionid: string;
+  isCompleted?: boolean;
 }

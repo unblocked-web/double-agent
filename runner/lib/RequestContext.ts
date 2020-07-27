@@ -3,7 +3,7 @@ import IDomainset from '../interfaces/IDomainset';
 import { IncomingMessage, ServerResponse } from 'http';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import HostDomain from '../interfaces/HostDomain';
-import { getOriginType } from '../server/extractRequestDetails';
+import { getOriginType } from '../detections-server/extractRequestDetails';
 import UserBucketTracker from './UserBucketTracker';
 import DetectionSession from './DetectionSession';
 import { URL } from 'url';

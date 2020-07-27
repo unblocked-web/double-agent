@@ -40,7 +40,7 @@ export default async function getAllAssignments(
 
 export function buildAssignment(
   httpDomains: IDetectionDomains,
-  secureDomains: IDetectionDomains,
+  httpsDomains: IDetectionDomains,
   agent: IBrowserToTestAgent = null,
   isIntoliUseragent = false,
 ) {
@@ -52,17 +52,17 @@ export function buildAssignment(
     testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [
       {
-        url: secureDomains.main.href,
+        url: httpsDomains.main.href,
         clickSelector: '#goto-run-page',
-        clickDestinationUrl: new URL('/run', secureDomains.main).href,
+        clickDestinationUrl: new URL('/run', httpsDomains.main).href,
       },
       {
-        url: new URL('/run-page', secureDomains.external).href,
+        url: new URL('/run-page', httpsDomains.external).href,
         clickSelector: '#goto-results-page',
-        clickDestinationUrl: new URL('/results', secureDomains.external).href,
+        clickDestinationUrl: new URL('/results', httpsDomains.external).href,
       },
       {
-        url: new URL('/results-page', secureDomains.main).href,
+        url: new URL('/results-page', httpsDomains.main).href,
         waitForElementSelector: 'body.ready',
       },
       {

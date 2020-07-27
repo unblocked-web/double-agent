@@ -1,7 +1,7 @@
-import IAssignment from '../interfaces/IAssignment';
-import IDetectionSession from '../interfaces/IDetectionSession';
-import { average } from './utils';
-import IUserBucketAverages from '../interfaces/IUserBucketAverages';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
+import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
+import { average } from '@double-agent/runner/lib/utils';
+import IUserBucketAverages from '@double-agent/runner/interfaces/IUserBucketAverages';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default class UserBucketStats {

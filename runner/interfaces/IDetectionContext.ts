@@ -1,4 +1,4 @@
-import DetectorPluginDelegate from '../server/DetectorPluginDelegate';
+import DetectorPluginDelegate from '../detections-server/DetectorPluginDelegate';
 import IDetectorModule from './IDetectorModule';
 import SessionTracker from '../lib/SessionTracker';
 import UserBucketTracker from '../lib/UserBucketTracker';

@@ -21,12 +21,22 @@ forEachAssignment(basename(__dirname), async assignment => {
 
   for (const page of assignment.pages) {
     if (curl.getInfo(Curl.info.EFFECTIVE_URL) !== page.url) {
-      console.log('GET ', page.url);
-      await httpGet(curl, page.url);
+      try {
+        console.log('GET ', page.url);
+        await httpGet(curl, page.url);
+      } catch(error) {
+        console.log(`ERROR getting page.url: ${page.url}`, error);
+        throw error;
+      }
     }
     if (page.clickDestinationUrl) {
-      console.log('GET click dest', page.clickDestinationUrl);
-      await httpGet(curl, page.clickDestinationUrl);
+      try {
+        console.log('GET click dest', page.clickDestinationUrl);
+        await httpGet(curl, page.clickDestinationUrl);
+      } catch(error) {
+        console.log(`ERROR getting page.clickDestinationUrl: ${page.clickDestinationUrl}`, error);
+        throw error;
+      }
     }
   }
   curl.close();

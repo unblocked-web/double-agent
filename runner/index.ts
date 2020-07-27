@@ -1,6 +1,6 @@
 import 'source-map-support/register';
-import DetectionsServer from './server/DetectionsServer';
-import AssignmentServer from './server/AssignmentServer';
+import DetectionsServer from './detections-server/DetectionsServer';
+import AssignmentServer from './assignments-server/AssignmentServer';
 
 let assignmentsPort = Number(process.env.PORT ?? 3000);
 let httpPort = Number(process.env.HTTP_PORT ?? 3001);

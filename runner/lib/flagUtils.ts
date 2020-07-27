@@ -1,6 +1,6 @@
 import IRequestContext from '../interfaces/IRequestContext';
 import Layer from '../interfaces/Layer';
-import { getHostType, getResourceType } from '../server/extractRequestDetails';
+import { getHostType, getResourceType } from '../detections-server/extractRequestDetails';
 import IAsset from '../interfaces/IAsset';
 import OriginType from '../interfaces/OriginType';
 import IDomainset from '../interfaces/IDomainset';
