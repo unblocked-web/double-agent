@@ -6,34 +6,21 @@ Mostly, these tests detect when a user agent is not who it claims to be.
 
 ## Mainstream Scraper Detections:
 
-This version of Double Agent tests how many ways popular scrapers can be detected when emulating  browser/OS desktop combos. Future versions will integrate mobile browsers.
+This version of Double Agent tests how many ways scrapers can be detected when emulating browser/OS desktop combos. Future versions will integrate mobile browsers.
 
 Scrapers often choose a strategy of rotating user agents using a library, or picking a few popular browsers and rotating between those. This suite tests both strategies.
 
-1. **Generator:** randomly generated using the Intoli [user-agents](https://github.com/intoli/user-agents) package
-2. **Top Browsers:** rotate between the top 2 Browsers according to [StatCounter.com](https://gs.statcounter.com/)
+1. **Intoli:** randomly generated useragents using the Intoli [user-agents](https://github.com/intoli/user-agents) package
+2. **Majority:** rotate between the useragents that comprise more than 50% of web traffic according to [StatCounter.com](https://gs.statcounter.com/)
 
-Counts shown are the likelihood of bot detection using both strategies when scraping just a few requests. NOTE: all tests are active in these scores. For a dynamic approach to exploring results, visit [State of Scraping](https://stateofscraping.org).
-
-[]() | Generator | Top Browsers
---- | :---: | :---:
-curl 7.64 | 100 | 98
-Node.js 12 - http/https | 100 | 98
-Scrapy 1.8 | 100 | 98
-Puppeteer 2.0 - Chromium 79 | 96 | 98
-Puppeteer 2.0 - Chromium 79 + Incognito Mode | 96 | 98
-Puppeteer 2.1 - Chromium 80 | 89 | 98
-Puppeteer 2.1 - Chrome 80 | 89 | 97
-Puppeteer 2.1 - Chrome 80 + Stealth Plugin | 89 | 98
-Secret Agent 0.2.8 | 30 | 41
+For a dynamic approach to exploring results, visit [State of Scraping](https://stateofscraping.org).
 
 ## Structure:
 
-This suite is broken up by the layers of an http request. Each layer has one or more plugins that tie into an overall set of pages loaded by a test runner. Each plugin first generates "profiles" of how known browsers behave loading the test pages. Any scraper is then compared to these "profiles" to find discrepancies. These checks are given a "bot score", or likelihood that the flagged check indicates the user agent is actually a bot.
+This suite is broken up by the layers of a browser request. Each layer has one or more plugins that tie into an overall set of pages loaded by a test runner. Each plugin first generates "profiles" of how known browsers behave loading the test pages. Any scraper is then compared to these "profiles" to find discrepancies. These checks are given a "bot score", or likelihood that the flagged check indicates the user agent is actually a bot.
 
 - `/detections`: suite of tests
 - `/runner`: a server that can generate step-by-step assignments for a scraper to run all tests
-- `/scrapers`: some default scraping stacks running the suite
 - `/profiler`: create profiles of real browsers running through the pages 
 
 ## Detections:
@@ -53,6 +40,7 @@ browser/codecs | * Audio Codecs Supported<br/><br/>* Video Codecs Supported<br/>
 browser/dom | * Dom Features Match Version | Test that the list of browser dom features matches the user agent | :white_check_mark:
 browser/fingerprint | * Browser Fingerprint | Is the browser fingerprint the same on every execution? | :white_check_mark:
 browser/fonts | * Fonts Supported | Does the font fingerprint match the operating system | :white_check_mark:
+browser/window-keys | * Window Keys Match Version | Test that the list of browser window keys match the user agent | :white_check_mark:
 visits/over-time | * Hits Per Second<br/><br/>* Hits Per Minute<br/><br/>* Hits Per Hour | Checks counts of hits from the same user agent buckets | :white_check_mark:
 http/cache | * Cache Headers | Http caching headers sent in different conditions vs default user agent behavior |  
 http/referrers | * Referrers | Referrer headers indicate browser came from a legitimate source |  
@@ -77,4 +65,4 @@ If you'd like to test out your scraper stack:
 
 3. Once all tests are run, results will be output to the same directory as your scraper engine.
 
-Popular scraper examples can be found in the `/scrapers` directory.
+Popular scraper examples can be found in the [scraper-report](https://github.com/ulixee/scraper-report) repo.

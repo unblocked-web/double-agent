@@ -11,6 +11,7 @@ browser/codecs | * Audio Codecs Supported<br/><br/>* Video Codecs Supported<br/>
 browser/dom | * Dom Features Match Version | Test that the list of browser dom features matches the user agent | :white_check_mark:
 browser/fingerprint | * Browser Fingerprint | Is the browser fingerprint the same on every execution? | :white_check_mark:
 browser/fonts | * Fonts Supported | Does the font fingerprint match the operating system | :white_check_mark:
+browser/window-keys | * Window Keys Match Version | Test that the list of browser window keys match the user agent | :white_check_mark:
 visits/over-time | * Hits Per Second<br/><br/>* Hits Per Minute<br/><br/>* Hits Per Hour | Checks counts of hits from the same user agent buckets | :white_check_mark:
 http/cache | * Cache Headers | Http caching headers sent in different conditions vs default user agent behavior |  
 http/referrers | * Referrers | Referrer headers indicate browser came from a legitimate source |  
