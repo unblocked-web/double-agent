@@ -8,15 +8,16 @@
     "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 TLS_DOMAIN=tls.ulixee.org MAIN_DOMAIN=headers.ulixee.org SAME_SITE_DOMAIN=a1.ulixee.org CROSS_SITE_DOMAIN=headers.dataliberationfoundation.org HTTP_PORT=80 HTTPS_PORT=443 node index.js"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "cookie": "^0.4.0",
     "diff": "^4.0.2",
+    "json5": "^2.1.2",
+    "moment": "^2.24.0",
     "p-queue": "^6.2.1",
+    "path-to-regexp": "^6.1.0",
     "source-map-support": "^0.5.16",
     "useragent": "^2.3.0",
-    "moment": "^2.24.0",
-    "json5": "^2.1.2",
-    "ws": "^7.2.1",
-    "axios": "^0.19.2"
+    "ws": "^7.2.1"
   },
   "devDependencies": {
     "@types/cookie": "^0.3.3",

@@ -50,12 +50,13 @@ process.on('exit', () => {
 
 function getRunnerForAgent(agent: IBrowserstackAgent) {
   return async () => {
-    const response = await fetch(`http://${runnerDomain}:3000/create`, {
+    const response = await fetch(`http://${runnerDomain}:3000/profiler`, {
       headers: {
         scraper: 'profiler',
       },
     });
-    const assignment: IAssignment = await response.json();
+    const data = await response.json();
+    const assignment = data.assignment as IAssignment
     console.log('Running agent [%s]', agent);
 
     const times = 1;

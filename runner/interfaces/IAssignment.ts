@@ -1,6 +1,7 @@
 import IAssignmentPage from './IAssignmentPage';
 
 export default interface IAssignment {
+  id: number;
   useragent: string;
   profileDirName: string;
   percentOfTraffic: number;

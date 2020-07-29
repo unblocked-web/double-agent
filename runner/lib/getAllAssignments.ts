@@ -9,11 +9,12 @@ export default async function getAllAssignments(
   httpsDomains: IDetectionDomains,
   browsersToTest: BrowsersToTest,
 ) {
-  const assignments = [];
+  const assignments: IAssignment[] = [];
 
   browsersToTest.majority.forEach(browserToTest => {
     browserToTest.agents.forEach(agent => {
       const assignment = buildAssignment(
+        assignments.length,
         httpDomains,
         httpsDomains,
         agent,
@@ -26,6 +27,7 @@ export default async function getAllAssignments(
   browsersToTest.intoli.forEach(browserToTest => {
     browserToTest.agents.forEach(agent => {
       const assignment = buildAssignment(
+        assignments.length,
         httpDomains,
         httpsDomains,
         agent,
@@ -39,6 +41,7 @@ export default async function getAllAssignments(
 }
 
 export function buildAssignment(
+  assignmentId: number,
   httpDomains: IDetectionDomains,
   httpsDomains: IDetectionDomains,
   agent: IBrowserToTestAgent = null,
@@ -46,6 +49,7 @@ export function buildAssignment(
 ) {
   const profileDirName = agent ? getProfileDirNameFromUseragent(agent.useragent) : null;
   return {
+    id: assignmentId,
     useragent: agent?.useragent,
     percentOfTraffic: agent?.usagePercent,
     profileDirName: profileDirName,
