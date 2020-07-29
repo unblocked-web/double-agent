@@ -16,6 +16,10 @@ export default class SessionTracker {
     return this.sessions[sessionid];
   }
 
+  public deleteSession(sessionid: string) {
+    delete this.sessions[sessionid];
+  }
+
   public createSession(expectedUseragent: string) {
     const sessionid = String((sessionIdCounter += 1));
 

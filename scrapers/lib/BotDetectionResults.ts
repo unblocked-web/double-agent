@@ -1,6 +1,6 @@
-import IAssignment from '../interfaces/IAssignment';
-import IDetectionSession from '../interfaces/IDetectionSession';
-import IBrowserFindings, { IBrowserPercents } from '../interfaces/IBrowserFindings';
+import IAssignment from '@double-agent/runner/interfaces/IAssignment';
+import IDetectionSession from '@double-agent/runner/interfaces/IDetectionSession';
+import IBrowserFindings, { IBrowserPercents } from '@double-agent/runner/interfaces/IBrowserFindings';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default class BotDetectionResults {
@@ -34,7 +34,7 @@ export default class BotDetectionResults {
         const entry = browserFinding[flaggedCheck.category];
         entry.flagged += 1;
         entry.botPct = Math.max(entry.botPct ?? 0, flaggedCheck.pctBot);
-        entry.flaggedChecks.push(flaggedCheck);
+        // entry.flaggedChecks.push(flaggedCheck);
       }
     }
 

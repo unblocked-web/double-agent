@@ -11,11 +11,16 @@ export default class TcpPlugin implements IDetectionPlugin {
     remoteAddress: string,
   ) => Promise<{ windowSize: number; ttl: number }>;
   private closeTracker: () => void;
+  private trackerHasError: boolean = false;
 
   public async start(domains: IDetectionDomains, secureDomains: IDetectionDomains): Promise<void> {
     const tracker = trackRemoteTcpVars(domains.main.port, secureDomains.main.port);
+    if (tracker.hasError) {
+      console.log('------------- ERROR Starting TTL Tracker -------------\nTry starting server with sudo');
+    }
     this.getRemoteTcpVarsForAddress = tracker.getPacket;
     this.closeTracker = tracker.stop;
+    this.trackerHasError = tracker.hasError;
   }
 
   public async stop() {
@@ -23,7 +28,7 @@ export default class TcpPlugin implements IDetectionPlugin {
   }
 
   public async onRequest(ctx: IRequestContext) {
-    if (ctx.session.requests.length > 1) {
+    if (ctx.session.requests.length > 1 || this.trackerHasError) {
       return;
     }
     const packet = await this.getRemoteTcpVarsForAddress(ctx.requestDetails.remoteAddress);

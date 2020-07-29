@@ -27,7 +27,6 @@ export default function httpRequestHandler(
     }
 
     const listeningDomains = domains.listeningDomains;
-
     const requestUrl = new URL(`${listeningDomains.main.protocol}//${req.headers.host}${req.url}`);
 
     if (!isOndomains(requestUrl, listeningDomains)) {

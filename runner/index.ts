@@ -1,6 +1,6 @@
 import 'source-map-support/register';
-import DetectionsServer from './server/DetectionsServer';
-import AssignmentServer from './server/AssignmentServer';
+import DetectionsServer from './detections-server/DetectionsServer';
+import AssignmentServer from './assignments-server/AssignmentServer';
 
 let assignmentsPort = Number(process.env.PORT ?? 3000);
 let httpPort = Number(process.env.HTTP_PORT ?? 3001);
@@ -36,7 +36,9 @@ NOTE if not using dockers:
 
 Run the suite:
 4. Point your scraper at http://a1.ulixee-test.org:${assignmentsPort} to get your first assignment.
-5. Follow the assignment, and then ask this same url for your next assignment. Assignments will be returned until the test suite is completed.`,
+5. Follow the assignment, and then ask this same url for your next assignment. Assignments will be returned until the test suite is completed.
+
+`,
       );
     })
     .on('error', err => console.log(err));

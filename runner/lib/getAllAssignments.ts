@@ -9,11 +9,12 @@ export default async function getAllAssignments(
   httpsDomains: IDetectionDomains,
   browsersToTest: BrowsersToTest,
 ) {
-  const assignments = [];
+  const assignments: IAssignment[] = [];
 
   browsersToTest.majority.forEach(browserToTest => {
     browserToTest.agents.forEach(agent => {
       const assignment = buildAssignment(
+        assignments.length,
         httpDomains,
         httpsDomains,
         agent,
@@ -26,6 +27,7 @@ export default async function getAllAssignments(
   browsersToTest.intoli.forEach(browserToTest => {
     browserToTest.agents.forEach(agent => {
       const assignment = buildAssignment(
+        assignments.length,
         httpDomains,
         httpsDomains,
         agent,
@@ -39,30 +41,32 @@ export default async function getAllAssignments(
 }
 
 export function buildAssignment(
+  assignmentId: number,
   httpDomains: IDetectionDomains,
-  secureDomains: IDetectionDomains,
+  httpsDomains: IDetectionDomains,
   agent: IBrowserToTestAgent = null,
   isIntoliUseragent = false,
 ) {
   const profileDirName = agent ? getProfileDirNameFromUseragent(agent.useragent) : null;
   return {
+    id: assignmentId,
     useragent: agent?.useragent,
     percentOfTraffic: agent?.usagePercent,
     profileDirName: profileDirName,
     testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [
       {
-        url: secureDomains.main.href,
+        url: httpsDomains.main.href,
         clickSelector: '#goto-run-page',
-        clickDestinationUrl: new URL('/run', secureDomains.main).href,
+        clickDestinationUrl: new URL('/run', httpsDomains.main).href,
       },
       {
-        url: new URL('/run-page', secureDomains.external).href,
+        url: new URL('/run-page', httpsDomains.external).href,
         clickSelector: '#goto-results-page',
-        clickDestinationUrl: new URL('/results', secureDomains.external).href,
+        clickDestinationUrl: new URL('/results', httpsDomains.external).href,
       },
       {
-        url: new URL('/results-page', secureDomains.main).href,
+        url: new URL('/results-page', httpsDomains.main).href,
         waitForElementSelector: 'body.ready',
       },
       {
