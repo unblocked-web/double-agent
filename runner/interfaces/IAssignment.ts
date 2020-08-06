@@ -1,12 +1,13 @@
 import IAssignmentPage from './IAssignmentPage';
+import { IBrowserToTestPickType, IBrowserToTestUsagePercent } from '@double-agent/profiler/lib/BrowsersToTest';
 
 export default interface IAssignment {
   id: number;
   useragent: string;
+  pickType: IBrowserToTestPickType;
   profileDirName: string;
-  percentOfTraffic: number;
-  testType: 'intoli' | 'topBrowsers';
+  usagePercent: IBrowserToTestUsagePercent;
   pages: IAssignmentPage[];
-  sessionid: string;
+  sessionId: string;
   isCompleted?: boolean;
 }

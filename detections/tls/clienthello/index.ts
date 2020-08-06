@@ -20,7 +20,7 @@ export default class TlsClientHelloPlugin implements IDetectionPlugin {
   public async onNewAssignment(assignment: IAssignment) {
     const forkedServer = new ForkedServerRunner();
     const presitePort = (tlsPort += 1);
-    const sessionid = assignment.sessionid;
+    const sessionid = assignment.sessionId;
     await forkedServer.start(
       presitePort,
       result => this.onTlsResult(result, sessionid),

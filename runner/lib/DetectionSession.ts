@@ -9,8 +9,11 @@ import IDomainset from '../interfaces/IDomainset';
 import ICheckCounter from '../interfaces/ICheckCounter';
 import { assetFromURL } from './flagUtils';
 import { URL } from 'url';
+import { IBrowserToTestPickType, IBrowserToTestUsagePercent } from '@double-agent/profiler/lib/BrowsersToTest';
+import IAssignment from '../interfaces/IAssignment';
 
 export default class DetectionSession implements IDetectionSession {
+  public readonly id: string;
   public readonly assetsNotLoaded: IAsset[] = [];
   public readonly checks: ICheckCounter[] = [];
   public readonly expectedAssets: (IAsset & { fromUrl?: string })[] = [];
@@ -24,7 +27,24 @@ export default class DetectionSession implements IDetectionSession {
   public userUuid: string;
   public useragent: string;
 
-  constructor(readonly id: string) {}
+  private readonly pickType: IBrowserToTestPickType = [];
+  private readonly usagePercent: IBrowserToTestUsagePercent;
+
+  constructor(id: string, assignment?: IAssignment) {
+    this.id = id;
+    if (assignment) {
+      this.pickType = assignment.pickType;
+      this.usagePercent = assignment.usagePercent;
+    }
+  }
+
+  public get pctBot() {
+    let pctBot = 0;
+    for (const flaggedCheck of this.flaggedChecks) {
+      pctBot = Math.max(flaggedCheck.pctBot, pctBot);
+    }
+    return pctBot
+  }
 
   public setUseragent(useragent: string) {
     this.useragent = useragent;
@@ -49,6 +69,26 @@ export default class DetectionSession implements IDetectionSession {
     }
     this.recordCheckRun(flaggedCheck, skipPreviousRecordingCheck);
     return flaggedCheck;
+  }
+
+  public toJSON() {
+    return {
+      id: this.id,
+      pctBot: this.pctBot,
+      pickType: this.pickType,
+      usagePercent: this.usagePercent,
+      assetsNotLoaded: this.assetsNotLoaded,
+      checks: this.checks,
+      expectedAssets: this.expectedAssets,
+      expectedUseragent: this.expectedUseragent,
+      flaggedChecks: this.flaggedChecks,
+      identifiers: this.identifiers,
+      parsedUseragent: this.parsedUseragent,
+      pluginsRun: this.pluginsRun,
+      requests: this.requests,
+      userUuid: this.userUuid,
+      useragent: this.useragent,
+    }
   }
 
   private recordCheckRun(

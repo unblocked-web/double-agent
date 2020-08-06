@@ -1,6 +1,5 @@
 import * as Path from 'path';
 import * as Fs from 'fs';
-import IBrowserVersion from '../interfaces/IBrowserVersion';
 import IBrowser from '../interfaces/IBrowser';
 
 export const FILE_PATH = Path.join(__dirname, '../data/browsers.json');

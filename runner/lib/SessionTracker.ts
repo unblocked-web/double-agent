@@ -5,27 +5,28 @@ import HostDomain from '../interfaces/HostDomain';
 import UserBucket from '../interfaces/UserBucket';
 import DetectionSession from './DetectionSession';
 import { URL } from 'url';
+import IAssignment from "../interfaces/IAssignment";
 
 let sessionIdCounter = 0;
 export default class SessionTracker {
-  private sessions: { [sessionid: string]: DetectionSession } = {};
+  private sessions: { [sessionId: string]: DetectionSession } = {};
 
   constructor(readonly httpDomains: IDetectionDomains, readonly secureDomains: IDetectionDomains) {}
 
-  public getSession(sessionid: string) {
-    return this.sessions[sessionid];
+  public getSession(sessionId: string) {
+    return this.sessions[sessionId];
   }
 
-  public deleteSession(sessionid: string) {
-    delete this.sessions[sessionid];
+  public deleteSession(sessionId: string) {
+    delete this.sessions[sessionId];
   }
 
-  public createSession(expectedUseragent: string) {
-    const sessionid = String((sessionIdCounter += 1));
+  public createSession(expectedUseragent: string, assignment?: IAssignment) {
+    const sessionId = String((sessionIdCounter += 1));
 
-    const session = new DetectionSession(sessionid);
+    const session = new DetectionSession(sessionId, assignment);
     session.expectedUseragent = expectedUseragent;
-    this.sessions[sessionid] = session;
+    this.sessions[sessionId] = session;
     return session;
   }
 
@@ -37,7 +38,7 @@ export default class SessionTracker {
     const { cookies, bodyJson, useragent } = requestDetails;
 
     const query = requestUrl.searchParams;
-    let sessionid =
+    let sessionId =
       query.get('sessionid') ??
       (bodyJson as any).sessionid ??
       cookies.sessionid ??
@@ -45,11 +46,11 @@ export default class SessionTracker {
       this.getSessionFromAddress(requestDetails) ??
       this.getSessionFromAddressAndPort(requestDetails);
 
-    if (!sessionid) {
-      sessionid = this.createSession(requestDetails.useragent).id;
+    if (!sessionId) {
+      sessionId = this.createSession(requestDetails.useragent).id;
     }
 
-    const session = this.sessions[sessionid];
+    const session = this.sessions[sessionId];
     if (!session.useragent) {
       session.setUseragent(useragent);
     }
@@ -70,10 +71,10 @@ export default class SessionTracker {
         category: 'Cookie Support'
       });
     }
-    requestDetails.headers = requestDetails.headers.map(x => this.cleanDomains(x, sessionid));
-    requestDetails.origin = this.cleanDomains(requestDetails.origin, sessionid);
-    requestDetails.referer = this.cleanDomains(requestDetails.referer, sessionid);
-    requestDetails.url = this.cleanDomains(requestDetails.url, sessionid);
+    requestDetails.headers = requestDetails.headers.map(x => this.cleanDomains(x, sessionId));
+    requestDetails.origin = this.cleanDomains(requestDetails.origin, sessionId);
+    requestDetails.referer = this.cleanDomains(requestDetails.referer, sessionId);
+    requestDetails.url = this.cleanDomains(requestDetails.url, sessionId);
 
     session.requests.push(requestDetails);
 
@@ -120,13 +121,13 @@ export default class SessionTracker {
     }
   }
 
-  private cleanDomains(str: string, sessionid: string) {
+  private cleanDomains(str: string, sessionId: string) {
     if (!str) return str;
 
-    return SessionTracker.cleanUrls(str, sessionid, this.secureDomains, this.httpDomains);
+    return SessionTracker.cleanUrls(str, sessionId, this.secureDomains, this.httpDomains);
   }
 
-  public static cleanUrls(prop: string, sessionid: string, ...domains: IDetectionDomains[]) {
+  public static cleanUrls(prop: string, sessionId: string, ...domains: IDetectionDomains[]) {
     if (!prop) return prop;
 
     let cleaned = prop;
@@ -139,7 +140,7 @@ export default class SessionTracker {
         .replace(RegExp(fullSubSite, 'g'), 'subdomain')
         .replace(RegExp(fullMainSite, 'g'), 'main')
         .replace(RegExp(fullCrossSite, 'g'), 'external')
-        .replace(RegExp(`sessionid=${sessionid}`, 'g'), 'sessionid=X');
+        .replace(RegExp(`sessionid=${sessionId}`, 'g'), 'sessionid=X');
     }
     return cleaned;
   }

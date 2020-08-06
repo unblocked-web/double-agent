@@ -1,7 +1,10 @@
 import IAssignment from '../interfaces/IAssignment';
 import IDetectionDomains from '../interfaces/IDetectionDomains';
 import { URL } from 'url';
-import BrowsersToTest, { IBrowserToTestAgent } from '@double-agent/profiler/lib/BrowsersToTest';
+import BrowsersToTest, {
+  IBrowserToTestPickType,
+  IBrowserToTestUsagePercent
+} from '@double-agent/profiler/lib/BrowsersToTest';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
 
 export default async function getAllAssignments(
@@ -10,31 +13,17 @@ export default async function getAllAssignments(
   browsersToTest: BrowsersToTest,
 ) {
   const assignments: IAssignment[] = [];
-
-  browsersToTest.majority.forEach(browserToTest => {
-    browserToTest.agents.forEach(agent => {
-      const assignment = buildAssignment(
-        assignments.length,
-        httpDomains,
-        httpsDomains,
-        agent,
-        false,
-      );
-      assignments.push(assignment);
-    })
-  });
-
-  browsersToTest.intoli.forEach(browserToTest => {
-    browserToTest.agents.forEach(agent => {
-      const assignment = buildAssignment(
-        assignments.length,
-        httpDomains,
-        httpsDomains,
-        agent,
-        true,
-      );
-      assignments.push(assignment);
-    })
+  browsersToTest.all.forEach(browserToTest => {
+    const browserStackUseragent = browserToTest.useragents.find(x => x.sources.includes('BrowserStack'));
+    const assignment = buildAssignment(
+      assignments.length,
+      httpDomains,
+      httpsDomains,
+      browserStackUseragent ? browserStackUseragent.string : browserToTest.useragents[0].string,
+      browserToTest.usagePercent,
+      browserToTest.pickType,
+    );
+    assignments.push(assignment);
   });
 
   return assignments;
@@ -44,16 +33,17 @@ export function buildAssignment(
   assignmentId: number,
   httpDomains: IDetectionDomains,
   httpsDomains: IDetectionDomains,
-  agent: IBrowserToTestAgent = null,
-  isIntoliUseragent = false,
+  useragent: string = null,
+  usagePercent: IBrowserToTestUsagePercent = null,
+  pickType: IBrowserToTestPickType = [],
 ) {
-  const profileDirName = agent ? getProfileDirNameFromUseragent(agent.useragent) : null;
+  const profileDirName = useragent ? getProfileDirNameFromUseragent(useragent) : null;
   return {
     id: assignmentId,
-    useragent: agent?.useragent,
-    percentOfTraffic: agent?.usagePercent,
+    useragent: useragent,
+    pickType: pickType,
+    usagePercent: usagePercent,
     profileDirName: profileDirName,
-    testType: isIntoliUseragent ? 'intoli' : 'topBrowsers',
     pages: [
       {
         url: httpsDomains.main.href,
@@ -84,6 +74,6 @@ export function buildAssignment(
         waitForElementSelector: 'body.ready',
       },
     ],
-    sessionid: '',
+    sessionId: '',
   } as IAssignment;
 }

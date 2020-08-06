@@ -1,7 +1,10 @@
 import osVersionsRaw from '../data/statcounter/os_combined.json';
 import macVersions from '../data/statcounter/macos_version.json';
 import winVersions from '../data/statcounter/windows_version.json';
-import { IOperatingSystem, IOperatingSystemVersion, IByKey, FILE_PATH } from './Oses';
+import IOperatingSystem from '../interfaces/IOperatingSystem';
+import IOperatingSystemVersion from '../interfaces/IOperatingSystemVersion';
+import extraOses from '../data/extra/oses.json';
+import { IByKey, FILE_PATH } from './Oses';
 import * as Fs from 'fs';
 import { createOsKey } from './OsUtils';
 
@@ -21,6 +24,10 @@ export default class OsGenerator {
     for (let [rawOsString, rawValues] of Object.entries(winVersions.results)) {
       const os = extractOs(rawOsString, rawValues, winPct)
       this.byKey[os.key] = os;
+    }
+
+    for (const extraOs of Object.values(extraOses)) {
+      if (!this.byKey[extraOs.key]) this.byKey[extraOs.key] = extraOs as unknown as IOperatingSystem;
     }
   }
 

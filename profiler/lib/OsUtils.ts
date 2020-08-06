@@ -1,11 +1,18 @@
-import {IOperatingSystem} from './Oses';
+import IOperatingSystem from '../interfaces/IOperatingSystem';
+import osTranslations from '../data/extra/osTranslations.json';
 import { lookup } from 'useragent';
 
 export function createOsKey(os: Pick<IOperatingSystem, 'name' | 'version'>) {
-  let tmpKey = `${os.name.replace(/\s/g, '_')}_${os.version.major}`;
-  if (os.version.minor) tmpKey += `_${os.version.minor}`;
+  const name = os.name.toLowerCase();
+  if (['other', 'linux'].includes(name)) {
+    return name;
+  }
 
-  return tmpKey.toLowerCase()
+  let tmpKey = `${name.replace(/\s/g, '-')}-${os.version.major}`;
+  if (os.version.minor) tmpKey += `-${os.version.minor}`;
+  if (osTranslations[tmpKey]) return osTranslations[tmpKey];
+
+  return tmpKey;
 }
 
 export function createOsKeyFromUseragent(useragent: string) {

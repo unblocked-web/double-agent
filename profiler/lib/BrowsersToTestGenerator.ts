@@ -1,13 +1,24 @@
+import * as Fs from 'fs';
 import Browsers from './Browsers';
-import { IByType, FILE_PATH } from './BrowsersToTest';
-import Fs from 'fs';
+import { FILE_PATH, IBrowserToTest, IBrowserToTestPickType} from './BrowsersToTest';
+import IBrowserUseragent from '../interfaces/IBrowserUseragent';
+
+interface ITmpInstance {
+  browserKey: string;
+  osKey: string;
+  desktopPercent: number;
+  hasBrowserStackSupport: boolean;
+  useragents: IBrowserUseragent[];
+  pickType: IBrowserToTestPickType,
+}
 
 export default class BrowsersToTestGenerator {
-  private byType: IByType;
+  private instances: IBrowserToTest[];
 
   public async run() {
-    this.byType = { majority: [], intoli: [] };
-    const unsortedInstances = [];
+    this.instances = [];
+
+    const unsortedInstances: ITmpInstance[] = [];
     new Browsers().toArray().forEach(browser => {
       Object.values(browser.byOsKey).forEach(instance => {
         const { key: osKey, desktopPercent, hasBrowserStackSupport, useragents } = instance;
@@ -17,6 +28,7 @@ export default class BrowsersToTestGenerator {
           desktopPercent,
           hasBrowserStackSupport,
           useragents,
+          pickType: [],
         })
       });
     })
@@ -32,50 +44,36 @@ export default class BrowsersToTestGenerator {
     });
 
     let totalPercentage = 0;
-    const majorityInstances = [];
-    const intoliInstances = [];
-
+    const testInstances = [];
     for (const instance of sortedInstances) {
       if (totalPercentage < 50 && instance.useragents.find(x => x.sources.includes('BrowserStack'))) {
-        majorityInstances.push(instance);
+        instance.pickType.push('majority');
         totalPercentage += instance.desktopPercent;
       }
       if (instance.useragents.find(x => x.sources.includes('Intoli'))) {
-        intoliInstances.push(instance);
+        instance.pickType.push('random');
+      }
+      if (instance.pickType.length) {
+        testInstances.push(instance);
       }
     }
 
-    for (const instance of majorityInstances) {
-      const useragentObjs = instance.useragents.filter(x => x.sources.includes('BrowserStack'));
-      this.byType.majority.push({
+    for (const instance of testInstances) {
+      this.instances.push({
         browserKey: instance.browserKey,
         osKey: instance.osKey,
-        agents: useragentObjs.map(useragentObj => {
-          return {
-            useragent: useragentObj.string,
-            usagePercent: instance.desktopPercent / useragentObjs.length,
-          }
-        }),
-      });
-    }
-
-    for (const instance of intoliInstances) {
-      const useragentObjs = instance.useragents.filter(x => x.sources.includes('Intoli'));
-      this.byType.intoli.push({
-        browserKey: instance.browserKey,
-        osKey: instance.osKey,
-        agents: useragentObjs.map(useragentObj => {
-          return {
-            useragent: useragentObj.string,
-            usagePercent: useragentObj.sources.filter(x => x === 'Intoli').length * 2,
-          }
-        }),
+        pickType: instance.pickType,
+        usagePercent: {
+          majority: instance.pickType.includes('majority') ? instance.desktopPercent : 0,
+          random: instance.pickType.includes('random') ? 2 : 0,
+        },
+        useragents: instance.useragents,
       });
     }
   }
 
   public save() {
-    const data = JSON.stringify(this.byType, null, 2);
+    const data = JSON.stringify(this.instances, null, 2);
     Fs.writeFileSync(FILE_PATH, data);
   }
 }
