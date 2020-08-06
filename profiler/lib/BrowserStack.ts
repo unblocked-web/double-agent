@@ -2,7 +2,7 @@ import axios from 'axios';
 import IBrowserstackAgent from '../interfaces/IBrowserstackAgent';
 import webdriver from 'selenium-webdriver';
 import IBrowser from '../interfaces/IBrowser';
-import {IOperatingSystem} from "./Oses";
+import IOperatingSystem from '../interfaces/IOperatingSystem';
 
 export default class BrowserStack {
   static supportedCapabilities = [];

@@ -50,7 +50,7 @@ process.on('exit', () => {
 
 function getRunnerForAgent(agent: IBrowserstackAgent) {
   return async () => {
-    const response = await fetch(`http://${runnerDomain}:3000/profiler`, {
+    const response = await fetch(`http://${runnerDomain}:3000/`, {
       headers: {
         scraper: 'profiler',
       },

@@ -1,22 +1,19 @@
 import * as Path from 'path';
 import * as Fs from 'fs';
+import IBrowserUseragent from "../interfaces/IBrowserUseragent";
 
 export const FILE_PATH = Path.join(__dirname, '../data/browsersToTest.json');
 
 export default class BrowsersToTest {
-  private readonly byType: IByType;
+  private readonly instances: IBrowserToTest[];
 
   constructor() {
     const data = Fs.readFileSync(FILE_PATH, 'utf8');
-    this.byType = JSON.parse(data) as IByType;
+    this.instances = JSON.parse(data) as IBrowserToTest[];
   }
 
-  get majority() {
-    return this.byType.majority;
-  }
-
-  get intoli() {
-    return this.byType.intoli;
+  get all() {
+    return this.instances;
   }
 }
 
@@ -25,15 +22,14 @@ export default class BrowsersToTest {
 export interface IBrowserToTest {
   browserKey: string;
   osKey: string;
-  agents: IBrowserToTestAgent[];
+  pickType: IBrowserToTestPickType;
+  usagePercent: IBrowserToTestUsagePercent;
+  useragents: IBrowserUseragent[];
 }
 
-export interface IBrowserToTestAgent {
-  useragent: string;
-  usagePercent: number;
+export interface IBrowserToTestUsagePercent {
+  majority: number;
+  random: number;
 }
 
-export interface IByType {
-  majority: IBrowserToTest[];
-  intoli: IBrowserToTest[];
-}
+export type IBrowserToTestPickType = ('majority' | 'random')[];

@@ -1,4 +1,6 @@
-import Oses, { IOperatingSystem } from './Oses';
+import Fs from 'fs';
+import IOperatingSystem from '../interfaces/IOperatingSystem';
+import Oses from './Oses';
 import IBrowser from '../interfaces/IBrowser';
 import { IByKey, FILE_PATH } from './Browsers';
 import browserVersions from '../data/statcounter/browser_version.json';
@@ -6,12 +8,13 @@ import ProfilerData from '../data';
 import IntoliAgents from 'user-agents';
 import { lookup } from 'useragent';
 import BrowserStack from './BrowserStack';
-import Fs from 'fs';
 import { createOsKeyFromUseragent } from './OsUtils';
-import { createBrowserKey } from './BrowserUtils';
+import { createBrowserKey, createBrowserKeyFromUseragent } from './BrowserUtils';
+import { getProfileDirNameFromUseragent } from '../index';
+import { IBrowserUseragentSource } from '../interfaces/IBrowserUseragent';
 
 interface IUseragentSources {
-  [useragent: string]: string[];
+  [useragent: string]: IBrowserUseragentSource[];
 }
 
 interface IPercentMap {
@@ -34,6 +37,7 @@ export default class BrowserGenerator {
       useragentSources[useragent].push('BrowserStack');
     }
 
+    const intoliUniqueKeys: Set<string> = new Set();
     const intoliAgents = new IntoliAgents({ deviceCategory: 'desktop' });
     const intoliFetchGoal = 50;
     let intoliFetchCount = 0;
@@ -41,6 +45,11 @@ export default class BrowserGenerator {
     while (intoliFetchCount < intoliFetchGoal) {
       const intoliAgent = intoliAgents.random();
       const useragent = intoliAgent.data.userAgent;
+      const browserKey = createBrowserKeyFromUseragent(useragent);
+      if (['safari-0-0'].includes(browserKey)) continue;
+      const profileDirName = getProfileDirNameFromUseragent(useragent);
+      if (intoliUniqueKeys.has(profileDirName)) continue;
+      intoliUniqueKeys.add(profileDirName);
       useragents.add(useragent);
       useragentSources[useragent] = useragentSources[useragent] || [];
       useragentSources[useragent].push('Intoli');

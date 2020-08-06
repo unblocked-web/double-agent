@@ -1,4 +1,4 @@
-import { IOperatingSystem } from './lib/Oses';
+import IOperatingSystem from './interfaces/IOperatingSystem';
 import IBrowser from './interfaces/IBrowser';
 import { createOsKey, createOsKeyFromUseragent } from './lib/OsUtils';
 import { createBrowserKey, createBrowserKeyFromUseragent } from './lib/BrowserUtils';
@@ -6,11 +6,11 @@ import { createBrowserKey, createBrowserKeyFromUseragent } from './lib/BrowserUt
 export function getProfileDirNameFromUseragent(useragent: string) {
   const osKey = createOsKeyFromUseragent(useragent);
   const browserKey = createBrowserKeyFromUseragent(useragent);
-  return `${osKey}__${browserKey}`;
+  return `${osKey}--${browserKey}`;
 }
 
 export function getProfileDirName(os: IOperatingSystem, browser: IBrowser) {
   const osKey = createOsKey(os);
   const browserKey = createBrowserKey(browser);
-  return `${osKey}__${browserKey}`;
+  return `${osKey}--${browserKey}`;
 }

@@ -1,11 +1,11 @@
+import * as Fs from 'fs';
 import * as http from 'http';
 import { IncomingMessage, Server, ServerResponse } from 'http';
-import url, {URL} from 'url';
+import url, { URL } from 'url';
 import DetectionsServer from '../detections-server/DetectionsServer';
-import getAllAssignments, {buildAssignment} from '../lib/getAllAssignments';
+import getAllAssignments, { buildAssignment } from '../lib/getAllAssignments';
 import IAssignment from '../interfaces/IAssignment';
 import BrowsersToTest from '@double-agent/profiler/lib/BrowsersToTest';
-import {promises as fs} from "fs";
 import zlib from 'zlib';
 import { pathToRegexp } from 'path-to-regexp';
 
@@ -150,23 +150,22 @@ export default class AssignmentServer {
       return sendJson(res, {});
     }
 
-    const session = this.detectionsServer.sessionTracker.getSession(assignment.sessionid);
+    const session = this.detectionsServer.sessionTracker.getSession(assignment.sessionId);
     if (activeScraper.dataDir) {
       const filePath = `${activeScraper.dataDir}/${assignment.profileDirName}.json.gz`;
-      await fs.writeFile(filePath, await gzipJson(session));
+      Fs.writeFileSync(filePath, await gzipJson(session.toJSON()));
       console.log(`SAVED ${filePath}`);
     }
 
-    this.detectionsServer.sessionTracker.deleteSession(assignment.sessionid);
+    this.detectionsServer.sessionTracker.deleteSession(assignment.sessionId);
 
     assignment.isCompleted = true;
     sendJson(res, { session });
   }
 
   private async activateAssignmentSession(assignment: IAssignment, useragent: string) {
-    if (assignment.sessionid) return;
-
-    const session = this.detectionsServer.sessionTracker.createSession(useragent);
+    if (assignment.sessionId) return;
+    const session = this.detectionsServer.sessionTracker.createSession(useragent, assignment);
     addSessionIdToAssignment(assignment, session.id);
     await this.detectionsServer.pluginDelegate.onNewAssignment(assignment);
   }
@@ -179,18 +178,18 @@ function sendJson(res: ServerResponse, json: any, status = 200) {
   res.end(JSON.stringify(json));
 }
 
-function addSessionIdToAssignment(assignment: IAssignment, sessionid: string) {
-  assignment.sessionid = sessionid;
+function addSessionIdToAssignment(assignment: IAssignment, sessionId: string) {
+  assignment.sessionId = sessionId;
   for (const page of assignment.pages) {
-    page.url = addSessionIdToUrl(page.url, sessionid);
-    page.clickDestinationUrl = addSessionIdToUrl(page.clickDestinationUrl, sessionid);
+    page.url = addSessionIdToUrl(page.url, sessionId);
+    page.clickDestinationUrl = addSessionIdToUrl(page.clickDestinationUrl, sessionId);
   }
 }
 
-function addSessionIdToUrl(url: string, sessionid: string) {
+function addSessionIdToUrl(url: string, sessionId: string) {
   if (!url) return url;
   const startUrl = new URL(url);
-  startUrl.searchParams.set('sessionid', sessionid);
+  startUrl.searchParams.set('sessionid', sessionId);
   return startUrl.href;
 }
 

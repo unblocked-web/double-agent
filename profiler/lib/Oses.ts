@@ -1,5 +1,6 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
+import IOperatingSystem from '../interfaces/IOperatingSystem';
 
 export const FILE_PATH = Path.join(__dirname, '../data/oses.json');
 
@@ -17,19 +18,6 @@ export default class Oses {
 }
 
 // INTERFACES
-
-export interface IOperatingSystem {
-  key: string;
-  name: string;
-  desktopPercent: number;
-  version: IOperatingSystemVersion;
-}
-
-export interface IOperatingSystemVersion {
-  major: string;
-  minor: string;
-  name?: string;
-}
 
 export interface IByKey {
   [key: string]: IOperatingSystem
