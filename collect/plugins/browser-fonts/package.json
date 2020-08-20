@@ -1,0 +1,16 @@
+{
+  "name": "@double-agent/collect-browser-fonts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "checkCategories": [
+    "Fonts Supported"
+  ],
+  "description": "Does the font fingerprint match the operating system",
+  "scripts": {
+    "analyze": "node -e 'require(\"./lib/FontProfile\").analyze()'"
+  },
+  "dependencies": {
+    "@double-agent/collect": "1.0.0"
+  }
+}

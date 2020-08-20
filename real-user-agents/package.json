@@ -1,0 +1,24 @@
+{
+  "name": "@double-agent/real-user-agents",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "export $(cat .env | xargs) && node run.js",
+    "build": "node -r source-map-support/register -e 'require(\"./scripts/build.js\").default()'",
+    "updateStatscounterData": "node -e 'require(\"./scripts/updateStatscounterData.js\").default()'",
+    "updateBrowserData": "export $(cat .env | xargs) && node -r source-map-support/register -e 'require(\"./scripts/updateBrowserData.js\").default()'"
+  },
+  "dependencies": {
+    "@double-agent/config": "1.0.0",
+    "axios": "^0.19.2",
+    "csv-parser": "^2.3.2",
+    "dashify": "^2.0.0",
+    "moment": "^2.29.1",
+    "source-map-support": "^0.5.16",
+    "useragent": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/useragent": "^2.1.1"
+  }
+}

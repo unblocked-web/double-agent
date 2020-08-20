@@ -1,0 +1,5103 @@
+[
+  {
+    "id": "rcoo-aaaa",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaab",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaac",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaad",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaae",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaaf",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--JsCookies",
+    "args": [
+      {
+        "setter": "JsScript",
+        "name": "http-SameDomain--JsCookies",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaag",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaah",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaai",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaaj",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaak",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaal",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--JsCookies",
+    "args": [
+      {
+        "setter": "JsScript",
+        "name": "http-SameDomain--JsCookies",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaam",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaan",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaao",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaap",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--JsCookies",
+    "args": [
+      {
+        "setter": "JsScript",
+        "name": "http-SameDomain--JsCookies",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaaq",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaar",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaas",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaat",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaau",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaav",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaaw",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaax",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaay",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaaz",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaba",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabb",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabc",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--JsCookies",
+    "args": [
+      {
+        "setter": "JsScript",
+        "name": "https-SameDomain--JsCookies",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabd",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabe",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabf",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabg",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabh",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabi",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabj",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabk",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabl",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabm",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabn",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabo",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--JsCookies",
+    "args": [
+      {
+        "setter": "JsScript",
+        "name": "https-SameDomain--JsCookies",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabp",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabq",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabr",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabs",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabt",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabu",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabv",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabw",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabx",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaby",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--JsCookies",
+    "args": [
+      {
+        "setter": "JsScript",
+        "name": "https-SameDomain--JsCookies",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aabz",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaca",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacb",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacd",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aace",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacf",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaaa",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaab",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaac",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaad",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaae",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaaf",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaag",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaah",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaai",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaaj",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaak",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaal",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaam",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaan",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaao",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaap",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaat",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaau",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaav",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaaz",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabd",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabe",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabf",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabg",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabh",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabi",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabm",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabn",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabo",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabp",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabq",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabr",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabs",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabt",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabu",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabv",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabw",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaby",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabz",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaca",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacb",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacc",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacd",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aace",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacf",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacg",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aach",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaci",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacl",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacm",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaco",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacp",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacq",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacr",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacs",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aact",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacu",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacv",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacw",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacx",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacy",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadb",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--MainDomain-Secure-SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--MainDomain-Secure-SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Lax",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadc",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aade",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadf",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadg",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadh",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadi",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadj",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadk",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadl",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadm",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadn",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aado",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadq",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadr",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aads",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadt",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadu",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadv",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadw",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaed",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--HttpOnly-MainDomain",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--HttpOnly-MainDomain",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaek",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aael",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaem",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaen",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaeo",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaep",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaeq",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaer",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaes",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaet",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaeu",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaew",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaex",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaey",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaez",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafa",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafb",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafc",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafd",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafe",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaff",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafg",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafk",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafl",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafm",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafn",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafo",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafp",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafq",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafr",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafs",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaft",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafu",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafy",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--Basic",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--Basic",
+        "previouslyCreated": false,
+        "attributes": []
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafz",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--ToBeExpired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--ToBeExpired",
+        "previouslyCreated": true,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaga",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagb",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--HttpOnly",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--HttpOnly",
+        "previouslyCreated": false,
+        "attributes": [
+          "HttpOnly"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagc",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--Expired",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--Expired",
+        "previouslyCreated": false,
+        "attributes": [
+          "expires=[PAST DATE]"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagd",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--SameSiteLax",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--SameSiteLax",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aage",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--SameSiteLax-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--SameSiteLax-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Lax",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagf",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagg",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--SameSiteStrict-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--SameSiteStrict-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=Strict",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagh",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagi",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--RootPath-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--RootPath-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "Path=/"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaaw",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaax",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaay",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabj",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabk",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabl",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabx",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomainRedirect--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomainRedirect--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacj",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacn",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aacz",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadd",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadp",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-CrossDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-CrossDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaev",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomainRedirect--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomainRedirect--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafh",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafv",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagj",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-CrossDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-CrossDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacc",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaaq",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaar",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaas",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaba",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabb",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aabc",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aack",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aada",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadx",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aady",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aadz",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaee",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaef",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaeg",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafi",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafw",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaea",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaeb",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaec",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaeh",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaei",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aaej",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafj",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aafx",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacg",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aach",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaci",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacj",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aack",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacl",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacm",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomainRedirect--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomainRedirect--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacn",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "http-SubDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "http-SubDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "http"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aaco",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacq",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacs",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacu",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacw",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacy",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aada",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aadc",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--MainDomain-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--MainDomain-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacp",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacr",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aact",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacv",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpAssetHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacx",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--SameSiteNone-Secure",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--SameSiteNone-Secure",
+        "previouslyCreated": false,
+        "attributes": [
+          "SameSite=None",
+          "Secure"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacz",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SameDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "JsScript",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aadb",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aadd",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomain--MainDomain-Secure-SameSiteNone",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomain--MainDomain-Secure-SameSiteNone",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "ucoo-aagk",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  }
+]

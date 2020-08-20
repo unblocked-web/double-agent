@@ -1,0 +1,2343 @@
+[
+  {
+    "id": "strc-aaaa",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "host",
+    "args": [
+      "Host"
+    ]
+  },
+  {
+    "id": "strc-aaab",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "connection",
+    "args": [
+      "Connection"
+    ]
+  },
+  {
+    "id": "strc-aaac",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "upgrade-insecure-requests",
+    "args": [
+      "Upgrade-Insecure-Requests"
+    ]
+  },
+  {
+    "id": "strc-aaad",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "user-agent",
+    "args": [
+      "User-Agent"
+    ]
+  },
+  {
+    "id": "strc-aaae",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "accept",
+    "args": [
+      "Accept"
+    ]
+  },
+  {
+    "id": "strc-aaaf",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "accept-encoding",
+    "args": [
+      "Accept-Encoding"
+    ]
+  },
+  {
+    "id": "strc-aaag",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "accept-language",
+    "args": [
+      "Accept-Language"
+    ]
+  },
+  {
+    "id": "strc-aaah",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "referer",
+    "args": [
+      "Referer"
+    ]
+  },
+  {
+    "id": "dval-aaaa",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "connection",
+    "args": [
+      [
+        "keep-alive"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaab",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "upgrade-insecure-requests",
+    "args": [
+      [
+        "1"
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabf",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "user-agent",
+          "accept",
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "upgrade-insecure-requests",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabg",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host"
+        ],
+        [
+          "accept",
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "upgrade-insecure-requests",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabh",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent"
+        ],
+        [
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "upgrade-insecure-requests",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabi",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent",
+          "accept"
+        ],
+        [
+          "accept-encoding",
+          "connection",
+          "upgrade-insecure-requests",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabj",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent",
+          "accept",
+          "accept-language"
+        ],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabl",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent",
+          "accept",
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "referer"
+        ],
+        []
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaad",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-encoding",
+    "args": [
+      [
+        "gzip, deflate",
+        "gzip, deflate, br"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaag",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-language",
+    "args": [
+      [
+        "en-US,en;q=0.9"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaan",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-language",
+    "args": [
+      [
+        "en-US,en;q=0.5"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaap",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-language",
+    "args": [
+      [
+        "en-us"
+      ]
+    ]
+  },
+  {
+    "id": "strc-aaai",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-user",
+    "args": [
+      "Sec-Fetch-User"
+    ]
+  },
+  {
+    "id": "strc-aaaj",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-site",
+    "args": [
+      "Sec-Fetch-Site"
+    ]
+  },
+  {
+    "id": "strc-aaak",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-mode",
+    "args": [
+      "Sec-Fetch-Mode"
+    ]
+  },
+  {
+    "id": "dval-aaah",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-user",
+    "args": [
+      [
+        "?1"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaai",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-site",
+    "args": [
+      [
+        "none",
+        "cross-site",
+        "same-origin"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaaj",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-mode",
+    "args": [
+      [
+        "navigate"
+      ]
+    ]
+  },
+  {
+    "id": "strc-aaal",
+    "checkName": "StringCaseCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-dest",
+    "args": [
+      "Sec-Fetch-Dest"
+    ]
+  },
+  {
+    "id": "dval-aaak",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept",
+    "args": [
+      [
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaal",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "sec-fetch-dest",
+    "args": [
+      [
+        "document"
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaat",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaau",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaav",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection"
+        ],
+        [
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaaw",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests"
+        ],
+        [
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaax",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaay",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ],
+        [
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaaz",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ],
+        []
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaba",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest"
+        ],
+        [
+          "accept-encoding",
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabb",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-site",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept"
+        ],
+        [
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-dest",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabc",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-mode",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "sec-fetch-site"
+        ],
+        [
+          "sec-fetch-user",
+          "sec-fetch-dest",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabd",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-user",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ],
+        [
+          "sec-fetch-dest",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabe",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-dest",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aace",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-dest",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacf",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-dest",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacg",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection"
+        ],
+        [
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-dest",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aach",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests"
+        ],
+        [
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-dest",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaci",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-dest"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacj",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "referer",
+          "sec-fetch-dest",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ],
+        [
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aack",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "referer",
+          "sec-fetch-dest",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ],
+        []
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacl",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "sec-fetch-dest",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ],
+        [
+          "accept-encoding",
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacm",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-dest",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent"
+        ],
+        [
+          "accept",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacn",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-site",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-dest",
+          "accept"
+        ],
+        [
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaco",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-mode",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-dest",
+          "accept",
+          "sec-fetch-site"
+        ],
+        [
+          "sec-fetch-user",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacp",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-user",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-dest",
+          "accept",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaai",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-user",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaaj",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-user",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaak",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection"
+        ],
+        [
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-user",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaal",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests"
+        ],
+        [
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-user",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaam",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-user"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaan",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "referer",
+          "sec-fetch-user",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ],
+        [
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaao",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "referer",
+          "sec-fetch-user",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ],
+        []
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaap",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "sec-fetch-user",
+          "sec-fetch-site",
+          "sec-fetch-mode"
+        ],
+        [
+          "accept-encoding",
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaaq",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-user",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent"
+        ],
+        [
+          "accept",
+          "sec-fetch-site",
+          "sec-fetch-mode",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaar",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-site",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-user",
+          "accept"
+        ],
+        [
+          "sec-fetch-mode",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaas",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-mode",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-user",
+          "accept",
+          "sec-fetch-site"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaaf",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept",
+    "args": [
+      [
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacy",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-site"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacz",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-site"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aada",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection"
+        ],
+        [
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-site"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aadb",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests"
+        ],
+        [
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-site"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aadc",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-mode",
+          "sec-fetch-user"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer",
+          "sec-fetch-site"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aadd",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "referer",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-site"
+        ],
+        [
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aade",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "referer",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-site"
+        ],
+        []
+      ]
+    ]
+  },
+  {
+    "id": "aord-aadf",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "sec-fetch-site"
+        ],
+        [
+          "accept-encoding",
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aadg",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-mode",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent"
+        ],
+        [
+          "sec-fetch-user",
+          "accept",
+          "sec-fetch-site",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aadh",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-user",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-mode"
+        ],
+        [
+          "accept",
+          "sec-fetch-site",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aadi",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.sec-fetch-site",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "sec-fetch-mode",
+          "sec-fetch-user",
+          "accept"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaar",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-encoding",
+    "args": [
+      [
+        "gzip, deflate, sdch",
+        "gzip, deflate, sdch, br"
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaaa",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaab",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaac",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection"
+        ],
+        [
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaad",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests"
+        ],
+        [
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaae",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaaf",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "referer"
+        ],
+        [
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaag",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept",
+          "accept-encoding",
+          "referer"
+        ],
+        []
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaah",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "user-agent",
+          "accept"
+        ],
+        [
+          "accept-encoding",
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaae",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-language",
+    "args": [
+      [
+        "en-US,en;q=0.8"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaao",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept",
+    "args": [
+      [
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabw",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language",
+          "accept-encoding",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabx",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host",
+          "accept-encoding",
+          "accept-language",
+          "accept",
+          "user-agent"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language",
+          "accept-encoding",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaby",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "accept-encoding",
+          "accept-language"
+        ],
+        [
+          "accept",
+          "user-agent",
+          "accept-language",
+          "accept-encoding",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabz",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "accept-encoding",
+          "accept-language"
+        ],
+        [
+          "user-agent",
+          "accept-language",
+          "accept-encoding",
+          "referer",
+          "connection"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aaca",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "accept-encoding",
+          "accept-language"
+        ],
+        [
+          "accept-language",
+          "accept-encoding",
+          "referer",
+          "connection"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacb",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-encoding",
+          "referer"
+        ],
+        [
+          "accept-encoding",
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacc",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language",
+          "referer"
+        ],
+        [
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "referer",
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacd",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "accept-encoding",
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language"
+        ],
+        [
+          "accept-language",
+          "accept-encoding"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaaq",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-encoding",
+    "args": [
+      [
+        "gzip, deflate",
+        "br, gzip, deflate"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaam",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept",
+    "args": [
+      [
+        "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaac",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept",
+    "args": [
+      [
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabp",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "connection",
+          "user-agent",
+          "upgrade-insecure-requests",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabq",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host"
+        ],
+        [
+          "user-agent",
+          "upgrade-insecure-requests",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabr",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabs",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "user-agent"
+        ],
+        [
+          "accept",
+          "accept-encoding",
+          "accept-language",
+          "user-agent",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabt",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "user-agent",
+          "upgrade-insecure-requests"
+        ],
+        [
+          "accept-encoding",
+          "accept-language",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabu",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "user-agent",
+          "upgrade-insecure-requests",
+          "accept",
+          "referer"
+        ],
+        [
+          "accept-language"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabv",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "user-agent",
+          "upgrade-insecure-requests",
+          "accept",
+          "accept-encoding",
+          "referer"
+        ],
+        []
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacq",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.host",
+    "args": [
+      [
+        [],
+        [
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacr",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.upgrade-insecure-requests",
+    "args": [
+      [
+        [
+          "host",
+          "connection"
+        ],
+        [
+          "accept",
+          "user-agent",
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacs",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept",
+    "args": [
+      [
+        [
+          "host",
+          "upgrade-insecure-requests",
+          "connection"
+        ],
+        [
+          "user-agent",
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aact",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.user-agent",
+    "args": [
+      [
+        [
+          "host",
+          "upgrade-insecure-requests",
+          "accept",
+          "connection",
+          "accept-language",
+          "accept-encoding"
+        ],
+        [
+          "accept-language",
+          "accept-encoding",
+          "connection",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacu",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-language",
+    "args": [
+      [
+        [
+          "host",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "connection",
+          "referer"
+        ],
+        [
+          "accept-encoding",
+          "connection",
+          "user-agent",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacv",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.accept-encoding",
+    "args": [
+      [
+        [
+          "host",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language",
+          "connection",
+          "referer"
+        ],
+        [
+          "connection",
+          "user-agent"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacw",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language",
+          "accept-encoding"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "referer",
+          "accept-language",
+          "accept-encoding"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aacx",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "connection",
+          "upgrade-insecure-requests",
+          "accept",
+          "user-agent",
+          "accept-language"
+        ],
+        [
+          "accept-language",
+          "accept-encoding"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabn",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent",
+          "accept",
+          "accept-language",
+          "accept-encoding",
+          "referer"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "referer"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabo",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent",
+          "accept",
+          "accept-language",
+          "accept-encoding",
+          "connection"
+        ],
+        [
+          "upgrade-insecure-requests",
+          "connection"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "dval-aaas",
+    "checkName": "DefaultValueCheck",
+    "checkType": "Individual",
+    "path": "accept-language",
+    "args": [
+      [
+        "en-GB,en;q=0.5"
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabk",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.connection",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent",
+          "accept",
+          "accept-language",
+          "accept-encoding",
+          "referer"
+        ],
+        [
+          "upgrade-insecure-requests"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "aord-aabm",
+    "checkName": "ArrayOrderIndexCheck",
+    "checkType": "Individual",
+    "path": "headers.referer",
+    "args": [
+      [
+        [
+          "host",
+          "user-agent",
+          "accept",
+          "accept-language",
+          "accept-encoding"
+        ],
+        [
+          "connection",
+          "upgrade-insecure-requests"
+        ]
+      ]
+    ]
+  }
+]

@@ -8,14 +8,13 @@
     "watch": "tsc -w",
     "docs": "node docs/generator",
     "test": "node scrapers/lib/runAll.js",
-    "profile": "yarn workspace @double-agent/profiler start",
-    "cleanProfiles": "rm -rf profiler/data/profiles",
-    "lintProfiles": "prettier --write detections/*/*/profiles/**.json",
+    "cleanProfiles": "rm -rf config/data/profiles",
     "start": "yarn workspace @double-agent/runner start",
     "prod": "yarn workspace @double-agent/runner prod",
     "updateUseragent": "node node_modules/useragent/bin/update.js",
     "postinstall": "yarn updateUseragent",
-    "clean": "tsc -b --clean"
+    "clean": "tsc -b --clean",
+    "lint": "eslint --cache ./"
   },
   "author": "Data Liberation Foundation",
   "license": "ISC",
@@ -33,6 +32,9 @@
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
+    "@types/puppeteer": "~1.19.1",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "request": "^2.88.2",
     "yamlparser": "0.0.x",
     "@types/cookie": "^0.3.3",
@@ -46,31 +48,36 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^1.8.0",
     "source-map-support": "^0.5.16",
-    "tslint": "^5.20.1",
-    "tslint-config-airbnb": "^5.11.2",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-config-standard": "^8.0.1",
-    "tslint-eslint-rules": "^5.4.0",
-    "tslint-microsoft-contrib": "^6.2.0",
-    "tslint-plugin-prettier": "^2.0.1",
-    "@types/puppeteer": "~1.19.1",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-monorepo-cop": "^1.0.2",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
     "typescript": "^3.8.3"
   },
-  "workspaces": [
-    "detections/*/*",
-    "emulation-generator",
-    "emulation-generator/dom-dumper",
-    "runner",
-    "profiler"
-  ],
+  "workspaces": {
+    "packages": [
+      "analyze",
+      "analyze/plugins/*",
+      "collect",
+      "collect/plugins/*",
+      "config",
+      "runner",
+      "real-user-agents",
+      "tls-server",
+      "tester"
+    ]
+  },
   "lint-staged": {
-    "./**/*.ts": [
-      "tslint --format verbose",
-      "git add"
-    ],
-    "./**/*.json": [
-      "prettier --write",
-      "git add"
+    "*.ts": [
+      "eslint --fix"
     ]
   }
 }

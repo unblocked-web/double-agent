@@ -10,8 +10,8 @@ This version of Double Agent tests how many ways scrapers can be detected when e
 
 Scrapers often choose a strategy of rotating user agents using a library, or picking a few popular browsers and rotating between those. This suite tests both strategies.
 
-1. **Intoli:** randomly generated useragents using the Intoli [user-agents](https://github.com/intoli/user-agents) package
-2. **Majority:** rotate between the useragents that comprise more than 50% of web traffic according to [StatCounter.com](https://gs.statcounter.com/)
+1. **Random:** randomly generated useragents using the Intoli [user-agents](https://github.com/intoli/user-agents) package
+2. **Popular:** rotate between the useragents that comprise more than 50% of web traffic according to [StatCounter.com](https://gs.statcounter.com/)
 
 For a dynamic approach to exploring results, visit [State of Scraping](https://stateofscraping.org).
 
@@ -19,9 +19,9 @@ For a dynamic approach to exploring results, visit [State of Scraping](https://s
 
 This suite is broken up by the layers of a browser request. Each layer has one or more plugins that tie into an overall set of pages loaded by a test runner. Each plugin first generates "profiles" of how known browsers behave loading the test pages. Any scraper is then compared to these "profiles" to find discrepancies. These checks are given a "bot score", or likelihood that the flagged check indicates the user agent is actually a bot.
 
-- `/detections`: suite of tests
+- `/collect`: suite of scripts for collecting browser profile data
+- `/analyze`: suite of scripts for collecting browser profile data
 - `/runner`: a server that can generate step-by-step assignments for a scraper to run all tests
-- `/profiler`: create profiles of real browsers running through the pages 
 
 ## Detections:
 
