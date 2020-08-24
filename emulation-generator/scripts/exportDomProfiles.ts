@@ -124,6 +124,7 @@ function extractPolyfill(profile: IDomProfile, targetProfile: IDomProfile) {
     if (x.path.includes('window.origin')) return false;
     if (x.path.includes('window.document.cookie')) return false;
     if (x.path.includes('window.performance.timing')) return false;
+    if (x.path.includes('window.performance.timeOrigin')) return false;
     if (x.path.includes('baseLatency._value')) return false;
     if (x.path === 'window.navigator.platform._value') return false;
     if (x.path === 'window.screen.orientation.type._value') return false;

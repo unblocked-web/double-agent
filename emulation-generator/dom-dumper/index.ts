@@ -29,12 +29,11 @@ const serverStarted = new Promise(resolve => {
 });
 
 (async function() {
-  const dockerHost = getDockerHost();
-
   try {
     for (const { dockerChromeUrl, browser, version, revision } of browsers) {
       if (browser === 'chrome') {
         if (dockerChromeUrl && shouldRunDockers) {
+          const dockerHost = getDockerHost()
           console.log('Running Chrome %s on Docker', version);
           const dockerName = buildChromeDocker(version, dockerChromeUrl);
           const docker = await runDocker(dockerName, dockerHost);
@@ -91,8 +90,7 @@ async function launchLocalChrome(chromePath: string) {
       '--disable-gpu',
       '--headless',
       '--allow-running-insecure-content',
-      '--ignore-certificate-errors',
-      '--user-data-dir=/data',
+      '--ignore-certificate-errors'
     ],
   });
 }
