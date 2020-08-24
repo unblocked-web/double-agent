@@ -3,7 +3,9 @@ import HeaderProfile from '@double-agent/http-headers/lib/HeaderProfile';
 import getDefaultHeaderOrder from '@double-agent/http-headers/lib/getDefaultHeaderOrder';
 import ResourceType from '@double-agent/runner/interfaces/ResourceType';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
-const browserKeys: string[] = require('../browserKeys.json');
+import emulators from '../emulators.json';
+
+const browserKeys: string[] = emulators.map(x => x.key);
 
 const emulationsDir = process.env.PLUGIN_DIR ?? `${__dirname}/../data/emulations`;
 

@@ -1,0 +1,83 @@
+{
+  "osKey": "windows-7",
+  "removals": [
+    "window.Navigator.prototype.bluetooth",
+    "window.navigator.bluetooth",
+    "window.BluetoothUUID",
+    "window.Bluetooth",
+    "window.BluetoothCharacteristicProperties",
+    "window.BluetoothDevice",
+    "window.BluetoothRemoteGATTCharacteristic",
+    "window.BluetoothRemoteGATTDescriptor",
+    "window.BluetoothRemoteGATTServer",
+    "window.BluetoothRemoteGATTService"
+  ],
+  "additions": [
+    {
+      "path": "window.Navigator.prototype",
+      "propertyName": "setAppBadge",
+      "prevProperty": "xr",
+      "property": {
+        "length": {
+          "_type": "number",
+          "_flags": "c",
+          "_value": 0
+        },
+        "name": {
+          "_type": "string",
+          "_flags": "c",
+          "_value": ""
+        },
+        "_function": "function () { [native code] }",
+        "_flags": "cew"
+      }
+    },
+    {
+      "path": "window.Navigator.prototype",
+      "propertyName": "clearAppBadge",
+      "prevProperty": "setAppBadge",
+      "property": {
+        "length": {
+          "_type": "number",
+          "_flags": "c",
+          "_value": 0
+        },
+        "name": {
+          "_type": "string",
+          "_flags": "c",
+          "_value": ""
+        },
+        "_function": "function () { [native code] }",
+        "_flags": "cew"
+      }
+    },
+    {
+      "path": "window.document",
+      "propertyName": "currentScript",
+      "prevProperty": "scripts",
+      "property": {
+        "_type": "object",
+        "_value": null
+      }
+    },
+    {
+      "path": "window.Notification.prototype",
+      "propertyName": "image",
+      "prevProperty": "close",
+      "property": {
+        "_flags": "ce",
+        "_accessException": "TypeError: Illegal invocation",
+        "_get": "function get image() { [native code] }",
+        "_getToStringToString": "function toString() { [native code] }"
+      }
+    }
+  ],
+  "order": [],
+  "changes": [
+    {
+      "path": "window.document.readyState",
+      "propertyName": "_value",
+      "property": "complete"
+    }
+  ]
+}

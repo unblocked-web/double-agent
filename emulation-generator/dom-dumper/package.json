@@ -4,9 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "PORT=9224 node index.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "chrome-remote-interface": "0.28.2"
+    "chrome-remote-interface": "0.28.2",
+    "chrome-launcher": "^0.13.4",
+    "puppeteer-core": "^5.2.1"
   }
 }

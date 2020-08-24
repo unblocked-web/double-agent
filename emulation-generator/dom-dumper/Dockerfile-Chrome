@@ -1,6 +1,8 @@
 FROM debian:stable-slim
 
-ENV CHROME_URL http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_80.0.3987.122-1_amd64.deb
+ARG chrome_url
+
+ENV CHROME_URL=$chrome_url
 
 RUN apt-get update && apt-get install -qy \
         wget fonts-freefont-ttf \

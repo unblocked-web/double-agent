@@ -7,8 +7,10 @@
     "exportClienthello": "PRINT=1 node -e 'require(\"./scripts/exportClienthelloProfiles\").default()'",
     "exportCodec": "PRINT=1 node -e 'require(\"./scripts/exportCodecProfiles\").default()'",
     "exportDom": "PRINT=1 node -e 'require(\"./scripts/exportDomProfiles\").default()'",
+    "exportChromeAndNavigator": "PRINT=1 node -e 'require(\"./scripts/exportChromeAndNavigator\").default()'",
     "exportHeader": "PRINT=1 node -e 'require(\"./scripts/exportHeaderProfiles\").default()'",
-    "export": "yarn exportClienthello && yarn exportCodex && yarn exportDom && yarn exportHeader"
+    "exportAgents": "PRINT=1 node -e 'require(\"./scripts/exportUserAgents\").default()'",
+    "export": "yarn exportClienthello && yarn exportCodex && yarn exportDom && yarn exportHeader && yarn exportChromeAndNavigator && yarn exportAgents"
   },
   "description": "Generates data that can be used to emulate browsers"
 }
