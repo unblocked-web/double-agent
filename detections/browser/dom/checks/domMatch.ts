@@ -229,6 +229,8 @@ export function isWebdriverProp(prop: string) {
   return (
     webdriverProps.has(prop) ||
     prop.startsWith('window.document.$cdc_') ||
+    // non-standard devtools properties
+    prop.includes('.cdc_adoQpoasnfa76pfcZLmcfl_') ||
     prop.includes('.getDestinationInsertionPoints')
   );
 }

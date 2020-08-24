@@ -3,7 +3,9 @@ import 'source-map-support/register';
 import getAllProfiles, { equalSupport, equalWebRtcCodecs } from '@double-agent/browser-codecs/lib/CodecProfile';
 import ICodecProfile from '@double-agent/browser-codecs/interfaces/ICodecProfile';
 import { lookup } from 'useragent';
-const browserKeys: string[] = require('../browserKeys.json');
+import emulators from '../emulators.json';
+
+const browserKeys: string[] = emulators.map(x => x.key);
 
 const emulationsDir = process.env.PLUGIN_DIR ?? `${__dirname}/../data/emulations`;
 

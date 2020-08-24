@@ -7,6 +7,11 @@ import { resolve } from 'path';
 import { IncomingMessage } from 'http';
 import domScript from '@double-agent/browser-dom/domScript';
 import { getProfileDirNameFromUseragent } from '@double-agent/profiler';
+import puppeteer from 'puppeteer-core';
+import { BrowserFetcher } from 'puppeteer-core/lib/cjs/puppeteer/node/BrowserFetcher';
+import browsers from './browsers.json';
+import { buildChromeDocker, getDockerHost, runDocker } from './docker';
+import * as ChromeLauncher from 'chrome-launcher';
 
 const options = {
   key: fs.readFileSync(`${__dirname}/../../runner/certs/privkey.pem`),
@@ -16,23 +21,97 @@ const options = {
 const dataDir = resolve(__dirname, '../data');
 const port = process.env.DUMPER_PORT ?? 9000;
 const url = new URL(`https://a1.ulixee-test.org:${port}`);
+const shouldRunDockers = !!process.env.RUN_DOCKERS ?? false;
+
+const server = createServer();
+const serverStarted = new Promise(resolve => {
+  server.once('listening', resolve);
+});
 
 (async function() {
-  const server = createServer();
-  const serverStarted = new Promise(resolve => {
-    server.once('listening', resolve);
+  const dockerHost = getDockerHost();
+
+  try {
+    for (const { dockerChromeUrl, browser, version, revision } of browsers) {
+      if (browser === 'chrome') {
+        if (dockerChromeUrl && shouldRunDockers) {
+          console.log('Running Chrome %s on Docker', version);
+          const dockerName = buildChromeDocker(version, dockerChromeUrl);
+          const docker = await runDocker(dockerName, dockerHost);
+          await navigateToUrl(9224);
+          docker.kill('SIGTERM');
+        }
+        if (revision) {
+          const revisionInfo = await getBrowserRevision(browser, version, revision);
+
+          console.log('Running Chrome %s on Local (%s)', version, revision);
+          const chrome = await launchLocalChrome(revisionInfo.executablePath);
+
+          await navigateToUrl(chrome.port);
+          await chrome.kill();
+        }
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  } finally {
+    server.close();
+    process.exit();
+  }
+})();
+
+async function getBrowserRevision(browser: 'chrome', version: string, revision: string) {
+  const localBrowserCache = `${__dirname}/.browsers`;
+  if (!existsSync(localBrowserCache)) mkdirSync(localBrowserCache, { recursive: true });
+
+  const browserFetcher: BrowserFetcher = puppeteer.createBrowserFetcher({
+    product: browser,
+    path: `${localBrowserCache}/${browser}-${version}`,
   });
+
+  let revisionInfo = browserFetcher.revisionInfo(revision);
+  if (!revisionInfo.local) {
+    let lastPct = 0;
+    revisionInfo = await browserFetcher.download(revision, (downloadedBytes, totalBytes) => {
+      const pct = Math.floor((100 * downloadedBytes) / totalBytes);
+      if (pct % 5 !== 0) return;
+      if (pct > lastPct) lastPct = pct;
+      else return;
+      console.log('Downloading %s-%s: (%s%)', browser, revision, pct);
+    });
+  }
+  return revisionInfo;
+}
+
+async function launchLocalChrome(chromePath: string) {
+  return await ChromeLauncher.launch({
+    chromePath,
+    ignoreDefaultFlags: true,
+    chromeFlags: [
+      '--disable-gpu',
+      '--headless',
+      '--allow-running-insecure-content',
+      '--ignore-certificate-errors',
+      '--user-data-dir=/data',
+    ],
+  });
+}
+
+async function navigateToUrl(developerToolsPort: number) {
+  await serverStarted;
   let client;
 
   try {
     // connect to endpoint
-    client = await CDP({ port: process.env.PORT ?? 9224 });
+    client = await CDP({ port: developerToolsPort });
+    console.log('Connected to chrome devtools (%s)', developerToolsPort);
     // extract domains
     const { Network, Page } = client;
     const uploadedPromise = new Promise<any>(resolve => {
       // setup handlers
       Network.responseReceived(params => {
         if (params.response.url.endsWith('/dump')) {
+          console.log('Dump uploaded');
           resolve();
         }
       });
@@ -40,7 +119,6 @@ const url = new URL(`https://a1.ulixee-test.org:${port}`);
     // enable events then start!
     await Network.enable();
     await Page.enable();
-    await serverStarted;
     await Page.navigate({ url: 'https://a1.ulixee-test.org:9000' });
     await uploadedPromise;
   } catch (err) {
@@ -49,10 +127,8 @@ const url = new URL(`https://a1.ulixee-test.org:${port}`);
     if (client) {
       await client.close();
     }
-    server.close();
-    process.exit();
   }
-})();
+}
 
 function createServer() {
   return https
