@@ -193,4 +193,5 @@ const codecs = [
   'ac-3',
   'ec-3',
   'mhm1.0x0D',
+  'theora'
 ];

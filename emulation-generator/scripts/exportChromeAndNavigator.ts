@@ -20,6 +20,7 @@ export default async function exportChromeAndNavigator() {
 
   const browserNavigators: IBrowserNavigators = {};
   const browserChromes: IBrowserChromes = {};
+  const browserFrames: IBrowserFrames = {};
 
   for (const useragent of ProfilerData.useragents) {
     const profileDirName = getProfileDirNameFromUseragent(useragent);
@@ -36,6 +37,7 @@ export default async function exportChromeAndNavigator() {
     const osKey = createOsKeyFromUseragent(useragent);
 
     browserChromes[browserKey] = browserChromes[browserKey] || [];
+    browserFrames[browserKey] = browserFrames[browserKey] || {};
     browserNavigators[browserKey] = browserNavigators[browserKey] || [];
     browserNavigators[browserKey].push({ osKey, navigator: profile.dom.window.navigator });
 
@@ -49,6 +51,8 @@ export default async function exportChromeAndNavigator() {
         prevProperty,
       });
     }
+    browserFrames[browserKey][osKey] =
+      profile.dom.window.outerHeight._value - profile.dom.window.innerHeight._value;
   }
 
   for (const browserKey of browserKeys) {
@@ -56,6 +60,7 @@ export default async function exportChromeAndNavigator() {
     warnForChromeOsDifferences(browserChromes, browserKey);
     const navigators = browserNavigators[browserKey];
     const chromes = browserChromes[browserKey];
+    const frames = browserFrames[browserKey];
     const emulationName = browserKey.toLowerCase().replace('_', '-');
     const basePath = Path.join(emulationsDir, `emulate-${emulationName}`);
     if (navigators.length) {
@@ -65,6 +70,19 @@ export default async function exportChromeAndNavigator() {
         'utf8',
       );
     }
+    const finalFrames: any = {};
+    for (const [key, value] of Object.entries(frames)) {
+      if (key.startsWith('mac-os-x')) {
+        if (finalFrames['mac-os-x'] && finalFrames['mac-os-x'] !== value) {
+          finalFrames[key] = value;
+        }
+        finalFrames['mac-os-x'] = value;
+
+      } else {
+        finalFrames[key] = value;
+      }
+    }
+    Fs.writeFileSync(`${basePath}/frame.json`, JSON.stringify(finalFrames, null, 2), 'utf8');
     if (chromes.length) {
       Fs.writeFileSync(`${basePath}/chrome.json`, JSON.stringify(chromes[0], null, 2), 'utf8');
     }
@@ -136,4 +154,8 @@ interface IBrowserChromes {
 
 interface IBrowserNavigators {
   [browserKey: string]: { osKey: string; navigator: any }[];
+}
+
+interface IBrowserFrames {
+  [browserKey: string]: { [osKey: string]: number };
 }
