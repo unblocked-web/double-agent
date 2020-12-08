@@ -6,51 +6,39 @@ import domScript from './domScript';
 import { IProfileData } from './interfaces/IProfile';
 
 export default class BrowserDomPlugin extends Plugin {
-  private pendingByKey: { [key: string]: IResolvablePromise } = {};
+  private pendingBySessionId: { [sessionId: string]: IResolvablePromise } = {};
 
   public initialize() {
-    this.registerRoute('all', '/dom1', this.loadScript);
-    this.registerRoute('all', '/dom2', this.loadScript);
+    this.registerRoute('all', '/', this.loadScript);
     this.registerRoute('all', '/save', this.save);
     this.registerRoute('all', '/wait-forever.js', this.waitForeverJs);
 
     const pages: IPluginPage[] = [];
     ['http', 'https'].forEach(protocol => {
-      pages.push(
-        { name: 'dom1', route: this.routes[protocol]['/dom1'], clickNext: true },
-        { name: 'dom2', route: this.routes[protocol]['/dom2'], waitForReady: true },
-      );
+      pages.push({ route: this.routes[protocol]['/'], waitForReady: true });
     });
     this.registerPages(...pages);
   }
 
   private loadScript(ctx: IRequestContext) {
-    const key = `${ctx.session.id}:${ctx.page.name}`;
-    this.pendingByKey[key] = createPromise();
+    this.pendingBySessionId[ctx.session.id] = createPromise();
     const document = new Document(ctx);
-    document.injectBodyTag(domScript(ctx, ctx.page.name));
-    document.injectFooterTag(`<script src="${ctx.buildUrl('/wait-forever.js')}&key=${key}" />`);
-    if (ctx.page.clickNext) {
-      document.addNextPageClick();
-    }
+    document.injectBodyTag(domScript(ctx));
+    document.injectFooterTag(`<script src="${ctx.buildUrl('/wait-forever.js')}" />`);
     ctx.res.end(document.html);
   }
 
   private async save(ctx: IRequestContext) {
-    const name = ctx.url.searchParams.get('name');
-    const key = `${ctx.session.id}:${name}`;
-    const protocol = ctx.url.protocol.replace(':', '');
-    const filenameSuffix = `-${protocol}-${name.replace('dom', '')}`;
-    this.pendingByKey[key]?.resolve();
+    const filenameSuffix = `-${ctx.url.protocol.replace(':', '')}`;
+    this.pendingBySessionId[ctx.session.id]?.resolve();
     const profileData = ctx.requestDetails.bodyJson as IProfileData;
     ctx.session.savePluginProfileData<IProfileData>(this, profileData, { filenameSuffix });
     ctx.res.end();
   }
 
   private async waitForeverJs(ctx: IRequestContext) {
-    const key = ctx.url.searchParams.get('key');
-    await this.pendingByKey[key]?.promise;
-    delete this.pendingByKey[key];
+    await this.pendingBySessionId[ctx.session.id]?.promise;
+    delete this.pendingBySessionId[ctx.session.id];
     ctx.res.end();
   }
 }

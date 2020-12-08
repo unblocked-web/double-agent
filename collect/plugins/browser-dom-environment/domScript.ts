@@ -45,8 +45,7 @@ const doNotAccess = [
   'window.CSSTransition.prototype.timeline' // crashes Safari
 ];
 
-export default function domScript(ctx: IRequestContext, pageName: string) {
-  const saveUrl = `/save?name=${pageName}`;
+export default function domScript(ctx: IRequestContext) {
   return `
   <script type="text/javascript">
 (function browserDomProbe() {
@@ -463,7 +462,7 @@ export default function domScript(ctx: IRequestContext, pageName: string) {
   window.afterQueueComplete = async () => {
     await new Promise(resolve => setTimeout(resolve, 1e3));
     const props = await extractPropsFromObject(window, 'window');
-    return fetch("${ctx.buildUrl(saveUrl)}", {
+    return fetch("${ctx.buildUrl('/save')}", {
       method: 'POST',
       body: JSON.stringify({
         window: props,

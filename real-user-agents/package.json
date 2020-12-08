@@ -5,8 +5,8 @@
   "scripts": {
     "start": "export $(cat .env | xargs) && node run.js",
     "build": "node -r source-map-support/register -e 'require(\"./scripts/build.js\").default()'",
-    "updateStatscounterData": "node -e 'require(\"./scripts/updateStatscounterData.js\").default()'",
-    "updateBrowserData": "export $(cat .env | xargs) && node -r source-map-support/register -e 'require(\"./scripts/updateBrowserData.js\").default()'"
+    "importStatscounterData": "node -e 'require(\"./scripts/updateStatscounterData.js\").default()'",
+    "importBrowserData": "export $(cat .env | xargs) && node -r source-map-support/register -e 'require(\"./scripts/updateBrowserData.js\").default()'"
   },
   "dependencies": {
     "@double-agent/config": "1.0.0",

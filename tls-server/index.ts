@@ -25,7 +25,7 @@ export default class TlsServer extends EventEmitter {
     this.port = port;
     this.listenCallback = callback;
 
-    this.child = fork(`${__dirname  }/child`, [], { stdio: ['ignore', 'inherit', 'pipe', 'ipc'] });
+    this.child = fork(`${__dirname}/child`, [], { stdio: ['ignore', 'inherit', 'pipe', 'ipc'] });
     this.child.stderr.setEncoding('utf8');
 
     this.child.on('error', err => {
