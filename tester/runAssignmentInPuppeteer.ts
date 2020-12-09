@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
 import IAssignment from '@double-agent/runner/interfaces/IAssignment';
 import puppeteer from 'puppeteer';
-import ISessionPage from "@double-agent/collect/interfaces/ISessionPage";
+import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
 export default async function runAssignmentInPuppeteer(
   puppPage: puppeteer.Page,
   assignment: IAssignment,
-  setUseragent = true,
+  setUserAgentString = true,
 ) {
-  if (setUseragent === true) {
-    await puppPage.setUserAgent(assignment.useragent);
+  if (setUserAgentString === true) {
+    await puppPage.setUserAgent(assignment.userAgentString);
   }
 
   let pageCount = 0;

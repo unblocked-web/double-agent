@@ -1,7 +1,7 @@
 // import IRequestDetails from "@double-agent/collect/interfaces/IRequestDetails";
-
+//
 // keep the browser up but clear the cookies... can you still be tracked.
-
+//
 // private getSessionFromAddressAndPort(requestDetails: IRequestDetails) {
 //   const addrParts = requestDetails.remoteAddress.split(':');
 //   const addrPort = addrParts.pop();

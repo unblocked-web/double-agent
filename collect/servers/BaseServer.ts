@@ -1,10 +1,10 @@
-import Plugin, { IRoutesByPath } from "../lib/Plugin";
-import IServerContext from "../interfaces/IServerContext";
+import Plugin, { IRoutesByPath } from '../lib/Plugin';
+import IServerContext from '../interfaces/IServerContext';
 
 export type IServerProtocol = 'tls' | 'http' | 'https';
 
 export default class BaseServer {
-  public port: number
+  public port: number;
   public protocol: IServerProtocol;
 
   private readonly routesByPath: IRoutesByPath = {};

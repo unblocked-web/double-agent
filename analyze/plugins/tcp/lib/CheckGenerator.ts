@@ -16,12 +16,12 @@ export default class CheckGenerator {
   }
 
   private extractTtlChecks() {
-    const { useragentId } = this.profile;
-    const { osName } = Config.extractMetaFromUseragentId(useragentId);
+    const { userAgentId } = this.profile;
+    const { osName } = Config.extractMetaFromUserAgentId(userAgentId);
     const expectedValue = expectedTtlValues[osName];
 
     const check = new ExpectedValueCheck(
-      { useragentId },
+      { userAgentId },
       'time-to-live',
       expectedValue,
       this.profile.data.ttl,
@@ -30,8 +30,8 @@ export default class CheckGenerator {
   }
 
   private extractWindowSizeChecks() {
-    const { useragentId } = this.profile;
-    const { osName, osVersion } = Config.extractMetaFromUseragentId(useragentId);
+    const { userAgentId } = this.profile;
+    const { osName, osVersion } = Config.extractMetaFromUserAgentId(userAgentId);
 
     let expectedValues = expectedWindowSizes[osName];
 
@@ -40,11 +40,11 @@ export default class CheckGenerator {
       expectedValues = expectedWindowSizes[osName][windowsVersion];
     }
     if (!expectedValues) {
-      console.log('WARN: No expected window sizes found', useragentId);
+      console.log('WARN: No expected window sizes found', userAgentId);
     }
 
     const check = new ExpectedValuesCheck(
-      { useragentId },
+      { userAgentId },
       'window-sizes',
       expectedValues,
       this.profile.data.windowSize,

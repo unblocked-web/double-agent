@@ -1,10 +1,10 @@
 import IHttpBasicCookiesProfile, {
   ICollectedCookieData,
-  ICreatedCookieData
-} from "@double-agent/collect-http-basic-cookies/interfaces/IProfile";
-import ReadableCookieCheck from "./checks/ReadableCookieCheck";
-import UnreadableCookieCheck from "./checks/UnreadableCookieCheck";
-import ICookieSetDetails from "../interfaces/ICookieSetDetails";
+  ICreatedCookieData,
+} from '@double-agent/collect-http-basic-cookies/interfaces/IProfile';
+import ReadableCookieCheck from './checks/ReadableCookieCheck';
+import UnreadableCookieCheck from './checks/UnreadableCookieCheck';
+import ICookieSetDetails from '../interfaces/ICookieSetDetails';
 
 export default class CheckGenerator {
   public readonly checks = [];
@@ -17,7 +17,7 @@ export default class CheckGenerator {
   }
 
   private extractChecks() {
-    const { useragentId } = this.profile;
+    const { userAgentId } = this.profile;
 
     const setCookiesMap = this.extractSetCookieDetails();
     const getCookiesMap: { [key: string]: { [getter: string]: Set<string> } } = {};
@@ -35,7 +35,7 @@ export default class CheckGenerator {
         const setDetails = setCookiesMap[key][name];
         const getDetails = { getter, httpProtocol };
         if (!setDetails) throw new Error(`no cookies created for ${key} with name: ${name}`);
-        this.checks.push(new ReadableCookieCheck({useragentId}, name, setDetails, getDetails));
+        this.checks.push(new ReadableCookieCheck({ userAgentId }, name, setDetails, getDetails));
         getCookiesMap[key][getter].add(name);
       }
     }
@@ -46,7 +46,9 @@ export default class CheckGenerator {
           if (names.has(name)) continue;
           const httpProtocol = key.split('-')[0];
           const getDetails = { getter, httpProtocol };
-          this.checks.push(new UnreadableCookieCheck({useragentId}, name, setDetails, getDetails));
+          this.checks.push(
+            new UnreadableCookieCheck({ userAgentId }, name, setDetails, getDetails),
+          );
         }
       }
     }
@@ -66,19 +68,21 @@ export default class CheckGenerator {
         const parts = createCookieStr.split(';').map(x => x.trim());
         const name = parts.splice(0, 1)[0].split('=')[0];
         const previouslyCreated = !!cookiesMap[key][name];
-        const attributes: any = parts.map(part => {
-          // eslint-disable-next-line prefer-const
-          let [n, v] = part.split('=');
-          if (n === 'expires') v = '[PAST DATE]'
-          return v ? [n, v].join('=') : n;
-        }).filter(x => x);
+        const attributes: any = parts
+          .map(part => {
+            // eslint-disable-next-line prefer-const
+            let [n, v] = part.split('=');
+            if (n === 'expires') v = '[PAST DATE]';
+            return v ? [n, v].join('=') : n;
+          })
+          .filter(x => x);
 
         cookiesMap[key][name] = {
           setter,
           name,
           previouslyCreated,
-          attributes
-        }
+          attributes,
+        };
       }
     }
 

@@ -3,10 +3,10 @@ import { URL } from 'url';
 import IRequestContext from '../interfaces/IRequestContext';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import Session from './Session';
-import {addSessionIdToUrl, DomainType} from "./DomainUtils";
-import {CrossDomain, MainDomain, SubDomain} from "../index";
-import BaseServer, {IServerProtocol} from "../servers/BaseServer";
-import Plugin from "./Plugin";
+import { addSessionIdToUrl, DomainType } from './DomainUtils';
+import { CrossDomain, MainDomain, SubDomain } from '../index';
+import BaseServer, { IServerProtocol } from '../servers/BaseServer';
+import Plugin from './Plugin';
 
 export default class RequestContext implements IRequestContext {
   private readonly plugin: Plugin;

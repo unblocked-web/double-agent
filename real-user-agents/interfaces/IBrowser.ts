@@ -1,5 +1,5 @@
 import IBrowserVersion from './IBrowserVersion';
-import { IDeviceCategory } from "./DeviceCategory";
+import { IDeviceCategory } from './DeviceCategory';
 
 export default interface IBrowser {
   id: string;

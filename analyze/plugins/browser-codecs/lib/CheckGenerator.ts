@@ -29,14 +29,14 @@ export default class CheckGenerator {
   // if (checksById[check.id]) throw new Error(`check already exists: ${check.id}`);
 
   private extractChecks() {
-    const { useragentId } = this.profile;
+    const { userAgentId } = this.profile;
 
     for (const codecType of [CodecType.audio, CodecType.video]) {
       for (const entryKey of ['probablyPlays', 'maybePlays', 'recordingFormats']) {
         const rawCodecs = this.profile.data[`${codecType}Support`][entryKey];
         const path = `${codecType}Support.${entryKey}`;
         for (const codec of rawCodecs) {
-          const check = new StringArrayCheck({ useragentId }, path, codec);
+          const check = new StringArrayCheck({ userAgentId }, path, codec);
           this.checksByType[codecType].push(check);
         }
       }
@@ -54,7 +54,7 @@ export default class CheckGenerator {
         ),
       );
       for (const codec of codecs) {
-        const check = new StringArrayCheck({ useragentId }, path, codec);
+        const check = new StringArrayCheck({ userAgentId }, path, codec);
         this.checksByType[codecType].push(check);
       }
     }

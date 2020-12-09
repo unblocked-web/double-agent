@@ -36,8 +36,8 @@ export default class TcpPlugin extends Plugin {
   runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return [
-      ...this.runProbes('TTL', profile.useragentId, checkGenerator.ttlChecks),
-      ...this.runProbes('WNS', profile.useragentId, checkGenerator.winChecks),
+      ...this.runProbes('TTL', profile.userAgentId, checkGenerator.ttlChecks),
+      ...this.runProbes('WNS', profile.userAgentId, checkGenerator.winChecks),
     ];
   }
 }

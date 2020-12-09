@@ -6,7 +6,7 @@
   "checkCategories": [
     "Browser Fingerprint"
   ],
-  "description": "Is the browser fingerprint the same on every execution?",
+  "description": "Collects various browser attributes that can be used to fingerprint a given session",
   "scripts": {
     "start": "node index.js",
     "prod": "GENERATE_PROFILES=1 PORT=3001 DOMAIN=a1.ulixee.org node index.js"

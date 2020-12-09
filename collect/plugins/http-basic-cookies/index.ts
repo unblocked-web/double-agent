@@ -1,9 +1,10 @@
 import Cookie from 'cookie';
+import RealUserAgents from '@double-agent/real-user-agents';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import { MainDomain, SubDomain, CrossDomain } from '@double-agent/collect';
-import Plugin, {IPluginPage} from "@double-agent/collect/lib/Plugin";
-import Document from "@double-agent/collect/lib/Document";
-import {cleanDomains, DomainType} from "@double-agent/collect/lib/DomainUtils";
+import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
+import Document from '@double-agent/collect/lib/Document';
+import { cleanDomains, DomainType } from '@double-agent/collect/lib/DomainUtils';
 import {
   CookieGetter,
   CookieSetter,
@@ -12,7 +13,7 @@ import {
   ICookieGetter,
   ICookieSetter,
   IProfileData,
-} from "./interfaces/IProfile";
+} from './interfaces/IProfile';
 
 export default class HttpCookiesPlugin extends Plugin {
   public initialize() {
@@ -33,7 +34,12 @@ export default class HttpCookiesPlugin extends Plugin {
       let data = { cookieGroup: 'SameDomain' };
       pages.push(
         { route: this.routes[protocol]['/start'], domain: MainDomain, clickNext: true, data },
-        { route: this.routes[protocol]['/saveLoadAssetsAndReadFromJs'], domain: MainDomain, clickNext: true, data },
+        {
+          route: this.routes[protocol]['/saveLoadAssetsAndReadFromJs'],
+          domain: MainDomain,
+          clickNext: true,
+          data,
+        },
         // test.css
         // saveFromJs
       );
@@ -41,15 +47,34 @@ export default class HttpCookiesPlugin extends Plugin {
       // try setting cookies on cross-domain during redirect
       data = { cookieGroup: 'CrossDomainRedirect' };
       pages.push(
-        { route: this.routes[protocol]['/redirectToNextPage'], domain: MainDomain, isRedirect: true },
-        { route: this.routes[protocol]['/setAndRedirectToNextPage'], domain: CrossDomain, isRedirect: true, data },
-        { route: this.routes[protocol]['/saveAndRedirectToNextPage'], domain: MainDomain, isRedirect: true, data },
+        {
+          route: this.routes[protocol]['/redirectToNextPage'],
+          domain: MainDomain,
+          isRedirect: true,
+        },
+        {
+          route: this.routes[protocol]['/setAndRedirectToNextPage'],
+          domain: CrossDomain,
+          isRedirect: true,
+          data,
+        },
+        {
+          route: this.routes[protocol]['/saveAndRedirectToNextPage'],
+          domain: MainDomain,
+          isRedirect: true,
+          data,
+        },
       );
 
       // try setting cookies on sub-domain during redirect
       data = { cookieGroup: 'SubDomainRedirect' };
       pages.push(
-        { route: this.routes[protocol]['/setAndRedirectToNextPage'], domain: SubDomain, isRedirect: true, data },
+        {
+          route: this.routes[protocol]['/setAndRedirectToNextPage'],
+          domain: SubDomain,
+          isRedirect: true,
+          data,
+        },
         { route: this.routes[protocol]['/save'], domain: MainDomain, clickNext: true, data },
       );
 
@@ -61,7 +86,7 @@ export default class HttpCookiesPlugin extends Plugin {
 
       data = { cookieGroup: 'CrossDomain' };
       pages.push(
-          //
+        //
         { route: this.routes[protocol]['/set'], domain: CrossDomain, clickNext: true, data },
         { route: this.routes[protocol]['/save'], domain: MainDomain, data },
       );
@@ -94,7 +119,9 @@ export default class HttpCookiesPlugin extends Plugin {
     const document = new Document(ctx);
 
     document.addNextPageClick();
-    document.injectHeadTag(`<link rel="stylesheet" type="text/css" href="${ctx.buildUrl('/test.css')}" />`);
+    document.injectHeadTag(
+      `<link rel="stylesheet" type="text/css" href="${ctx.buildUrl('/test.css')}" />`,
+    );
     document.injectBodyTag(`<script type="text/javascript">
       (function() {
         const promise = fetch("${ctx.buildUrl('/saveFromJs')}", {
@@ -111,14 +138,19 @@ export default class HttpCookiesPlugin extends Plugin {
   }
 
   private saveFromJs(ctx: IRequestContext) {
-    const cookies = Cookie.parse((ctx.requestDetails.bodyJson as any).cookies ?? '') as ICollectedCookies;
+    const cookies = Cookie.parse(
+      (ctx.requestDetails.bodyJson as any).cookies ?? '',
+    ) as ICollectedCookies;
     this.saveCollectedCookiesToProfile(cookies, ctx, { getter: 'JsScript', group: 'SameDomain' });
     ctx.res.end();
   }
 
   private saveFromCss(ctx: IRequestContext) {
     const cookies = collectCookies(ctx);
-    this.saveCollectedCookiesToProfile(cookies, ctx, { getter: 'HttpAssetHeader', group: 'SameDomain' });
+    this.saveCollectedCookiesToProfile(cookies, ctx, {
+      getter: 'HttpAssetHeader',
+      group: 'SameDomain',
+    });
     ctx.res.end('');
   }
 
@@ -158,26 +190,32 @@ export default class HttpCookiesPlugin extends Plugin {
   }
 
   private saveCreatedCookiesToProfile(
-      cookies: ICreatedCookies,
-      ctx: IRequestContext,
-      extraData: IExtraSaveData = {}
+    cookies: ICreatedCookies,
+    ctx: IRequestContext,
+    extraData: IExtraSaveData = {},
   ) {
-    const setter = extraData.setter || CookieSetter.HttpHeader
+    const setter = extraData.setter || CookieSetter.HttpHeader;
     const group = extraData.group || ctx.page.data?.cookieGroup;
     const httpProtocol = ctx.server.protocol;
     const profileData = ctx.session.getPluginProfileData<IProfileData>(this, []);
 
     const cleanedCookies = cookies.map(x => cleanDomains(x));
-    profileData.push({ group, setter, httpProtocol, cookies: cleanedCookies, url: ctx.requestDetails.url });
+    profileData.push({
+      group,
+      setter,
+      httpProtocol,
+      cookies: cleanedCookies,
+      url: ctx.requestDetails.url,
+    });
     ctx.session.savePluginProfileData<IProfileData>(this, profileData, { keepInMemory: true });
   }
 
   private saveCollectedCookiesToProfile(
-      allCookies: ICollectedCookies,
-      ctx: IRequestContext,
-      extraData: IExtraSaveData = {}
+    allCookies: ICollectedCookies,
+    ctx: IRequestContext,
+    extraData: IExtraSaveData = {},
   ) {
-    const getter = extraData.getter || CookieGetter.HttpHeader
+    const getter = extraData.getter || CookieGetter.HttpHeader;
     const group = extraData.group || ctx.page.data?.cookieGroup;
     const httpProtocol = ctx.server.protocol;
     const cookies = filterCookies(allCookies, httpProtocol, group);
@@ -194,7 +232,8 @@ function createCookies(ctx: IRequestContext) {
   const domainType = ctx.requestDetails.domainType;
   const cookieGroup = ctx.page.data?.cookieGroup;
   const prefix = `${ctx.server.protocol}-${cookieGroup}`;
-  const isChrome80 = ctx.session.parsedUseragent.family === 'Chrome' && ctx.session.parsedUseragent.major === '80';
+  const userAgent = RealUserAgents.findByString(ctx.session.expectedUserAgentString);
+  const isChrome80 = userAgent?.browserId.startsWith('chrome-80');
 
   const cookies = [
     `${prefix}--Basic=0`,
@@ -226,18 +265,24 @@ function createCookies(ctx: IRequestContext) {
     );
     if (!isChrome80) {
       // chrome 80 starts a/b testing for sending ONLY SameSite=None cookies that are "Secure" to cross-site
-      cookies.push(`${prefix}--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=${MainDomain}`);
+      cookies.push(
+        `${prefix}--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=${MainDomain}`,
+      );
     }
   }
 
   return cookies;
 }
 
-function collectCookies(ctx)  {
+function collectCookies(ctx) {
   return Cookie.parse(ctx.req.headers.cookie ?? '');
 }
 
-function filterCookies(cookies: ICollectedCookies, httpProtocol: string, cookieGroup?: string): ICollectedCookies {
+function filterCookies(
+  cookies: ICollectedCookies,
+  httpProtocol: string,
+  cookieGroup?: string,
+): ICollectedCookies {
   const prefix = `${httpProtocol}-${cookieGroup}--`;
   const filteredCookies: ICollectedCookies = {};
 

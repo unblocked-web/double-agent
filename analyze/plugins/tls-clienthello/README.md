@@ -78,3 +78,7 @@ https://tools.ietf.org/html/draft-davidben-tls-grease-01#section-5
 https://browserleaks.com/ssl
 https://www.ssllabs.com/ssltest/clients.html
 https://tools.ietf.org/html/rfc8446
+
+## ToDo
+
+We're not checking the details of every extension. Need to investigate this more.

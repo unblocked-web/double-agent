@@ -1,27 +1,25 @@
-import { Agent, lookup } from 'useragent';
-import { createUseragentId } from "@double-agent/config";
-import { IAssignmentType } from "@double-agent/runner/interfaces/IAssignment";
+import { createUserAgentIdFromString } from '@double-agent/config';
+import { IAssignmentType } from '@double-agent/runner/interfaces/IAssignment';
 import ISession from '../interfaces/ISession';
 import IAsset from '../interfaces/IAsset';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import IUserIdentifier from '../interfaces/IUserIdentifier';
-import Plugin from "./Plugin";
-import SessionTracker from "./SessionTracker";
-import PluginDelegate from "./PluginDelegate";
-import IBaseProfile from "../interfaces/IBaseProfile";
+import Plugin from './Plugin';
+import SessionTracker from './SessionTracker';
+import PluginDelegate from './PluginDelegate';
+import IBaseProfile from '../interfaces/IBaseProfile';
 
 export default class Session implements ISession {
   public readonly id: string;
   public readonly assignmentType: IAssignmentType;
   public readonly assetsNotLoaded: IAsset[] = [];
   public readonly expectedAssets: (IAsset & { fromUrl?: string })[] = [];
-  public expectedUseragent: string;
-  public parsedUseragent: Agent;
+  public expectedUserAgentString: string;
 
   public readonly identifiers: IUserIdentifier[] = [];
   public readonly pluginsRun: Set<string> = new Set();
   public readonly requests: IRequestDetails[] = [];
-  public useragent: string;
+  public userAgentString: string;
   public onSavePluginProfile: (plugin: Plugin, profile: any, filenameSuffix?: string) => void;
 
   public readonly sessionTracker: SessionTracker;
@@ -29,7 +27,12 @@ export default class Session implements ISession {
 
   private readonly profilesByPluginId: { [pluginId: string]: IBaseProfile } = {};
   private readonly currentPageIndexByPluginId: { [pluginId: string]: number } = {};
-  constructor(id: string, assignmentType: IAssignmentType, sessionTracker: SessionTracker, pluginDelegate: PluginDelegate) {
+  constructor(
+    id: string,
+    assignmentType: IAssignmentType,
+    sessionTracker: SessionTracker,
+    pluginDelegate: PluginDelegate,
+  ) {
     this.id = id;
     this.assignmentType = assignmentType;
     this.sessionTracker = sessionTracker;
@@ -39,7 +42,9 @@ export default class Session implements ISession {
   public trackCurrentPageIndex(pluginId: string, currentPageIndex: number) {
     const lastPageIndex = this.currentPageIndexByPluginId[pluginId] || 0;
     if (currentPageIndex < lastPageIndex) {
-      throw new Error(`You cannot go backwards in session. ${currentPageIndex} must be >= ${lastPageIndex}`);
+      throw new Error(
+        `You cannot go backwards in session. ${currentPageIndex} must be >= ${lastPageIndex}`,
+      );
     }
     this.currentPageIndexByPluginId[pluginId] = currentPageIndex;
   }
@@ -62,38 +67,38 @@ export default class Session implements ISession {
   }
 
   public recordRequest(requestDetails: IRequestDetails) {
-    const { useragent } = requestDetails;
+    const { userAgentString } = requestDetails;
 
-    if (!this.useragent) {
-      this.setUseragent(useragent);
+    if (!this.userAgentString) {
+      this.setUserAgentString(userAgentString);
     }
 
     this.requests.push(requestDetails);
   }
 
-  public setUseragent(useragent: string) {
-    this.useragent = useragent;
-    this.parsedUseragent = lookup(useragent);
+  public setUserAgentString(userAgentString: string) {
+    this.userAgentString = userAgentString;
   }
 
   public getPluginProfileData<TProfileData>(plugin: Plugin, data: TProfileData): TProfileData {
     if (!this.profilesByPluginId[plugin.id]) {
       this.profilesByPluginId[plugin.id] = {
-        useragentId: createUseragentId(this.useragent),
+        userAgentId: createUserAgentIdFromString(this.userAgentString),
         data,
-      }
+      };
     }
     return this.profilesByPluginId[plugin.id].data;
   }
 
   public savePluginProfileData<TProfileData>(
-      plugin: Plugin,
-      data: TProfileData,
-      options: { keepInMemory?: boolean; filenameSuffix?: string } = {}) {
+    plugin: Plugin,
+    data: TProfileData,
+    options: { keepInMemory?: boolean; filenameSuffix?: string } = {},
+  ) {
     const profile: IBaseProfile = {
-      useragentId: createUseragentId(this.useragent),
+      userAgentId: createUserAgentIdFromString(this.userAgentString),
       data,
-    }
+    };
     if (this.onSavePluginProfile) {
       this.onSavePluginProfile(plugin, profile, options.filenameSuffix);
     }
@@ -109,13 +114,12 @@ export default class Session implements ISession {
       id: this.id,
       assetsNotLoaded: this.assetsNotLoaded,
       expectedAssets: this.expectedAssets,
-      expectedUseragent: this.expectedUseragent,
+      expectedUserAgentString: this.expectedUserAgentString,
       identifiers: this.identifiers,
-      parsedUseragent: this.parsedUseragent,
       pluginsRun: Array.from(this.pluginsRun),
       requests: this.requests,
-      useragent: this.useragent,
-    }
+      userAgentString: this.userAgentString,
+    };
   }
 
   public async close() {

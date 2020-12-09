@@ -11,8 +11,6 @@
     "cleanProfiles": "rm -rf config/data/profiles",
     "start": "yarn workspace @double-agent/runner start",
     "prod": "yarn workspace @double-agent/runner prod",
-    "updateUseragent": "node node_modules/useragent/bin/update.js",
-    "postinstall": "yarn updateUseragent",
     "clean": "tsc -b --clean",
     "lint": "eslint --cache ./"
   },
@@ -28,7 +26,6 @@
   },
   "dependencies": {
     "cookie": "^0.4.0",
-    "useragent": "^2.3.0",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
@@ -38,7 +35,6 @@
     "request": "^2.88.2",
     "yamlparser": "0.0.x",
     "@types/cookie": "^0.3.3",
-    "@types/useragent": "^2.1.1",
     "p-queue": "^6.2.1",
     "@types/jest": "^24.0.11",
     "@types/node": "^12.7.11",
@@ -69,6 +65,7 @@
       "collect",
       "collect/plugins/*",
       "config",
+      "docs",
       "runner",
       "real-user-agents",
       "tls-server",

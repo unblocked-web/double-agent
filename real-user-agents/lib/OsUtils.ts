@@ -1,4 +1,4 @@
-import { lookup } from 'useragent';
+import extractUserAgentMeta from './extractUserAgentMeta';
 import IOperatingSystem from '../interfaces/IOperatingSystem';
 
 export function createOsName(name: string) {
@@ -8,8 +8,11 @@ export function createOsName(name: string) {
 }
 
 export function createOsId(os: Pick<IOperatingSystem, 'name' | 'version'>) {
-  const name = os.name.toLowerCase().replace(/\s/g, '-').replace('os-x', 'os');
-  const minorVersion = os.version.minor === '0' ? null : os.version.minor
+  const name = os.name
+    .toLowerCase()
+    .replace(/\s/g, '-')
+    .replace('os-x', 'os');
+  const minorVersion = os.version.minor === '0' ? null : os.version.minor;
   if (['other', 'linux'].includes(name)) {
     return name;
   }
@@ -20,12 +23,10 @@ export function createOsId(os: Pick<IOperatingSystem, 'name' | 'version'>) {
   return id;
 }
 
-export function createOsIdFromUseragent(useragent: string) {
-  const userAgent = lookup(useragent);
-  const userAgentOs = userAgent.os;
-  const name = userAgentOs.family;
-  const version = createOsVersion(name, userAgentOs.major, userAgentOs.minor);
-
+export function createOsIdFromUserAgentString(userAgentString: string) {
+  const { osName, osVersion } = extractUserAgentMeta(userAgentString);
+  const name = osName;
+  const version = createOsVersion(name, osVersion.major, osVersion.minor);
   return createOsId({ name, version });
 }
 
@@ -51,7 +52,7 @@ export function createOsVersion(osName: string, majorVersion: string, minorVersi
     major: majorVersion,
     minor: minorVersion,
     name: namedVersion,
-  }
+  };
 }
 
 const macNameToVersion = {
@@ -75,7 +76,7 @@ const macVersionToName = Object.entries(macNameToVersion).reduce((obj, [a, b]) =
 const winNameToVersion = {
   Vista: '6.0',
   XP: '5.2',
-}
+};
 
 const winVersionToName = Object.entries(winNameToVersion).reduce((obj, [a, b]) => {
   return Object.assign(obj, { [b]: a });

@@ -11,7 +11,7 @@ export default class ProbeBucket {
   public id: string;
   public layerId: string;
   public checkType: ICheckType;
-  public useragentIds: string[];
+  public userAgentIds: string[];
   public probes: Probe[];
   public matcher: string;
   public scorer: string;
@@ -22,13 +22,13 @@ export default class ProbeBucket {
     checkType: ICheckType,
     matcher: string,
     scorer: string,
-    useragentIds: string[],
+    userAgentIds: string[],
     probes: Probe[],
   ) {
     this.id = id;
     this.layerId = layerId;
     this.checkType = checkType;
-    this.useragentIds = useragentIds;
+    this.userAgentIds = userAgentIds;
     this.matcher = matcher;
     this.scorer = scorer;
     this.probes = probes;
@@ -42,7 +42,7 @@ export default class ProbeBucket {
       id: this.id,
       layerId: this.layerId,
       checkType: this.checkType,
-      useragentIds: this.useragentIds,
+      userAgentIds: this.userAgentIds,
       matcher: this.matcher,
       scorer: this.scorer,
       probeIds: this.probes.map(p => p.id),
@@ -52,20 +52,20 @@ export default class ProbeBucket {
   public static create(
     layer: Layer,
     probes: Probe[],
-    useragentIds: string[],
+    userAgentIds: string[],
     matcher: Constructable<BaseMatcher>,
     scorer: Constructable<BaseScorer>,
   ) {
     const id = generateId(layer);
     const layerId = layer.id;
     const checkType = probes[0].checkType;
-    return new this(id, layerId, checkType, matcher.name, scorer.name, useragentIds, probes);
+    return new this(id, layerId, checkType, matcher.name, scorer.name, userAgentIds, probes);
   }
 
   public static load(probeBucketObj: any, probesById: { [id: string]: Probe }) {
     const probes = probeBucketObj.probeIds.map(id => probesById[id]);
-    const { id, layerId, checkType, useragentIds, matcher, scorer } = probeBucketObj;
-    return new this(id, layerId, checkType, matcher, scorer, useragentIds, probes);
+    const { id, layerId, checkType, userAgentIds, matcher, scorer } = probeBucketObj;
+    return new this(id, layerId, checkType, matcher, scorer, userAgentIds, probes);
   }
 }
 

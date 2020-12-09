@@ -21,24 +21,24 @@ export default class BrowserDomPlugin extends Plugin {
   }
 
   private loadScript(ctx: IRequestContext) {
-    this.pendingBySessionId[ctx.session.id] = createPromise();
+    // this.pendingBySessionId[ctx.session.id] = createPromise();
     const document = new Document(ctx);
     document.injectBodyTag(domScript(ctx));
-    document.injectFooterTag(`<script src="${ctx.buildUrl('/wait-forever.js')}" />`);
+    // document.injectFooterTag(`<script src="${ctx.buildUrl('/wait-forever.js')}" />`);
     ctx.res.end(document.html);
   }
 
   private async save(ctx: IRequestContext) {
     const filenameSuffix = `-${ctx.url.protocol.replace(':', '')}`;
-    this.pendingBySessionId[ctx.session.id]?.resolve();
+    // this.pendingBySessionId[ctx.session.id]?.resolve();
     const profileData = ctx.requestDetails.bodyJson as IProfileData;
     ctx.session.savePluginProfileData<IProfileData>(this, profileData, { filenameSuffix });
     ctx.res.end();
   }
 
   private async waitForeverJs(ctx: IRequestContext) {
-    await this.pendingBySessionId[ctx.session.id]?.promise;
-    delete this.pendingBySessionId[ctx.session.id];
+    // await this.pendingBySessionId[ctx.session.id]?.promise;
+    // delete this.pendingBySessionId[ctx.session.id];
     ctx.res.end();
   }
 }

@@ -24,6 +24,6 @@ export default class HttpCookies extends Plugin {
 
   runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
-    return this.runProbes('BAC', profile.useragentId, checkGenerator.checks);
+    return this.runProbes('BAC', profile.userAgentId, checkGenerator.checks);
   }
 }

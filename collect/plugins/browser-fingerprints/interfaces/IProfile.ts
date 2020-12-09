@@ -1,4 +1,4 @@
-import IBaseProfile from "@double-agent/collect/interfaces/IBaseProfile";
+import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
 
 type IProfile = IBaseProfile<IProfileData>;
 
@@ -10,5 +10,5 @@ export interface IProfileDataFingerprint {
   sessionHash: string;
   browserHash: string;
   components: { key: string; value: object }[];
-  useragent: string;
+  userAgentString: string;
 }

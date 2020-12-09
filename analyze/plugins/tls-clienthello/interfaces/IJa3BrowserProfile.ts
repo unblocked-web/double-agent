@@ -1,7 +1,7 @@
 // import { IClientHello } from '../lib/parseHelloMessage';
 //
 // export default interface IJa3BrowserProfile {
-//   useragent: string;
+//   userAgentString: string;
 //   ja3: string;
 //   ja3Extended: string;
 //   ja3Md5: string;

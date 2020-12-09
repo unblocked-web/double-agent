@@ -1,6 +1,6 @@
-import IUserAgent from "../interfaces/IUserAgent";
-import OperatingSystems from "./OperatingSystems";
-import Browsers from "./Browsers";
+import IUserAgent from '../interfaces/IUserAgent';
+import OperatingSystems from './OperatingSystems';
+import Browsers from './Browsers';
 
 export default class UserAgent implements IUserAgent {
   public id: string;

@@ -1,8 +1,8 @@
-import 'source-map-support/register';
-import buildDetectionsList from './buildDetectionsList';
+import buildPluginsList from './buildPluginsList';
 import buildReadme from './buildReadme';
 
 (async function() {
-  await buildDetectionsList();
+  await buildPluginsList('collect');
+  await buildPluginsList('analyze');
   await buildReadme();
 })();

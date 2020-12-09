@@ -1,9 +1,9 @@
 import { URL } from 'url';
-import {IAssignmentType} from "@double-agent/runner/interfaces/IAssignment";
-import http from "http";
+import { IAssignmentType } from '@double-agent/runner/interfaces/IAssignment';
+import http from 'http';
 import Session from './Session';
-import PluginDelegate from "./PluginDelegate";
-import BaseServer from "../servers/BaseServer";
+import PluginDelegate from './PluginDelegate';
+import BaseServer from '../servers/BaseServer';
 
 let sessionIdCounter = 0;
 

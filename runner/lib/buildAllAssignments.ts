@@ -1,25 +1,21 @@
 import UserAgentsToTest from '@double-agent/config/lib/UserAgentsToTest';
 import IUserAgentToTest, {
   UserAgentToTestPickType,
-  IUserAgentToTestPickType
+  IUserAgentToTestPickType,
 } from '@double-agent/config/interfaces/IUserAgentToTest';
-import { createUseragentId } from '@double-agent/config';
-import buildAssignment from "./buildAssignment";
-import IAssignment, {AssignmentType} from '../interfaces/IAssignment';
+import { createUserAgentIdFromString } from '@double-agent/config';
+import buildAssignment from './buildAssignment';
+import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
 
 export default async function buildAllAssignments() {
   const assignments: IAssignment[] = [];
   const userAgentsToTest = UserAgentsToTest.all();
 
   for (const userAgentToTest of userAgentsToTest) {
-    const useragent = userAgentToTest.string;
-    const id = createUseragentId(useragent);
+    const userAgentString = userAgentToTest.string;
+    const id = createUserAgentIdFromString(userAgentString);
     const type = AssignmentType.Individual;
-    assignments.push(buildAssignment(
-      id,
-      type,
-      useragent,
-    ));
+    assignments.push(buildAssignment(id, type, userAgentString));
   }
 
   assignments.push(...buildAssignmentsOverTime(userAgentsToTest, UserAgentToTestPickType.popular));
@@ -30,47 +26,59 @@ export default async function buildAllAssignments() {
 
 // HELPERS //////////////////
 
-function buildAssignmentsOverTime(userAgentsToTest: IUserAgentToTest[], pickType: IUserAgentToTestPickType) {
+function buildAssignmentsOverTime(
+  userAgentsToTest: IUserAgentToTest[],
+  pickType: IUserAgentToTestPickType,
+) {
   const type = AssignmentType.OverTime;
   const assignments: IAssignment[] = [];
   const selUserAgents = userAgentsToTest.filter(x => x.pickTypes.includes(pickType));
-  const sortedUserAgents = selUserAgents.sort((a: IUserAgentToTest, b: IUserAgentToTest) => a.usagePercent[pickType] - b.usagePercent[pickType]);
-  const countByUseragentId: { [useragentId: string]: number } = {};
+  const sortedUserAgents = selUserAgents.sort(
+    (a: IUserAgentToTest, b: IUserAgentToTest) =>
+      a.usagePercent[pickType] - b.usagePercent[pickType],
+  );
+  const countByUserAgentId: { [userAgentId: string]: number } = {};
 
   while (assignments.length < 100) {
     let userAgentToTest: IUserAgentToTest;
-    let useragent: string;
-    let useragentId: string;
+    let userAgentString: string;
+    let userAgentId: string;
     for (userAgentToTest of sortedUserAgents) {
-      useragent = userAgentToTest.string;
-      useragentId = createUseragentId(useragent);
-      countByUseragentId[useragentId] = countByUseragentId[useragentId] || 0;
-      const pctIncluded = countByUseragentId[useragentId] / assignments.length * 100;
+      userAgentString = userAgentToTest.string;
+      userAgentId = createUserAgentIdFromString(userAgentString);
+      countByUserAgentId[userAgentId] = countByUserAgentId[userAgentId] || 0;
+      const pctIncluded = (countByUserAgentId[userAgentId] / assignments.length) * 100;
       if (pctIncluded < userAgentToTest.usagePercent[pickType]) break;
     }
-    countByUseragentId[useragentId] += 1;
-    assignments.push(buildAssignment(
-        createOverTimeSessionKey(pickType, assignments.length, useragentId),
+    countByUserAgentId[userAgentId] += 1;
+    assignments.push(
+      buildAssignment(
+        createOverTimeSessionKey(pickType, assignments.length, userAgentId),
         type,
-        useragent,
+        userAgentString,
         pickType,
         userAgentToTest.usagePercent[pickType],
-    ));
+      ),
+    );
   }
 
   return assignments;
 }
 
-export function createOverTimeSessionKey(pickType: IUserAgentToTestPickType, indexPos: number, useragentId: string) {
-  return `${pickType}-${indexPos.toString().padStart(2, '0')}:${useragentId}`;
+export function createOverTimeSessionKey(
+  pickType: IUserAgentToTestPickType,
+  indexPos: number,
+  userAgentId: string,
+) {
+  return `${pickType}-${indexPos.toString().padStart(2, '0')}:${userAgentId}`;
 }
 
 export function extractMetaFromOverTimeSessionKey(sessionKey: string) {
   // this function is used in ScraperReport
-  const [pickType, indexPos, useragentId] = sessionKey.match(/^([a-z]+)-([0-9]+):(.+)$/).slice(1);
+  const [pickType, indexPos, userAgentId] = sessionKey.match(/^([a-z]+)-([0-9]+):(.+)$/).slice(1);
   return {
     pickType: pickType as IUserAgentToTestPickType,
     indexPos: Number(indexPos),
-    useragentId
+    userAgentId,
   };
 }

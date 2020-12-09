@@ -1,0 +1,437 @@
+{
+  "userAgentId": "mac-os-10-15--chrome-81-0",
+  "data": [
+    {
+      "group": "SameDomain",
+      "setter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": [
+        "http-SameDomain--Basic=0",
+        "http-SameDomain--ToBeExpired=start;",
+        "http-SameDomain--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-SameDomain--Secure=0; Secure",
+        "http-SameDomain--HttpOnly=0; HttpOnly",
+        "http-SameDomain--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-SameDomain--SameSiteLax=0; SameSite=Lax",
+        "http-SameDomain--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "http-SameDomain--SameSiteStrict=0; SameSite=Strict",
+        "http-SameDomain--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "http-SameDomain--SameSiteNone=0; SameSite=None",
+        "http-SameDomain--RootPath-Secure=0; Secure; Path=/",
+        "http-SameDomain--SameSiteNone-Secure=0; SameSite=None; Secure",
+        "http-SameDomain--HttpOnly-MainDomain=0; HttpOnly; Domain=MainDomain",
+        "http-SameDomain--MainDomain-SameSiteNone=0; SameSite=None; Domain=MainDomain",
+        "http-SameDomain--MainDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=MainDomain",
+        "http-SameDomain--MainDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=MainDomain",
+        "http-SameDomain--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=MainDomain"
+      ],
+      "url": "http://MainDomain/http-basic-cookies/start?sessionId=X&pageIndex=0"
+    },
+    {
+      "group": "SameDomain",
+      "setter": "JsScript",
+      "httpProtocol": "http",
+      "cookies": [
+        "http-SameDomain--JsCookies=0"
+      ],
+      "url": "http://MainDomain/http-basic-cookies/start?sessionId=X&pageIndex=0"
+    },
+    {
+      "group": "SameDomain",
+      "getter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": {
+        "http-SameDomain--Basic": "0",
+        "http-SameDomain--HttpOnly": "0",
+        "http-SameDomain--SameSiteLax": "0",
+        "http-SameDomain--SameSiteStrict": "0",
+        "http-SameDomain--HttpOnly-MainDomain": "0",
+        "http-SameDomain--JsCookies": "0"
+      },
+      "url": "http://MainDomain/http-basic-cookies/saveLoadAssetsAndReadFromJs?sessionId=X&pageIndex=1"
+    },
+    {
+      "group": "SameDomain",
+      "getter": "HttpAssetHeader",
+      "httpProtocol": "http",
+      "cookies": {
+        "http-SameDomain--Basic": "0",
+        "http-SameDomain--HttpOnly": "0",
+        "http-SameDomain--SameSiteLax": "0",
+        "http-SameDomain--SameSiteStrict": "0",
+        "http-SameDomain--HttpOnly-MainDomain": "0",
+        "http-SameDomain--JsCookies": "0"
+      },
+      "url": "http://MainDomain/http-basic-cookies/test.css?sessionId=X"
+    },
+    {
+      "group": "SameDomain",
+      "getter": "JsScript",
+      "httpProtocol": "http",
+      "cookies": {
+        "http-SameDomain--Basic": "0",
+        "http-SameDomain--SameSiteLax": "0",
+        "http-SameDomain--SameSiteStrict": "0",
+        "http-SameDomain--JsCookies": "0"
+      },
+      "url": "http://MainDomain/http-basic-cookies/saveFromJs?sessionId=X"
+    },
+    {
+      "group": "CrossDomainRedirect",
+      "setter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": [
+        "http-CrossDomainRedirect--Basic=0",
+        "http-CrossDomainRedirect--ToBeExpired=start;",
+        "http-CrossDomainRedirect--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-CrossDomainRedirect--Secure=0; Secure",
+        "http-CrossDomainRedirect--HttpOnly=0; HttpOnly",
+        "http-CrossDomainRedirect--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-CrossDomainRedirect--SameSiteLax=0; SameSite=Lax",
+        "http-CrossDomainRedirect--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "http-CrossDomainRedirect--SameSiteStrict=0; SameSite=Strict",
+        "http-CrossDomainRedirect--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "http-CrossDomainRedirect--SameSiteNone=0; SameSite=None",
+        "http-CrossDomainRedirect--RootPath-Secure=0; Secure; Path=/",
+        "http-CrossDomainRedirect--SameSiteNone-Secure=0; SameSite=None; Secure"
+      ],
+      "url": "http://CrossDomain/http-basic-cookies/setAndRedirectToNextPage?sessionId=X&pageIndex=3"
+    },
+    {
+      "group": "CrossDomainRedirect",
+      "getter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": {},
+      "url": "http://MainDomain/http-basic-cookies/saveAndRedirectToNextPage?sessionId=X&pageIndex=4"
+    },
+    {
+      "group": "SubDomainRedirect",
+      "setter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": [
+        "http-SubDomainRedirect--Basic=0",
+        "http-SubDomainRedirect--ToBeExpired=start;",
+        "http-SubDomainRedirect--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-SubDomainRedirect--Secure=0; Secure",
+        "http-SubDomainRedirect--HttpOnly=0; HttpOnly",
+        "http-SubDomainRedirect--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-SubDomainRedirect--SameSiteLax=0; SameSite=Lax",
+        "http-SubDomainRedirect--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "http-SubDomainRedirect--SameSiteStrict=0; SameSite=Strict",
+        "http-SubDomainRedirect--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "http-SubDomainRedirect--SameSiteNone=0; SameSite=None",
+        "http-SubDomainRedirect--RootPath-Secure=0; Secure; Path=/",
+        "http-SubDomainRedirect--SameSiteNone-Secure=0; SameSite=None; Secure",
+        "http-SubDomainRedirect--HttpOnly-MainDomain=0; HttpOnly; Domain=MainDomain",
+        "http-SubDomainRedirect--MainDomain-SameSiteNone=0; SameSite=None; Domain=MainDomain",
+        "http-SubDomainRedirect--MainDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=MainDomain",
+        "http-SubDomainRedirect--MainDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=MainDomain",
+        "http-SubDomainRedirect--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=MainDomain"
+      ],
+      "url": "http://SubDomain/http-basic-cookies/setAndRedirectToNextPage?sessionId=X&pageIndex=5"
+    },
+    {
+      "group": "SubDomainRedirect",
+      "getter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": {
+        "http-SubDomainRedirect--HttpOnly-MainDomain": "0"
+      },
+      "url": "http://MainDomain/http-basic-cookies/save?sessionId=X&pageIndex=6"
+    },
+    {
+      "group": "SubDomain",
+      "setter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": [
+        "http-SubDomain--Basic=0",
+        "http-SubDomain--ToBeExpired=start;",
+        "http-SubDomain--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-SubDomain--Secure=0; Secure",
+        "http-SubDomain--HttpOnly=0; HttpOnly",
+        "http-SubDomain--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-SubDomain--SameSiteLax=0; SameSite=Lax",
+        "http-SubDomain--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "http-SubDomain--SameSiteStrict=0; SameSite=Strict",
+        "http-SubDomain--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "http-SubDomain--SameSiteNone=0; SameSite=None",
+        "http-SubDomain--RootPath-Secure=0; Secure; Path=/",
+        "http-SubDomain--SameSiteNone-Secure=0; SameSite=None; Secure",
+        "http-SubDomain--HttpOnly-MainDomain=0; HttpOnly; Domain=MainDomain",
+        "http-SubDomain--MainDomain-SameSiteNone=0; SameSite=None; Domain=MainDomain",
+        "http-SubDomain--MainDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=MainDomain",
+        "http-SubDomain--MainDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=MainDomain",
+        "http-SubDomain--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=MainDomain"
+      ],
+      "url": "http://SubDomain/http-basic-cookies/set?sessionId=X&pageIndex=7"
+    },
+    {
+      "group": "SubDomain",
+      "getter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": {
+        "http-SubDomain--HttpOnly-MainDomain": "0"
+      },
+      "url": "http://MainDomain/http-basic-cookies/save?sessionId=X&pageIndex=8"
+    },
+    {
+      "group": "CrossDomain",
+      "setter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": [
+        "http-CrossDomain--Basic=0",
+        "http-CrossDomain--ToBeExpired=start;",
+        "http-CrossDomain--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-CrossDomain--Secure=0; Secure",
+        "http-CrossDomain--HttpOnly=0; HttpOnly",
+        "http-CrossDomain--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "http-CrossDomain--SameSiteLax=0; SameSite=Lax",
+        "http-CrossDomain--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "http-CrossDomain--SameSiteStrict=0; SameSite=Strict",
+        "http-CrossDomain--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "http-CrossDomain--SameSiteNone=0; SameSite=None",
+        "http-CrossDomain--RootPath-Secure=0; Secure; Path=/",
+        "http-CrossDomain--SameSiteNone-Secure=0; SameSite=None; Secure"
+      ],
+      "url": "http://CrossDomain/http-basic-cookies/set?sessionId=X&pageIndex=9"
+    },
+    {
+      "group": "CrossDomain",
+      "getter": "HttpHeader",
+      "httpProtocol": "http",
+      "cookies": {},
+      "url": "http://MainDomain/http-basic-cookies/save?sessionId=X&pageIndex=10"
+    },
+    {
+      "group": "SameDomain",
+      "setter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": [
+        "https-SameDomain--Basic=0",
+        "https-SameDomain--ToBeExpired=start;",
+        "https-SameDomain--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-SameDomain--Secure=0; Secure",
+        "https-SameDomain--HttpOnly=0; HttpOnly",
+        "https-SameDomain--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-SameDomain--SameSiteLax=0; SameSite=Lax",
+        "https-SameDomain--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "https-SameDomain--SameSiteStrict=0; SameSite=Strict",
+        "https-SameDomain--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "https-SameDomain--SameSiteNone=0; SameSite=None",
+        "https-SameDomain--RootPath-Secure=0; Secure; Path=/",
+        "https-SameDomain--SameSiteNone-Secure=0; SameSite=None; Secure",
+        "https-SameDomain--HttpOnly-MainDomain=0; HttpOnly; Domain=MainDomain",
+        "https-SameDomain--MainDomain-SameSiteNone=0; SameSite=None; Domain=MainDomain",
+        "https-SameDomain--MainDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=MainDomain",
+        "https-SameDomain--MainDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=MainDomain",
+        "https-SameDomain--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=MainDomain"
+      ],
+      "url": "https://MainDomain/http-basic-cookies/start?sessionId=X&pageIndex=11"
+    },
+    {
+      "group": "SameDomain",
+      "setter": "JsScript",
+      "httpProtocol": "https",
+      "cookies": [
+        "https-SameDomain--JsCookies=0"
+      ],
+      "url": "https://MainDomain/http-basic-cookies/start?sessionId=X&pageIndex=11"
+    },
+    {
+      "group": "SameDomain",
+      "getter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": {
+        "https-SameDomain--Basic": "0",
+        "https-SameDomain--Secure": "0",
+        "https-SameDomain--HttpOnly": "0",
+        "https-SameDomain--SameSiteLax": "0",
+        "https-SameDomain--SameSiteLax-Secure": "0",
+        "https-SameDomain--SameSiteStrict": "0",
+        "https-SameDomain--SameSiteStrict-Secure": "0",
+        "https-SameDomain--SameSiteNone-Secure": "0",
+        "https-SameDomain--HttpOnly-MainDomain": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteLax": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteStrict": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteNone": "0",
+        "https-SameDomain--JsCookies": "0",
+        "https-SameDomain--RootPath-Secure": "0"
+      },
+      "url": "https://MainDomain/http-basic-cookies/saveLoadAssetsAndReadFromJs?sessionId=X&pageIndex=12"
+    },
+    {
+      "group": "SameDomain",
+      "getter": "HttpAssetHeader",
+      "httpProtocol": "https",
+      "cookies": {
+        "https-SameDomain--Basic": "0",
+        "https-SameDomain--Secure": "0",
+        "https-SameDomain--HttpOnly": "0",
+        "https-SameDomain--SameSiteLax": "0",
+        "https-SameDomain--SameSiteLax-Secure": "0",
+        "https-SameDomain--SameSiteStrict": "0",
+        "https-SameDomain--SameSiteStrict-Secure": "0",
+        "https-SameDomain--SameSiteNone-Secure": "0",
+        "https-SameDomain--HttpOnly-MainDomain": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteLax": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteStrict": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteNone": "0",
+        "https-SameDomain--JsCookies": "0",
+        "https-SameDomain--RootPath-Secure": "0"
+      },
+      "url": "https://MainDomain/http-basic-cookies/test.css?sessionId=X"
+    },
+    {
+      "group": "SameDomain",
+      "getter": "JsScript",
+      "httpProtocol": "https",
+      "cookies": {
+        "https-SameDomain--Basic": "0",
+        "https-SameDomain--Secure": "0",
+        "https-SameDomain--SameSiteLax": "0",
+        "https-SameDomain--SameSiteLax-Secure": "0",
+        "https-SameDomain--SameSiteStrict": "0",
+        "https-SameDomain--SameSiteStrict-Secure": "0",
+        "https-SameDomain--SameSiteNone-Secure": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteLax": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteStrict": "0",
+        "https-SameDomain--MainDomain-Secure-SameSiteNone": "0",
+        "https-SameDomain--JsCookies": "0",
+        "https-SameDomain--RootPath-Secure": "0"
+      },
+      "url": "https://MainDomain/http-basic-cookies/saveFromJs?sessionId=X"
+    },
+    {
+      "group": "CrossDomainRedirect",
+      "setter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": [
+        "https-CrossDomainRedirect--Basic=0",
+        "https-CrossDomainRedirect--ToBeExpired=start;",
+        "https-CrossDomainRedirect--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-CrossDomainRedirect--Secure=0; Secure",
+        "https-CrossDomainRedirect--HttpOnly=0; HttpOnly",
+        "https-CrossDomainRedirect--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-CrossDomainRedirect--SameSiteLax=0; SameSite=Lax",
+        "https-CrossDomainRedirect--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "https-CrossDomainRedirect--SameSiteStrict=0; SameSite=Strict",
+        "https-CrossDomainRedirect--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "https-CrossDomainRedirect--SameSiteNone=0; SameSite=None",
+        "https-CrossDomainRedirect--RootPath-Secure=0; Secure; Path=/",
+        "https-CrossDomainRedirect--SameSiteNone-Secure=0; SameSite=None; Secure"
+      ],
+      "url": "https://CrossDomain/http-basic-cookies/setAndRedirectToNextPage?sessionId=X&pageIndex=14"
+    },
+    {
+      "group": "CrossDomainRedirect",
+      "getter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": {},
+      "url": "https://MainDomain/http-basic-cookies/saveAndRedirectToNextPage?sessionId=X&pageIndex=15"
+    },
+    {
+      "group": "SubDomainRedirect",
+      "setter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": [
+        "https-SubDomainRedirect--Basic=0",
+        "https-SubDomainRedirect--ToBeExpired=start;",
+        "https-SubDomainRedirect--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-SubDomainRedirect--Secure=0; Secure",
+        "https-SubDomainRedirect--HttpOnly=0; HttpOnly",
+        "https-SubDomainRedirect--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-SubDomainRedirect--SameSiteLax=0; SameSite=Lax",
+        "https-SubDomainRedirect--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "https-SubDomainRedirect--SameSiteStrict=0; SameSite=Strict",
+        "https-SubDomainRedirect--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "https-SubDomainRedirect--SameSiteNone=0; SameSite=None",
+        "https-SubDomainRedirect--RootPath-Secure=0; Secure; Path=/",
+        "https-SubDomainRedirect--SameSiteNone-Secure=0; SameSite=None; Secure",
+        "https-SubDomainRedirect--HttpOnly-MainDomain=0; HttpOnly; Domain=MainDomain",
+        "https-SubDomainRedirect--MainDomain-SameSiteNone=0; SameSite=None; Domain=MainDomain",
+        "https-SubDomainRedirect--MainDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=MainDomain",
+        "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=MainDomain",
+        "https-SubDomainRedirect--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=MainDomain"
+      ],
+      "url": "https://SubDomain/http-basic-cookies/setAndRedirectToNextPage?sessionId=X&pageIndex=16"
+    },
+    {
+      "group": "SubDomainRedirect",
+      "getter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": {
+        "https-SubDomainRedirect--HttpOnly-MainDomain": "0",
+        "https-SubDomainRedirect--MainDomain-Secure-SameSiteLax": "0",
+        "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict": "0",
+        "https-SubDomainRedirect--MainDomain-Secure-SameSiteNone": "0"
+      },
+      "url": "https://MainDomain/http-basic-cookies/save?sessionId=X&pageIndex=17"
+    },
+    {
+      "group": "SubDomain",
+      "setter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": [
+        "https-SubDomain--Basic=0",
+        "https-SubDomain--ToBeExpired=start;",
+        "https-SubDomain--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-SubDomain--Secure=0; Secure",
+        "https-SubDomain--HttpOnly=0; HttpOnly",
+        "https-SubDomain--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-SubDomain--SameSiteLax=0; SameSite=Lax",
+        "https-SubDomain--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "https-SubDomain--SameSiteStrict=0; SameSite=Strict",
+        "https-SubDomain--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "https-SubDomain--SameSiteNone=0; SameSite=None",
+        "https-SubDomain--RootPath-Secure=0; Secure; Path=/",
+        "https-SubDomain--SameSiteNone-Secure=0; SameSite=None; Secure",
+        "https-SubDomain--HttpOnly-MainDomain=0; HttpOnly; Domain=MainDomain",
+        "https-SubDomain--MainDomain-SameSiteNone=0; SameSite=None; Domain=MainDomain",
+        "https-SubDomain--MainDomain-Secure-SameSiteLax=0; Secure; SameSite=Lax; Domain=MainDomain",
+        "https-SubDomain--MainDomain-Secure-SameSiteStrict=0; Secure; SameSite=Strict; Domain=MainDomain",
+        "https-SubDomain--MainDomain-Secure-SameSiteNone=0; Secure; SameSite=None; Domain=MainDomain"
+      ],
+      "url": "https://SubDomain/http-basic-cookies/set?sessionId=X&pageIndex=18"
+    },
+    {
+      "group": "SubDomain",
+      "getter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": {
+        "https-SubDomain--HttpOnly-MainDomain": "0",
+        "https-SubDomain--MainDomain-Secure-SameSiteLax": "0",
+        "https-SubDomain--MainDomain-Secure-SameSiteStrict": "0",
+        "https-SubDomain--MainDomain-Secure-SameSiteNone": "0"
+      },
+      "url": "https://MainDomain/http-basic-cookies/save?sessionId=X&pageIndex=19"
+    },
+    {
+      "group": "CrossDomain",
+      "setter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": [
+        "https-CrossDomain--Basic=0",
+        "https-CrossDomain--ToBeExpired=start;",
+        "https-CrossDomain--ToBeExpired=start; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-CrossDomain--Secure=0; Secure",
+        "https-CrossDomain--HttpOnly=0; HttpOnly",
+        "https-CrossDomain--Expired=0; expires=Thu, 01 Jan 1970 00:00:00 GMT",
+        "https-CrossDomain--SameSiteLax=0; SameSite=Lax",
+        "https-CrossDomain--SameSiteLax-Secure=0; SameSite=Lax; Secure",
+        "https-CrossDomain--SameSiteStrict=0; SameSite=Strict",
+        "https-CrossDomain--SameSiteStrict-Secure=0; SameSite=Strict; Secure",
+        "https-CrossDomain--SameSiteNone=0; SameSite=None",
+        "https-CrossDomain--RootPath-Secure=0; Secure; Path=/",
+        "https-CrossDomain--SameSiteNone-Secure=0; SameSite=None; Secure"
+      ],
+      "url": "https://CrossDomain/http-basic-cookies/set?sessionId=X&pageIndex=20"
+    },
+    {
+      "group": "CrossDomain",
+      "getter": "HttpHeader",
+      "httpProtocol": "https",
+      "cookies": {},
+      "url": "https://MainDomain/http-basic-cookies/save?sessionId=X&pageIndex=21"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
-import IBrowser from "../interfaces/IBrowser";
-import IBrowserVersion from "../interfaces/IBrowserVersion";
-import {IDeviceCategory} from "../interfaces/DeviceCategory";
+import IBrowser from '../interfaces/IBrowser';
+import IBrowserVersion from '../interfaces/IBrowserVersion';
+import { IDeviceCategory } from '../interfaces/DeviceCategory';
 import UserAgents from '../index';
 
 export default class Browser implements IBrowser {

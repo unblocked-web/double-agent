@@ -1,4 +1,4 @@
 export default interface IBaseProfile<T = any> {
-  useragentId: string;
+  userAgentId: string;
   data: T;
 }

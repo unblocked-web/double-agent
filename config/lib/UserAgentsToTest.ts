@@ -1,5 +1,5 @@
 import * as Path from 'path';
-import IUserAgentToTest from "../interfaces/IUserAgentToTest";
+import IUserAgentToTest from '../interfaces/IUserAgentToTest';
 
 export const FILE_PATH = Path.join(__dirname, '../data/userAgentsToTest.json');
 

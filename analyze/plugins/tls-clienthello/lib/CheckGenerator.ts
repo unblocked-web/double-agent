@@ -10,12 +10,12 @@ export const usedExtensionTypes: Set<string> = new Set();
 export default class CheckGenerator {
   public readonly checks = [];
 
-  private readonly useragentId: string;
+  private readonly userAgentId: string;
   private readonly clientHello: IClientHello;
   private hasGrease = false;
 
   constructor(profile: ITlsClienthelloProfile) {
-    this.useragentId = profile.useragentId;
+    this.userAgentId = profile.userAgentId;
     this.clientHello = profile.data.clientHello;
     this.createVersionCheck();
     this.createCipherChecks();
@@ -29,39 +29,39 @@ export default class CheckGenerator {
   }
 
   private createVersionCheck() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
     const matches = clientHello.version.match(/^([^\s]+)\s\((.+)\)$/);
     const valueInt = Number(matches[1]);
     const valueStr = matches[2];
-    this.checks.push(new NumberCheck({ useragentId }, 'clientHello.version', valueInt, valueStr));
+    this.checks.push(new NumberCheck({ userAgentId }, 'clientHello.version', valueInt, valueStr));
   }
 
   private createCipherChecks() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
 
     for (const cipher of clientHello.ciphers) {
       const matches = cipher.match(/^\{(.+)\}\s(.+)$/);
       const valueInt = parseInt(matches[1].replace(/0x/g, '').replace(', ', ''), 16);
       const valueStr = matches[2];
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new NumberCheck({ useragentId }, 'clientHello.ciphers', valueInt, valueStr));
+      this.checks.push(new NumberCheck({ userAgentId }, 'clientHello.ciphers', valueInt, valueStr));
     }
   }
 
   private createExtensionChecks() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
     const path = 'clientHello.extensions.decimal';
     for (const extension of clientHello.extensions) {
       if (this.isGreased(extension.decimal)) continue;
       extensionTypes.add(extension.type);
-      this.checks.push(new NumberCheck({ useragentId }, path, extension.decimal, extension.type));
+      this.checks.push(new NumberCheck({ userAgentId }, path, extension.decimal, extension.type));
     }
   }
 
   private createCurveChecks() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('supported_groups');
@@ -74,12 +74,12 @@ export default class CheckGenerator {
       const valueStr = matches[1];
       const valueInt = Number(matches[2]);
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new NumberCheck({ useragentId }, path, valueInt, valueStr));
+      this.checks.push(new NumberCheck({ userAgentId }, path, valueInt, valueStr));
     }
   }
 
   private createPointFormatChecks() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('ec_point_formats');
@@ -90,12 +90,12 @@ export default class CheckGenerator {
     for (const value of values) {
       const valueInt = Number(value.match(/\((\d+)\)/)[1]);
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new StringCheck({ useragentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, path, value));
     }
   }
 
   private createSupportedVersionChecks() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('supported_versions');
@@ -106,12 +106,12 @@ export default class CheckGenerator {
     for (const value of values) {
       const valueInt = Number(value.match(/\((\d+)\)/)[1]);
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new StringCheck({ useragentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, path, value));
     }
   }
 
   private createSignatureAlgos() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('signature_algorithms');
@@ -127,12 +127,12 @@ export default class CheckGenerator {
           .replace(')', ''),
       );
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new StringCheck({ useragentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, path, value));
     }
   }
 
   private createAlpnChecks() {
-    const { useragentId, clientHello } = this;
+    const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('application_layer_protocol_negotiation');
@@ -143,15 +143,15 @@ export default class CheckGenerator {
     const values: string[] = extension?.values || [];
 
     for (const value of values) {
-      this.checks.push(new StringCheck({ useragentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, path, value));
     }
   }
 
   private createGreaseCheck() {
-    const { useragentId, hasGrease } = this;
+    const { userAgentId, hasGrease } = this;
 
     const path = 'clientHello.isGreased';
-    this.checks.push(new BooleanCheck({ useragentId }, path, hasGrease));
+    this.checks.push(new BooleanCheck({ userAgentId }, path, hasGrease));
   }
 
   private isGreased(num: number) {

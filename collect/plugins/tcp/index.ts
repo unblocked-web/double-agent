@@ -1,8 +1,8 @@
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
-import Plugin from "@double-agent/collect/lib/Plugin";
-import Document from "@double-agent/collect/lib/Document";
-import { IProfileData } from "./interfaces/IProfile";
-import trackRemoteTcpVars from "./lib/trackRemoteTcpVars";
+import Plugin from '@double-agent/collect/lib/Plugin';
+import Document from '@double-agent/collect/lib/Document';
+import { IProfileData } from './interfaces/IProfile';
+import trackRemoteTcpVars from './lib/trackRemoteTcpVars';
 
 export default class TcpPlugin extends Plugin {
   private tracker: any;
@@ -13,7 +13,9 @@ export default class TcpPlugin extends Plugin {
     this.onServerStart('https', () => {
       this.tracker = trackRemoteTcpVars(this.httpsServer.port);
       if (this.tracker.hasError) {
-        console.log('------------- ERROR Starting TTL Tracker -------------\nTry starting server with sudo');
+        console.log(
+          '------------- ERROR Starting TTL Tracker -------------\nTry starting server with sudo',
+        );
       }
     });
 
@@ -21,9 +23,7 @@ export default class TcpPlugin extends Plugin {
       if (this.tracker) this.tracker.stop();
     });
 
-    this.registerPages(
-      { route: this.routes.https['/'] },
-    );
+    this.registerPages({ route: this.routes.https['/'] });
   }
 
   public async extractData(ctx: IRequestContext) {

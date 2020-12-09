@@ -1,7 +1,7 @@
 import humanizeString from 'humanize-string';
 import initialize from 'initialism';
 import slugify from 'slugify';
-import {IProbeBucketMeta} from "./ProbeBucketGenerator";
+import { IProbeBucketMeta } from './ProbeBucketGenerator';
 
 export default class Layer {
   public id: string;
@@ -21,7 +21,8 @@ export default class Layer {
     if (!key) {
       const title = humanizeString(meta.layerName);
       const words = title.split(' ');
-      key = words.length === 2 ? initialize(words[0], 2) + initialize(words[1]) : initialize(title, 3);
+      key =
+        words.length === 2 ? initialize(words[0], 2) + initialize(words[1]) : initialize(title, 3);
     }
     return key.toLowerCase();
   }
@@ -33,6 +34,6 @@ export default class Layer {
 
   public static load(obj: any) {
     const { id, key, name, pluginId } = obj;
-    return new this(id, key, name, pluginId)
+    return new this(id, key, name, pluginId);
   }
 }

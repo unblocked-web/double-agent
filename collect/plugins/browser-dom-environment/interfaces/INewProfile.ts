@@ -1,4 +1,4 @@
-import IBaseProfile from "@double-agent/collect/interfaces/IBaseProfile";
+import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
 
 type INewProfile = IBaseProfile<INewDomProfileData>;
 
@@ -19,7 +19,7 @@ export interface INewDomProfileData {
     _$value?: string;
     _$invocation?: string;
     _$skipped?: IDomSkipped;
-  }
+  };
 }
 
 enum DomType {
@@ -37,9 +37,9 @@ enum DomType {
   'boolean' = 'boolean',
   'array' = 'array',
   'dom' = 'dom',
-  'symbol' = 'symbol'
+  'symbol' = 'symbol',
 }
 
 type IDomFlag = 'c' | 'e' | 'w';
-export type IDomType = keyof typeof DomType
-type IDomSkipped =  'SKIPPED DOM' | 'SKIPPED STYLE' | 'SKIPPED ELEMENT' | 'SKIPPED DOCUMENT';
+export type IDomType = keyof typeof DomType;
+type IDomSkipped = 'SKIPPED DOM' | 'SKIPPED STYLE' | 'SKIPPED ELEMENT' | 'SKIPPED DOCUMENT';

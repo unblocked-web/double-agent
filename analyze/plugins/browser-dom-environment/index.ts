@@ -23,6 +23,6 @@ export default class BrowserDom extends Plugin {
 
   runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
-    return this.runProbes('DOM', profile.useragentId, checkGenerator.checks);
+    return this.runProbes('DOM', profile.userAgentId, checkGenerator.checks);
   }
 }

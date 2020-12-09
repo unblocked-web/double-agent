@@ -1,58 +1,51 @@
 Double Agent is a suite of tools written to allow a scraper engine to test if it is detectable when trying to blend into the most common web traffic.
 
-Each test suite measures ways to detect a specific part of a scraper stack. Most detection techniques presented compare a user agent’s browser and operating system to the capabilities detectable in a given page load.
-
-Mostly, these tests detect when a user agent is not who it claims to be.
-
-## Mainstream Scraper Detections:
-
-This version of Double Agent tests how many ways scrapers can be detected when emulating browser/OS desktop combos. Future versions will integrate mobile browsers.
-
-Scrapers often choose a strategy of rotating user agents using a library, or picking a few popular browsers and rotating between those. This suite tests both strategies.
-
-1. **Random:** randomly generated useragents using the Intoli [user-agents](https://github.com/intoli/user-agents) package
-2. **Popular:** rotate between the useragents that comprise more than 50% of web traffic according to [StatCounter.com](https://gs.statcounter.com/)
-
-For a dynamic approach to exploring results, visit [State of Scraping](https://stateofscraping.org).
-
 ## Structure:
 
-This suite is broken up by the layers of a browser request. Each layer has one or more plugins that tie into an overall set of pages loaded by a test runner. Each plugin first generates "profiles" of how known browsers behave loading the test pages. Any scraper is then compared to these "profiles" to find discrepancies. These checks are given a "bot score", or likelihood that the flagged check indicates the user agent is actually a bot.
-
-- `/collect`: suite of scripts for collecting browser profile data
-- `/analyze`: suite of scripts for collecting browser profile data
+DoubleAgent has been organized into two main layers:
+ 
+- `/collect`: scripts/plugins for collecting browser profiles. Each plugin generates a series of pages to test how a browser behaves.
+- `/analyze`: scripts/plugins for analyzing browser profiles against verified profiles. Scraper results from `collect` are compared to legit "profiles" to find discrepancies. These checks are given a Looks Human"&trade; score, which indicates the likelihood that a scraper would be flagged as bot or human.
+ 
+The easiest way to use `collect` is with the runner:
 - `/runner`: a server that can generate step-by-step assignments for a scraper to run all tests
 
-## Detections:
+## Plugins
 
-The list of detections is listed below (some tests are not yet implemented):
+The bulk of the `collect` and `analyze` logic has been organized into what we call plugins.
 
-Module | Detections | Description | Implemented
---- | --- | --- | :---:
-tcp/ttl | * TCP Layer | Compares tcp packet values to the user agent OS | :white_check_mark:
-tls/clienthello | * TLS Handshake<br/><br/>* TLS Grease Used | Looks at the tls handshake and compares to the proposed user agent OS | :white_check_mark:
-ip/address | * IP Address | Checks remote ip addresses and port ranges | :white_check_mark:
-http/cookies | * Cookie Support<br/><br/>* Secure Cookies<br/><br/>* Same Site Cookies<br/><br/>* Same Origin Cookies<br/><br/>* Cross Site Cookies | Are cookies enabled? Are same-site, secure and other cookies correctly sent? | :white_check_mark:
-http/headers | * Standard Http Headers<br/><br/>* Standard Https Headers<br/><br/>* Asset Headers<br/><br/>* Xhr Headers<br/><br/>* Cors Preflight Headers<br/><br/>* Websocket Headers | Compares header order, capitalization and default values to normal (recorded) user agent values | :white_check_mark:
-http/loaded-assets | * Loads All Page Assets | Does a request load expected assets? (css, images, ad networks) | :white_check_mark:
-http/user-agent | * User Agent | Checks how common a user agent is | :white_check_mark:
-browser/codecs | * Audio Codecs Supported<br/><br/>* Video Codecs Supported<br/><br/>* WebRTC Audio Codecs Supported<br/><br/>* WebRTC Video Codecs Supported | Test that the audio, video and WebRTC codecs match the given user agent | :white_check_mark:
-browser/dom | * Dom Features Match Version | Test that the list of browser dom features matches the user agent | :white_check_mark:
-browser/fingerprint | * Browser Fingerprint | Is the browser fingerprint the same on every execution? | :white_check_mark:
-browser/fonts | * Fonts Supported | Does the font fingerprint match the operating system | :white_check_mark:
-browser/window-keys | * Window Keys Match Version | Test that the list of browser window keys match the user agent | :white_check_mark:
-visits/over-time | * Hits Per Second<br/><br/>* Hits Per Minute<br/><br/>* Hits Per Hour | Checks counts of hits from the same user agent buckets | :white_check_mark:
-http/cache | * Cache Headers | Http caching headers sent in different conditions vs default user agent behavior |  
-http/referrers | * Referrers | Referrer headers indicate browser came from a legitimate source |  
-browser/javascript | * Is Javascript Enabled?<br/><br/>* EMCA Support Matches Browser | Tests that javascript is enabled and has all/only EMCA features expected |  
-browser/render | * Browser Rendering | Detect nuances and capabilities for each browser rendering engine |  
-browser/tampering | * Dom Features Tampered With | Detect when features have been tampered with to simulate a real browser |  
-browser/vm | * Virtual Machine Used | Detect when a browser is running in a VM |  
-browser/webgl | * WebGl Parameters | Detect webGL graphics card and capabilities |  
-user/interaction | * Time Between User Actions<br/><br/>* Time to Interact with Page<br/><br/>* Repeated Interaction Steps | Recording of order of exact steps performed (pages loaded, mouse movements/clicks, element interaction, typing) |  
-user/mouse | * Mouse Movement | Does the mouse move (scrolling, clicking, movement)? |  
+### Collect Plugins
+Name | Description
+--- | :---
+browser-codecs | Collects the audio, video and WebRTC codecs of the browser
+browser-dom-environment | Collects the browser's DOM environment such as object structure, class inheritance amd key order
+browser-fingerprints | Collects various browser attributes that can be used to fingerprint a given session
+browser-fonts | Collects the fonts of the current browser/os.
+http-assets | Collects the headers used when loading assets such as css, js, and images in a browser
+http-basic-cookies | Collects a wide range of cookies configuration options and whether they're settable/gettable
+http-basic-headers | Collects the headers sent by browser when requesting documents in various contexts
+http-websockets | Collects the headers used when initializing and facilitating web sockets
+http-xhr | Collects the headers used by browsers when facilitating XHR requests
+tcp | Collects tcp packet values such as window-size and time-to-live
+tls-clienthello | Collects the TLS clienthello handshake when initiating a secure connection
 
-## Testing your Scraper Stack:
+### Analyze Plugins
+
+Name | Description
+--- | :---
+browser-codecs | Checks that the audio, video and WebRTC codecs match the given user agent
+browser-dom-environment | Checks that the DOM environment, such as functionality and object structure, match the given user-agent
+browser-fingerprints | Checks whether the browser's fingerprints leak across sessions
+http-basic-cookies | Checks whether cookies are enabled correctly, including same-site and secure
+http-basic-headers | Checks header order, capitalization and default values
+tcp | Checks tcp packet values, including window-size and time-to-live
+tls-clienthello | Checks clienthello handshake signatures, including ciphers, extensions and version
+
+## Scraper Results:
+
+For a dynamic approach to exploring results, visit [ScraperReport](https://scraper.report).
+
+## Testing your Scraper:
 
 This project leverages yarn workspaces. To get started, run `yarn` from the root directory.
 

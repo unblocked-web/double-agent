@@ -1,24 +1,25 @@
-import * as Path from "path";
-import UserAgent from "./lib/UserAgent";
-import Browsers from "./lib/Browsers";
-import OperatingSystems from "./lib/OperatingSystems";
+import * as Path from 'path';
+import { createUserAgentIdFromString } from '@double-agent/config';
+import UserAgent from './lib/UserAgent';
+import Browsers from './lib/Browsers';
+import OperatingSystems from './lib/OperatingSystems';
 
 export const FILE_PATH = Path.join(__dirname, './data/userAgentsById.json');
 
 // LOAD DATA
 let BY_ID: IUserAgentsById;
-function load() {
+function loadById() {
   if (!BY_ID) {
     // eslint-disable-next-line global-require,import/no-dynamic-require
     BY_ID = require(FILE_PATH) as IUserAgentsById;
-    Object.keys(BY_ID).forEach(id => BY_ID[id] = UserAgent.load(BY_ID[id]));
+    Object.keys(BY_ID).forEach(id => (BY_ID[id] = UserAgent.load(BY_ID[id])));
   }
   return BY_ID;
 }
 
 export default class RealUserAgents {
   public static all(): UserAgent[] {
-    return Object.values(load()).filter(userAgent => {
+    return Object.values(loadById()).filter(userAgent => {
       const { name, version } = userAgent.browser;
       if (name === 'Chrome' && Number(version.major) < 58) return false;
       if (name === 'Edge' && Number(version.major) < 58) return false;
@@ -30,7 +31,7 @@ export default class RealUserAgents {
     });
   }
 
-  public static where(query: { browserId?: string, operatingSystemId?: string }) {
+  public static where(query: { browserId?: string; operatingSystemId?: string }) {
     let userAgents = this.all();
     if (query.browserId) {
       userAgents = userAgents.filter(x => x.browserId === query.browserId);
@@ -41,27 +42,36 @@ export default class RealUserAgents {
     return userAgents;
   }
 
-  public static random(countToGet: number) {
+  public static findByString(userAgentString: string) {
+    if (!userAgentString) return;
+    const userAgentId = createUserAgentIdFromString(userAgentString);
+    return loadById()[userAgentId];
+  }
+
+  public static random(countToGet: number, filterFn?: (userAgent: UserAgent) => boolean) {
     const availableUserAgents = this.all();
     const userAgentCount = availableUserAgents.length;
 
     const selectedUserAgents = [];
-    while(selectedUserAgents.length < countToGet && selectedUserAgents.length < userAgentCount) {
+    while (selectedUserAgents.length < countToGet && selectedUserAgents.length < userAgentCount) {
+      if (!availableUserAgents.length) break;
       const selectedIndex = Math.floor(Math.random() * availableUserAgents.length);
-      const selectedUserAgent = availableUserAgents.splice(selectedIndex, 1)[0];
-      selectedUserAgents.push(selectedUserAgent);
+      const userAgent = availableUserAgents.splice(selectedIndex, 1)[0];
+      if (filterFn && !filterFn(userAgent)) continue;
+      selectedUserAgents.push(userAgent);
     }
 
     return selectedUserAgents;
   }
 
-  public static popular(marketshareNeeded: number) {
-    const sortedUserAgents = this.all().sort((a,b) => b.marketshare - a.marketshare);
+  public static popular(marketshareNeeded: number, filterFn?: (userAgent: UserAgent) => boolean) {
+    const sortedUserAgents = this.all().sort((a, b) => b.marketshare - a.marketshare);
     const selectedUserAgents = [];
     let selectedMarketshare = 0;
 
     for (const userAgent of sortedUserAgents) {
       if (selectedMarketshare > marketshareNeeded) break;
+      if (filterFn && !filterFn(userAgent)) continue;
       selectedMarketshare += userAgent.marketshare;
       selectedUserAgents.push(userAgent);
     }
@@ -81,5 +91,3 @@ export default class RealUserAgents {
 interface IUserAgentsById {
   [id: string]: UserAgent;
 }
-
-

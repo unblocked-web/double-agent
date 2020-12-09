@@ -1,19 +1,19 @@
 import Dashify from 'dashify';
+import { IReleaseDates } from '../interfaces/ISlabData';
 
-export default function extractReleaseDateAndDescription(name: string, id: string, extras: any) {
+export default function extractReleaseDateAndDescription(
+  id: string,
+  name: string,
+  descriptions: { [key: string]: string },
+  releaseDates: IReleaseDates,
+) {
   const slug = Dashify(name);
-  const extra = extras[slug];
 
-  if (!extra) {
-    throw new Error(`Missing extra data for ${slug}`);
-  }
+  const description = descriptions[id] || descriptions[slug];
+  if (!description) throw new Error(`Missing description for ${id}`);
 
-  const releaseDate = extra.releaseDates ? extra.releaseDates[id] : extra.releaseDate;
-  if (!releaseDate) {
-    throw new Error(`${slug} is missing release date for ${id}`);
-  }
-
-  const description = extra.descriptions ? extra.descriptions[id] || extra.description : extra.description;
+  const releaseDate = releaseDates[id] || releaseDates[slug];
+  if (!releaseDate) throw new Error(`Missing releaseDate for ${id}`);
 
   return [releaseDate, description];
 }

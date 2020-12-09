@@ -1,6 +1,6 @@
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
-import Plugin from "@double-agent/collect/lib/Plugin";
-import Document from "@double-agent/collect/lib/Document";
+import Plugin from '@double-agent/collect/lib/Plugin';
+import Document from '@double-agent/collect/lib/Document';
 import IWebRTCCodec from './interfaces/IWebRTCCodec';
 import { IProfileData } from './interfaces/IProfile';
 import codecPageScript from './codecPageScript';

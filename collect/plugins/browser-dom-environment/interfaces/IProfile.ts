@@ -1,4 +1,4 @@
-import IBaseProfile from "@double-agent/collect/interfaces/IBaseProfile";
+import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
 
 type IProfile = IBaseProfile<IProfileData>;
 

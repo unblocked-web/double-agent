@@ -5,7 +5,7 @@ enum UserBucket {
   BrowserSingleSession = 'Single-Session Browser Fingerprint',
   Font = 'Fonts Fingerprint',
   IpAndPortRange = 'IP Address & Port Range',
-  Useragent = 'Useragent',
+  UserAgent = 'UserAgent',
   UserCookie = 'UserCookie',
 }
 

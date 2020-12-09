@@ -7,12 +7,12 @@
 // const pluginId = 'ip/address';
 //
 // export default class IpProfile {
-//   constructor(readonly useragent: string, readonly requests: IIpRequest[]) {}
+//   constructor(readonly userAgentString: string, readonly requests: IIpRequest[]) {}
 //
 //   public save() {
 //     if (!process.env.GENERATE_PROFILES) return;
-//     const data = { useragent: this.useragent, requests: this.requests } as IIpProfile;
-//     Config.saveProfile(pluginId, this.useragent, data);
+//     const data = { userAgentString: this.userAgentString, requests: this.requests } as IIpProfile;
+//     Config.saveProfile(pluginId, this.userAgentString, data);
 //   }
 //
 //   public static fromContext(ctx: IRequestContext) {
@@ -27,7 +27,7 @@
 //           url: x.url,
 //         } as IIpRequest),
 //     );
-//     return new IpProfile(ctx.session.useragent, requests);
+//     return new IpProfile(ctx.session.userAgentString, requests);
 //   }
 //
 //   public static getPortRange(portString: string | number) {
@@ -43,7 +43,7 @@
 //     const socketsPerSession: IIpAddressGroup[] = [];
 //     for (const profile of profiles) {
 //       const session: IIpAddressGroup = {
-//         useragent: profile.useragent,
+//         userAgentString: profile.userAgentString,
 //         secureSockets: 0,
 //         httpSockets: 0,
 //         portRanges: [],
@@ -130,7 +130,7 @@
 // }
 //
 // interface IIpAddressGroup {
-//   useragent: string;
+//   userAgentString: string;
 //   secureSockets: number;
 //   httpSockets: number;
 //   securePorts: number[];
@@ -142,7 +142,7 @@
 //
 // interface IIpProfile {
 //   requests: IIpRequest[];
-//   useragent: string;
+//   userAgentString: string;
 // }
 //
 // interface IIpRequest {

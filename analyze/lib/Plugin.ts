@@ -43,7 +43,7 @@ export default abstract class Plugin {
 
   protected runProbes(
     layerKey: string,
-    useragentId: string,
+    userAgentId: string,
     checks: BaseCheck[],
     profileCountOverTime?: number,
   ) {
@@ -56,7 +56,7 @@ export default abstract class Plugin {
 
     const probeBuckets = this.probeBuckets.filter(x => {
       return (
-        x.layerId === layer.id && (!x.useragentIds.length || x.useragentIds.includes(useragentId))
+        x.layerId === layer.id && (!x.userAgentIds.length || x.userAgentIds.includes(userAgentId))
       );
     });
 
@@ -76,7 +76,7 @@ export default abstract class Plugin {
           const probeBucketId = probeBucket.id;
           flags.push({
             pluginId: this.id,
-            useragentId,
+            userAgentId,
             humanScore,
             probeId,
             probeBucketId,
@@ -94,7 +94,7 @@ export default abstract class Plugin {
 }
 
 export interface IResultFlag {
-  useragentId: string;
+  userAgentId: string;
   humanScore: number;
   probeId: string;
   pluginId: string;

@@ -1,4 +1,4 @@
-import IBaseProfile from "@double-agent/collect/interfaces/IBaseProfile";
+import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
 import IWebRTCCodec from './IWebRTCCodec';
 import ICodecSupport from './ICodecSupport';
 

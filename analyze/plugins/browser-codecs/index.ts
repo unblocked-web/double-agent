@@ -36,8 +36,8 @@ export default class BrowserCodecs extends Plugin {
   runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return [
-      ...this.runProbes('VCD', profile.useragentId, checkGenerator.videoChecks),
-      ...this.runProbes('ACD', profile.useragentId, checkGenerator.audioChecks),
+      ...this.runProbes('VCD', profile.userAgentId, checkGenerator.videoChecks),
+      ...this.runProbes('ACD', profile.userAgentId, checkGenerator.audioChecks),
     ];
   }
 }

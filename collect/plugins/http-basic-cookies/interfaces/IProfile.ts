@@ -1,4 +1,4 @@
-import IBaseProfile from "@double-agent/collect/interfaces/IBaseProfile";
+import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
 
 type IProfile = IBaseProfile<IProfileData>;
 
@@ -24,13 +24,13 @@ export interface ICollectedCookieData {
 
 export enum CookieSetter {
   HttpHeader = 'HttpHeader',
-  JsScript = 'JsScript'
+  JsScript = 'JsScript',
 }
 
 export enum CookieGetter {
   HttpHeader = 'HttpHeader',
   HttpAssetHeader = 'HttpAssetHeader',
-  JsScript = 'JsScript'
+  JsScript = 'JsScript',
 }
 
 export type ICookieSetter = keyof typeof CookieSetter;
@@ -41,4 +41,3 @@ export interface ICollectedCookies {
 }
 
 export type ICreatedCookies = string[];
-

@@ -1,16 +1,16 @@
 {
-  "useragentId": "mac-os-10-15--chrome-80-0",
+  "userAgentId": "mac-os-10-15--chrome-80-0",
   "data": {
     "clientHello": {
       "type": "ClientHello",
       "version": "0x303 (TLS 1.2)",
       "random": {
-        "unixTime": "0xB8DBBDE3",
-        "randomBytes": "855C56D957C19C49558BC805026F32C34F80F28D0623349C3CC013F5"
+        "unixTime": "0xFF76C056",
+        "randomBytes": "817EC3F46E2396F175DECE4C1FABBC677F243F52599F25539DED116E"
       },
-      "sessionId": "1750B2468AC94F19E908321E9B090E17F41BF19D6E11EEEDAC4962B4104FE618",
+      "sessionId": "F2A3D089A59C29D482D33352354720CBBE9491866AFF4B4B2008D9BB4D906ACE",
       "ciphers": [
-        "{0x4A, 0x4A} GREASE",
+        "{0xEA, 0xEA} GREASE",
         "{0x13, 0x01} TLS_AES_128_GCM_SHA256",
         "{0x13, 0x02} TLS_AES_256_GCM_SHA384",
         "{0x13, 0x03} TLS_CHACHA20_POLY1305_SHA256",
@@ -34,7 +34,7 @@
       "extensions": [
         {
           "type": "GREASE",
-          "decimal": 27242,
+          "decimal": 19018,
           "values": []
         },
         {
@@ -61,7 +61,7 @@
           "type": "supported_groups",
           "decimal": 10,
           "values": [
-            "GREASE (14906)",
+            "GREASE (31354)",
             "ecdh_x25519 (29)",
             "secp256r1 (P-256) (23)",
             "secp384r1 (P-384) (24)"
@@ -118,10 +118,10 @@
           "type": "key_share",
           "decimal": 51,
           "values": [
-            "NamedGroup: GREASE (14906)",
+            "NamedGroup: GREASE (31354)",
             "key_exchange:  (len=1): 00",
             "NamedGroup: ecdh_x25519 (29)",
-            "key_exchange:  (len=32): 9BE696E135D40BAB89544D85CD1A13E7AEB87E6ABBF741C9ECD9F7824DFB9762"
+            "key_exchange:  (len=32): FFC8514CAEAC4B7F90B73B0DF7C9E5AEBA9941BDD130FE15DFEB9D4234A4F267"
           ]
         },
         {
@@ -135,7 +135,7 @@
           "type": "supported_versions",
           "decimal": 43,
           "values": [
-            "GREASE (43690)",
+            "GREASE (60138)",
             "TLS 1.3 (772)",
             "TLS 1.2 (771)",
             "TLS 1.1 (770)",
@@ -151,7 +151,7 @@
         },
         {
           "type": "GREASE",
-          "decimal": 6682,
+          "decimal": 51914,
           "values": [
             "0000 - 00                                             ."
           ]

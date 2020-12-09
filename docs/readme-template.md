@@ -1,35 +1,31 @@
 Double Agent is a suite of tools written to allow a scraper engine to test if it is detectable when trying to blend into the most common web traffic.
 
-Each test suite measures ways to detect a specific part of a scraper stack. Most detection techniques presented compare a user agent’s browser and operating system to the capabilities detectable in a given page load.
-
-Mostly, these tests detect when a user agent is not who it claims to be.
-
-## Mainstream Scraper Detections:
-
-This version of Double Agent tests how many ways scrapers can be detected when emulating browser/OS desktop combos. Future versions will integrate mobile browsers.
-
-Scrapers often choose a strategy of rotating user agents using a library, or picking a few popular browsers and rotating between those. This suite tests both strategies.
-
-1. **Random:** randomly generated useragents using the Intoli [user-agents](https://github.com/intoli/user-agents) package
-2. **Popular:** rotate between the useragents that comprise more than 50% of web traffic according to [StatCounter.com](https://gs.statcounter.com/)
-
-For a dynamic approach to exploring results, visit [State of Scraping](https://stateofscraping.org).
-
 ## Structure:
 
-This suite is broken up by the layers of a browser request. Each layer has one or more plugins that tie into an overall set of pages loaded by a test runner. Each plugin first generates "profiles" of how known browsers behave loading the test pages. Any scraper is then compared to these "profiles" to find discrepancies. These checks are given a "bot score", or likelihood that the flagged check indicates the user agent is actually a bot.
-
-- `/collect`: suite of scripts for collecting browser profile data
-- `/analyze`: suite of scripts for collecting browser profile data
+DoubleAgent has been organized into two main layers:
+ 
+- `/collect`: scripts/plugins for collecting browser profiles. Each plugin generates a series of pages to test how a browser behaves.
+- `/analyze`: scripts/plugins for analyzing browser profiles against verified profiles. Scraper results from `collect` are compared to legit "profiles" to find discrepancies. These checks are given a Looks Human"&trade; score, which indicates the likelihood that a scraper would be flagged as bot or human.
+ 
+The easiest way to use `collect` is with the runner:
 - `/runner`: a server that can generate step-by-step assignments for a scraper to run all tests
 
-## Detections:
+## Plugins
 
-The list of detections is listed below (some tests are not yet implemented):
+The bulk of the `collect` and `analyze` logic has been organized into what we call plugins.
 
-{{inject=output/detections.md}}
+### Collect Plugins
+{{inject=output/collect-plugins.md}}
 
-## Testing your Scraper Stack:
+### Analyze Plugins
+
+{{inject=output/analyze-plugins.md}}
+
+## Scraper Results:
+
+For a dynamic approach to exploring results, visit [ScraperReport](https://scraper.report).
+
+## Testing your Scraper:
 
 This project leverages yarn workspaces. To get started, run `yarn` from the root directory.
 

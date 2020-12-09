@@ -1,16 +1,19 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import * as fs from 'fs';
 import { URL } from 'url';
-import { createUseragentId } from '@double-agent/config';
+import { createUserAgentIdFromString } from '@double-agent/config';
 import IRequestContext from '../interfaces/IRequestContext';
 import extractRequestDetails from './extractRequestDetails';
-import RequestContext from "./RequestContext";
+import RequestContext from './RequestContext';
 import IServerContext from '../interfaces/IServerContext';
-import BaseServer from "../servers/BaseServer";
-import {CrossDomain, MainDomain, SubDomain} from "../index";
-import {isRecognizedDomain} from "./DomainUtils";
+import BaseServer from '../servers/BaseServer';
+import { CrossDomain, MainDomain, SubDomain } from '../index';
+import { isRecognizedDomain } from './DomainUtils';
 
-export default function createHttpRequestHandler(server: BaseServer, serverContext: IServerContext) {
+export default function createHttpRequestHandler(
+  server: BaseServer,
+  serverContext: IServerContext,
+) {
   return async function requestHandler(req: IncomingMessage, res: ServerResponse) {
     if (req.method === 'HEAD') {
       // BrowserStack sends head requests to check if a domain is active. not part of the tests..
@@ -28,7 +31,8 @@ export default function createHttpRequestHandler(server: BaseServer, serverConte
 
     if (requestUrl.pathname === '/favicon.ico') {
       return sendFavicon(res);
-    } if (route?.isAsset) {
+    }
+    if (route?.isAsset) {
       await route?.handlerFn({ res } as IRequestContext);
       return;
     }
@@ -37,7 +41,7 @@ export default function createHttpRequestHandler(server: BaseServer, serverConte
       const session = sessionTracker.getSessionFromServerRequest(server, req);
       const { requestDetails } = await extractRequestDetails(server, req, session);
       const ctx = new RequestContext(server, req, res, requestUrl, requestDetails, session);
-      const useragentId = createUseragentId(req.headers['user-agent']);
+      const userAgentId = createUserAgentIdFromString(req.headers['user-agent']);
       session.recordRequest(requestDetails);
 
       console.log(
@@ -45,14 +49,14 @@ export default function createHttpRequestHandler(server: BaseServer, serverConte
         requestDetails.method,
         requestDetails.url,
         requestDetails.remoteAddress,
-        useragentId,
+        userAgentId,
       );
 
       if (req.method === 'OPTIONS') {
         sendPreflight(ctx);
-        if (route?.preflightHandlerFn) await route?.preflightHandlerFn(ctx)
+        if (route?.preflightHandlerFn) await route?.preflightHandlerFn(ctx);
       } else if (route?.handlerFn) {
-        await route?.handlerFn(ctx)
+        await route?.handlerFn(ctx);
       } else {
         res.writeHead(404).end(JSON.stringify({ message: 'Not found' }));
       }
@@ -75,7 +79,7 @@ function sendPreflight(ctx: IRequestContext) {
 }
 
 function sendFavicon(res: ServerResponse) {
-  const asset = fs.readFileSync(`${__dirname  }/../public/favicon.ico`);
+  const asset = fs.readFileSync(`${__dirname}/../public/favicon.ico`);
   res.writeHead(200, { 'Content-Type': 'image/x-icon' });
   res.end(asset);
 }

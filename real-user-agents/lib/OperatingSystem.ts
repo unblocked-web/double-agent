@@ -1,6 +1,6 @@
-import IOperatingSystem from "../interfaces/IOperatingSystem";
-import IOperatingSystemVersion from "../interfaces/IOperatingSystemVersion";
-import {IDeviceCategory} from "../interfaces/DeviceCategory";
+import IOperatingSystem from '../interfaces/IOperatingSystem';
+import IOperatingSystemVersion from '../interfaces/IOperatingSystemVersion';
+import { IDeviceCategory } from '../interfaces/DeviceCategory';
 
 export default class OperatingSystem implements IOperatingSystem {
   id: string;

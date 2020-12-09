@@ -6,7 +6,7 @@
 //
 // /**
 //  * This extension aims to identify when fields are left out for specifically identifying
-//  * user useragents purporting to be Chrome, but missing key attributes.
+//  * user-agents purporting to be Chrome, but missing key attributes.
 //  *
 //  * Ja3 extended adds to the fields of Ja3, but instead of fully removing Greased values, it includes
 //  * a flag indicating if Grease was included. This value is simply a 1 if true

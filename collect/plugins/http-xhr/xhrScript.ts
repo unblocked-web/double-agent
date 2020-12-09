@@ -1,5 +1,5 @@
-import {DomainType} from "@double-agent/collect/lib/DomainUtils";
-import IRequestContext from "@double-agent/collect/interfaces/IRequestContext";
+import { DomainType } from '@double-agent/collect/lib/DomainUtils';
+import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 
 export default function xhrScript(ctx: IRequestContext) {
   return `
@@ -100,7 +100,6 @@ function builtRequests(ctx: IRequestContext) {
 
 function randomText() {
   return Math.random()
-      .toString(36)
-      .substring(2);
+    .toString(36)
+    .substring(2);
 }
-

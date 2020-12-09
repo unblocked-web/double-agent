@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import {IAssignmentType} from "@double-agent/runner/interfaces/IAssignment";
+import { IAssignmentType } from '@double-agent/runner/interfaces/IAssignment';
 import SessionTracker from './lib/SessionTracker';
 import Session from './lib/Session';
 
@@ -18,7 +18,7 @@ export default class Collect {
     }
 
     console.log(
-        `
+      `
 NOTE if not using dockers:
 1. Go to the collect/certs directory and run generate.sh
 2. To run the https tests, you will need to install trusted certificates onto your machine.
@@ -34,9 +34,12 @@ NOTE if not using dockers:
     );
   }
 
-  public async createSession(assignmentType: IAssignmentType, expectedUseragent?: string): Promise<Session> {
+  public async createSession(
+    assignmentType: IAssignmentType,
+    expectedUserAgentString?: string,
+  ): Promise<Session> {
     const session = await this.sessionTracker.createSession(assignmentType);
-    session.expectedUseragent = expectedUseragent;
+    session.expectedUserAgentString = expectedUserAgentString;
 
     return session;
   }

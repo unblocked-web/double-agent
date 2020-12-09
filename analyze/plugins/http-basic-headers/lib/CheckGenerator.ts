@@ -8,18 +8,18 @@ export default class CheckGenerator {
   public readonly checks = [];
 
   private readonly profile: IHttpBasicHeadersProfile;
-  private readonly useragentId: string;
+  private readonly userAgentId: string;
 
   constructor(profile: IHttpBasicHeadersProfile) {
     this.profile = profile;
-    this.useragentId = profile.useragentId;
+    this.userAgentId = profile.userAgentId;
     this.addHeaderCaseChecks();
     this.addHeaderOrderChecks();
     this.addDefaultValueChecks();
   }
 
   private addDefaultValueChecks() {
-    const { useragentId } = this;
+    const { userAgentId } = this;
     const defaultValuesMap: { [httpMethod: string]: { [key: string]: Set<string> } } = {};
 
     // // ToDo: Preflight cannot check value, only case
@@ -40,27 +40,27 @@ export default class CheckGenerator {
 
     for (const [httpMethod, valuesByKey] of Object.entries(defaultValuesMap)) {
       for (const [key, values] of Object.entries(valuesByKey)) {
-        const check = new DefaultValueCheck({ useragentId, httpMethod }, key, Array.from(values));
+        const check = new DefaultValueCheck({ userAgentId, httpMethod }, key, Array.from(values));
         this.checks.push(check);
       }
     }
   }
 
   private addHeaderCaseChecks() {
-    const { useragentId } = this;
+    const { userAgentId } = this;
 
     for (const page of this.profile.data) {
       const httpMethod = page.method;
       for (const [key] of page.rawHeaders) {
         if (!isOfficialHeader(key)) continue;
-        const check = new StringCaseCheck({ useragentId, httpMethod }, key.toLowerCase(), key);
+        const check = new StringCaseCheck({ userAgentId, httpMethod }, key.toLowerCase(), key);
         this.checks.push(check);
       }
     }
   }
 
   private addHeaderOrderChecks() {
-    const { useragentId } = this;
+    const { userAgentId } = this;
     const allHeaderKeys: string[][] = [];
 
     for (const page of this.profile.data) {
@@ -72,7 +72,7 @@ export default class CheckGenerator {
     for (const key of Object.keys(orderIndexMap)) {
       const path = `headers.${key}`;
       const orderIndex = orderIndexMap[key];
-      const check = new ArrayOrderIndexCheck({ useragentId }, path, orderIndex);
+      const check = new ArrayOrderIndexCheck({ userAgentId }, path, orderIndex);
       this.checks.push(check);
     }
   }

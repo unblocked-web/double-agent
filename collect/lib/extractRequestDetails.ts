@@ -4,9 +4,9 @@ import cookie from 'cookie';
 import ResourceType from '../interfaces/ResourceType';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import OriginType from '../interfaces/OriginType';
-import {cleanDomains, DomainType, getDomainType} from "./DomainUtils";
-import BaseServer from "../servers/BaseServer";
-import Session from "./Session";
+import { cleanDomains, DomainType, getDomainType } from './DomainUtils';
+import BaseServer from '../servers/BaseServer';
+import Session from './Session';
 
 export default async function extractRequestDetails(
   server: BaseServer,
@@ -15,8 +15,8 @@ export default async function extractRequestDetails(
   overrideResourceType?: ResourceType,
 ) {
   const time = new Date();
-  const useragent = req.headers['user-agent'];
-  const addr = `${req.connection.remoteAddress.split(':').pop()  }:${  req.connection.remotePort}`;
+  const userAgentString = req.headers['user-agent'];
+  const addr = `${req.connection.remoteAddress.split(':').pop()}:${req.connection.remotePort}`;
   const requestUrl = new URL(`${server.protocol}://${req.headers.host}${req.url}`);
 
   let body = '';
@@ -34,7 +34,7 @@ export default async function extractRequestDetails(
   const rawHeaders = parseHeaders(req.rawHeaders);
 
   const requestDetails: IRequestDetails = {
-    useragent,
+    userAgentString,
     bodyJson,
     cookies,
     time,
@@ -46,15 +46,21 @@ export default async function extractRequestDetails(
     method: req.method,
     headers: rawHeaders.map(x => cleanUrl(x, session.id)),
     domainType: getDomainType(requestUrl),
-    secureDomain: ['https','tls'].includes(server.protocol),
+    secureDomain: ['https', 'tls'].includes(server.protocol),
     resourceType: overrideResourceType ?? getResourceType(req.method, requestUrl.pathname),
   };
 
   // if origin sent, translate into origin type
   if (requestDetails.origin) {
-    requestDetails.originType = getOriginType(new URL(requestDetails.origin), requestDetails.domainType);
+    requestDetails.originType = getOriginType(
+      new URL(requestDetails.origin),
+      requestDetails.domainType,
+    );
   } else if (requestDetails.referer) {
-    requestDetails.originType = getOriginType(new URL(requestDetails.referer), requestDetails.domainType);
+    requestDetails.originType = getOriginType(
+      new URL(requestDetails.referer),
+      requestDetails.domainType,
+    );
   }
 
   return {
@@ -123,7 +129,6 @@ function cleanUrl(url: string, sessionId: string) {
   if (!url) return url;
 
   return cleanDomains(url)
-      .replace(RegExp(`sessionId=${sessionId}`, 'g'), 'sessionId=X')
-      .replace(RegExp(':[0-9]+/'), '/');
+    .replace(RegExp(`sessionId=${sessionId}`, 'g'), 'sessionId=X')
+    .replace(RegExp(':[0-9]+/'), '/');
 }
-

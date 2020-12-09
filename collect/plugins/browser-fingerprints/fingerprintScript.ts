@@ -1,4 +1,4 @@
-import IRequestContext from "@double-agent/collect/interfaces/IRequestContext";
+import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 
 export default function fingerprintScript(ctx: IRequestContext) {
   return `
@@ -75,5 +75,9 @@ const checkedOtherPlaces = [
   'hasLiedBrowser',
 ];
 
-export const browserIgnoredAttributes = ['userAgent', 'platform', 'enumerateDevices'].concat(checkedOtherPlaces);
-export const sessionIgnoredAttributes = ['canvas', 'webgl', 'enumerateDevices'].concat(checkedOtherPlaces);
+export const browserIgnoredAttributes = ['userAgent', 'platform', 'enumerateDevices'].concat(
+  checkedOtherPlaces,
+);
+export const sessionIgnoredAttributes = ['canvas', 'webgl', 'enumerateDevices'].concat(
+  checkedOtherPlaces,
+);

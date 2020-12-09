@@ -42,6 +42,6 @@ export type ICheckType = keyof typeof CheckType;
 
 export interface ICheckIdentity {
   isUniversal?: boolean;
-  useragentId?: string;
+  userAgentId?: string;
   httpMethod?: string;
 }

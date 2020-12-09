@@ -1,8 +1,8 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
-import Config from "@double-agent/config";
-import IBaseProfile from "@double-agent/collect/interfaces/IBaseProfile";
-import getAllPlugins from "./lib/getAllPlugins";
+import Config from '@double-agent/config';
+import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
+import getAllPlugins from './lib/getAllPlugins';
 
 const dataDir = Path.resolve(__dirname, './data');
 const probeBucketsDir = Path.join(dataDir, 'probe-buckets');
@@ -32,16 +32,18 @@ for (const plugin of plugins) {
 
   for (const layer of plugin.layers) {
     const probeBuckets = plugin.probeBuckets.filter(x => x.layerId === layer.id);
-    const checkCount = probeBuckets.map(p => p.probes.length).reduce((a, b) => a+b, 0);
+    const checkCount = probeBuckets.map(p => p.probes.length).reduce((a, b) => a + b, 0);
     totalChecks += checkCount;
-    console.log(`${layer.name} (${layer.id} has ${probeBuckets.length} probe buckets (${checkCount} checks)`);
+    console.log(
+      `${layer.name} (${layer.id} has ${probeBuckets.length} probe buckets (${checkCount} checks)`,
+    );
   }
 }
 
 const layersData = JSON.stringify(layers, null, 2);
 Fs.writeFileSync(`${dataDir}/layers.json`, layersData);
 
-console.log('======')
+console.log('======');
 console.log(`${totalChecks} TOTAL CHECKS`);
 
 // console.log('========================================');

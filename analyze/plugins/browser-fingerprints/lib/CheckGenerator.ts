@@ -13,10 +13,10 @@ export default class CheckGenerator {
   }
 
   private extractChecks() {
-    const { useragentId } = this.profile;
+    const { userAgentId } = this.profile;
 
     const fingerprints = this.profile.data.map(x => x.browserHash);
-    this.checks.push(new SessionFingerprintCheck({ useragentId }, 'fingerprint-js', fingerprints));
+    this.checks.push(new SessionFingerprintCheck({ userAgentId }, 'fingerprint-js', fingerprints));
     this.checks.push(
       new UniqueFingerprintCheck({ isUniversal: true }, 'fingerprint-js', fingerprints[0]),
     );

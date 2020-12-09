@@ -4,7 +4,7 @@ import { IUserAgentToTestPickType } from '@double-agent/config/interfaces/IUserA
 export default interface IAssignment {
   id: string;
   type: IAssignmentType;
-  useragent: string;
+  userAgentString: string;
   pickType: IUserAgentToTestPickType;
   usagePercent: number;
   pagesByPlugin?: { [pluginId: string]: ISessionPage[] };

@@ -1,9 +1,9 @@
 import http from 'http';
 import createHttpRequestHandler from '../lib/createHttpRequestHandler';
 import createWebsocketHandler from '../lib/createWebsocketHandler';
-import IServerContext from "../interfaces/IServerContext";
-import BaseServer  from "./BaseServer";
-import {IRoutesByPath} from "../lib/Plugin";
+import IServerContext from '../interfaces/IServerContext';
+import BaseServer from './BaseServer';
+import { IRoutesByPath } from '../lib/Plugin';
 
 export default class HttpServer extends BaseServer {
   private httpServer: http.Server;
@@ -20,7 +20,7 @@ export default class HttpServer extends BaseServer {
       const httpRequestHandler = createHttpRequestHandler(this, context);
       const websocketHandler = createWebsocketHandler(this, context);
       const server = http.createServer(options, httpRequestHandler);
-      server.on('upgrade', websocketHandler)
+      server.on('upgrade', websocketHandler);
       server.listen(this.port, () => resolve(server));
     });
 

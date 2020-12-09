@@ -1,4 +1,4 @@
-import IHello from "./IHello";
+import IHello from './IHello';
 
 export default interface IServerHello extends IHello {
   type: 'ServerHello';

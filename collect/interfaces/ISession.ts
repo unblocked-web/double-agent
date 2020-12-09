@@ -8,7 +8,7 @@ export default interface ISession {
   assetsNotLoaded: IAsset[];
   expectedAssets: (IAsset & { fromUrl?: string })[];
   pluginsRun: Set<string>;
-  useragent: string;
-  expectedUseragent: string;
+  userAgentString: string;
+  expectedUserAgentString: string;
   id: string;
 }

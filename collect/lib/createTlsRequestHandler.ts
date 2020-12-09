@@ -1,11 +1,11 @@
 import { URL } from 'url';
 import { IncomingMessage, ServerResponse } from 'http';
 import IServerContext from '../interfaces/IServerContext';
-import extractRequestDetails from "./extractRequestDetails";
-import RequestContext from "./RequestContext";
-import BaseServer from "../servers/BaseServer";
-import { TlsDomain } from "../index";
-import {isRecognizedDomain} from "./DomainUtils";
+import extractRequestDetails from './extractRequestDetails';
+import RequestContext from './RequestContext';
+import BaseServer from '../servers/BaseServer';
+import { TlsDomain } from '../index';
+import { isRecognizedDomain } from './DomainUtils';
 
 export default function createTlsRequestHandler(server: BaseServer, serverContext: IServerContext) {
   return async function requestHandler(req: IncomingMessage, res: ServerResponse) {
@@ -23,7 +23,7 @@ export default function createTlsRequestHandler(server: BaseServer, serverContex
     session.recordRequest(requestDetails);
 
     if (handler) {
-      await handler(ctx)
+      await handler(ctx);
     } else {
       res.writeHead(404).end(JSON.stringify({ message: 'Not found' }));
     }

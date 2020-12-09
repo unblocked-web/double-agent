@@ -1,5 +1,5 @@
 import IOperatingSystemVersion from './IOperatingSystemVersion';
-import { IDeviceCategory } from "./DeviceCategory";
+import { IDeviceCategory } from './DeviceCategory';
 
 export default interface IOperatingSystem {
   id: string;

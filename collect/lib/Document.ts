@@ -1,5 +1,5 @@
-import IRequestContext from "../interfaces/IRequestContext";
-import {DomainType} from "./DomainUtils";
+import IRequestContext from '../interfaces/IRequestContext';
+import { DomainType } from './DomainUtils';
 
 const clickElementId = 'next-page';
 const clickElementSelector = `#${clickElementId}`;
@@ -11,8 +11,8 @@ export default class Document {
   public static waitForElementSelector = waitForElementSelector;
 
   private headTags: string[] = [];
-  private bodyTags: string[] = []
-  private footerTags: string[] = []
+  private bodyTags: string[] = [];
+  private footerTags: string[] = [];
   private clickToNextPage = false;
   private ctx: IRequestContext;
 
@@ -66,7 +66,8 @@ export default class Document {
     const nextPageLink = this.ctx.nextPageLink;
     const clickToNextPage = this.clickToNextPage;
 
-    let nextPageTag; let finalPageTag;
+    let nextPageTag;
+    let finalPageTag;
     if (nextPageLink && clickToNextPage) {
       nextPageTag = `<a href="${nextPageLink}" id="${clickElementId}">Next</a>`;
     } else if (nextPageLink) {

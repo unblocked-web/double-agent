@@ -1,5 +1,5 @@
-import {URL} from "url";
-import {CrossDomain, MainDomain, SubDomain, TlsDomain} from "../index";
+import { URL } from 'url';
+import { CrossDomain, MainDomain, SubDomain, TlsDomain } from '../index';
 
 export enum DomainType {
   MainDomain = 'MainDomain', // eslint-disable-line no-shadow
@@ -13,15 +13,17 @@ export function getDomainType(url: URL | string) {
   const domain = extractDomainFromHost(host);
   if (domain === MainDomain || domain === DomainType.MainDomain.toLowerCase()) {
     return DomainType.MainDomain;
-  } if (domain === CrossDomain || domain === DomainType.CrossDomain.toLowerCase()) {
+  }
+  if (domain === CrossDomain || domain === DomainType.CrossDomain.toLowerCase()) {
     return DomainType.CrossDomain;
-  } if (domain === SubDomain || domain === DomainType.SubDomain.toLowerCase()) {
+  }
+  if (domain === SubDomain || domain === DomainType.SubDomain.toLowerCase()) {
     return DomainType.SubDomain;
-  } if (domain === TlsDomain || domain === DomainType.TlsDomain.toLowerCase()) {
+  }
+  if (domain === TlsDomain || domain === DomainType.TlsDomain.toLowerCase()) {
     return DomainType.TlsDomain;
   }
-    throw new Error(`Unknown domain type: ${domain}`);
-
+  throw new Error(`Unknown domain type: ${domain}`);
 }
 
 export function isRecognizedDomain(host: string, recognizedDomains: string[]) {
@@ -46,7 +48,8 @@ export function addPageIndexToUrl(url: string, pageIndex: number) {
 export function cleanDomains(url: string) {
   if (!url) return url;
 
-  return url.replace(RegExp(SubDomain, 'g'), 'SubDomain')
+  return url
+    .replace(RegExp(SubDomain, 'g'), 'SubDomain')
     .replace(RegExp(MainDomain, 'g'), 'MainDomain')
     .replace(RegExp(CrossDomain, 'g'), 'CrossDomain');
 }

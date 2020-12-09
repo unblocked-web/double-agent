@@ -1,13 +1,13 @@
 import ResourceType from './ResourceType';
 import OriginType from './OriginType';
-import {DomainType} from "../lib/DomainUtils";
+import { DomainType } from '../lib/DomainUtils';
 
 export default interface IRequestDetails {
   url: string;
   method: string;
   time: Date;
   remoteAddress: string;
-  useragent: string;
+  userAgentString: string;
   headers: string[];
   origin: string;
   secureDomain: boolean;

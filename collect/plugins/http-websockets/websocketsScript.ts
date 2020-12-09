@@ -1,5 +1,5 @@
-import IRequestContext from "@double-agent/collect/interfaces/IRequestContext";
-import { DomainType } from "@double-agent/collect/lib/DomainUtils";
+import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
+import { DomainType } from '@double-agent/collect/lib/DomainUtils';
 
 export default function websocketsScript(ctx: IRequestContext) {
   const isSecure = ctx.url.protocol === 'https:';

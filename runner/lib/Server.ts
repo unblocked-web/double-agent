@@ -5,10 +5,10 @@ import * as Path from 'path';
 import * as http from 'http';
 import { pathToRegexp } from 'path-to-regexp';
 import Collect from '@double-agent/collect';
-import Plugin from "@double-agent/collect/lib/Plugin";
-import IAssignment, {AssignmentType} from '../interfaces/IAssignment';
-import buildAssignment from "./buildAssignment";
-import buildAllAssignments from "./buildAllAssignments";
+import Plugin from '@double-agent/collect/lib/Plugin';
+import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
+import buildAssignment from './buildAssignment';
+import buildAllAssignments from './buildAllAssignments';
 
 interface IRequestParams {
   scraperName: string;
@@ -32,8 +32,8 @@ const downloadDir = '/tmp/double-agent-download-data';
 if (Fs.existsSync(downloadDir)) Fs.rmdirSync(downloadDir, { recursive: true });
 
 export default class Server {
-  private activeScrapers: { [scraper: string]: IActiveScraper  } = {};
-  private readonly collect: Collect
+  private activeScrapers: { [scraper: string]: IActiveScraper } = {};
+  private readonly collect: Collect;
   private readonly httpServer: http.Server;
   private readonly httpServerPort: number;
   private readonly routeMetaByRegexp: Map<RegExp, any> = new Map();
@@ -45,7 +45,7 @@ export default class Server {
     '/download': this.downloadAll.bind(this),
     '/download/:assignmentId': this.downloadAssignmentProfiles.bind(this),
     '/finish': this.finishAssignments.bind(this),
-    '/user-agent': this.userAgent.bind(this),
+    '/user-agent': this.extractNavigatorDetails.bind(this),
     '/favicon.ico': this.sendFavicon.bind(this),
   };
 
@@ -79,7 +79,7 @@ export default class Server {
       if (matches) {
         endpoint = this.endpointsByRoute[meta.route];
         meta.keys.forEach((key, index) => {
-          params[key.name] = matches[index+1];
+          params[key.name] = matches[index + 1];
         });
         break;
       }
@@ -89,18 +89,18 @@ export default class Server {
       return sendJson(res, { message: 'Not Found' }, 404);
     }
 
-    const scraperName = req.headers.scraper ?? requestUrl.query.scraper as string;
+    const scraperName = req.headers.scraper ?? (requestUrl.query.scraper as string);
     const dataDir = req.headers.dataDir ?? requestUrl.query.dataDir;
     Object.assign(params, { scraperName, dataDir }, params);
 
     await endpoint(req, res, params);
   }
 
-  private async userAgent(req: http.IncomingMessage, res: http.ServerResponse) {
-    const useragent = req.headers["user-agent"];
+  private async extractNavigatorDetails(req: http.IncomingMessage, res: http.ServerResponse) {
+    const userAgentString = req.headers['user-agent'];
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(`
-      <div id="userAgent">${useragent}</div>
+      <div id="userAgent">${userAgentString}</div>
       <div id="platform"></div>
       <div id="buildID"></div>
       <script>
@@ -111,14 +111,15 @@ export default class Server {
   }
 
   private async sendFavicon(_, res: http.ServerResponse) {
-    const asset = Fs.readFileSync(`${__dirname  }/../public/favicon.ico`);
+    const asset = Fs.readFileSync(`${__dirname}/../public/favicon.ico`);
     res.writeHead(200, { 'Content-Type': 'image/x-icon' });
     res.end(asset);
   }
 
   private async createBasicAssignment(_, res: http.ServerResponse, params: IRequestParams) {
     const { scraperName, dataDir } = params;
-    if (!scraperName) return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    if (!scraperName)
+      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
 
     if (!this.activeScrapers[scraperName]) {
       this.activeScrapers[scraperName] = {
@@ -147,13 +148,17 @@ export default class Server {
 
   private async createAssignments(_, res: http.ServerResponse, params: IRequestParams) {
     const { scraperName, dataDir } = params;
-    if (!scraperName) return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    if (!scraperName)
+      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
 
-    this.activeScrapers[scraperName] = this.activeScrapers[scraperName] || await this.createScraper(scraperName, dataDir);
+    this.activeScrapers[scraperName] =
+      this.activeScrapers[scraperName] || (await this.createScraper(scraperName, dataDir));
 
-    const assignments = Object.values(this.activeScrapers[scraperName].assignmentsById).map(assignment => {
-      return { ...assignment, pagesByPlugin: undefined};
-    });
+    const assignments = Object.values(this.activeScrapers[scraperName].assignmentsById).map(
+      assignment => {
+        return { ...assignment, pagesByPlugin: undefined };
+      },
+    );
 
     sendJson(res, { assignments });
   }
@@ -175,8 +180,10 @@ export default class Server {
 
   private async activateAssignment(_, res: http.ServerResponse, params: IRequestParams) {
     const { scraperName, assignmentId } = params;
-    if (!scraperName) return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
-    if (!assignmentId) return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
+    if (!scraperName)
+      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    if (!assignmentId)
+      return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
 
     const activeScraper = this.activeScrapers[scraperName];
     const assignmentsById = activeScraper?.assignmentsById;
@@ -184,26 +191,28 @@ export default class Server {
     if (!assignment) return sendJson(res, { message: 'Assignment not found' }, 500);
 
     if (assignment.sessionId) return;
-    const session = await this.collect.createSession(assignment.type, assignment.useragent || 'freeform');
+    const session = await this.collect.createSession(assignment.type, assignment.userAgentString);
     assignment.sessionId = session.id;
     assignment.pagesByPlugin = session.generatePages();
 
     if (activeScraper.dataDir) {
       session.onSavePluginProfile = (plugin: Plugin, data: any, filenameSuffix: string) => {
         const profilesDir = extractAssignmentProfilesDir(activeScraper, assignment);
-        const filename = `${plugin.id}${filenameSuffix? `-${filenameSuffix}` : ''}`;
+        const filename = `${plugin.id}${filenameSuffix ? `-${filenameSuffix}` : ''}`;
         this.saveFile(profilesDir, `${filename}.json`, data);
-      }
+      };
     }
 
     const dataDir = extractAssignmentDir(activeScraper, assignment);
-    sendJson(res, { assignment: {dataDir, ...assignment} });
+    sendJson(res, { assignment: { dataDir, ...assignment } });
   }
 
   private async downloadAssignmentProfiles(_, res: http.ServerResponse, params: IRequestParams) {
     const { scraperName, assignmentId } = params;
-    if (!scraperName) return sendJson(res, { message: 'Please provide a scraperName header or query param' }, 500);
-    if (!assignmentId) return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
+    if (!scraperName)
+      return sendJson(res, { message: 'Please provide a scraperName header or query param' }, 500);
+    if (!assignmentId)
+      return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
 
     const activeScraper = this.activeScrapers[scraperName];
     const assignmentsById = activeScraper?.assignmentsById;
@@ -217,7 +226,8 @@ export default class Server {
 
   private async downloadAll(_, res: http.ServerResponse, params: IRequestParams) {
     const { scraperName } = params;
-    if (!scraperName) return sendJson(res, { message: 'Please provide a scraperName header or query param' }, 500);
+    if (!scraperName)
+      return sendJson(res, { message: 'Please provide a scraperName header or query param' }, 500);
 
     const activeScraper = this.activeScrapers[scraperName];
     for (const assignmentId of Object.keys(activeScraper.assignmentsById)) {
@@ -231,7 +241,8 @@ export default class Server {
 
   private async finishAssignments(_, res: http.ServerResponse, params: IRequestParams) {
     const { scraperName } = params;
-    if (!scraperName) return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    if (!scraperName)
+      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
 
     const activeScraper = this.activeScrapers[scraperName];
     const assignments = activeScraper ? Object.values(activeScraper.assignmentsById) : [];
@@ -285,14 +296,16 @@ function extractBaseDir(activeScraper: IActiveScraper) {
   if (activeScraper.dataDir === DOWNLOAD) {
     return Path.join(downloadDir, activeScraper.name);
   }
-    return activeScraper.dataDir;
-
+  return activeScraper.dataDir;
 }
 
 function extractAssignmentDir(activeScraper: IActiveScraper, assignment: IAssignment) {
   const baseDir = extractBaseDir(activeScraper);
   const isIndividual = assignment.type === AssignmentType.Individual;
-  const folder = (isIndividual ? assignment.type : `${assignment.type}-${assignment.pickType}`).toLowerCase();
+  const folder = (isIndividual
+    ? assignment.type
+    : `${assignment.type}-${assignment.pickType}`
+  ).toLowerCase();
   return `${baseDir}/${folder}/${assignment.id}`;
 }
 

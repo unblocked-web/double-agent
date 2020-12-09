@@ -24,7 +24,7 @@ export default class BrowserFingerprints extends Plugin {
 
   runIndividual(profile: IFingerprintProfile) {
     const checkGenerator = new CheckGenerator(profile);
-    return this.runProbes('FNG', profile.useragentId, checkGenerator.checks);
+    return this.runProbes('FNG', profile.userAgentId, checkGenerator.checks);
   }
 
   runOverTime(profile: IFingerprintProfile, profileCountOverTime: number) {
@@ -32,6 +32,6 @@ export default class BrowserFingerprints extends Plugin {
       throw new Error('profileCountOverTime must be > 0');
     }
     const checkGenerator = new CheckGenerator(profile);
-    return this.runProbes('FNG', profile.useragentId, checkGenerator.checks, profileCountOverTime);
+    return this.runProbes('FNG', profile.userAgentId, checkGenerator.checks, profileCountOverTime);
   }
 }

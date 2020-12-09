@@ -25,31 +25,31 @@ export default class ProbeBucketGenerator {
 
     // convert checks array to object by id
     const universalProbeIds: Set<string> = new Set();
-    const useragentIdsByProbeId: { [path: string]: Set<string> } = {};
+    const userAgentIdsByProbeId: { [path: string]: Set<string> } = {};
     const probesById: { [id: string]: Probe } = {};
     for (const check of meta.checks) {
       const probeId = check.id;
       probesById[probeId] = probesById[probeId] || Probe.create(check, pluginId);
-      if (check.identity.useragentId) {
-        useragentIdsByProbeId[probeId] = useragentIdsByProbeId[probeId] || new Set();
-        useragentIdsByProbeId[probeId].add(check.identity.useragentId);
+      if (check.identity.userAgentId) {
+        userAgentIdsByProbeId[probeId] = userAgentIdsByProbeId[probeId] || new Set();
+        userAgentIdsByProbeId[probeId].add(check.identity.userAgentId);
       } else if (check.identity.isUniversal) {
         universalProbeIds.add(probeId);
       } else {
-        throw new Error(`Check is missing useragentId and is not universal: ${check.id}`);
+        throw new Error(`Check is missing userAgentId and is not universal: ${check.id}`);
       }
     }
 
     // organize initial groups
     const groupsById: {
-      [groupId: string]: { useragentIds: string[]; checkType: ICheckType; probeIds: string[] };
+      [groupId: string]: { userAgentIds: string[]; checkType: ICheckType; probeIds: string[] };
     } = {};
-    for (const probeId of Object.keys(useragentIdsByProbeId)) {
+    for (const probeId of Object.keys(userAgentIdsByProbeId)) {
       const probe = probesById[probeId];
       const checkType = probe.check.type;
-      const useragentIds = Array.from(useragentIdsByProbeId[probeId]).sort();
-      const groupId = `${checkType}:${useragentIds.join(':')}`;
-      groupsById[groupId] = groupsById[groupId] || { useragentIds, checkType, probeIds: [] };
+      const userAgentIds = Array.from(userAgentIdsByProbeId[probeId]).sort();
+      const groupId = `${checkType}:${userAgentIds.join(':')}`;
+      groupsById[groupId] = groupsById[groupId] || { userAgentIds, checkType, probeIds: [] };
       groupsById[groupId].probeIds.push(probeId);
     }
 
@@ -68,7 +68,7 @@ export default class ProbeBucketGenerator {
         const probeIds = universalProbeIdsByCheckType[checkType];
         if (probeIds.length) {
           groupsById[`${checkType}:universal`] = {
-            useragentIds: [],
+            userAgentIds: [],
             checkType: checkType as ICheckType,
             probeIds: Array.from(universalProbeIds),
           };
@@ -79,15 +79,15 @@ export default class ProbeBucketGenerator {
     // reorganize groups that aren't cleanly organized by browser group
     for (const groupId of Object.keys(groupsById)) {
       const group = groupsById[groupId];
-      const groupingDetails = extractBrowserGroupings(group.useragentIds);
+      const groupingDetails = extractBrowserGroupings(group.userAgentIds);
       const isBucketed = groupingDetails.every(x => x[0].includes('AllProfiled'));
-      if (isBucketed || group.useragentIds.length <= 1) continue;
-      for (const useragentId of group.useragentIds) {
+      if (isBucketed || group.userAgentIds.length <= 1) continue;
+      for (const userAgentId of group.userAgentIds) {
         const checkType = group.checkType;
         for (const probeId of group.probeIds) {
-          const newGroupId = `${checkType}:${useragentId}`;
+          const newGroupId = `${checkType}:${userAgentId}`;
           groupsById[newGroupId] = groupsById[newGroupId] || {
-            useragentIds: [useragentId],
+            userAgentIds: [userAgentId],
             checkType,
             probeIds: [],
           };
@@ -99,10 +99,10 @@ export default class ProbeBucketGenerator {
 
     // sort groups
     const sortedGroups = Object.values(groupsById).sort((a, b) => {
-      if (a.useragentIds.length === 1 && b.useragentIds.length > 1) {
+      if (a.userAgentIds.length === 1 && b.userAgentIds.length > 1) {
         return 1;
       }
-      if (a.useragentIds.length > 1 && b.useragentIds.length === 1) {
+      if (a.userAgentIds.length > 1 && b.userAgentIds.length === 1) {
         return -1;
       }
       return b.probeIds.length - a.probeIds.length;
@@ -110,12 +110,12 @@ export default class ProbeBucketGenerator {
 
     // convert groups into probes
     for (const group of sortedGroups) {
-      const groupingDetails = extractBrowserGroupings(group.useragentIds);
+      const groupingDetails = extractBrowserGroupings(group.userAgentIds);
       const probes = group.probeIds.map(id => probesById[id]);
       const probeBucket = ProbeBucket.create(
         this.layer,
         probes,
-        group.useragentIds,
+        group.userAgentIds,
         meta.matcher,
         meta.scorer,
       );
