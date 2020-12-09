@@ -8,3 +8,8 @@ export interface IProfileData {
   window: any;
   detached: any;
 }
+
+export interface IProfileDataByProtocol {
+  http: IProfileData;
+  https: IProfileData;
+}

@@ -45,16 +45,3 @@ Fs.writeFileSync(`${dataDir}/layers.json`, layersData);
 
 console.log('======');
 console.log(`${totalChecks} TOTAL CHECKS`);
-
-// console.log('========================================');
-// console.log(`${meta.name}: `, `${meta.checks.length} STARTING CHECKS`);
-//
-// for (const probe of probeGenerator.probes) {
-//   console.log('---------------------------------');
-//   console.log(`${probe.id} (${probe.name}) = ${probe.checks.length} checks`);
-// }
-//
-// console.log(`${meta.name}: `, `${probeGenerator.checkCount} UNIQUE CHECKS`);
-// console.log(`${meta.name}: `, `${probeGenerator.probeCount} PROBES`);
-// console.log(`${meta.name}: `, `${probeGenerator.bucketedCheckCount} BUCKETED CHECKS`);
-// console.log(`${meta.name}: `, `${probeGenerator.bucketedProbeCount} BUCKETED PROBES`);

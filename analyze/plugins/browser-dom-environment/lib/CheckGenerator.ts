@@ -25,11 +25,12 @@ export default class CheckGenerator {
   public checks: BaseCheck[] = [];
 
   private readonly endpointsByPath: { [path: string]: IEndpoint } = {};
-  private readonly profile: IBaseProfile<any>;
+  private readonly userAgentId: string;
 
   constructor(profile: IBaseProfile<any>) {
-    this.profile = profile;
-    this.endpointsByPath = extractDomEndpoints(profile.data);
+    const httpDom = profile.data.https;
+    this.userAgentId = profile.userAgentId;
+    this.endpointsByPath = extractDomEndpoints(httpDom);
     for (const { path, object } of Object.values(this.endpointsByPath)) {
       this.addKeyOrderChecks(path, object);
       this.addFlagChecks(path, object);
@@ -57,7 +58,7 @@ export default class CheckGenerator {
       return;
     if (!object._$keyOrder?.length) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     const keys = removeWebdriverKeys(path, object._$keyOrder);
     this.add(new KeyOrderCheck({ userAgentId }, path, keys));
   }
@@ -65,14 +66,17 @@ export default class CheckGenerator {
   private addFlagChecks(path: string, object) {
     if (isWebdriverPath(path)) return;
 
-    const { userAgentId } = this.profile;
-    this.add(new FlagsCheck({ userAgentId }, path, object._$flags.split('')));
+    const { userAgentId } = this;
+
+    if (object._$flags) {
+      this.add(new FlagsCheck({userAgentId}, path, object._$flags.split('')));
+    }
 
     if (object._$functionMethods) {
       for (const name of Object.keys(object._$functionMethods)) {
         const methodPath = `${path}.${name}`;
         const methodObj = object._$functionMethods[name];
-        this.add(new FlagsCheck({ userAgentId }, methodPath, methodObj._$flags));
+        this.add(new FlagsCheck({ userAgentId }, methodPath, methodObj._$flags.split('')));
       }
     }
   }
@@ -81,7 +85,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (!['prototype', 'object', 'constructor', 'array'].includes(object._$type)) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     this.add(new PrototypeCheck({ userAgentId }, path, object._$protos));
   }
 
@@ -89,7 +93,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (object._$type !== EndpointType.number) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     if (ignoreNumberValuePaths.some(x => x.test(path))) {
       this.add(new TypeCheck({ userAgentId }, path, EndpointType.number));
     } else if (object._$value === null || object._$value === undefined) {
@@ -109,7 +113,7 @@ export default class CheckGenerator {
       throw new Error(`Unknown function type: ${object._$type}`);
     }
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     const codeString = object._$function;
     const invocation = extractInvocation(path, object);
     const methods = {};
@@ -127,7 +131,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (object._$type !== EndpointType.string) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     if (ignoreStringValuePaths.some(x => x.test(path))) {
       this.add(new TypeCheck({ userAgentId }, path, EndpointType.string));
     } else if (path.endsWith('.stack')) {
@@ -142,7 +146,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (!object._$get) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     this.add(new GetterCheck({ userAgentId }, path, { codeString: object._$get }));
     this.add(
       new GetterCheck({ userAgentId }, path, { codeStringToString: object._$getToStringToString }),
@@ -159,7 +163,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (!object._$set) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     this.add(new SetterCheck({ userAgentId }, path, { codeString: object._$set }));
     this.add(
       new SetterCheck({ userAgentId }, path, { codeStringToString: object._$setToStringToString }),
@@ -170,7 +174,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (object._$type !== EndpointType.ref) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     this.add(new RefCheck({ userAgentId }, path, object._$ref));
   }
 
@@ -178,7 +182,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (object._$type !== EndpointType.class) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     const hasFunction = !!object._$function;
     this.add(new ClassCheck({ userAgentId }, path, { hasFunction }));
 
@@ -194,7 +198,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (object._$type !== EndpointType.boolean) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     if (ignoreBooleanValuePaths.some(x => x.test(path))) {
       this.add(new TypeCheck({ userAgentId }, path, EndpointType.boolean));
     } else {
@@ -206,7 +210,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (object._$type !== EndpointType.array) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     const hasLengthProperty = !!object._$keyOrder?.includes('length');
     this.add(new ArrayCheck({ userAgentId }, path, hasLengthProperty));
   }
@@ -215,7 +219,7 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (object._$type !== EndpointType.symbol) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     this.add(new SymbolCheck({ userAgentId }, path, object._$value));
   }
 
@@ -223,14 +227,14 @@ export default class CheckGenerator {
     if (isWebdriverPath(path)) return;
     if (!['object', 'constructor', 'dom'].includes(object._$type)) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     this.add(new TypeCheck({ userAgentId }, path, object._$type));
   }
 
   private addWebdriverChecks(path: string) {
     if (!isWebdriverPath(path)) return;
 
-    const { userAgentId } = this.profile;
+    const { userAgentId } = this;
     this.add(new WebdriverCheck({ userAgentId }, path));
   }
 

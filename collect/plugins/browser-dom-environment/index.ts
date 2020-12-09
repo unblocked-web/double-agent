@@ -29,7 +29,7 @@ export default class BrowserDomPlugin extends Plugin {
   }
 
   private async save(ctx: IRequestContext) {
-    const filenameSuffix = `-${ctx.url.protocol.replace(':', '')}`;
+    const filenameSuffix = ctx.url.protocol.replace(':', '');
     // this.pendingBySessionId[ctx.session.id]?.resolve();
     const profileData = ctx.requestDetails.bodyJson as IProfileData;
     ctx.session.savePluginProfileData<IProfileData>(this, profileData, { filenameSuffix });

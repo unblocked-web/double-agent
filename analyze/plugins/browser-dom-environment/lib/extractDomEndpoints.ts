@@ -1,3 +1,5 @@
+import { IProfileData } from '@double-agent/collect-browser-dom-environment/interfaces/IProfile';
+
 export const metaKeys = new Set([
   '_$protos',
   '_$function',
@@ -27,7 +29,7 @@ export interface IEndpoint {
 export const unknownMetaKeys: Set<string> = new Set();
 export const metaValues: { [key: string]: Set<any> } = {};
 
-export default function extractDomEndpoints(dom: any) {
+export default function extractDomEndpoints(dom: IProfileData) {
   const objectsToExtract: any[] = [{ path: [], object: dom }];
   const endpoints: IEndpoint[] = [];
 

@@ -198,7 +198,7 @@ export default class Server {
     if (activeScraper.dataDir) {
       session.onSavePluginProfile = (plugin: Plugin, data: any, filenameSuffix: string) => {
         const profilesDir = extractAssignmentProfilesDir(activeScraper, assignment);
-        const filename = `${plugin.id}${filenameSuffix ? `-${filenameSuffix}` : ''}`;
+        const filename = `${plugin.id}${filenameSuffix ? `--${filenameSuffix}` : ''}`;
         this.saveFile(profilesDir, `${filename}.json`, data);
       };
     }
