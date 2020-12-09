@@ -1,0 +1,15 @@
+{
+  "name": "@double-agent/real-user-agents",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "update": "node -r source-map-support/register -e 'require(\"./scripts/update.js\").default()'"
+  },
+  "dependencies": {
+    "@double-agent/config": "1.0.0",
+    "dashify": "^2.0.0",
+    "source-map-support": "^0.5.16",
+    "ua-parser-js": "^0.7.22"
+  },
+  "devDependencies": {}
+}

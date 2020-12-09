@@ -1,13 +1,20 @@
-import IAssignmentPage from './IAssignmentPage';
-import { IBrowserToTestPickType, IBrowserToTestUsagePercent } from '@double-agent/profiler/lib/BrowsersToTest';
+import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
+import { IUserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
 
 export default interface IAssignment {
-  id: number;
-  useragent: string;
-  pickType: IBrowserToTestPickType;
-  profileDirName: string;
-  usagePercent: IBrowserToTestUsagePercent;
-  pages: IAssignmentPage[];
-  sessionId: string;
-  isCompleted?: boolean;
+  id: string;
+  type: IAssignmentType;
+  userAgentString: string;
+  pickType: IUserAgentToTestPickType;
+  usagePercent: number;
+  pagesByPlugin?: { [pluginId: string]: ISessionPage[] };
+  sessionId?: string;
+  dataDir?: string;
 }
+
+export enum AssignmentType {
+  Individual = 'Individual',
+  OverTime = 'OverTime',
+}
+
+export type IAssignmentType = keyof typeof AssignmentType;

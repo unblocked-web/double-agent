@@ -1,0 +1,14 @@
+{
+  "name": "@double-agent/docs",
+  "version": "1.0.0",
+  "main": "generator/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node -r source-map-support/register generator/index.js"
+  },
+  "dependencies": {
+    "@double-agent/collect": "1.0.0",
+    "@double-agent/analyze": "1.0.0"
+  },
+  "devDependencies": {}
+}
