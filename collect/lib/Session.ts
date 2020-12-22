@@ -69,7 +69,7 @@ export default class Session implements ISession {
   public recordRequest(requestDetails: IRequestDetails) {
     const { userAgentString } = requestDetails;
 
-    if (!this.userAgentString) {
+    if (!this.userAgentString || this.userAgentString.startsWith('axios')) {
       this.setUserAgentString(userAgentString);
     }
 

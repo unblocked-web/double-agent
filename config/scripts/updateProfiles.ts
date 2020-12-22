@@ -4,7 +4,7 @@ import UserAgentsToTest from '../lib/UserAgentsToTest';
 import { createUserAgentIdFromKeys } from '../index';
 
 const slabDataDir = process.env.SLAB_DATA_DIR || Path.resolve(__dirname, '../../../slab/data');
-const sourceDir = Path.join(slabDataDir, 'profiles/complete');
+const sourceDir = Path.join(slabDataDir, 'profiles');
 const destinationDir = Path.join(__dirname, '../data/profiles');
 
 export default function run() {
