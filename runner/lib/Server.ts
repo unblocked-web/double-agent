@@ -45,7 +45,7 @@ export default class Server {
     '/download': this.downloadAll.bind(this),
     '/download/:assignmentId': this.downloadAssignmentProfiles.bind(this),
     '/finish': this.finishAssignments.bind(this),
-    '/user-agent': this.extractNavigatorDetails.bind(this),
+    '/load-navigator': this.extractNavigatorDetails.bind(this),
     '/favicon.ico': this.sendFavicon.bind(this),
   };
 

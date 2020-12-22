@@ -1,13 +1,17 @@
 import Config from '@double-agent/config';
+import RealUserAgents from '@double-agent/real-user-agents';
 
 export default function extractBrowserGroupings(userAgentIds: string[]): [string, string[]][] {
   const { idsByGroup, hasAllOf, hasAllExcept, hasNone } = extractGroupedIds(userAgentIds);
   const details: { [name: string]: string[] } = {};
 
   for (const userAgentId of userAgentIds) {
-    const { osName, osVersion, browserName, browserVersion } = Config.extractMetaFromUserAgentId(
-      userAgentId,
-    );
+    const {
+      operatingSystemName: osName,
+      operatingSystemVersion: osVersion,
+      browserName,
+      browserVersion,
+    } = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
     if (hasNone.includes(userAgentId)) {
       details[`${osName}-${osVersion}`] = details[`${osName}-${osVersion}`] || [];
       details[`${osName}-${osVersion}`].push(`${browserName}-${browserVersion}`);

@@ -1,5 +1,5 @@
 import ITcpProfile from '@double-agent/collect/plugins/tcp/interfaces/IProfile';
-import Config from '@double-agent/config';
+import RealUserAgents from '@double-agent/real-user-agents';
 import ExpectedValueCheck from './checks/ExpectedValueCheck';
 import ExpectedValuesCheck from './checks/ExpectedValuesCheck';
 
@@ -17,8 +17,8 @@ export default class CheckGenerator {
 
   private extractTtlChecks() {
     const { userAgentId } = this.profile;
-    const { osName } = Config.extractMetaFromUserAgentId(userAgentId);
-    const expectedValue = expectedTtlValues[osName];
+    const { operatingSystemName } = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
+    const expectedValue = expectedTtlValues[operatingSystemName];
 
     const check = new ExpectedValueCheck(
       { userAgentId },
@@ -31,13 +31,16 @@ export default class CheckGenerator {
 
   private extractWindowSizeChecks() {
     const { userAgentId } = this.profile;
-    const { osName, osVersion } = Config.extractMetaFromUserAgentId(userAgentId);
+    const {
+      operatingSystemName,
+      operatingSystemVersion,
+    } = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
 
-    let expectedValues = expectedWindowSizes[osName];
+    let expectedValues = expectedWindowSizes[operatingSystemName];
 
-    if (osName === 'windows') {
-      const windowsVersion = Number(osVersion.split('-', 1)) >= 10 ? '10' : '7';
-      expectedValues = expectedWindowSizes[osName][windowsVersion];
+    if (operatingSystemName === 'windows') {
+      const windowsVersion = Number(operatingSystemVersion.split('-', 1)) >= 10 ? '10' : '7';
+      expectedValues = expectedWindowSizes[operatingSystemName][windowsVersion];
     }
     if (!expectedValues) {
       console.log('WARN: No expected window sizes found', userAgentId);

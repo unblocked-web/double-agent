@@ -86,6 +86,17 @@ export default class RealUserAgents {
   public static getOperatingSystem(operatingSystemid: string) {
     return OperatingSystems.byId(operatingSystemid);
   }
+
+  public static extractMetaFromUserAgentId(userAgentId: string) {
+    const matches = userAgentId.match(/^(([a-z-]+)(-([0-9-]+))?)--(([a-z-]+)-([0-9-]+))$/);
+    const operatingSystemId = matches[1];
+    const operatingSystemName = matches[2];
+    const operatingSystemVersion = matches[4] || '';
+    const browserId = matches[5];
+    const browserName = matches[6];
+    const browserVersion = matches[7];
+    return { operatingSystemId, operatingSystemName, operatingSystemVersion, browserId, browserName, browserVersion };
+  }
 }
 
 interface IUserAgentsById {

@@ -2,6 +2,7 @@ import Fs from 'fs';
 import Path from 'path';
 import { createOsIdFromUserAgentString } from '@double-agent/real-user-agents/lib/OsUtils';
 import { createBrowserIdFromUserAgentString } from '@double-agent/real-user-agents/lib/BrowserUtils';
+import RealUserAgents from '@double-agent/real-user-agents';
 
 const dataDir = Path.join(__dirname, 'data');
 const profilesDir = Path.join(dataDir, 'profiles');
@@ -13,7 +14,7 @@ const userAgentIds: Set<string> = new Set();
 const profilePathsMap: {
   [pluginId: string]: {
     [userAgentId: string]: IProfilePath;
-  }
+  };
 } = {};
 
 let userAgentStrings;
@@ -70,33 +71,24 @@ export default class Config {
   }
 
   static get browserNames(): string[] {
-    const names = this.userAgentIds.map(userAgentId => this.extractMetaFromUserAgentId(userAgentId).browserName);
+    const names = this.userAgentIds.map(
+      userAgentId => RealUserAgents.extractMetaFromUserAgentId(userAgentId).browserName,
+    );
     return Array.from(new Set(names));
   }
 
   static get osNames(): string[] {
-    const names = this.userAgentIds.map(userAgentId => this.extractMetaFromUserAgentId(userAgentId).osName);
+    const names = this.userAgentIds.map(
+      userAgentId => RealUserAgents.extractMetaFromUserAgentId(userAgentId).operatingSystemName,
+    );
     return Array.from(new Set(names));
   }
 
   static findUserAgentIdsByName(name: string) {
     return this.userAgentIds.filter(userAgentId => {
-      const meta = this.extractMetaFromUserAgentId(userAgentId);
-      return [meta.osName, meta.browserName].includes(name);
+      const meta = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
+      return [meta.operatingSystemName, meta.browserName].includes(name);
     });
-  }
-
-  static extractMetaFromUserAgentId(userAgentId: string) {
-    const matches = userAgentId.match(/^(([a-z-]+)(-([0-9-]+))?)--(([a-z-]+)-([0-9-]+))$/);
-    if (!matches) {
-      console.log('ERROR: ', userAgentId);
-      console.log(new Error(''))
-      process.exit();
-    }
-    // eslint-disable-next-line prefer-const,@typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars
-    let [osId, osName, _, osVersion, browserId, browserName, browserVersion] = matches.slice(1);
-    osVersion = osVersion || '';
-    return { osId, osName, osVersion, browserId, browserName, browserVersion };
   }
 
   static getProfiles<TProfile = any>(pluginId: string): TProfile[] {
