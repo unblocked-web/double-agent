@@ -17,15 +17,15 @@ import {
 
 export default class HttpCookiesPlugin extends Plugin {
   public initialize() {
-    this.registerRoute('all', '/start', this.start);
-    this.registerRoute('all', '/saveLoadAssetsAndReadFromJs', this.saveLoadAssetsAndReadFromJs);
-    this.registerRoute('all', '/saveFromJs', this.saveFromJs);
-    this.registerRoute('all', '/test.css', this.saveFromCss);
-    this.registerRoute('all', '/redirectToNextPage', this.redirectToNextPage);
-    this.registerRoute('all', '/saveAndRedirectToNextPage', this.saveAndRedirectToNextPage);
-    this.registerRoute('all', '/setAndRedirectToNextPage', this.setAndRedirectToNextPage);
-    this.registerRoute('all', '/set', this.set);
-    this.registerRoute('all', '/save', this.save);
+    this.registerRoute('allHttp1', '/start', this.start);
+    this.registerRoute('allHttp1', '/saveLoadAssetsAndReadFromJs', this.saveLoadAssetsAndReadFromJs);
+    this.registerRoute('allHttp1', '/saveFromJs', this.saveFromJs);
+    this.registerRoute('allHttp1', '/test.css', this.saveFromCss);
+    this.registerRoute('allHttp1', '/redirectToNextPage', this.redirectToNextPage);
+    this.registerRoute('allHttp1', '/saveAndRedirectToNextPage', this.saveAndRedirectToNextPage);
+    this.registerRoute('allHttp1', '/setAndRedirectToNextPage', this.setAndRedirectToNextPage);
+    this.registerRoute('allHttp1', '/set', this.set);
+    this.registerRoute('allHttp1', '/save', this.save);
 
     const pages: IPluginPage[] = [];
 

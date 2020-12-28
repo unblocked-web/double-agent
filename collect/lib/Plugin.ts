@@ -18,6 +18,7 @@ import Http2Server from '../servers/Http2Server';
 
 enum Protocol {
   all = 'all',
+  allHttp1 = 'allHttp1',
   http = 'http',
   https = 'https',
   http2 = 'http2',
@@ -28,7 +29,7 @@ enum Protocol {
 
 type IHandlerFn = (ctx: IRequestContext) => Promise<void> | void;
 type IRoutableServerProtocol = IServerProtocol | 'ws' | 'wss';
-type IFlexibleServerProtocol = IRoutableServerProtocol | 'all';
+type IFlexibleServerProtocol = IRoutableServerProtocol | 'all' | 'allHttp1';
 
 interface IRoute {
   protocol: IRoutableServerProtocol;
@@ -186,7 +187,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     handlerFn: IHandlerFn,
     preflightHandlerFn?: IHandlerFn,
   ) {
-    if (protocol === Protocol.all || protocol === Protocol.ws) {
+    if (protocol === Protocol.all || protocol === Protocol.ws || protocol === Protocol.allHttp1) {
       this.registerRoute(Protocol.http, path, handlerFn, preflightHandlerFn);
       this.registerRoute(Protocol.https, path, handlerFn, preflightHandlerFn);
       if (protocol === Protocol.all) {
@@ -212,10 +213,12 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
   }
 
   protected registerAsset(protocol: IFlexibleServerProtocol, path: string, handler: IHandlerFn) {
-    if (protocol === Protocol.all) {
+    if (protocol === Protocol.all || protocol === Protocol.allHttp1) {
       this.registerAsset(Protocol.http, path, handler);
       this.registerAsset(Protocol.https, path, handler);
-      this.registerAsset(Protocol.http2, path, handler);
+      if (protocol === Protocol.all) {
+        this.registerAsset(Protocol.http2, path, handler);
+      }
       return;
     }
 

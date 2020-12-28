@@ -6,7 +6,7 @@ import websocketsScript from './websocketsScript';
 
 export default class HttpHeadersPlugin extends Plugin {
   public initialize() {
-    this.registerRoute('all', '/', this.start);
+    this.registerRoute('allHttp1', '/', this.start);
     this.registerRoute('ws', '/ws', this.onConnection);
 
     const pages: IPluginPage[] = [];
