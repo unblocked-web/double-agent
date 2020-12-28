@@ -1,7 +1,10 @@
-import Plugin, { IRoutesByPath } from '../lib/Plugin';
+import * as http from 'http';
+import * as http2 from 'http2';
+import { URL } from 'url';
 import IServerContext from '../interfaces/IServerContext';
+import Plugin, { IRoutesByPath } from '../lib/Plugin';
 
-export type IServerProtocol = 'tls' | 'http' | 'https';
+export type IServerProtocol = 'tls' | 'http' | 'https' | 'http2';
 
 export default class BaseServer {
   public port: number;
@@ -23,6 +26,11 @@ export default class BaseServer {
   public async start(context: IServerContext) {
     this.context = context;
     return this;
+  }
+
+  public getRequestUrl(req: http.IncomingMessage | http2.Http2ServerRequest): URL {
+    const host = req instanceof http2.Http2ServerRequest ? req.authority : req.headers.host;
+    return new URL(`${this.protocol}://${host}${req.url}`);
   }
 
   public cleanPath(rawPath: string) {

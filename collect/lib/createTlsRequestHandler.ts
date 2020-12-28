@@ -1,4 +1,3 @@
-import { URL } from 'url';
 import { IncomingMessage, ServerResponse } from 'http';
 import IServerContext from '../interfaces/IServerContext';
 import extractRequestDetails from './extractRequestDetails';
@@ -10,7 +9,7 @@ import { isRecognizedDomain } from './DomainUtils';
 export default function createTlsRequestHandler(server: BaseServer, serverContext: IServerContext) {
   return async function requestHandler(req: IncomingMessage, res: ServerResponse) {
     const { sessionTracker } = serverContext;
-    const requestUrl = new URL(`${server.protocol}://${req.headers.host}${req.url}`);
+    const requestUrl = server.getRequestUrl(req);
 
     if (!isRecognizedDomain(req.headers.host, [TlsDomain])) {
       throw new Error('Invalid domain used to access site');

@@ -1,20 +1,13 @@
-import * as Fs from 'fs';
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import Document from '@double-agent/collect/lib/Document';
 import { IProfileData } from './interfaces/IProfile';
 import websocketsScript from './websocketsScript';
 
-const axiosJs = Fs.readFileSync(require.resolve('axios/dist/axios.min.js'));
-const axiosSourceMap = Fs.readFileSync(require.resolve('axios/dist/axios.min.map'));
-
 export default class HttpHeadersPlugin extends Plugin {
   public initialize() {
     this.registerRoute('all', '/', this.start);
     this.registerRoute('ws', '/ws', this.onConnection);
-
-    this.registerAsset('all', '/axios.js', this.axiosJs);
-    this.registerAsset('all', '/axios.min.map', this.axiosSourceMap);
 
     const pages: IPluginPage[] = [];
 
@@ -27,23 +20,12 @@ export default class HttpHeadersPlugin extends Plugin {
 
   public start(ctx: IRequestContext) {
     const document = new Document(ctx);
-    document.injectHeadTag(`<script src="${ctx.buildUrl('/axios.js')}"></script>`);
     document.injectBodyTag(websocketsScript(ctx));
     ctx.res.end(document.html);
   }
 
   public onConnection(ctx: IRequestContext) {
     saveHeadersToProfile(this, ctx);
-  }
-
-  public axiosJs(ctx: IRequestContext) {
-    ctx.res.writeHead(200, { 'Content-Type': 'application/javascript' });
-    ctx.res.end(axiosJs);
-  }
-
-  public axiosSourceMap(ctx: IRequestContext) {
-    ctx.res.writeHead(200, { 'Content-Type': 'application/octet-stream' });
-    ctx.res.end(axiosSourceMap);
   }
 }
 

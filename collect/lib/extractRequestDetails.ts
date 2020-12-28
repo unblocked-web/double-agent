@@ -1,6 +1,7 @@
 import { URL } from 'url';
 import * as http from 'http';
 import cookie from 'cookie';
+import http2 from 'http2';
 import ResourceType from '../interfaces/ResourceType';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import OriginType from '../interfaces/OriginType';
@@ -10,14 +11,14 @@ import Session from './Session';
 
 export default async function extractRequestDetails(
   server: BaseServer,
-  req: http.IncomingMessage,
+  req: http.IncomingMessage | http2.Http2ServerRequest,
   session: Session,
   overrideResourceType?: ResourceType,
 ) {
   const time = new Date();
   const userAgentString = req.headers['user-agent'];
-  const addr = `${req.connection.remoteAddress.split(':').pop()}:${req.connection.remotePort}`;
-  const requestUrl = new URL(`${server.protocol}://${req.headers.host}${req.url}`);
+  const addr = `${req.socket.remoteAddress.split(':').pop()}:${req.socket.remotePort}`;
+  const requestUrl = server.getRequestUrl(req);
 
   let body = '';
   let bodyJson: any = {};
@@ -46,7 +47,7 @@ export default async function extractRequestDetails(
     method: req.method,
     headers: rawHeaders.map(x => cleanUrl(x, session.id)),
     domainType: getDomainType(requestUrl),
-    secureDomain: ['https', 'tls'].includes(server.protocol),
+    secureDomain: ['https', 'tls', 'http2'].includes(server.protocol),
     resourceType: overrideResourceType ?? getResourceType(req.method, requestUrl.pathname),
   };
 

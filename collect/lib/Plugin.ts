@@ -14,11 +14,13 @@ import ISessionPage from '../interfaces/ISessionPage';
 import { addPageIndexToUrl, addSessionIdToUrl } from './DomainUtils';
 import Document from './Document';
 import Session from './Session';
+import Http2Server from '../servers/Http2Server';
 
 enum Protocol {
   all = 'all',
   http = 'http',
   https = 'https',
+  http2 = 'http2',
   ws = 'ws',
   wss = 'wss',
   tls = 'tls',
@@ -71,6 +73,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
 
   protected httpServer: HttpServer;
   protected httpsServer: HttpsServer;
+  protected http2Server: Http2Server;
   protected tlsServerBySessionId: { [sessionId: string]: TlsServer } = {};
 
   constructor(pluginDir: string) {
@@ -99,9 +102,12 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     const { protocol, path } = page.route;
     const domain = page.domain || (protocol === Protocol.tls ? TlsDomain : MainDomain);
     const server = this.getServer(protocol, sessionId);
-    const baseUrl = `${protocol === Protocol.tls ? Protocol.https : protocol}://${domain}:${
-      server.port
-    }`;
+
+    let urlProtocol = protocol;
+    if (protocol === Protocol.tls || protocol === Protocol.http2) {
+      urlProtocol = Protocol.https;
+    }
+    const baseUrl = `${urlProtocol}://${domain}:${server.port}`;
     const fullPath = `/${this.id}${path.startsWith('/') ? path : `/${path}`}`;
 
     let url = new URL(fullPath, baseUrl).href;
@@ -132,6 +138,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
       if (protocol === Protocol.ws) {
         await this.createServer(Protocol.http, serverContext, session.id, routesByPath);
         await this.createServer(Protocol.https, serverContext, session.id, routesByPath);
+        await this.createServer(Protocol.http2, serverContext, session.id, routesByPath);
       }
       await this.createServer(protocol as IServerProtocol, serverContext, session.id, routesByPath);
     }
@@ -168,6 +175,9 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     if (protocol === Protocol.https) {
       return this.httpsServer;
     }
+    if (protocol === Protocol.http2) {
+      return this.http2Server;
+    }
   }
 
   protected registerRoute(
@@ -179,6 +189,9 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     if (protocol === Protocol.all || protocol === Protocol.ws) {
       this.registerRoute(Protocol.http, path, handlerFn, preflightHandlerFn);
       this.registerRoute(Protocol.https, path, handlerFn, preflightHandlerFn);
+      if (protocol === Protocol.all) {
+        this.registerRoute(Protocol.http2, path, handlerFn, preflightHandlerFn);
+      }
       return;
     }
 
@@ -202,6 +215,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     if (protocol === Protocol.all) {
       this.registerAsset(Protocol.http, path, handler);
       this.registerAsset(Protocol.https, path, handler);
+      this.registerAsset(Protocol.http2, path, handler);
       return;
     }
 
@@ -228,15 +242,15 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
   }
 
   private async createServer(
-      protocol: IServerProtocol,
-      serverContext: IServerContext,
-      sessionId: string,
-      routesByPath: IRoutesByPath,
+    protocol: IServerProtocol,
+    serverContext: IServerContext,
+    sessionId: string,
+    routesByPath: IRoutesByPath,
   ) {
     const port = generatePort();
     if (protocol === Protocol.tls) {
       this.tlsServerBySessionId[sessionId] = await new TlsServer(port, routesByPath).start(
-          serverContext,
+        serverContext,
       );
       console.log(`${this.id} listening on ${port} (TLS)`);
     } else if (protocol === Protocol.http) {
@@ -247,6 +261,10 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
       if (this.httpsServer) return;
       this.httpsServer = await new HttpsServer(port, routesByPath).start(serverContext);
       console.log(`${this.id} listening on ${port} (HTTPS)`);
+    } else if (protocol === Protocol.http2) {
+      if (this.http2Server) return;
+      this.http2Server = await new Http2Server(port, routesByPath).start(serverContext);
+      console.log(`${this.id} listening on ${port} (HTTP2)`);
     }
     this.emit(`${protocol}-started`);
   }
