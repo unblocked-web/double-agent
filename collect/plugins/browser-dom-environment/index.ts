@@ -2,12 +2,14 @@ import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import { createPromise, IResolvablePromise } from '@double-agent/collect/lib/PromiseUtils';
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
 import Document from '@double-agent/collect/lib/Document';
+import { DomainType } from '@double-agent/collect/lib/DomainUtils';
 import domScript from './domScript';
 import { loadServiceWorker, serviceWorkerScript } from './serviceWorkerScripts';
 import { loadSharedWorker, sharedWorkerScript } from './sharedWorkerScripts';
 import { dedicatedWorkerScript, loadDedicatedWorker } from './dedicatedWorkerScripts';
 import { IProfileData } from './interfaces/IProfile';
 import PageNames from './interfaces/PageNames';
+import { iframePage, waitForIframe } from './iframeScripts';
 
 export default class BrowserDomPlugin extends Plugin {
   private pendingByKey: { [key: string]: IResolvablePromise } = {};
@@ -21,6 +23,10 @@ export default class BrowserDomPlugin extends Plugin {
     this.registerRoute('allHttp1', '/service-worker.js', serviceWorkerScript);
     this.registerRoute('allHttp1', '/load-shared-worker', this.loadSharedWorker);
     this.registerRoute('allHttp1', '/shared-worker.js', sharedWorkerScript);
+    this.registerRoute('allHttp1', '/load-iframe', this.loadIFrame);
+    this.registerRoute('allHttp1', '/load-iframe-sandbox', this.loadIFrameSandbox);
+    this.registerRoute('allHttp1', '/load-iframe-cross-domain', this.loadIFrameCrossDomain);
+    this.registerRoute('allHttp1', '/iframe', iframePage);
     this.registerRoute('allHttp1', '/wait-until-finished', this.waitUntilFinished);
     this.registerRoute('allHttp1', '/wait-until-finished.js', this.waitUntilFinishedJs);
 
@@ -42,6 +48,21 @@ export default class BrowserDomPlugin extends Plugin {
           route: this.routes[protocol]['/load-dedicated-worker'],
           waitForReady: true,
           name: PageNames.DedicatedWorkerDom,
+        },
+        {
+          route: this.routes[protocol]['/load-iframe'],
+          waitForReady: true,
+          name: PageNames.IFrameDom,
+        },
+        {
+          route: this.routes[protocol]['/load-iframe-sandbox'],
+          waitForReady: true,
+          name: PageNames.IFrameSandboxDom,
+        },
+        {
+          route: this.routes[protocol]['/load-iframe-cross-domain'],
+          waitForReady: true,
+          name: PageNames.IFrameCrossDomainDom,
         },
       );
     });
@@ -77,6 +98,40 @@ export default class BrowserDomPlugin extends Plugin {
     ctx.res.end(document.html);
   }
 
+  private loadIFrame(ctx: IRequestContext) {
+    const document = new Document(ctx);
+    const testPath = `/iframe?page-name=${PageNames.IFrameDom}`;
+    document.injectBodyTag(`<iframe src='${ctx.buildUrl(testPath)}'></iframe>`);
+    document.injectBodyTag(waitForIframe());
+    this.addWaitIfNeeded(document, ctx);
+    ctx.res.end(document.html);
+  }
+
+  private loadIFrameSandbox(ctx: IRequestContext) {
+    const document = new Document(ctx);
+    const testPath = `/iframe?page-name=${PageNames.IFrameSandboxDom}`;
+    document.injectBodyTag(
+      `<iframe src='${ctx.buildUrl(testPath)}' sandbox="allow-scripts allow-same-origin"></iframe>`,
+    );
+    document.injectBodyTag(waitForIframe());
+    this.addWaitIfNeeded(document, ctx);
+    ctx.res.end(document.html);
+  }
+
+  private loadIFrameCrossDomain(ctx: IRequestContext) {
+    const document = new Document(ctx);
+    const testPath = `/iframe?page-name=${PageNames.IFrameCrossDomainDom}`;
+    document.injectBodyTag(
+      `<iframe src='${ctx.buildUrl(
+        testPath,
+        DomainType.CrossDomain,
+      )}' sandbox="allow-scripts"></iframe>`,
+    );
+    document.injectBodyTag(waitForIframe());
+    this.addWaitIfNeeded(document, ctx);
+    ctx.res.end(document.html);
+  }
+
   private async save(ctx: IRequestContext) {
     const pageName = ctx.req.headers['page-name'] || '';
     const pendingKey = this.getPendingKey(ctx, pageName as string);
@@ -88,6 +143,12 @@ export default class BrowserDomPlugin extends Plugin {
       filenameSuffix += '-shared-worker';
     } else if (pageName === PageNames.DedicatedWorkerDom) {
       filenameSuffix += '-dedicated-worker';
+    } else if (pageName === PageNames.IFrameDom) {
+      filenameSuffix += '-iframe';
+    } else if (pageName === PageNames.IFrameSandboxDom) {
+      filenameSuffix += '-iframe-sandbox';
+    } else if (pageName === PageNames.IFrameCrossDomainDom) {
+      filenameSuffix += '-iframe-cross-domain';
     }
     const profileData = ctx.requestDetails.bodyJson as IProfileData;
     ctx.session.savePluginProfileData<IProfileData>(this, profileData, { filenameSuffix });
@@ -114,7 +175,9 @@ export default class BrowserDomPlugin extends Plugin {
     const pendingKey = this.getPendingKey(ctx, ctx.page.name);
     if (this.pendingByKey[pendingKey]) {
       document.injectFooterTag(
-        `<script src="${ctx.buildUrl(`/wait-until-finished.js?pendingKey=${pendingKey}`)}"></script>`,
+        `<script src="${ctx.buildUrl(
+          `/wait-until-finished.js?pendingKey=${pendingKey}`,
+        )}"></script>`,
       );
     }
   }
