@@ -52,7 +52,7 @@ export default async function extractRequestDetails(
   };
 
   // if origin sent, translate into origin type
-  if (requestDetails.origin) {
+  if (requestDetails.origin && requestDetails.origin !== 'null') {
     requestDetails.originType = getOriginType(
       new URL(requestDetails.origin),
       requestDetails.domainType,

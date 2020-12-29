@@ -151,9 +151,6 @@ export default function domScript(ctx: IRequestContext, basePath: string = 'wind
 
       const prop = '' + String(key);
 
-      if (path.includes('LinearAccelerationSensor.prototype')) {
-          debugger;
-      }
       if (path.startsWith('${basePath}.document') &&
           (typeof key === 'string' && (key.startsWith('child') || key.startsWith('first') || key.startsWith('last') || key.startsWith('next') || key.startsWith('prev')
               || key === 'textContent' || key === 'text'))
@@ -397,7 +394,6 @@ export default function domScript(ctx: IRequestContext, basePath: string = 'wind
               resolve(answer);
             } catch(err) {
               if (didReply) return;
-              console.log(path)
               didReply = true;
               clearTimeout(c);
               reject(err);
