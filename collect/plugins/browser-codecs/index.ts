@@ -7,8 +7,8 @@ import codecPageScript from './codecPageScript';
 
 export default class BrowserCodecsPlugin extends Plugin {
   public initialize() {
-    this.registerRoute('http', '/', this.loadScript);
-    this.registerRoute('http', '/save', this.save);
+    this.registerRoute('https', '/', this.loadScript);
+    this.registerRoute('https', '/save', this.save);
     this.registerPages({ route: this.routes.http['/'], waitForReady: true });
   }
 

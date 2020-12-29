@@ -10,6 +10,9 @@ const contentTypeByPath = {
   '/test.css': 'text/css',
   '/test.svg': 'image/svg+xml',
   '/test.png': 'image/png',
+  '/test.ttf': 'font/ttf',
+  '/test.mp3': 'audio/mpeg',
+  '/test.webm': 'video/webm',
   '/css-background.png': 'image/png',
 };
 
@@ -23,6 +26,14 @@ export default class HttpHeadersPlugin extends Plugin {
     this.registerRoute('all', '/test.css', this.saveHeadersAndSendAsset, this.savePreflightHeaders);
     this.registerRoute('all', '/test.svg', this.saveHeadersAndSendAsset, this.savePreflightHeaders);
     this.registerRoute('all', '/test.png', this.saveHeadersAndSendAsset, this.savePreflightHeaders);
+    this.registerRoute('all', '/test.mp3', this.saveHeadersAndSendAsset, this.savePreflightHeaders);
+    this.registerRoute(
+      'all',
+      '/test.webm',
+      this.saveHeadersAndSendAsset,
+      this.savePreflightHeaders,
+    );
+    this.registerRoute('all', '/test.ttf', this.saveHeadersAndSendAsset, this.savePreflightHeaders);
     this.registerRoute(
       'all',
       '/css-background.png',
@@ -32,7 +43,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https'].forEach(protocol => {
+    ['http', 'https', 'http2'].forEach(protocol => {
       pages.push({ route: this.routes[protocol]['/'], waitForReady: true });
     });
 
@@ -52,6 +63,12 @@ export default class HttpHeadersPlugin extends Plugin {
       );
       document.injectBodyTag(`<img src="${ctx.buildUrl('/test.png', domainType)}" />`);
       document.injectBodyTag(`<img src="${ctx.buildUrl('/test.svg', domainType)}" />`);
+      document.injectBodyTag(
+        `<audio controls src="${ctx.buildUrl('/test.mp3', domainType)}"></audio>`,
+      );
+      document.injectBodyTag(`<video controls width="250">
+    <source src="${ctx.buildUrl('/test.webm', domainType)}" type="video/webm">
+</video>`);
     }
     ctx.res.end(document.html);
   }
@@ -71,9 +88,11 @@ export default class HttpHeadersPlugin extends Plugin {
     let assetContents: any = cachedAssetsByPath[pathname];
     if (pathname === '/test.css') {
       const imagePath = '/css-background.png';
+      const fontPath = '/test.ttf';
       assetContents = assetContents
         .toString()
-        .replace(imagePath, ctx.buildUrl(imagePath, DomainType.MainDomain));
+        .replace(imagePath, ctx.buildUrl(imagePath, DomainType.MainDomain))
+        .replace(fontPath, ctx.buildUrl(fontPath, DomainType.MainDomain));
     }
 
     ctx.res.writeHead(200, { 'Content-Type': contentTypeByPath[pathname] });

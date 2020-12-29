@@ -13,16 +13,16 @@ export default class BrowserDomPlugin extends Plugin {
   private pendingByKey: { [key: string]: IResolvablePromise } = {};
 
   public initialize() {
-    this.registerRoute('all', '/', this.loadScript);
-    this.registerRoute('all', '/save', this.save);
-    this.registerRoute('all', '/load-dedicated-worker', this.loadDedicatedWorker);
-    this.registerRoute('all', '/dedicated-worker.js', dedicatedWorkerScript);
-    this.registerRoute('all', '/load-service-worker', this.loadServiceWorker);
-    this.registerRoute('all', '/service-worker.js', serviceWorkerScript);
-    this.registerRoute('all', '/load-shared-worker', this.loadSharedWorker);
-    this.registerRoute('all', '/shared-worker.js', sharedWorkerScript);
-    this.registerRoute('all', '/wait-until-finished', this.waitUntilFinished);
-    this.registerRoute('all', '/wait-until-finished.js', this.waitUntilFinishedJs);
+    this.registerRoute('allHttp1', '/', this.loadScript);
+    this.registerRoute('allHttp1', '/save', this.save);
+    this.registerRoute('allHttp1', '/load-dedicated-worker', this.loadDedicatedWorker);
+    this.registerRoute('allHttp1', '/dedicated-worker.js', dedicatedWorkerScript);
+    this.registerRoute('allHttp1', '/load-service-worker', this.loadServiceWorker);
+    this.registerRoute('allHttp1', '/service-worker.js', serviceWorkerScript);
+    this.registerRoute('allHttp1', '/load-shared-worker', this.loadSharedWorker);
+    this.registerRoute('allHttp1', '/shared-worker.js', sharedWorkerScript);
+    this.registerRoute('allHttp1', '/wait-until-finished', this.waitUntilFinished);
+    this.registerRoute('allHttp1', '/wait-until-finished.js', this.waitUntilFinishedJs);
 
     const pages: IPluginPage[] = [];
     ['http', 'https'].forEach(protocol => {

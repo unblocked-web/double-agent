@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import http2 from 'http2';
 import * as fs from 'fs';
 import { URL } from 'url';
 import { createUserAgentIdFromString } from '@double-agent/config';
@@ -14,7 +15,10 @@ export default function createHttpRequestHandler(
   server: BaseServer,
   serverContext: IServerContext,
 ) {
-  return async function requestHandler(req: IncomingMessage, res: ServerResponse) {
+  return async function requestHandler(
+    req: IncomingMessage | http2.Http2ServerRequest,
+    res: ServerResponse | http2.Http2ServerResponse,
+  ) {
     if (req.method === 'HEAD') {
       // BrowserStack sends head requests to check if a domain is active. not part of the tests..
       console.log('HEAD request inbound. Should not be getting this.', req.url, req.headers);
@@ -22,10 +26,10 @@ export default function createHttpRequestHandler(
     }
 
     const { sessionTracker } = serverContext;
-    const requestUrl = new URL(`${server.protocol}://${req.headers.host}${req.url}`);
+    const requestUrl = server.getRequestUrl(req);
     const route = server.getRoute(requestUrl.pathname);
 
-    if (!isRecognizedDomain(req.headers.host, [MainDomain, SubDomain, CrossDomain])) {
+    if (!isRecognizedDomain(requestUrl.host, [MainDomain, SubDomain, CrossDomain])) {
       throw new Error('Invalid domain used to access site');
     }
 
@@ -78,7 +82,7 @@ function sendPreflight(ctx: IRequestContext) {
   ctx.res.end('');
 }
 
-function sendFavicon(res: ServerResponse) {
+function sendFavicon(res: ServerResponse | http2.Http2ServerResponse) {
   const asset = fs.readFileSync(`${__dirname}/../public/favicon.ico`);
   res.writeHead(200, { 'Content-Type': 'image/x-icon' });
   res.end(asset);

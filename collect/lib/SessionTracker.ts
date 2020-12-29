@@ -1,6 +1,7 @@
 import { URL } from 'url';
 import { IAssignmentType } from '@double-agent/runner/interfaces/IAssignment';
 import http from 'http';
+import * as http2 from 'http2';
 import Session from './Session';
 import PluginDelegate from './PluginDelegate';
 import BaseServer from '../servers/BaseServer';
@@ -25,8 +26,11 @@ export default class SessionTracker {
     return this.sessions[sessionId];
   }
 
-  public getSessionFromServerRequest(server: BaseServer, req: http.IncomingMessage) {
-    const requestUrl = new URL(`${server.protocol}://${req.headers.host}${req.url}`);
+  public getSessionFromServerRequest(
+    server: BaseServer,
+    req: http.IncomingMessage | http2.Http2ServerRequest,
+  ) {
+    const requestUrl = server.getRequestUrl(req);
     const sessionId = requestUrl.searchParams.get('sessionId');
     if (!sessionId) throw new Error(`Missing session: ${requestUrl}`);
 

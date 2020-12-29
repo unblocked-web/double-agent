@@ -17,7 +17,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https'].forEach(protocol => {
+    ['http', 'https', 'http2'].forEach(protocol => {
       pages.push(
         {
           route: this.routes[protocol]['/start'],
@@ -97,7 +97,7 @@ export default class HttpHeadersPlugin extends Plugin {
       (function() {
         window.afterReady = () => {
           setTimeout(() => {
-            window.location.href = '${ctx.nextPageLink}';  
+            window.location.href = '${ctx.nextPageLink}';
           }, 2e3);
         }
       })();

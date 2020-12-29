@@ -1,5 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { URL } from 'url';
+import * as http2 from 'http2';
 import IRequestContext from '../interfaces/IRequestContext';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import Session from './Session';
@@ -15,8 +16,8 @@ export default class RequestContext implements IRequestContext {
 
   constructor(
     public readonly server: BaseServer,
-    public readonly req: IncomingMessage,
-    public readonly res: ServerResponse,
+    public readonly req: IncomingMessage | http2.Http2ServerRequest,
+    public readonly res: ServerResponse | http2.Http2ServerResponse,
     public readonly url: URL,
     public readonly requestDetails: IRequestDetails,
     public readonly session: Session,
@@ -61,6 +62,9 @@ export default class RequestContext implements IRequestContext {
       throw new Error(`Unknown domainType: ${domainType}`);
     }
 
+    if (protocol === 'http2') {
+      protocol = 'https';
+    }
     const baseUrl = `${protocol}://${domain}:${port}`;
     const fullPath = `/${plugin.id}${path.startsWith('/') ? path : `/${path}`}`;
     const url = new URL(fullPath, baseUrl);
