@@ -32,6 +32,7 @@ export default class CheckGenerator {
     this.userAgentId = profile.userAgentId;
     this.endpointsByPath = extractDomEndpoints(httpDom);
     for (const { path, object } of Object.values(this.endpointsByPath)) {
+      if (ignorePaths.some(x => x.test(path))) continue;
       this.addKeyOrderChecks(path, object);
       this.addFlagChecks(path, object);
       this.addPrototypeChecks(path, object);
@@ -286,6 +287,10 @@ const webdriverPaths = new Set([
   'detached.isNodeReachable_',
 ]);
 
+const ignorePaths = [
+  new RegExp('window.document.scripts'),
+]
+
 const ignoreNumberValuePaths = [
   new RegExp('width', 'i'),
   new RegExp('height', 'i'),
@@ -301,6 +306,9 @@ const ignoreNumberValuePaths = [
   new RegExp('navigator.connection.*'),
   new RegExp(/AudioContext.+currentTime/), // can be 0 if stop gets triggered by dom perusal
   new RegExp('window.performance.timeOrigin'),
+  new RegExp('window.performance.timing.loadEventStart'),
+  new RegExp('window.performance.timing.loadEventEnd'),
+  new RegExp('window.performance.timing.domComplete'),
   new RegExp('window.navigator.hardwareConcurrency'), // ToDo: Add once we have better grasp of device ranges
 ];
 
@@ -324,6 +332,9 @@ const ignoreStringValuePaths = [
   new RegExp('window.chrome.loadTimes.new\\(\\).+'),
   new RegExp(/AudioContext.*state/),
   new RegExp('Document.new.+lastModified'),
+
+  new RegExp('window.document.title'),
+  new RegExp('window.document.readyState'),
 ];
 
 const ignoreBooleanValuePaths = [
