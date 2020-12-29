@@ -1,5 +1,27 @@
 [
   {
+    "id": "ucoo-aagk",
+    "checkName": "UnreadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
     "id": "rcoo-aaaa",
     "checkName": "ReadableCookieCheck",
     "checkType": "Individual",
@@ -4051,50 +4073,6 @@
     ]
   },
   {
-    "id": "rcoo-aacc",
-    "checkName": "ReadableCookieCheck",
-    "checkType": "Individual",
-    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
-    "args": [
-      {
-        "setter": "HttpHeader",
-        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
-        "previouslyCreated": false,
-        "attributes": [
-          "Secure",
-          "SameSite=Strict",
-          "Domain=MainDomain"
-        ]
-      },
-      {
-        "getter": "HttpHeader",
-        "httpProtocol": "https"
-      }
-    ]
-  },
-  {
-    "id": "ucoo-aagk",
-    "checkName": "UnreadableCookieCheck",
-    "checkType": "Individual",
-    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
-    "args": [
-      {
-        "setter": "HttpHeader",
-        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
-        "previouslyCreated": false,
-        "attributes": [
-          "Secure",
-          "SameSite=Strict",
-          "Domain=MainDomain"
-        ]
-      },
-      {
-        "getter": "HttpHeader",
-        "httpProtocol": "https"
-      }
-    ]
-  },
-  {
     "id": "rcoo-aacg",
     "checkName": "ReadableCookieCheck",
     "checkType": "Individual",
@@ -4588,6 +4566,28 @@
         "attributes": [
           "Secure",
           "SameSite=None",
+          "Domain=MainDomain"
+        ]
+      },
+      {
+        "getter": "HttpHeader",
+        "httpProtocol": "https"
+      }
+    ]
+  },
+  {
+    "id": "rcoo-aacc",
+    "checkName": "ReadableCookieCheck",
+    "checkType": "Individual",
+    "path": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+    "args": [
+      {
+        "setter": "HttpHeader",
+        "name": "https-SubDomainRedirect--MainDomain-Secure-SameSiteStrict",
+        "previouslyCreated": false,
+        "attributes": [
+          "Secure",
+          "SameSite=Strict",
           "Domain=MainDomain"
         ]
       },

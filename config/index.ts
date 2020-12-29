@@ -3,23 +3,14 @@ import Path from 'path';
 import { createOsIdFromUserAgentString } from '@double-agent/real-user-agents/lib/OsUtils';
 import { createBrowserIdFromUserAgentString } from '@double-agent/real-user-agents/lib/BrowserUtils';
 import RealUserAgents from '@double-agent/real-user-agents';
+import {extractProfilePathsMap, importProfile, IProfilePath, IProfilePathsMap} from "./lib/ProfileUtils";
 
 const dataDir = Path.join(__dirname, 'data');
 const profilesDir = Path.join(dataDir, 'profiles');
 if (!Fs.existsSync(profilesDir)) Fs.mkdirSync(profilesDir);
 
-type IProfilePath = string | { [filenameSuffix: string]: string };
-
 const userAgentIds: Set<string> = new Set();
-const profilePathsMap: {
-  [pluginId: string]: {
-    [userAgentId: string]: IProfilePath;
-  };
-} = {};
-
-let userAgentStrings;
-
-// LOAD DATA ////////////////////////////////////////////////////////////////////////////////////
+const profilePathsMap: IProfilePathsMap = {};
 
 for (const userAgentIdWithoutMinor of Fs.readdirSync(profilesDir)) {
   const minorVersionsDir = Path.join(profilesDir, userAgentIdWithoutMinor);
@@ -30,21 +21,12 @@ for (const userAgentIdWithoutMinor of Fs.readdirSync(profilesDir)) {
     const profileDir = Path.join(minorVersionsDir, minorVersion);
     if (!Fs.lstatSync(profileDir).isDirectory()) continue;
 
-    for (const fileName of Fs.readdirSync(profileDir)) {
-      if (!fileName.endsWith('.json') || fileName.startsWith('_')) continue;
-      const [pluginId, filenameSuffix] = fileName.replace('.json', '').split('--');
-      const profilePath = Path.join(profileDir, fileName);
-      profilePathsMap[pluginId] = profilePathsMap[pluginId] || {};
-      if (filenameSuffix) {
-        profilePathsMap[pluginId][userAgentId] = profilePathsMap[pluginId][userAgentId] || {};
-        profilePathsMap[pluginId][userAgentId][filenameSuffix] = profilePath;
-      } else {
-        profilePathsMap[pluginId][userAgentId] = profilePath;
-      }
-      userAgentIds.add(userAgentId);
-    }
+    userAgentIds.add(userAgentId);
+    extractProfilePathsMap(profileDir, userAgentId, profilePathsMap);
   }
 }
+
+let userAgentStrings;
 
 /////// /////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,9 +43,7 @@ export function createUserAgentIdFromKeys(osKey: string, browserKey: string) {
 /////// /////////////////////////////////////////////////////////////////////////////////////
 
 export default class Config {
-  static get userAgentIds() {
-    return Array.from(userAgentIds);
-  }
+  static userAgentIds: string[] = [];
 
   static get userAgentStrings() {
     userAgentStrings = userAgentStrings || this.getProfiles('tcp/ttl').map(p => p.userAgentString);
@@ -114,32 +94,5 @@ export default class Config {
     if (!profilePath) return;
 
     return importProfile<TProfile>(profilePath);
-  }
-}
-
-function importProfile<TProfile>(profilePath: IProfilePath) {
-  if (typeof profilePath === 'string') {
-    const rawData = Fs.readFileSync(profilePath, 'utf8');
-    try {
-      return JSON.parse(rawData) as TProfile;
-    } catch (error) {
-      console.log(profilePath);
-      throw error;
-    }
-  } else {
-    const dataByFilenameSuffix: any = {};
-    let profile;
-    for (const filenameSuffix of Object.keys(profilePath)) {
-      const rawData = Fs.readFileSync(profilePath[filenameSuffix], 'utf8');
-      try {
-        profile = JSON.parse(rawData);
-      } catch (error) {
-        console.log(profilePath[filenameSuffix]);
-        throw error;
-      }
-      dataByFilenameSuffix[filenameSuffix] = profile.data;
-    }
-    profile.data = dataByFilenameSuffix;
-    return profile as TProfile;
   }
 }

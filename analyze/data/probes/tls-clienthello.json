@@ -1,5 +1,133 @@
 [
   {
+    "id": "numr-aabr",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49188,
+      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
+    ]
+  },
+  {
+    "id": "numr-aabs",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49187,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
+    ]
+  },
+  {
+    "id": "numr-aabt",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49162,
+      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+    ]
+  },
+  {
+    "id": "numr-aabu",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49161,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+    ]
+  },
+  {
+    "id": "numr-aabv",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49192,
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
+    ]
+  },
+  {
+    "id": "numr-aabw",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49191,
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+    ]
+  },
+  {
+    "id": "numr-aabx",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      61,
+      "TLS_RSA_WITH_AES_256_CBC_SHA256"
+    ]
+  },
+  {
+    "id": "numr-aaby",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      60,
+      "TLS_RSA_WITH_AES_128_CBC_SHA256"
+    ]
+  },
+  {
+    "id": "numr-aabz",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49160,
+      "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA"
+    ]
+  },
+  {
+    "id": "numr-aaca",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.ciphers",
+    "args": [
+      49170,
+      "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA"
+    ]
+  },
+  {
+    "id": "numr-aacb",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.extensions.supported_groups",
+    "args": [
+      25,
+      "secp521r1"
+    ]
+  },
+  {
+    "id": "strg-actz",
+    "checkName": "StringCheck",
+    "checkType": "Individual",
+    "path": "clientHello.extensions.signature_algorithms",
+    "args": [
+      "ecdsa_sha1 (0x0203)"
+    ]
+  },
+  {
+    "id": "bool-aahc",
+    "checkName": "BooleanCheck",
+    "checkType": "Individual",
+    "path": "clientHello.isGreased",
+    "args": [
+      false
+    ]
+  },
+  {
     "id": "numr-aaah",
     "checkName": "NumberCheck",
     "checkType": "Individual",
@@ -250,7 +378,7 @@
     ]
   },
   {
-    "id": "strg-acuu",
+    "id": "strg-actj",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.ec_point_formats",
@@ -259,7 +387,7 @@
     ]
   },
   {
-    "id": "strg-acuv",
+    "id": "strg-actk",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -268,7 +396,7 @@
     ]
   },
   {
-    "id": "strg-acuw",
+    "id": "strg-actl",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -277,7 +405,7 @@
     ]
   },
   {
-    "id": "strg-acux",
+    "id": "strg-actm",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -286,7 +414,7 @@
     ]
   },
   {
-    "id": "strg-acuy",
+    "id": "strg-actn",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -295,7 +423,7 @@
     ]
   },
   {
-    "id": "strg-acuz",
+    "id": "strg-acto",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -304,7 +432,7 @@
     ]
   },
   {
-    "id": "strg-acva",
+    "id": "strg-actp",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -313,7 +441,7 @@
     ]
   },
   {
-    "id": "strg-acvb",
+    "id": "strg-actq",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -322,7 +450,7 @@
     ]
   },
   {
-    "id": "strg-acvc",
+    "id": "strg-actr",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -331,7 +459,7 @@
     ]
   },
   {
-    "id": "strg-acve",
+    "id": "strg-actt",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.application_layer_protocol_negotiation",
@@ -340,159 +468,12 @@
     ]
   },
   {
-    "id": "strg-acvf",
+    "id": "strg-actu",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.application_layer_protocol_negotiation",
     "args": [
       "http/1.1"
-    ]
-  },
-  {
-    "id": "numr-aaay",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.extensions.decimal",
-    "args": [
-      35,
-      "session_ticket"
-    ]
-  },
-  {
-    "id": "bool-aahb",
-    "checkName": "BooleanCheck",
-    "checkType": "Individual",
-    "path": "clientHello.isGreased",
-    "args": [
-      true
-    ]
-  },
-  {
-    "id": "numr-aabr",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49188,
-      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"
-    ]
-  },
-  {
-    "id": "numr-aabs",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49187,
-      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"
-    ]
-  },
-  {
-    "id": "numr-aabt",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49162,
-      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
-    ]
-  },
-  {
-    "id": "numr-aabu",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49161,
-      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
-    ]
-  },
-  {
-    "id": "numr-aabv",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49192,
-      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"
-    ]
-  },
-  {
-    "id": "numr-aabw",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49191,
-      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
-    ]
-  },
-  {
-    "id": "numr-aabx",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      61,
-      "TLS_RSA_WITH_AES_256_CBC_SHA256"
-    ]
-  },
-  {
-    "id": "numr-aaby",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      60,
-      "TLS_RSA_WITH_AES_128_CBC_SHA256"
-    ]
-  },
-  {
-    "id": "numr-aabz",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49160,
-      "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA"
-    ]
-  },
-  {
-    "id": "numr-aaca",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.ciphers",
-    "args": [
-      49170,
-      "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA"
-    ]
-  },
-  {
-    "id": "numr-aacb",
-    "checkName": "NumberCheck",
-    "checkType": "Individual",
-    "path": "clientHello.extensions.supported_groups",
-    "args": [
-      25,
-      "secp521r1"
-    ]
-  },
-  {
-    "id": "strg-acvk",
-    "checkName": "StringCheck",
-    "checkType": "Individual",
-    "path": "clientHello.extensions.signature_algorithms",
-    "args": [
-      "ecdsa_sha1 (0x0203)"
-    ]
-  },
-  {
-    "id": "bool-aahc",
-    "checkName": "BooleanCheck",
-    "checkType": "Individual",
-    "path": "clientHello.isGreased",
-    "args": [
-      false
     ]
   },
   {
@@ -506,7 +487,7 @@
     ]
   },
   {
-    "id": "strg-acvd",
+    "id": "strg-acts",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.signature_algorithms",
@@ -585,7 +566,7 @@
     ]
   },
   {
-    "id": "strg-acvg",
+    "id": "strg-actv",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.supported_versions",
@@ -594,7 +575,7 @@
     ]
   },
   {
-    "id": "strg-acvh",
+    "id": "strg-actw",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.supported_versions",
@@ -603,7 +584,7 @@
     ]
   },
   {
-    "id": "strg-acvi",
+    "id": "strg-actx",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.supported_versions",
@@ -612,12 +593,31 @@
     ]
   },
   {
-    "id": "strg-acvj",
+    "id": "strg-acty",
     "checkName": "StringCheck",
     "checkType": "Individual",
     "path": "clientHello.extensions.supported_versions",
     "args": [
       "TLS 1.0 (769)"
+    ]
+  },
+  {
+    "id": "numr-aaay",
+    "checkName": "NumberCheck",
+    "checkType": "Individual",
+    "path": "clientHello.extensions.decimal",
+    "args": [
+      35,
+      "session_ticket"
+    ]
+  },
+  {
+    "id": "bool-aahb",
+    "checkName": "BooleanCheck",
+    "checkType": "Individual",
+    "path": "clientHello.isGreased",
+    "args": [
+      true
     ]
   },
   {

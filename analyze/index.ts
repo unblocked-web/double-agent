@@ -5,6 +5,7 @@ import {
   UserAgentToTestPickType,
   IUserAgentToTestPickType,
 } from '@double-agent/config/interfaces/IUserAgentToTest';
+import { extractProfilePathsMap, importProfile } from '@double-agent/config/lib/ProfileUtils';
 import getAllPlugins from './lib/getAllPlugins';
 import Plugin, { IResultFlag } from './lib/Plugin';
 import Probe from './lib/Probe';
@@ -49,11 +50,14 @@ export default class Analyze {
 
   public addIndividual(individualsDir: string, userAgentId: string) {
     this.resultsMap.byUserAgentId[userAgentId] = [];
+    const profileDir = Path.join(individualsDir, userAgentId, 'raw-data');
+    const profilePathsMap = extractProfilePathsMap(profileDir, userAgentId);
 
     for (const plugin of this.plugins) {
-      const profilePath = Path.join(individualsDir, userAgentId, 'raw-data', `${plugin.id}.json`);
-      if (!Fs.existsSync(profilePath)) continue;
-      const profile = JSON.parse(Fs.readFileSync(profilePath, 'utf-8')) as IBaseProfile;
+      const profilePath = profilePathsMap[plugin.id][userAgentId];
+      if (!profilePath) continue;
+
+      const profile = importProfile<IBaseProfile>(profilePath);
 
       if (plugin.runIndividual) {
         const flags = plugin.runIndividual(profile);
@@ -73,10 +77,13 @@ export default class Analyze {
     for (const dirName of dirNames) {
       const userAgentId = dirName.match(/^[^:]+:(.+)$/)[1];
       const flags: IResultFlag[] = [];
+      const profileDir = Path.join(sessionsDir, dirName, 'raw-data');
+      const profilePathsMap = extractProfilePathsMap(profileDir, userAgentId);
       for (const plugin of plugins) {
-        const profilePath = Path.join(sessionsDir, dirName, 'raw-data', `${plugin.id}.json`);
-        if (!Fs.existsSync(profilePath)) continue;
-        const profile = JSON.parse(Fs.readFileSync(profilePath, 'utf-8')) as IBaseProfile;
+        const profilePath = profilePathsMap[plugin.id][userAgentId];
+        if (!profilePath) continue;
+
+        const profile = importProfile<IBaseProfile>(profilePath);
 
         if (plugin.runOverTime) {
           flags.push(...plugin.runOverTime(profile, dirNames.length));
@@ -91,8 +98,8 @@ export default class Analyze {
   public generateTestResults() {
     const humanScoreMap = {
       total: {
-        [UserAgentToTestPickType.popular]: 0,
-        [UserAgentToTestPickType.random]: 0,
+        [UserAgentToTestPickType.popular]: 100,
+        [UserAgentToTestPickType.random]: 100,
       },
       individualByUserAgentId: {},
       sessionsByPickType: {
@@ -104,7 +111,7 @@ export default class Analyze {
     for (const userAgentId of Object.keys(this.resultsMap.byUserAgentId)) {
       const humanScore = this.resultsMap.byUserAgentId[userAgentId].reduce((score, flag) => {
         return Math.min(score, flag.humanScore);
-      }, 0);
+      }, 100);
       humanScoreMap.individualByUserAgentId[userAgentId] = humanScore;
     }
 
@@ -116,10 +123,11 @@ export default class Analyze {
         const humanScoreIndividual = humanScoreMap.individualByUserAgentId[userAgentId];
         const humanScoreOverTime = flags.reduce(
           (score, flag) => Math.min(score, flag.humanScore),
-          0,
+          100,
         );
         let humanScoreTotal = humanScoreIndividual + humanScoreOverTime / 2;
         if (humanScoreTotal > 100) humanScoreTotal = 100;
+        if (humanScoreTotal < 0) humanScoreTotal = 0;
         sessionDetails.push({
           userAgentId,
           humanScore: {
@@ -132,8 +140,10 @@ export default class Analyze {
       humanScoreMap.sessionsByPickType[pickType] = sessionDetails;
       humanScoreMap.total[pickType] = sessionDetails
         .map(x => x.humanScore.total)
-        .reduce((a, b) => Math.max(a, b), 0);
+        .reduce((a, b) => Math.min(a, b), 100);
     }
+
+    console.log('humanScoreMap: ', humanScoreMap);
 
     return humanScoreMap;
   }
