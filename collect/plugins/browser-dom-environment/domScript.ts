@@ -1,5 +1,6 @@
 /* eslint-disable */
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
+import PageNames from './interfaces/PageNames';
 
 const skipProps = [
   'Fingerprint2',
@@ -19,44 +20,60 @@ const doNotInvoke = [
   'prompt',
   'confirm',
   'open',
+  'close',
   'reload',
   'assert',
   'requestPermission',
   'screenshot',
   'pageLoaded',
+  'delete',
+  'clear',
+  'read',
+
+  'start',
+  'stop',
 
   'write',
   'writeln',
   'replaceWith',
   'remove',
 
-  'window.close',
+  'self.history.back',
+  'self.history.forward',
+  'self.history.go',
+  'self.history.pushState',
+  'self.history.replaceState',
 
-  'window.history.back',
-  'window.history.forward',
-  'window.history.go',
-  'window.history.pushState',
-  'window.history.replaceState',
+  'getUserMedia',
+  'requestFullscreen',
+  'webkitRequestFullScreen',
+  'webkitRequestFullscreen',
+  'getDisplayMedia',
 ];
 
 const doNotAccess = [
-  'window.CSSAnimation.prototype.timeline', // crashes Safari
-  'window.Animation.prototype.timeline',    // crashes Safari
-  'window.CSSTransition.prototype.timeline' // crashes Safari
+  'self.CSSAnimation.prototype.timeline', // crashes Safari
+  'self.Animation.prototype.timeline', // crashes Safari
+  'self.CSSTransition.prototype.timeline', // crashes Safari
 ];
 
-export default function domScript(ctx: IRequestContext) {
+export default function domScript(ctx: IRequestContext, basePath: string = 'window') {
+  const vars = JSON.stringify({
+    skipProps,
+    doNotAccess,
+    doNotInvoke,
+    skipValues,
+  }).replace(/self\./g, `${basePath}.`);
+
   return `
-  <script type="text/javascript">
 (function browserDomProbe() {
-  const skipProps = ${JSON.stringify(skipProps)};
-  const skipValues = ${JSON.stringify(skipValues)};
-  const doNotInvoke = ${JSON.stringify(doNotInvoke)};
-  const doNotAccess = ${JSON.stringify(doNotAccess)};
-  const loadedObjects = new Map([[window, 'window']]);
+  const { skipProps, doNotInvoke, doNotAccess, skipValues } = ${vars};
+  const basePath = '${basePath}';
+  const excludedInheritedKeys = ['name', 'length', 'constructor'];
+  const loadedObjects = new Map([[self, basePath]]);
   const hierarchyNav = new Map();
   const detached = {};
-  
+
   async function extractPropsFromObject(obj, parentPath) {
     let keys = [];
     let symbols = [];
@@ -71,33 +88,33 @@ export default function domScript(ctx: IRequestContext) {
         if (!keys.includes(key)) keys.push(key);
       }
     } catch (err) {}
-    
+
     try {
       for (let key in obj) {
         if (!keys.includes(key)) keys.push(key);
       }
     } catch (err) {}
-    
+
     const protos = await loadProtoHierarchy(obj, parentPath);
-    
+
     const newObj = {
       _$protos: protos,
     };
-    if (parentPath.includes('window.document.') && !parentPath.includes('window.document.documentElement') && newObj._$protos.includes('HTMLElement.prototype')) {
+    if (parentPath.includes('${basePath}.document.') && !parentPath.includes('${basePath}.document.documentElement') && newObj._$protos.includes('HTMLElement.prototype')) {
       newObj._$skipped = 'SKIPPED ELEMENT';
       return newObj;
     }
-    
+
     if (parentPath.includes('new()') && parentPath.endsWith('.ownerElement')) {
       newObj._$skipped = 'SKIPPED ELEMENT';
       return newObj;
     }
-  
+
     if (parentPath.split('.').length >= 8) {
       newObj._$skipped = 'SKIPPED MAX DEPTH';
       return newObj;
     }
-    
+
     const isNewObject = parentPath.includes('.new()');
     if (isNewObject && newObj._$protos[0] === 'HTMLDocument.prototype') {
       newObj._$skipped = 'SKIPPED DOCUMENT';
@@ -107,30 +124,49 @@ export default function domScript(ctx: IRequestContext) {
     if (Object.isFrozen(obj)) newObj._$isFrozen = true;
     if (Object.isSealed(obj)) newObj._$isSealed = true;
     if (!newObj._$protos.length) delete newObj._$protos;
-    
+
+    const inheritedProps = [];
+    if (isNewObject) {
+        let proto = obj;
+        while (!!proto) {
+          proto = Object.getPrototypeOf(proto);
+          if (!proto || proto === Object || proto === Object.prototype || proto === Function
+            || proto === Function.prototype || proto === HTMLElement.prototype || proto === EventTarget.prototype) break;
+          for (const key of Object.getOwnPropertyNames(proto)) {
+            if (!keys.includes(key) && !excludedInheritedKeys.includes(key)) inheritedProps.push(key);
+          }
+        }
+    }
+    // TODO: re-enable inherited properties once we are on stable ground with chrome flags
+    // keys.push(...inheritedProps)
+
     for (const key of keys) {
       if (skipProps.includes(key)) {
         continue;
       }
       if (key === 'constructor') continue;
-      
+
       const path = parentPath + '.' + String(key);
       if (path.endsWith('_GLOBAL_HOOK__')) continue;
-      
+
       const prop = '' + String(key);
-      if (path.startsWith('window.document') && 
-          (typeof key === 'string' && (key.startsWith('child') || key.startsWith('first') || key.startsWith('last') || key.startsWith('next') || key.startsWith('prev') 
+
+      if (path.includes('LinearAccelerationSensor.prototype')) {
+          debugger;
+      }
+      if (path.startsWith('${basePath}.document') &&
+          (typeof key === 'string' && (key.startsWith('child') || key.startsWith('first') || key.startsWith('last') || key.startsWith('next') || key.startsWith('prev')
               || key === 'textContent' || key === 'text'))
-      ) {  
+      ) {
         newObj[prop] =  { _$type: 'dom', _$skipped: 'SKIPPED DOM' };
         continue;
       }
-      
-      if (path.startsWith('window.document') && path.split('.').length > 5) { 
+
+      if (path.startsWith('${basePath}.document') && path.split('.').length > 5) {
         newObj[prop] =  { _$type: 'object', _$skipped: 'SKIPPED DEPTH' };
         continue;
       }
-      
+
       if (key === 'style') {
         if (isNewObject) {
           newObj[prop] =  { _$type: 'object', _$skipped: 'SKIPPED STYLE' };
@@ -141,14 +177,13 @@ export default function domScript(ctx: IRequestContext) {
         newObj[prop] = hierarchyNav.get(path);
         continue;
       }
-      
+
       if (doNotAccess.includes(path)) {
         continue;
       }
-      
       try {
-        const value = await extractPropValue(obj, key, path);
-        const isOwnProp = obj.hasOwnProperty && obj.hasOwnProperty(key);
+        const isOwnProp = obj.hasOwnProperty && obj.hasOwnProperty(key) && !inheritedProps.includes(key);
+        const value = await extractPropValue(obj, key, path, !isOwnProp);
         if (value && typeof value === 'string' && value.startsWith('REF:') && !isOwnProp) {
           // don't assign here
           //console.log('skipping ref', value);
@@ -180,12 +215,12 @@ export default function domScript(ctx: IRequestContext) {
     }
     return newObj;
   }
-  
+
   async function loadProtoHierarchy(obj, parentPath) {
     const hierarchy = [];
     let proto = obj;
     if (typeof proto === 'function') return hierarchy;
-    
+
     while (!!proto) {
       proto = Object.getPrototypeOf(proto);
 
@@ -194,20 +229,20 @@ export default function domScript(ctx: IRequestContext) {
       try {
         let name = getObjectName(proto);
         hierarchy.push(name);
-        
+
         if (loadedObjects.has(proto)) continue;
-      
-        let path = 'window.' + name;
+
+        let path = '${basePath}.' + name;
         let topType = name.split('.').shift();
-        if (!(topType in window)) {
+        if (!(topType in self)) {
           path = 'detached.' + name;
         }
-        
-        if (!hierarchyNav.has(path)){            
+
+        if (!hierarchyNav.has(path)){
           hierarchyNav.set(path, {});
           const extracted = await extractPropsFromObject(proto, path);
           hierarchyNav.set(path, extracted);
-          if (!path.includes('window.')) {
+          if (!path.includes('${basePath}.')) {
             detached[name] = extracted;
           }
         }
@@ -217,11 +252,11 @@ export default function domScript(ctx: IRequestContext) {
     return hierarchy;
   }
 
-  async function extractPropValue(obj, key, path) {
+  async function extractPropValue(obj, key, path, isInherited) {
     if (obj === null || obj === undefined || !key) {
       return undefined;
     }
-    
+
     let accessException;
     let value = await new Promise(async (resolve, reject) => {
       let didResolve = false;
@@ -241,17 +276,19 @@ export default function domScript(ctx: IRequestContext) {
     }).catch(err => {
        accessException = err;
     });
-    
+
     if (
-      value && path !== 'window.document' &&
+      value && path !== '${basePath}.document' &&
       (typeof value === 'function' || typeof value === 'object' || typeof value === 'symbol')
     ) {
       if (loadedObjects.has(value)) {
-        return 'REF: ' + loadedObjects.get(value);
+        // TODO: re-enable invoking re-used functions once we are on stable ground with chrome flags
+        const shouldContinue = false; //typeof value === 'function' && (isInherited || !path.replace(String(key), '').includes(String(key)));
+        if (!shouldContinue) return 'REF: ' + loadedObjects.get(value);
       }
       // safari will end up in an infinite loop since each plugin is a new object as your traverse
       if (path.includes('.navigator') && path.endsWith('.enabledPlugin')) {
-        return 'REF: window.navigator.plugins.X'
+        return 'REF: ${basePath}.navigator.plugins.X'
       }
       loadedObjects.set(value, path);
     }
@@ -259,15 +296,15 @@ export default function domScript(ctx: IRequestContext) {
     let details = {};
     if (value && (typeof value === 'object' || typeof value === 'function')) {
       details = await extractPropsFromObject(value, path);
-    } 
+    }
     const descriptor = await getDescriptor(obj, key, accessException, path);
-    
+
     if (!Object.keys(descriptor).length && !Object.keys(details).length) return undefined;
     const prop = Object.assign(details, descriptor);
     if (prop._$value === 'REF: ' + path) {
       prop._$value = undefined;
     }
-    
+
     return prop;
   }
 
@@ -276,25 +313,25 @@ export default function domScript(ctx: IRequestContext) {
 
     if (!objDesc) {
       const plainObject = {};
-      
+
       if (accessException && String(accessException).includes( 'Likely a Promise')) {
         plainObject._$value = 'Likely a Promise';
-      } 
+      }
       else if (accessException) return plainObject;
       let value;
       try {
-        value = obj[key];         
+        value = obj[key];
       } catch (err) { }
-      
+
       let type = typeof value;
       if (value && Array.isArray(value)) type = 'array';
-      
+
       const functionDetails = await getFunctionDetails(value, obj, key, type, path);
       plainObject._$type = functionDetails.type;
       plainObject._$value = getValueString(value, key);
       plainObject._$function = functionDetails.func;
       plainObject._$invocation = functionDetails.invocation;
-      
+
       return plainObject;
     } else {
       let value;
@@ -304,17 +341,17 @@ export default function domScript(ctx: IRequestContext) {
           value = obj[key];
         }
       } catch (err) {}
-      
+
       let type = typeof value;
       value = getValueString(value, key);
       const functionDetails = await getFunctionDetails(value, obj, key, type, path);
       type = functionDetails.type;
-     
+
       const flags = [];
       if (objDesc.configurable) flags.push('c');
       if (objDesc.enumerable) flags.push('e');
       if (objDesc.writable) flags.push('w');
-      
+
       return {
         _$type: type,
         _$function: functionDetails.func,
@@ -329,7 +366,7 @@ export default function domScript(ctx: IRequestContext) {
       };
     }
   }
-  
+
   async function getFunctionDetails(value, obj, key, type, path) {
     let func;
     let invocation;
@@ -353,13 +390,14 @@ export default function domScript(ctx: IRequestContext) {
                 })
               }
               answer = await answer;
-             
+
               if (didReply) return;
               clearTimeout(c);
               didReply = true;
               resolve(answer);
             } catch(err) {
               if (didReply) return;
+              console.log(path)
               didReply = true;
               clearTimeout(c);
               reject(err);
@@ -370,14 +408,14 @@ export default function domScript(ctx: IRequestContext) {
         invocation = err ? err.toString() : err;
       }
     }
-    
+
     return {
       type,
-      func, 
+      func,
       invocation: getValueString(invocation),
     }
   }
-  
+
   function getValueString(value, key){
     if (key && skipValues.includes(key)) {
       return 'SKIPPED VALUE';
@@ -389,12 +427,10 @@ export default function domScript(ctx: IRequestContext) {
       }
       else if (value && (value instanceof Promise || typeof value.then === 'function'))  {
          value = 'Promise';
-      } 
+      }
       else if (value && typeof value === 'object') {
         if (loadedObjects.has(value)) {
           return 'REF: ' + loadedObjects.get(value);
-        } else {
-          value = String(value);
         }
       }
       else if (value && typeof value === 'string') {
@@ -406,7 +442,7 @@ export default function domScript(ctx: IRequestContext) {
         while (value.includes(host)) {
           value = value.replace(host, '<host>')
         }
-         
+
         value = value.replace(/<url>\:\d+\:\d+/g, '<url>:<lines>');
       }
     } catch(err) {
@@ -430,15 +466,15 @@ export default function domScript(ctx: IRequestContext) {
           name = obj.name;
         } catch(err) {}
       }
-      
+
       if (obj.constructor) {
         const constructorName = obj.constructor.name;
-        
-        if (constructorName && constructorName !== Function.name) {
+
+        if (constructorName && constructorName !== Function.name && constructorName !== Object.name) {
           name = constructorName
         }
       }
-      
+
       if ('prototype' in obj) {
         name = obj.prototype[Symbol.toStringTag] || obj.prototype.name || name;
         if (name) return name;
@@ -448,31 +484,31 @@ export default function domScript(ctx: IRequestContext) {
         if (name && name !== Function.name) return name;
         return obj.constructor.name;
       }
-      
+
       if (!name) return;
 
       return name + '.prototype';
     } catch (err) {}
   }
-  
-  window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
+
+  self.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
     console.log(promiseRejectionEvent);
   });
-  
-  window.afterQueueComplete = async () => {
+
+  self.afterQueueComplete = async (testType = '${PageNames.BrowserDom}') => {
     await new Promise(resolve => setTimeout(resolve, 1e3));
-    const props = await extractPropsFromObject(window, 'window');
+    const props = await extractPropsFromObject(self, '${basePath}');
     return fetch("${ctx.buildUrl('/save')}", {
       method: 'POST',
       body: JSON.stringify({
-        window: props,
+        ${basePath}: props,
         detached,
       }),
       headers: {
         'Content-Type': 'application/json',
+        'Page-Name': testType
       },
     });
   }
-})();
-</script>`;
+})();`;
 }
