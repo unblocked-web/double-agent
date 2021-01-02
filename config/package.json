@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "updateProfiles": "node -r source-map-support/register -e 'require(\"./scripts/updateProfiles.js\").default()'",
+    "regenerateProbes": "node -r source-map-support/register -e 'require(\"./scripts/regenerateProbes.js\").default()'",
     "regenerateUserAgentsToTest": "node -r source-map-support/register -e 'require(\"./scripts/updateUserAgentsToTest.js\").default()'"
   },
   "dependencies": {
+    "@double-agent/analyze": "1.0.0",
+    "@double-agent/collect": "1.0.0",
     "@double-agent/real-user-agents": "1.0.0",
     "source-map-support": "^0.5.16"
   },

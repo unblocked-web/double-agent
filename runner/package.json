@@ -1,31 +1,17 @@
 {
   "name": "@double-agent/runner",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "private": true,
   "scripts": {
-    "start": "node index.js",
-    "prod": "GENERATE_PROFILES=1 LETSENCRYPT=1 MAIN_DOMAIN=da-collect.ulixee.org TLS_DOMAIN=tls.da-collect.ulixee.org SUB_DOMAIN=sub.da-collect.ulixee.org CROSS_DOMAIN=headers.dataliberationfoundation.org HTTP_PORT=80 HTTPS_PORT=443 node index.js"
+    "start": "node -r source-map-support/register index.js"
   },
   "dependencies": {
-    "@double-agent/config": "1.0.0",
     "@double-agent/collect": "1.0.0",
-    "archiver": "^5.0.0",
-    "axios": "^0.19.2",
-    "cookie": "^0.4.0",
-    "diff": "^4.0.2",
-    "json5": "^2.1.2",
-    "moment": "^2.24.0",
-    "p-queue": "^6.2.1",
-    "path-to-regexp": "^6.1.0",
-    "source-map-support": "^0.5.16",
-    "ws": "^7.2.1"
+    "@double-agent/collect-controller": "1.0.0",
+    "node-fetch": "^2.6.1",
+    "p-queue": "^6.6.2",
+    "puppeteer": "2.1.1",
+    "unzipper": "^0.10.11"
   },
-  "devDependencies": {
-    "@types/cookie": "^0.3.3",
-    "@types/diff": "^4.0.2",
-    "@types/moment": "^2.13.0",
-    "@types/uuid": "^7.0.2",
-    "@types/ws": "^7.2.2"
-  }
+  "devDependencies": {}
 }

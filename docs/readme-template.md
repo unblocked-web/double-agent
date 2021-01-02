@@ -7,8 +7,8 @@ DoubleAgent has been organized into two main layers:
 - `/collect`: scripts/plugins for collecting browser profiles. Each plugin generates a series of pages to test how a browser behaves.
 - `/analyze`: scripts/plugins for analyzing browser profiles against verified profiles. Scraper results from `collect` are compared to legit "profiles" to find discrepancies. These checks are given a Looks Human"&trade; score, which indicates the likelihood that a scraper would be flagged as bot or human.
  
-The easiest way to use `collect` is with the runner:
-- `/runner`: a server that can generate step-by-step assignments for a scraper to run all tests
+The easiest way to use `collect` is with the collect-controller:
+- `/collect-controller`: a server that can generate step-by-step assignments for a scraper to run all tests
 
 ## Plugins
 
@@ -31,10 +31,10 @@ This project leverages yarn workspaces. To get started, run `yarn` from the root
 
 If you'd like to test out your scraper stack:
 
-1. Navigate to the `/runner` directory and run `yarn start`. Follow setup directions print onto the console from this command. 
+1. Navigate to the `/collect-controller` directory and run `yarn start`. Follow setup directions print onto the console from this command. 
 
 2. The API will return assignments one at a time until all tests have been run. Include a scraper engine you're testing with
-   a query string or header called "scraper". Assignment format can be found at `/runner/interfaces/IAssignment.ts`.
+   a query string or header called "scraper". Assignment format can be found at `/collect-controller/interfaces/IAssignment.ts`.
 
 3. Once all tests are run, results will be output to the same directory as your scraper engine.
 

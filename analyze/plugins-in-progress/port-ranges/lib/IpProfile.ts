@@ -1,6 +1,6 @@
-// import OriginType from '@double-agent/runner/interfaces/OriginType';
-// import ResourceType from '@double-agent/runner/interfaces/ResourceType';
-// import IRequestContext from '@double-agent/runner/interfaces/IRequestContext';
+// import OriginType from '@double-agent/collect-controller/interfaces/OriginType';
+// import ResourceType from '@double-agent/collect-controller/interfaces/ResourceType';
+// import IRequestContext from '@double-agent/collect-controller/interfaces/IRequestContext';
 // import { inspect } from 'util';
 // import Config from '@double-agent/config';
 //

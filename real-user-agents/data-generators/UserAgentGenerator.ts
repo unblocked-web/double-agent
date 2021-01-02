@@ -1,5 +1,5 @@
 import * as Fs from 'fs';
-import { createUserAgentIdFromKeys } from '@double-agent/config';
+import { createUserAgentIdFromIds } from '@double-agent/config';
 import IUserAgent from '../interfaces/IUserAgent';
 import { FILE_PATH } from '../index';
 import IBrowser from '../interfaces/IBrowser';
@@ -26,7 +26,7 @@ export default class UserAgentGenerator {
       const { name, version } = extractUserAgentMeta(userAgentString);
       const browserId = createBrowserId({ name, version });
       const osId = createOsIdFromUserAgentString(userAgentString);
-      const userAgentId = createUserAgentIdFromKeys(osId, browserId);
+      const userAgentId = createUserAgentIdFromIds(osId, browserId);
       const strings =
         name === 'Chrome' ? this.expandChromeString(userAgentString, version) : [userAgentString];
       const userAgent: IUserAgent = {

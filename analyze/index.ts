@@ -1,6 +1,7 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
 import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
+import Config from '@double-agent/config';
 import {
   UserAgentToTestPickType,
   IUserAgentToTestPickType,
@@ -11,8 +12,6 @@ import Plugin, { IResultFlag } from './lib/Plugin';
 import Probe from './lib/Probe';
 import ProbeBucket from './lib/ProbeBucket';
 import Layer from './lib/Layer';
-
-const dataDir = Path.resolve(__dirname, './data');
 
 interface IResult {
   userAgentId: string;
@@ -34,6 +33,7 @@ interface IResultsMap {
 export default class Analyze {
   public plugins: Plugin[] = [];
 
+  private readonly dataDir: string;
   private readonly profileCountOverTime: number;
   private resultsMap: IResultsMap = {
     byUserAgentId: {},
@@ -45,7 +45,8 @@ export default class Analyze {
 
   constructor(profileCountOverTime: number) {
     this.profileCountOverTime = profileCountOverTime;
-    this.plugins = loadAllPlugins();
+    this.dataDir = process.env.DATA_DIR ?? Config.dataDir;
+    this.plugins = loadAllPlugins(this.dataDir);
   }
 
   public addIndividual(individualsDir: string, userAgentId: string) {
@@ -69,7 +70,7 @@ export default class Analyze {
   }
 
   public addOverTime(sessionsDir: string, pickType: IUserAgentToTestPickType) {
-    const plugins = loadAllPlugins();
+    const plugins = loadAllPlugins(this.dataDir);
     const dirNames = Fs.readdirSync(sessionsDir)
       .filter(x => x.startsWith(pickType))
       .sort();
@@ -149,7 +150,7 @@ export default class Analyze {
   }
 }
 
-function loadAllPlugins() {
+function loadAllPlugins(dataDir: string) {
   const plugins = getAllPlugins();
   for (const plugin of plugins) {
     const layersPath = Path.join(dataDir, 'layers.json');

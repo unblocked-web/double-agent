@@ -42,7 +42,11 @@ export default function createHttpRequestHandler(
     }
 
     try {
-      const session = sessionTracker.getSessionFromServerRequest(server, req);
+      const sessionId = sessionTracker.getSessionIdFromServerRequest(server, req);
+      const session = sessionTracker.getSession(sessionId);
+      if (!session) {
+        throw new Error(`Missing session: ${sessionId}`);
+      }
       const { requestDetails } = await extractRequestDetails(server, req, session);
       const ctx = new RequestContext(server, req, res, requestUrl, requestDetails, session);
       const userAgentId = createUserAgentIdFromString(req.headers['user-agent']);

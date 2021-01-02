@@ -1,28 +1,30 @@
-/* eslint-disable no-console */
-import 'source-map-support/register';
-import Collect from '@double-agent/collect';
-import Server from './lib/Server';
-
-const serverPort = Number(process.env.PORT ?? 3000);
+import Puppeteer from 'puppeteer';
+import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
+import runAssignmentInPuppeteer from './runAssignmentInPuppeteer';
+import forEachAssignment from './forEachAssignment';
+import cleanPageCache from './cleanPageCache';
 
 (async function run() {
-  // this server loads all the modules in the "detections" directory and runs a bot detector
-  const collect = new Collect();
+  const puppeteer = await Puppeteer.launch({
+    // headless: false,
+    ignoreHTTPSErrors: true,
+    // executablePath:
+    //   process.env.PUPPETEER_EXECUTABLE_PATH ??
+    //   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  });
 
-  // this server simply provides assignments for a scraper to follow to "test" their stack
-  const server = new Server(collect, serverPort);
-  await server.start();
+  const runAssignment = async (assignment: IAssignment) => {
+    const session = await puppeteer.createIncognitoBrowserContext();
+    const page = await session.newPage();
 
-  if (process.env.GENERATE_PROFILES) {
-    return;
+    await cleanPageCache(page);
+    await runAssignmentInPuppeteer(page, assignment);
+    page.close().catch(); // eslint-disable-line promise/valid-params
   }
 
-  console.log(''.padEnd(100, '-'));
-  console.log(
-    `
-Run the suite:
-4. Point your scraper at http://localhost:${serverPort} to get your first assignment.
-5. Follow the assignment, and then ask this same url for your next assignment. Assignments will be returned until the test suite is completed.
-    `,
-  );
-})();
+  try {
+    await forEachAssignment('runner', assignment => runAssignment(assignment), 1);
+  } finally {
+    await puppeteer.close();
+  }
+})().catch(console.log);

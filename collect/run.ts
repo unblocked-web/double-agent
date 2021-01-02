@@ -1,4 +1,4 @@
-import { AssignmentType } from '@double-agent/runner/interfaces/IAssignment';
+import { AssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
 import Collect from './index';
 
 async function run() {
