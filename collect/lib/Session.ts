@@ -1,5 +1,5 @@
 import { createUserAgentIdFromString } from '@double-agent/config';
-import { IAssignmentType } from '@double-agent/runner/interfaces/IAssignment';
+import { IAssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISession from '../interfaces/ISession';
 import IAsset from '../interfaces/IAsset';
 import IRequestDetails from '../interfaces/IRequestDetails';

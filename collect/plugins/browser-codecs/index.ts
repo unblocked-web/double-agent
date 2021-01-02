@@ -9,7 +9,7 @@ export default class BrowserCodecsPlugin extends Plugin {
   public initialize() {
     this.registerRoute('https', '/', this.loadScript);
     this.registerRoute('https', '/save', this.save);
-    this.registerPages({ route: this.routes.http['/'], waitForReady: true });
+    this.registerPages({ route: this.routes.https['/'], waitForReady: true });
   }
 
   private loadScript(ctx: IRequestContext) {

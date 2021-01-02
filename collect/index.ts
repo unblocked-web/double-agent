@@ -1,5 +1,5 @@
 import 'source-map-support/register';
-import { IAssignmentType } from '@double-agent/runner/interfaces/IAssignment';
+import { IAssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
 import SessionTracker from './lib/SessionTracker';
 import Session from './lib/Session';
 

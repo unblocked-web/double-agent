@@ -9,8 +9,8 @@
     "docs": "node docs/generator",
     "test": "node scrapers/lib/runAll.js",
     "cleanProfiles": "rm -rf config/data/profiles",
-    "start": "yarn workspace @double-agent/runner start",
-    "prod": "yarn workspace @double-agent/runner prod",
+    "start": "yarn workspace @double-agent/collect-controller start",
+    "prod": "yarn workspace @double-agent/collect-controller prod",
     "clean": "tsc -b --clean",
     "lint": "eslint --cache ./"
   },
@@ -64,12 +64,12 @@
       "analyze/plugins/*",
       "collect",
       "collect/plugins/*",
+      "collect-controller",
       "config",
       "docs",
-      "runner",
       "real-user-agents",
       "tls-server",
-      "tester"
+      "runner"
     ]
   },
   "lint-staged": {

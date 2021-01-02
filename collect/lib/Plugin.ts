@@ -1,7 +1,7 @@
 import * as Path from 'path';
 import { URL } from 'url';
 import EventEmitter from 'events';
-import { AssignmentType } from '@double-agent/runner/interfaces/IAssignment';
+import { AssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
 import IPlugin from '../interfaces/IPlugin';
 import IRequestContext from '../interfaces/IRequestContext';
 import { IServerProtocol } from '../servers/BaseServer';
