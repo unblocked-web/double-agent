@@ -5,20 +5,22 @@ import assignmentServer from './assignmentServer';
 
 interface IConfig {
   userId: string;
-  dataDir: string;
+  dataDir?: string;
   concurrency?: number;
   beforeFinishFn?: () => Promise<void | unknown> | void;
 }
+
+export { IAssignment };
 
 export default async function forEachAssignment(
   config: IConfig,
   runAssignmentFn: (assignment: IAssignment) => Promise<void> | void,
 ) {
-  const userId = config.userId;
   const concurrency = config.concurrency || 5;
   const queue = new Queue({ concurrency });
 
   const dataDir = config.dataDir;
+  const userId = config.userId;
   const { assignments } = await assignmentServer('/create', { userId, dataDir });
 
   for (const { id: assignmentId } of assignments) {
@@ -44,5 +46,3 @@ export default async function forEachAssignment(
   await assignmentServer('/finish', { userId });
   console.log('FINISHED');
 }
-
-export { IAssignment };
