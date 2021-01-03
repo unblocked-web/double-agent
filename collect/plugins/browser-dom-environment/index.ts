@@ -34,36 +34,36 @@ export default class BrowserDomPlugin extends Plugin {
     ['http', 'https'].forEach(protocol => {
       pages.push(
         { route: this.routes[protocol]['/'], waitForReady: true, name: PageNames.BrowserDom },
-        {
-          route: this.routes[protocol]['/load-service-worker'],
-          waitForReady: true,
-          name: PageNames.ServiceWorkerDom,
-        },
-        {
-          route: this.routes[protocol]['/load-shared-worker'],
-          waitForReady: true,
-          name: PageNames.SharedWorkerDom,
-        },
-        {
-          route: this.routes[protocol]['/load-dedicated-worker'],
-          waitForReady: true,
-          name: PageNames.DedicatedWorkerDom,
-        },
-        {
-          route: this.routes[protocol]['/load-iframe'],
-          waitForReady: true,
-          name: PageNames.IFrameDom,
-        },
-        {
-          route: this.routes[protocol]['/load-iframe-sandbox'],
-          waitForReady: true,
-          name: PageNames.IFrameSandboxDom,
-        },
-        {
-          route: this.routes[protocol]['/load-iframe-cross-domain'],
-          waitForReady: true,
-          name: PageNames.IFrameCrossDomainDom,
-        },
+        // {
+        //   route: this.routes[protocol]['/load-service-worker'],
+        //   waitForReady: true,
+        //   name: PageNames.ServiceWorkerDom,
+        // },
+        // {
+        //   route: this.routes[protocol]['/load-shared-worker'],
+        //   waitForReady: true,
+        //   name: PageNames.SharedWorkerDom,
+        // },
+        // {
+        //   route: this.routes[protocol]['/load-dedicated-worker'],
+        //   waitForReady: true,
+        //   name: PageNames.DedicatedWorkerDom,
+        // },
+        // {
+        //   route: this.routes[protocol]['/load-iframe'],
+        //   waitForReady: true,
+        //   name: PageNames.IFrameDom,
+        // },
+        // {
+        //   route: this.routes[protocol]['/load-iframe-sandbox'],
+        //   waitForReady: true,
+        //   name: PageNames.IFrameSandboxDom,
+        // },
+        // {
+        //   route: this.routes[protocol]['/load-iframe-cross-domain'],
+        //   waitForReady: true,
+        //   name: PageNames.IFrameCrossDomainDom,
+        // },
       );
     });
     this.registerPages(...pages);

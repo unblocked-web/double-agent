@@ -9,6 +9,7 @@ export default function getAllPlugins(print = false, filter?: string[]) {
 
   for (const pluginDirName of Fs.readdirSync(pluginsDir)) {
     const pluginDir = Path.join(pluginsDir, pluginDirName);
+    const packageJsonPath = Path.join(pluginDir, 'package.json');
     if (pluginDirName === '.DS_Store') continue;
     if (!Fs.statSync(pluginDir).isDirectory()) continue;
     if (filter && !filter.includes(pluginDirName)) continue;
@@ -16,9 +17,12 @@ export default function getAllPlugins(print = false, filter?: string[]) {
     try {
       // eslint-disable-next-line global-require,import/no-dynamic-require
       const CollectPlugin = require(pluginDir)?.default;
-      if (CollectPlugin) {
-        plugins.push(new CollectPlugin(pluginDir));
-      }
+      if (!CollectPlugin) continue;
+      if (!Fs.existsSync(packageJsonPath)) continue;
+      // eslint-disable-next-line global-require,import/no-dynamic-require
+      const pkg = require(packageJsonPath);
+      if (pkg.disabled) continue;
+      plugins.push(new CollectPlugin(pluginDir));
     } catch (err) {
       console.log(err);
     }

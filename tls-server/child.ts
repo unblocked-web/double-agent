@@ -93,6 +93,10 @@ async function onConnection(req, res) {
         remoteAddress,
         remotePort,
       },
+      socket: {
+        remoteAddress,
+        remotePort,
+      },
       url: req.url,
       method: req.method,
       headers: req.headers,

@@ -10,6 +10,11 @@ export default class IncomingMessage {
     remotePort?: number;
   };
 
+  readonly socket: {
+    remoteAddress?: string;
+    remotePort?: number;
+  };
+
   readonly url?: string;
   readonly method?: string;
   readonly headers: IncomingHttpHeaders;

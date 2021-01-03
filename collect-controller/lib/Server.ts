@@ -11,7 +11,7 @@ import buildAssignment from './buildAssignment';
 import buildAllAssignments from './buildAllAssignments';
 
 interface IRequestParams {
-  scraperName: string;
+  userId: string;
   assignmentId?: string;
   dataDir?: string;
 }
@@ -20,8 +20,8 @@ interface IAssignmentsById {
   [id: string]: IAssignment;
 }
 
-interface IActiveScraper {
-  name: string;
+interface IActiveUser {
+  id: string;
   assignmentsById: IAssignmentsById;
   dataDir?: string;
   isBasic?: boolean;
@@ -32,7 +32,7 @@ const downloadDir = '/tmp/double-agent-download-data';
 if (Fs.existsSync(downloadDir)) Fs.rmdirSync(downloadDir, { recursive: true });
 
 export default class Server {
-  private activeScrapers: { [scraper: string]: IActiveScraper } = {};
+  private activeUsersById: { [id: string]: IActiveUser } = {};
   private readonly collect: Collect;
   private readonly httpServer: http.Server;
   private readonly httpServerPort: number;
@@ -89,9 +89,9 @@ export default class Server {
       return sendJson(res, { message: 'Not Found' }, 404);
     }
 
-    const scraperName = req.headers.scraper ?? (requestUrl.query.scraper as string);
+    const userId = req.headers.userId ?? (requestUrl.query.userId as string);
     const dataDir = req.headers.dataDir ?? requestUrl.query.dataDir;
-    Object.assign(params, { scraperName, dataDir }, params);
+    Object.assign(params, { userId, dataDir }, params);
 
     await endpoint(req, res, params);
   }
@@ -117,20 +117,20 @@ export default class Server {
   }
 
   private async createBasicAssignment(_, res: http.ServerResponse, params: IRequestParams) {
-    const { scraperName, dataDir } = params;
-    if (!scraperName)
-      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    const { userId, dataDir } = params;
+    if (!userId)
+      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
 
-    if (!this.activeScrapers[scraperName]) {
-      this.activeScrapers[scraperName] = {
-        name: scraperName,
+    if (!this.activeUsersById[userId]) {
+      this.activeUsersById[userId] = {
+        id: userId,
         dataDir: dataDir || DOWNLOAD,
         assignmentsById: {},
         isBasic: true,
       };
     }
 
-    const activeScraper = this.activeScrapers[scraperName];
+    const activeScraper = this.activeUsersById[userId];
 
     for (const assignmentId of Object.keys(activeScraper.assignmentsById)) {
       const assignment = activeScraper.assignmentsById[assignmentId];
@@ -139,7 +139,7 @@ export default class Server {
       delete activeScraper.assignmentsById[assignmentId];
     }
 
-    const assignment = buildAssignment(scraperName);
+    const assignment = buildAssignment(userId);
     activeScraper.assignmentsById = { [assignment.id]: assignment };
 
     params.assignmentId = assignment.id.toString();
@@ -147,14 +147,14 @@ export default class Server {
   }
 
   private async createAssignments(_, res: http.ServerResponse, params: IRequestParams) {
-    const { scraperName, dataDir } = params;
-    if (!scraperName)
-      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    const { userId, dataDir } = params;
+    if (!userId)
+      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
 
-    this.activeScrapers[scraperName] =
-      this.activeScrapers[scraperName] || (await this.createScraper(scraperName, dataDir));
+    this.activeUsersById[userId] =
+      this.activeUsersById[userId] || (await this.createUser(userId, dataDir));
 
-    const assignments = Object.values(this.activeScrapers[scraperName].assignmentsById).map(
+    const assignments = Object.values(this.activeUsersById[userId].assignmentsById).map(
       assignment => {
         return { ...assignment, pagesByPlugin: undefined };
       },
@@ -163,7 +163,7 @@ export default class Server {
     sendJson(res, { assignments });
   }
 
-  private async createScraper(name: string, dataDir: string) {
+  private async createUser(id: string, dataDir: string) {
     const assignments = await buildAllAssignments();
     const assignmentsById: IAssignmentsById = {};
 
@@ -172,20 +172,20 @@ export default class Server {
     }
 
     return {
-      name,
+      id,
       dataDir: dataDir || DOWNLOAD,
       assignmentsById,
     };
   }
 
   private async activateAssignment(_, res: http.ServerResponse, params: IRequestParams) {
-    const { scraperName, assignmentId } = params;
-    if (!scraperName)
-      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    const { userId, assignmentId } = params;
+    if (!userId)
+      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
     if (!assignmentId)
       return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
 
-    const activeScraper = this.activeScrapers[scraperName];
+    const activeScraper = this.activeUsersById[userId];
     const assignmentsById = activeScraper?.assignmentsById;
     const assignment = assignmentsById ? assignmentsById[assignmentId] : null;
     if (!assignment) return sendJson(res, { message: 'Assignment not found' }, 500);
@@ -208,13 +208,13 @@ export default class Server {
   }
 
   private async downloadAssignmentProfiles(_, res: http.ServerResponse, params: IRequestParams) {
-    const { scraperName, assignmentId } = params;
-    if (!scraperName)
-      return sendJson(res, { message: 'Please provide a scraperName header or query param' }, 500);
+    const { userId, assignmentId } = params;
+    if (!userId)
+      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
     if (!assignmentId)
       return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
 
-    const activeScraper = this.activeScrapers[scraperName];
+    const activeScraper = this.activeUsersById[userId];
     const assignmentsById = activeScraper?.assignmentsById;
     const assignment = assignmentsById ? assignmentsById[assignmentId] : null;
     if (!assignment) return sendJson(res, { message: 'Assignment not found' }, 500);
@@ -225,11 +225,11 @@ export default class Server {
   }
 
   private async downloadAll(_, res: http.ServerResponse, params: IRequestParams) {
-    const { scraperName } = params;
-    if (!scraperName)
-      return sendJson(res, { message: 'Please provide a scraperName header or query param' }, 500);
+    const { userId } = params;
+    if (!userId)
+      return sendJson(res, { message: 'Please provide a userId query param' }, 500);
 
-    const activeScraper = this.activeScrapers[scraperName];
+    const activeScraper = this.activeUsersById[userId];
     for (const assignmentId of Object.keys(activeScraper.assignmentsById)) {
       const assignment = activeScraper.assignmentsById[assignmentId];
       this.saveMetaFiles(activeScraper, assignment);
@@ -240,14 +240,14 @@ export default class Server {
   }
 
   private async finishAssignments(_, res: http.ServerResponse, params: IRequestParams) {
-    const { scraperName } = params;
-    if (!scraperName)
-      return sendJson(res, { message: 'Please provide a scraper header or query param' }, 500);
+    const { userId } = params;
+    if (!userId)
+      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
 
-    const activeScraper = this.activeScrapers[scraperName];
+    const activeScraper = this.activeUsersById[userId];
     const assignments = activeScraper ? Object.values(activeScraper.assignmentsById) : [];
     if (!activeScraper) {
-      return sendJson(res, { message: `No assignments were found for ${scraperName}` }, 500);
+      return sendJson(res, { message: `No assignments were found for ${userId}` }, 500);
     }
 
     for (const assignment of assignments) {
@@ -255,7 +255,7 @@ export default class Server {
       this.saveMetaFiles(activeScraper, assignment);
       await this.collect.deleteSession(session);
     }
-    delete this.activeScrapers[scraperName];
+    delete this.activeUsersById[userId];
 
     if (activeScraper.dataDir === DOWNLOAD) {
       const dataDir = extractBaseDir(activeScraper);
@@ -265,7 +265,7 @@ export default class Server {
     sendJson(res, { finished: true });
   }
 
-  private saveMetaFiles(activeScraper: IActiveScraper, assignment: IAssignment) {
+  private saveMetaFiles(activeScraper: IActiveUser, assignment: IAssignment) {
     const baseDirPath = extractAssignmentDir(activeScraper, assignment);
     this.saveFile(baseDirPath, 'assignment.json', assignment);
 
@@ -292,14 +292,14 @@ function sendJson(res: http.ServerResponse, json: any, status = 200) {
   res.end(JSON.stringify(json));
 }
 
-function extractBaseDir(activeScraper: IActiveScraper) {
+function extractBaseDir(activeScraper: IActiveUser) {
   if (activeScraper.dataDir === DOWNLOAD) {
-    return Path.join(downloadDir, activeScraper.name);
+    return Path.join(downloadDir, activeScraper.id);
   }
   return activeScraper.dataDir;
 }
 
-function extractAssignmentDir(activeScraper: IActiveScraper, assignment: IAssignment) {
+function extractAssignmentDir(activeScraper: IActiveUser, assignment: IAssignment) {
   const baseDir = extractBaseDir(activeScraper);
   const isIndividual = assignment.type === AssignmentType.Individual;
   const folder = (isIndividual
@@ -309,7 +309,7 @@ function extractAssignmentDir(activeScraper: IActiveScraper, assignment: IAssign
   return `${baseDir}/${folder}/${assignment.id}`;
 }
 
-function extractAssignmentProfilesDir(activeScraper: IActiveScraper, assignment: IAssignment) {
+function extractAssignmentProfilesDir(activeScraper: IActiveUser, assignment: IAssignment) {
   const baseDirPath = extractAssignmentDir(activeScraper, assignment);
   return `${baseDirPath}/raw-data`;
 }
