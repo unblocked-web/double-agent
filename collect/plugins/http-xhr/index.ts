@@ -54,7 +54,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https', 'http2'].forEach(protocol => {
+    ['http', 'https'].forEach(protocol => { // http2
       pages.push({ route: this.routes[protocol]['/run'], waitForReady: true });
     });
 

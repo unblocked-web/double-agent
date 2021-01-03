@@ -1,6 +1,6 @@
 import { Page } from 'puppeteer';
 
-export default async function cleanPageCache(page: Page) {
+export default async function cleanPuppeteerPageCache(page: Page) {
   // @ts-ignore
   const client = page._client;
 
