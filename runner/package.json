@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node -r source-map-support/register index.js"
+    "collectProfile": "node -r source-map-support/register scripts/1-collectProfile.js",
+    "extractProbes": "node -r source-map-support/register scripts/2-extractProbes.js",
+    "runAssignments": "node -r source-map-support/register scripts/3-runAssignments.js"
   },
   "dependencies": {
     "@double-agent/collect": "1.0.0",
     "@double-agent/collect-controller": "1.0.0",
     "@double-agent/config": "1.0.0",
+    "secret-agent": "^1.2.0-alpha.5",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
     "puppeteer": "2.1.1",
