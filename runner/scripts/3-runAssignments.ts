@@ -4,9 +4,12 @@ import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment
 import runAssignmentInSecretAgent from '../lib/runAssignmentInSecretAgent';
 import forEachAssignment from '../lib/forEachAssignment';
 
+process.env.SHOW_BROWSER = 'true';
+process.env.SA_SHOW_REPLAY = 'false';
+
 (async function run() {
   const runAssignment = async (assignment: IAssignment) => {
-    const agent = new Agent();
+    const agent = new Agent({ browserEmulatorId: 'chrome-80' });
     await runAssignmentInSecretAgent(agent, assignment);
     await agent.close();
   }

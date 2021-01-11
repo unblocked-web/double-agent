@@ -26,7 +26,14 @@ export default async function forEachAssignment(
   for (const { id: assignmentId } of assignments) {
     queue.add(async () => {
       console.log(`Getting assignment %s of %s`, assignmentId, assignments.length);
-      const { assignment } = await assignmentServer<IAssignment>(`/activate/${assignmentId}`, { userId });
+      let assignment;
+      try {
+        const response = await assignmentServer<IAssignment>(`/activate/${assignmentId}`, {userId});
+        assignment = response.assignment;
+      } catch (error) {
+        console.log('ERROR getting assignment: ', error);
+        process.exit();
+      }
       console.log(
         '[%s._] RUNNING %s assignment (%s)',
         assignment.sessionId,
@@ -37,6 +44,7 @@ export default async function forEachAssignment(
         await runAssignmentFn(assignment);
       } catch (error) {
         console.log('ERROR running assignment: ', error);
+        process.exit();
       }
     });
   }
