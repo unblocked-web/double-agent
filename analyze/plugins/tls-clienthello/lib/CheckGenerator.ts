@@ -33,7 +33,7 @@ export default class CheckGenerator {
     const matches = clientHello.version.match(/^([^\s]+)\s\((.+)\)$/);
     const valueInt = Number(matches[1]);
     const valueStr = matches[2];
-    this.checks.push(new NumberCheck({ userAgentId }, 'clientHello.version', valueInt, valueStr));
+    this.checks.push(new NumberCheck({ userAgentId }, { path: 'clientHello.version' }, valueInt, valueStr));
   }
 
   private createCipherChecks() {
@@ -44,7 +44,7 @@ export default class CheckGenerator {
       const valueInt = parseInt(matches[1].replace(/0x/g, '').replace(', ', ''), 16);
       const valueStr = matches[2];
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new NumberCheck({ userAgentId }, 'clientHello.ciphers', valueInt, valueStr));
+      this.checks.push(new NumberCheck({ userAgentId }, { path: 'clientHello.ciphers' }, valueInt, valueStr));
     }
   }
 
@@ -56,7 +56,9 @@ export default class CheckGenerator {
     for (const extension of clientHello.extensions) {
       if (this.isGreased(extension.decimal)) continue;
       extensionTypes.add(extension.type);
-      this.checks.push(new NumberCheck({ userAgentId }, path, extension.decimal, extension.type));
+      this.checks.push(
+        new NumberCheck({ userAgentId }, { path }, extension.decimal, extension.type),
+      );
     }
   }
 
@@ -74,7 +76,7 @@ export default class CheckGenerator {
       const valueStr = matches[1];
       const valueInt = Number(matches[2]);
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new NumberCheck({ userAgentId }, path, valueInt, valueStr));
+      this.checks.push(new NumberCheck({ userAgentId }, { path }, valueInt, valueStr));
     }
   }
 
@@ -90,7 +92,7 @@ export default class CheckGenerator {
     for (const value of values) {
       const valueInt = Number(value.match(/\((\d+)\)/)[1]);
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new StringCheck({ userAgentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, { path }, value));
     }
   }
 
@@ -106,7 +108,7 @@ export default class CheckGenerator {
     for (const value of values) {
       const valueInt = Number(value.match(/\((\d+)\)/)[1]);
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new StringCheck({ userAgentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, { path }, value));
     }
   }
 
@@ -127,7 +129,7 @@ export default class CheckGenerator {
           .replace(')', ''),
       );
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new StringCheck({ userAgentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, { path }, value));
     }
   }
 
@@ -143,7 +145,7 @@ export default class CheckGenerator {
     const values: string[] = extension?.values || [];
 
     for (const value of values) {
-      this.checks.push(new StringCheck({ userAgentId }, path, value));
+      this.checks.push(new StringCheck({ userAgentId }, { path }, value));
     }
   }
 
@@ -151,7 +153,7 @@ export default class CheckGenerator {
     const { userAgentId, hasGrease } = this;
 
     const path = 'clientHello.isGreased';
-    this.checks.push(new BooleanCheck({ userAgentId }, path, hasGrease));
+    this.checks.push(new BooleanCheck({ userAgentId }, { path }, hasGrease));
   }
 
   private isGreased(num: number) {

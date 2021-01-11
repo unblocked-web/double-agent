@@ -20,7 +20,11 @@ export default class CheckGenerator {
 
   private addDefaultValueChecks() {
     const { userAgentId } = this;
-    const defaultValuesMap: { [httpMethod: string]: { [key: string]: Set<string> } } = {};
+    const defaultValuesMap: {
+      [protocol: string]: {
+        [httpMethod: string]: { [key: string]: Set<string> };
+      };
+    } = {};
 
     // // ToDo: Preflight cannot check value, only case
     // if (resource === ResourceType.Preflight) {
@@ -28,20 +32,28 @@ export default class CheckGenerator {
     // }
 
     for (const page of this.profile.data) {
-      const httpMethod = page.method;
-      defaultValuesMap[httpMethod] = defaultValuesMap[httpMethod] || {};
+      const { protocol, method: httpMethod } = page;
+      if (protocol === 'http2') continue; // ToDo: add support for http2
+
+      defaultValuesMap[protocol] = defaultValuesMap[protocol] || {};
+      defaultValuesMap[protocol][httpMethod] = defaultValuesMap[protocol][httpMethod] || {};
       for (const [key, value] of page.rawHeaders) {
         if (!isOfficialDefaultValueKey(key)) continue;
-        const lkey = key.toLowerCase();
-        defaultValuesMap[httpMethod][lkey] = defaultValuesMap[httpMethod][lkey] || new Set();
-        defaultValuesMap[httpMethod][lkey].add(value);
+        const lowerKey = key.toLowerCase();
+        defaultValuesMap[protocol][httpMethod][lowerKey] =
+          defaultValuesMap[protocol][httpMethod][lowerKey] || new Set();
+        defaultValuesMap[protocol][httpMethod][lowerKey].add(value);
       }
     }
 
-    for (const [httpMethod, valuesByKey] of Object.entries(defaultValuesMap)) {
-      for (const [key, values] of Object.entries(valuesByKey)) {
-        const check = new DefaultValueCheck({ userAgentId, httpMethod }, key, Array.from(values));
-        this.checks.push(check);
+    for (const protocol of Object.keys(defaultValuesMap)) {
+      if (protocol === 'http2') continue; // ToDo: add support for http2
+      for (const [httpMethod, valuesByKey] of Object.entries(defaultValuesMap[protocol])) {
+        for (const [key, values] of Object.entries(valuesByKey)) {
+          const meta = { path: key, protocol, httpMethod };
+          const check = new DefaultValueCheck({ userAgentId }, meta, Array.from(values));
+          this.checks.push(check);
+        }
       }
     }
   }
@@ -50,10 +62,13 @@ export default class CheckGenerator {
     const { userAgentId } = this;
 
     for (const page of this.profile.data) {
-      const httpMethod = page.method;
+      const { protocol, method: httpMethod } = page;
+      if (protocol === 'http2') continue; // ToDo: add support for http2
+
       for (const [key] of page.rawHeaders) {
         if (!isOfficialHeader(key)) continue;
-        const check = new StringCaseCheck({ userAgentId, httpMethod }, key.toLowerCase(), key);
+        const meta = { path: key.toLowerCase(), protocol, httpMethod };
+        const check = new StringCaseCheck({ userAgentId }, meta, key);
         this.checks.push(check);
       }
     }
@@ -61,19 +76,32 @@ export default class CheckGenerator {
 
   private addHeaderOrderChecks() {
     const { userAgentId } = this;
-    const allHeaderKeys: string[][] = [];
+    const headerKeysMap: { [protocol: string]: { [httpMethod: string]: string[][] } } = {};
 
     for (const page of this.profile.data) {
-      const headerKeys = extractOfficialHeaderKeys(page.rawHeaders).map(x => x.toLowerCase());
-      if (!headerKeys.length) continue;
-      allHeaderKeys.push(headerKeys);
+      const { protocol, method: httpMethod } = page;
+      if (protocol === 'http2') continue; // ToDo: add support for http2
+
+      headerKeysMap[protocol] = headerKeysMap[protocol] || {};
+      headerKeysMap[protocol][httpMethod] = headerKeysMap[protocol][httpMethod] || [];
+      const keys = extractOfficialHeaderKeys(page.rawHeaders).map(x => x.toLowerCase());
+      if (!keys.length) continue;
+      headerKeysMap[protocol][httpMethod].push(keys);
     }
-    const orderIndexMap = extractOrderIndexMapFromArrays(allHeaderKeys);
-    for (const key of Object.keys(orderIndexMap)) {
-      const path = `headers.${key}`;
-      const orderIndex = orderIndexMap[key];
-      const check = new ArrayOrderIndexCheck({ userAgentId }, path, orderIndex);
-      this.checks.push(check);
+
+    for (const protocol of Object.keys(headerKeysMap)) {
+      if (protocol === 'http2') continue; // ToDo: add support for http2
+
+      for (const [httpMethod, headerKeys] of Object.entries(headerKeysMap[protocol])) {
+        const orderIndexMap = extractOrderIndexMapFromArrays(headerKeys);
+        for (const key of Object.keys(orderIndexMap)) {
+          const path = `headers.${key}`;
+          const orderIndex = orderIndexMap[key];
+          const meta = { path, protocol, httpMethod };
+          const check = new ArrayOrderIndexCheck({ userAgentId }, meta, orderIndex);
+          this.checks.push(check);
+        }
+      }
     }
   }
 }

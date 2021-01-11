@@ -1,15 +1,15 @@
 export default abstract class BaseCheck {
-  public path: string;
   public name: string;
   public identity: ICheckIdentity;
+  public meta: ICheckMeta;
 
   abstract prefix: string;
   abstract type: ICheckType;
 
-  protected constructor(identity: ICheckIdentity, path: string) {
-    this.identity = identity;
-    this.path = path;
+  protected constructor(identity: ICheckIdentity, meta: ICheckMeta) {
     this.name = this.constructor.name;
+    this.identity = identity;
+    this.meta = meta;
   }
 
   abstract get id(): string;
@@ -17,7 +17,8 @@ export default abstract class BaseCheck {
   abstract get args(): any[];
 
   public get idPrefix(): string {
-    return `${this.path}:${this.constructor.name}`;
+    const  { protocol, httpMethod, path } = this.meta;
+    return [protocol, httpMethod, path, this.constructor.name].filter(x => x).join(':');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,5 +44,10 @@ export type ICheckType = keyof typeof CheckType;
 export interface ICheckIdentity {
   isUniversal?: boolean;
   userAgentId?: string;
+}
+
+export interface ICheckMeta {
+  path: string;
+  protocol?: string;
   httpMethod?: string;
 }

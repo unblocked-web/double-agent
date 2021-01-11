@@ -1,4 +1,4 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {CheckType, ICheckIdentity, ICheckMeta} from '@double-agent/analyze/lib/checks/BaseCheck';
 import ICookieSetDetails from '../../interfaces/ICookieSetDetails';
 import ICookieGetDetails from '../../interfaces/ICookieGetDetails';
 
@@ -11,11 +11,11 @@ export default class ReadableCookieCheck extends BaseCheck {
 
   constructor(
     identity: ICheckIdentity,
-    path: string,
+    meta: ICheckMeta,
     setDetails: ICookieSetDetails,
     getDetails: ICookieGetDetails,
   ) {
-    super(identity, path);
+    super(identity, meta);
     this.setDetails = setDetails;
     this.getDetails = getDetails;
   }

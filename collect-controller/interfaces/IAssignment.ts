@@ -3,6 +3,7 @@ import { IUserAgentToTestPickType } from '@double-agent/config/interfaces/IUserA
 
 export default interface IAssignment {
   id: string;
+  num: number;
   type: IAssignmentType;
   userAgentString: string;
   pickType: IUserAgentToTestPickType;

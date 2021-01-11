@@ -1,4 +1,4 @@
-import BaseCheck, { CheckType, ICheckIdentity } from './BaseCheck';
+import BaseCheck, { CheckType, ICheckIdentity, ICheckMeta } from './BaseCheck';
 
 export default class StringArrayCheck extends BaseCheck {
   public readonly prefix: string = 'STRA';
@@ -6,8 +6,8 @@ export default class StringArrayCheck extends BaseCheck {
 
   protected readonly value: string;
 
-  constructor(identity: ICheckIdentity, path: string, value: string) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, value: string) {
+    super(identity, meta);
     this.value = value;
   }
 

@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class ExpectedValueCheck extends BaseCheck {
   public readonly prefix = 'EVLS';
@@ -9,11 +13,11 @@ export default class ExpectedValueCheck extends BaseCheck {
 
   constructor(
     identity: ICheckIdentity,
-    path: string,
+    meta: ICheckMeta,
     expectedValues: (string | number)[],
     value: string | number,
   ) {
-    super(identity, path);
+    super(identity, meta);
     this.expectedValues = expectedValues;
     this.value = value;
   }

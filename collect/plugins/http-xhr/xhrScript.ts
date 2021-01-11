@@ -5,13 +5,22 @@ export default function xhrScript(ctx: IRequestContext) {
   return `
 <script type="text/javascript">
   const requests = ${JSON.stringify(builtRequests(ctx))};
-  requests.forEach(x => {
-    if (x.func === 'axios.get') {
-      window.pageQueue.push(axios.get(x.url, x.args || {}).catch(console.log));
-    } else {
-      window.pageQueue.push(fetch(x.url, x.args || {}).catch(console.log));
+  async function runRequests() {
+    let count = 0;
+    for (const x of requests) {
+      count += 1;
+      if (x.func === 'axios.get') {
+        console.log('RUNNING axios.get', count, 'of', requests.length, x.url, x.args);
+        await axios.get(x.url, x.args || {}).catch(console.log);
+        console.log('COMPLETED axios.get', count, 'of', requests.length, x.url, x.args);
+      } else {
+        console.log('RUNNING fetch', count, 'of', requests.length, x.url, x.args);
+        await fetch(x.url, x.args || {}).catch(console.log);
+        console.log('COMPLETED fetch', count, 'of', requests.length, x.url, x.args);
+      }
     }
-  });
+  }
+  window.pageQueue.push(runRequests());
 </script>`;
 }
 

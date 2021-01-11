@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class SessionFingerprintCheck extends BaseCheck {
   public readonly prefix = 'SFNG';
@@ -6,13 +10,13 @@ export default class SessionFingerprintCheck extends BaseCheck {
 
   private readonly fingerprints: string[];
 
-  constructor(identity: ICheckIdentity, path: string, fingerprints: string[]) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, fingerprints: string[]) {
+    super(identity, meta);
     this.fingerprints = fingerprints;
   }
 
   public get id() {
-    return `${this.path}:${this.constructor.name}`;
+    return `${this.meta}:${this.constructor.name}`;
   }
 
   public get args() {

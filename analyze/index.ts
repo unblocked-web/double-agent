@@ -49,13 +49,19 @@ export default class Analyze {
     this.plugins = loadAllPlugins(this.dataDir);
   }
 
-  public addIndividual(individualsDir: string, userAgentId: string) {
+  public addIndividual(individualsDir: string, userAgentId: string): IResultFlag[] {
     this.resultsMap.byUserAgentId[userAgentId] = [];
     const profileDir = Path.join(individualsDir, userAgentId, 'raw-data');
     const profilePathsMap = extractProfilePathsMap(profileDir, userAgentId);
 
     for (const plugin of this.plugins) {
-      const profilePath = profilePathsMap[plugin.id][userAgentId];
+      const profilePathsByUserAgentId = profilePathsMap[plugin.id];
+      if (!profilePathsByUserAgentId) {
+        console.log(`${userAgentId} IS MISSING ${plugin.id}`);
+        continue;
+      }
+
+      const profilePath = profilePathsByUserAgentId[userAgentId];
       if (!profilePath) continue;
 
       const profile = importProfile<IBaseProfile>(profilePath);
@@ -81,9 +87,8 @@ export default class Analyze {
       const profileDir = Path.join(sessionsDir, dirName, 'raw-data');
       const profilePathsMap = extractProfilePathsMap(profileDir, userAgentId);
       for (const plugin of plugins) {
+        if (!profilePathsMap[plugin.id] || !profilePathsMap[plugin.id][userAgentId]) continue;
         const profilePath = profilePathsMap[plugin.id][userAgentId];
-        if (!profilePath) continue;
-
         const profile = importProfile<IBaseProfile>(profilePath);
 
         if (plugin.runOverTime) {
@@ -149,6 +154,8 @@ export default class Analyze {
     return humanScoreMap;
   }
 }
+
+// HELPERS
 
 function loadAllPlugins(dataDir: string) {
   const plugins = getAllPlugins();

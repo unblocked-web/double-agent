@@ -6,29 +6,30 @@ let lastPage: ISessionPage;
 
 export default async function runAssignmentInSecretAgent(agent: Agent, assignment: IAssignment) {
   console.log('--------------------------------------');
-  console.log('STARTING ', assignment.id);
+  console.log('STARTING ', assignment.id, assignment.userAgentString);
+  console.log('Session ID: ', await agent.sessionId);
+  let counter = 0;
   try {
     for (const pages of Object.values(assignment.pagesByPlugin)) {
-      await runPluginPages(agent, assignment, pages);
+      counter = await runPluginPages(agent, assignment, pages, counter);
     }
-    console.log('[%s.✔] Done', assignment.sessionId);
+    console.log(`[%s.✔] FINISHED ${assignment.id}`, assignment.num);
   } catch (err) {
-    console.log('[%s.x] Error on %s', assignment.sessionId, lastPage?.url, err);
+    console.log('[%s.x] Error on %s', assignment.num, lastPage?.url, err);
     process.exit();
   }
-  console.log('FINISHED ', assignment.id);
 }
 
-async function runPluginPages(agent: Agent, assignment: IAssignment, pages: ISessionPage[]) {
+async function runPluginPages(agent: Agent, assignment: IAssignment, pages: ISessionPage[], counter: number) {
   let isFirst = true;
-  let counter = 0;
   for (const page of pages) {
     lastPage = page;
-    const step = `[${assignment.sessionId}.${counter}]`;
+    const step = `[${assignment.num}.${counter}]`;
     if (page.isRedirect) continue;
     if (isFirst || page.url !== (await agent.url)) {
       console.log('%s GOTO -- %s', step, page.url);
       const resource = await agent.goto(page.url);
+      console.log('%s Waiting for statusCode -- %s', step, page.url);
       const statusCode = await resource.response.statusCode;
       if (statusCode >= 400) {
         console.log(`${statusCode} ERROR: `, await resource.response.text());
@@ -37,7 +38,8 @@ async function runPluginPages(agent: Agent, assignment: IAssignment, pages: ISes
       }
     }
     isFirst = false;
-    await agent.waitForAllContentLoaded();
+    console.log('%s waitForPaintingStable -- %s', step, page.url);
+    await agent.waitForPaintingStable();
 
     if (page.waitForElementSelector) {
       console.log('%s waitForElementSelector -- %s', step, page.waitForElementSelector);
@@ -56,4 +58,6 @@ async function runPluginPages(agent: Agent, assignment: IAssignment, pages: ISes
     }
     counter += 1;
   }
+
+  return counter;
 }

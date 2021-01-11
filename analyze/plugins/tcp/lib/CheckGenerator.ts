@@ -22,7 +22,7 @@ export default class CheckGenerator {
 
     const check = new ExpectedValueCheck(
       { userAgentId },
-      'time-to-live',
+      { path: 'time-to-live' },
       expectedValue,
       this.profile.data.ttl,
     );
@@ -48,7 +48,7 @@ export default class CheckGenerator {
 
     const check = new ExpectedValuesCheck(
       { userAgentId },
-      'window-sizes',
+      { path: 'window-sizes' },
       expectedValues,
       this.profile.data.windowSize,
     );

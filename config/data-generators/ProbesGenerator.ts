@@ -2,13 +2,10 @@ import * as Fs from 'fs';
 import * as Path from 'path';
 import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
 import getAllPlugins from '@double-agent/analyze/lib/getAllPlugins';
-import Plugin from "@double-agent/analyze/lib/Plugin";
+import Plugin from '@double-agent/analyze/lib/Plugin';
 import Layer from '@double-agent/analyze/lib/Layer';
-import Config, { createUserAgentIdFromIds } from '../index';
-import UserAgentsToTest from '../lib/UserAgentsToTest';
+import Config from '../index';
 import { extractProfilePathsMap, importProfile, IProfilePathsMap } from '../lib/ProfileUtils';
-
-
 
 export default class ProbesGenerator {
   private profilePathsMap: IProfilePathsMap = {};
@@ -36,8 +33,10 @@ export default class ProbesGenerator {
   public save() {
     const probeBucketsDir = Path.join(this.dataDir, 'probe-buckets');
     const probesDir = Path.join(this.dataDir, 'probes');
+    const probeIdsDir = Path.join(this.dataDir, 'probe-ids');
     if (!Fs.existsSync(probeBucketsDir)) Fs.mkdirSync(probeBucketsDir, { recursive: true });
     if (!Fs.existsSync(probesDir)) Fs.mkdirSync(probesDir, { recursive: true });
+    if (!Fs.existsSync(probeIdsDir)) Fs.mkdirSync(probeIdsDir, { recursive: true });
 
     for (const plugin of this.plugins) {
       const profiledProfiles = this.getProfiles<IBaseProfile>(plugin.id);
@@ -51,6 +50,9 @@ export default class ProbesGenerator {
 
       const probesData = JSON.stringify(plugin.probes, null, 2);
       Fs.writeFileSync(`${probesDir}/${plugin.id}.json`, probesData);
+
+      const probeIdsData = JSON.stringify(Config.probeIdsMap[plugin.id], null, 2);
+      Fs.writeFileSync(`${probeIdsDir}/${plugin.id}.json`, probeIdsData);
 
       this.layers.push(...plugin.layers);
 

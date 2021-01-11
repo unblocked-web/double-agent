@@ -1,4 +1,4 @@
-import BaseCheck, { CheckType, ICheckIdentity } from './BaseCheck';
+import BaseCheck, { CheckType, ICheckIdentity, ICheckMeta } from './BaseCheck';
 
 export default class DecimalLengthCheck extends BaseCheck {
   public readonly prefix = 'DECL';
@@ -6,8 +6,8 @@ export default class DecimalLengthCheck extends BaseCheck {
 
   private readonly length: number;
 
-  constructor(identity: ICheckIdentity, path: string, length: number) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, length: number) {
+    super(identity, meta);
     this.length = length;
   }
 

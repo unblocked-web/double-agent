@@ -1,4 +1,4 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {CheckType, ICheckIdentity, ICheckMeta} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class FlagsCheck extends BaseCheck {
   public readonly prefix = 'FLAG';
@@ -6,8 +6,8 @@ export default class FlagsCheck extends BaseCheck {
 
   private readonly flags: string[];
 
-  constructor(identity: ICheckIdentity, path: string, flags: string[]) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, flags: string[]) {
+    super(identity, meta);
     this.flags = (flags ?? []).sort();
   }
 

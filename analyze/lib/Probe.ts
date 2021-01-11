@@ -1,5 +1,6 @@
 import * as Path from 'path';
-import BaseCheck, { ICheckType } from './checks/BaseCheck';
+import Config from '@double-agent/config';
+import BaseCheck, { ICheckMeta, ICheckType } from './checks/BaseCheck';
 
 const COUNTER_START = 18278;
 const counterByPrefix: { [prefix: string]: number } = {};
@@ -8,7 +9,7 @@ export default class Probe {
   public id: string;
   public checkName: string;
   public checkType: ICheckType;
-  public path: string;
+  public checkMeta: ICheckMeta;
   public args: any[];
 
   private readonly pluginId: string;
@@ -18,14 +19,14 @@ export default class Probe {
     id: string,
     checkName: string,
     checkType: ICheckType,
-    path: string,
+    checkMeta: ICheckMeta,
     args: any[],
     pluginId: string,
   ) {
     this.id = id;
     this.checkName = checkName;
     this.checkType = checkType;
-    this.path = path;
+    this.checkMeta = checkMeta;
     this.args = args;
     this.pluginId = pluginId;
   }
@@ -42,7 +43,7 @@ export default class Probe {
         // eslint-disable-next-line global-require,import/no-dynamic-require
         Check = require(`${checksDir}/${this.checkName}`).default;
       }
-      this._check = new Check({}, this.path, ...this.args);
+      this._check = new Check({}, this.checkMeta, ...this.args);
     }
     return this._check;
   }
@@ -52,29 +53,34 @@ export default class Probe {
       id: this.id,
       checkName: this.checkName,
       checkType: this.checkType,
-      path: this.path,
+      checkMeta: this.checkMeta,
       args: this.args,
     };
   }
 
   public static create(check: BaseCheck, pluginId: string) {
-    const id = generateId(check);
-    const { type: checkType, path, args } = check;
-    return new this(id, check.constructor.name, checkType, path, args, pluginId);
+    const id = generateId(check, pluginId);
+    return new this(id, check.constructor.name, check.type, check.meta, check.args, pluginId);
   }
 
   public static load(probeObj: any, pluginId: string) {
-    const { id, checkName, checkType, path, args } = probeObj;
-    return new this(id, checkName, checkType, path, args, pluginId);
+    const { id, checkName, checkType, checkMeta, args } = probeObj;
+    return new this(id, checkName, checkType, checkMeta, args, pluginId);
   }
 }
 
 // HELPERS //////
 
-function generateId(check: BaseCheck) {
-  counterByPrefix[check.prefix] = counterByPrefix[check.prefix] || COUNTER_START;
-  counterByPrefix[check.prefix] += 1;
-  return `${check.prefix}-${convertToAlpha(counterByPrefix[check.prefix])}`.toLowerCase();
+function generateId(check: BaseCheck, pluginId: string) {
+  Config.probeIdsMap[pluginId] = Config.probeIdsMap[pluginId] || {};
+  let id = Config.probeIdsMap[pluginId][check.id];
+  if (!id) {
+    counterByPrefix[check.prefix] = counterByPrefix[check.prefix] || COUNTER_START;
+    counterByPrefix[check.prefix] += 1;
+    id = `${check.prefix}-${convertToAlpha(counterByPrefix[check.prefix])}`.toLowerCase();
+  }
+  Config.probeIdsMap[pluginId][check.id] = id;
+  return id;
 }
 
 function convertToAlpha(num) {

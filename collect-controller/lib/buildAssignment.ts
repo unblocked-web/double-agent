@@ -7,9 +7,11 @@ export default function buildAssignment(
   userAgentString: string = null,
   pickType: IUserAgentToTestPickType = null,
   usagePercent: number = null,
+  num = 0,
 ) {
   return {
     id,
+    num,
     type,
     userAgentString,
     pickType,

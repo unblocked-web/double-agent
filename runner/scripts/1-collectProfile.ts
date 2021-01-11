@@ -9,7 +9,7 @@ import saveAssignmentToProfileDir from '../lib/saveAssignmentToProfileDir';
 
 (async function run() {
   const puppeteer = await Puppeteer.launch({
-    // headless: false,
+    headless: false,
     ignoreHTTPSErrors: true,
   });
 

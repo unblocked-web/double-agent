@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class ArrayCheck extends BaseCheck {
   public readonly prefix = 'ARRY';
@@ -6,8 +10,8 @@ export default class ArrayCheck extends BaseCheck {
 
   private readonly hasLengthProperty: boolean;
 
-  constructor(identity: ICheckIdentity, path: string, hasLengthProperty: boolean) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, hasLengthProperty: boolean) {
+    super(identity, meta);
     this.hasLengthProperty = hasLengthProperty;
   }
 

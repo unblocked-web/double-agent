@@ -52,6 +52,7 @@ export default function createHttpRequestHandler(
       const userAgentId = createUserAgentIdFromString(req.headers['user-agent']);
       session.recordRequest(requestDetails);
 
+      console.log(userAgentId, req.headers['user-agent']);
       console.log(
         '%s %s: from %s (%s)',
         requestDetails.method,

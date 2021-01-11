@@ -5,6 +5,7 @@ import BooleanCheck from '@double-agent/analyze/lib/checks/BooleanCheck';
 import DecimalLengthCheck from '@double-agent/analyze/lib/checks/DecimalLengthCheck';
 import NumberLengthCheck from '@double-agent/analyze/lib/checks/NumberLengthCheck';
 import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
+import instanceToInstance from '@double-agent/config/data/dom-bridges/instance-to-instance.json';
 import extractDomEndpoints, { IEndpoint } from './extractDomEndpoints';
 import EndpointType, { IEndpointType } from '../interfaces/EndpointType';
 import KeyOrderCheck from './checks/KeyOrderCheck';
@@ -52,7 +53,7 @@ export default class CheckGenerator {
   }
 
   private addKeyOrderChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (
       !['object', 'prototype', 'function', 'class', 'constructor', 'array'].includes(object._$type)
     )
@@ -61,54 +62,54 @@ export default class CheckGenerator {
 
     const { userAgentId } = this;
     const keys = removeWebdriverKeys(path, object._$keyOrder);
-    this.add(new KeyOrderCheck({ userAgentId }, path, keys));
+    this.add(new KeyOrderCheck({ userAgentId }, { path }, keys));
   }
 
   private addFlagChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
 
     const { userAgentId } = this;
 
     if (object._$flags) {
-      this.add(new FlagsCheck({userAgentId}, path, object._$flags.split('')));
+      this.add(new FlagsCheck({ userAgentId }, { path }, object._$flags.split('')));
     }
 
     if (object._$functionMethods) {
       for (const name of Object.keys(object._$functionMethods)) {
         const methodPath = `${path}.${name}`;
         const methodObj = object._$functionMethods[name];
-        this.add(new FlagsCheck({ userAgentId }, methodPath, methodObj._$flags.split('')));
+        this.add(new FlagsCheck({ userAgentId }, { path: methodPath }, methodObj._$flags.split('')));
       }
     }
   }
 
   private addPrototypeChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (!['prototype', 'object', 'constructor', 'array'].includes(object._$type)) return;
 
     const { userAgentId } = this;
-    this.add(new PrototypeCheck({ userAgentId }, path, object._$protos));
+    this.add(new PrototypeCheck({ userAgentId }, { path }, object._$protos));
   }
 
   private addNumberChecks(path: string, object): IChecks {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (object._$type !== EndpointType.number) return;
 
     const { userAgentId } = this;
     if (ignoreNumberValuePaths.some(x => x.test(path))) {
-      this.add(new TypeCheck({ userAgentId }, path, EndpointType.number));
+      this.add(new TypeCheck({ userAgentId }, { path }, EndpointType.number));
     } else if (object._$value === null || object._$value === undefined) {
-      this.add(new NumberCheck({ userAgentId }, path, object._$value));
+      this.add(new NumberCheck({ userAgentId }, { path }, object._$value));
     } else if (String(object._$value).includes('.')) {
       const decimalStr = String(object._$value).split('.')[1];
-      this.add(new DecimalLengthCheck({ userAgentId }, path, decimalStr.length));
+      this.add(new DecimalLengthCheck({ userAgentId }, { path }, decimalStr.length));
     } else {
-      this.add(new NumberLengthCheck({ userAgentId }, path, String(object._$value).length));
+      this.add(new NumberLengthCheck({ userAgentId }, { path }, String(object._$value).length));
     }
   }
 
   private addFunctionChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (!object._$function) return;
     if (!['function', 'class', 'prototype'].includes(object._$type)) {
       throw new Error(`Unknown function type: ${object._$type}`);
@@ -124,119 +125,119 @@ export default class CheckGenerator {
       }
     }
 
-    const functionCheck = new FunctionCheck({ userAgentId }, path, codeString, methods, invocation);
+    const functionCheck = new FunctionCheck({ userAgentId }, { path }, codeString, methods, invocation);
     this.add(functionCheck);
   }
 
   private addStringChecks(path: string, object): IChecks {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (object._$type !== EndpointType.string) return;
 
     const { userAgentId } = this;
     if (ignoreStringValuePaths.some(x => x.test(path))) {
-      this.add(new TypeCheck({ userAgentId }, path, EndpointType.string));
+      this.add(new TypeCheck({ userAgentId }, { path }, EndpointType.string));
     } else if (path.endsWith('.stack')) {
       // is stack trace
-      this.add(new StacktraceCheck({ userAgentId }, path, object._$value));
+      this.add(new StacktraceCheck({ userAgentId }, { path }, object._$value));
     } else {
-      this.add(new StringCheck({ userAgentId }, path, object._$value));
+      this.add(new StringCheck({ userAgentId }, { path }, object._$value));
     }
   }
 
   private addGetterChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (!object._$get) return;
 
     const { userAgentId } = this;
-    this.add(new GetterCheck({ userAgentId }, path, { codeString: object._$get }));
+    this.add(new GetterCheck({ userAgentId }, { path }, { codeString: object._$get }));
     this.add(
-      new GetterCheck({ userAgentId }, path, { codeStringToString: object._$getToStringToString }),
+      new GetterCheck({ userAgentId }, { path }, { codeStringToString: object._$getToStringToString }),
     );
 
     if (object._$accessException) {
       this.add(
-        new GetterCheck({ userAgentId }, path, { accessException: object._$accessException }),
+        new GetterCheck({ userAgentId }, { path }, { accessException: object._$accessException }),
       );
     }
   }
 
   private addSetterChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (!object._$set) return;
 
     const { userAgentId } = this;
-    this.add(new SetterCheck({ userAgentId }, path, { codeString: object._$set }));
+    this.add(new SetterCheck({ userAgentId }, { path }, { codeString: object._$set }));
     this.add(
-      new SetterCheck({ userAgentId }, path, { codeStringToString: object._$setToStringToString }),
+      new SetterCheck({ userAgentId }, { path }, { codeStringToString: object._$setToStringToString }),
     );
   }
 
   private addRefChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (object._$type !== EndpointType.ref) return;
 
     const { userAgentId } = this;
-    this.add(new RefCheck({ userAgentId }, path, object._$ref));
+    this.add(new RefCheck({ userAgentId }, { path }, object._$ref));
   }
 
   private addClassChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (object._$type !== EndpointType.class) return;
 
     const { userAgentId } = this;
     const hasFunction = !!object._$function;
-    this.add(new ClassCheck({ userAgentId }, path, { hasFunction }));
+    this.add(new ClassCheck({ userAgentId }, { path }, { hasFunction }));
 
     const constructorPath = `${path}.new()`;
     const constructorException = this.endpointsByPath[constructorPath]?.object
       ._$constructorException;
     if (constructorException) {
-      this.add(new ClassCheck({ userAgentId }, path, { constructorException }));
+      this.add(new ClassCheck({ userAgentId }, { path }, { constructorException }));
     }
   }
 
   private addBooleanChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (object._$type !== EndpointType.boolean) return;
 
     const { userAgentId } = this;
     if (ignoreBooleanValuePaths.some(x => x.test(path))) {
-      this.add(new TypeCheck({ userAgentId }, path, EndpointType.boolean));
+      this.add(new TypeCheck({ userAgentId }, { path }, EndpointType.boolean));
     } else {
-      this.add(new BooleanCheck({ userAgentId }, path, object._$value));
+      this.add(new BooleanCheck({ userAgentId }, { path }, object._$value));
     }
   }
 
   private addArrayChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (object._$type !== EndpointType.array) return;
 
     const { userAgentId } = this;
     const hasLengthProperty = !!object._$keyOrder?.includes('length');
-    this.add(new ArrayCheck({ userAgentId }, path, hasLengthProperty));
+    this.add(new ArrayCheck({ userAgentId }, { path }, hasLengthProperty));
   }
 
   private addSymbolChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (object._$type !== EndpointType.symbol) return;
 
     const { userAgentId } = this;
-    this.add(new SymbolCheck({ userAgentId }, path, object._$value));
+    this.add(new SymbolCheck({ userAgentId }, { path }, object._$value));
   }
 
   private addTypeChecks(path: string, object) {
-    if (isWebdriverPath(path)) return;
+    if (shouldIgnorePath(path)) return;
     if (!['object', 'constructor', 'dom'].includes(object._$type)) return;
 
     const { userAgentId } = this;
-    this.add(new TypeCheck({ userAgentId }, path, object._$type));
+    this.add(new TypeCheck({ userAgentId }, { path }, object._$type));
   }
 
   private addWebdriverChecks(path: string) {
-    if (!isWebdriverPath(path)) return;
+    if (!shouldIgnorePath(path)) return;
 
     const { userAgentId } = this;
-    this.add(new WebdriverCheck({ userAgentId }, path));
+    this.add(new WebdriverCheck({ userAgentId }, { path }));
   }
 
   private add(check: BaseCheck) {
@@ -254,6 +255,17 @@ function extractInvocation(path: string, object: any) {
     return null;
   }
   return object._$invocation;
+}
+
+function shouldIgnorePath(path: string) {
+  if (isWebdriverPath(path)) return true;
+
+  for (const pathToIgnore of instanceToInstance) {
+    if (path.startsWith(pathToIgnore)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function isWebdriverPath(path: string) {
@@ -287,9 +299,7 @@ const webdriverPaths = new Set([
   'detached.isNodeReachable_',
 ]);
 
-const ignorePaths = [
-  new RegExp('window.document.scripts'),
-]
+const ignorePaths = [new RegExp('window.document.scripts')];
 
 const ignoreNumberValuePaths = [
   new RegExp('width', 'i'),
@@ -314,7 +324,10 @@ const ignoreNumberValuePaths = [
 
 const ignoreFunctionInvocationPaths = [
   new RegExp('window.Math.random'),
+  new RegExp('window.Date'),
   new RegExp('window.Date.now'),
+  new RegExp('window.chrome.csi'),
+  new RegExp('window.chrome.loadTimes'),
   new RegExp('window.BarcodeDetector.getSupportedFormats'), // ToDo: Add once we solve why BrowserStack is returning empty arrays on some OSes
 ];
 

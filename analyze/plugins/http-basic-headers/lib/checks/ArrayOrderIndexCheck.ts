@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 type IOrderIndex = [string[], string[]];
 
@@ -8,8 +12,8 @@ export default class ArrayOrderIndexCheck extends BaseCheck {
 
   private readonly orderIndex: IOrderIndex;
 
-  constructor(identity: ICheckIdentity, path: string, orderIndex: IOrderIndex) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, orderIndex: IOrderIndex) {
+    super(identity, meta);
     this.orderIndex = orderIndex;
   }
 

@@ -3,13 +3,13 @@ import { createPromise, IResolvablePromise } from '@double-agent/collect/lib/Pro
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
 import Document from '@double-agent/collect/lib/Document';
 import { DomainType } from '@double-agent/collect/lib/DomainUtils';
-import domScript from './domScript';
-import { loadServiceWorker, serviceWorkerScript } from './serviceWorkerScripts';
-import { loadSharedWorker, sharedWorkerScript } from './sharedWorkerScripts';
-import { dedicatedWorkerScript, loadDedicatedWorker } from './dedicatedWorkerScripts';
 import { IProfileData } from './interfaces/IProfile';
 import PageNames from './interfaces/PageNames';
-import { iframePage, waitForIframe } from './iframeScripts';
+import { iframePage, waitForIframe } from './lib/iframeScripts';
+import { loadServiceWorker, serviceWorkerScript } from './lib/serviceWorkerScripts';
+import { loadSharedWorker, sharedWorkerScript } from './lib/sharedWorkerScripts';
+import { dedicatedWorkerScript, loadDedicatedWorker } from './lib/dedicatedWorkerScripts';
+import loadDomExtractorScript, {IDomExtractorPageMeta} from './lib/loadDomExtractorScript';
 
 export default class BrowserDomPlugin extends Plugin {
   private pendingByKey: { [key: string]: IResolvablePromise } = {};
@@ -71,7 +71,18 @@ export default class BrowserDomPlugin extends Plugin {
 
   private loadScript(ctx: IRequestContext) {
     const document = new Document(ctx);
-    document.injectBodyTag(`<script type="text/javascript">${domScript(ctx)}</script>`);
+    const pageMeta: IDomExtractorPageMeta = {
+      saveToUrl: ctx.buildUrl('/save'),
+      pageUrl: ctx.url.href,
+      pageHost: ctx.url.host,
+      pageName: PageNames.BrowserDom,
+    };
+    document.injectBodyTag(`
+      <script type="text/javascript">
+        ${loadDomExtractorScript()};
+        window.pageQueue.push(runDomExtractor('window', ${JSON.stringify(pageMeta)}));
+      </script>
+    `);
     this.addWaitIfNeeded(document, ctx);
     ctx.res.end(document.html);
   }
@@ -133,7 +144,7 @@ export default class BrowserDomPlugin extends Plugin {
   }
 
   private async save(ctx: IRequestContext) {
-    const pageName = ctx.req.headers['page-name'] || '';
+    const pageName = ctx.req.headers['page-name'] || PageNames.BrowserDom;
     const pendingKey = this.getPendingKey(ctx, pageName as string);
 
     let filenameSuffix = ctx.url.protocol.replace(':', '');
@@ -157,7 +168,7 @@ export default class BrowserDomPlugin extends Plugin {
   }
 
   private async waitUntilFinished(ctx: IRequestContext) {
-    const pendingKey = this.getPendingKey(ctx, ctx.url.searchParams.get('pageName'));
+    const pendingKey = this.getPendingKey(ctx, ctx.url.searchParams.get('pageName') || PageNames.BrowserDom);
     this.pendingByKey[pendingKey] = createPromise();
     await this.pendingByKey[pendingKey].promise;
     ctx.res.end();
@@ -183,10 +194,6 @@ export default class BrowserDomPlugin extends Plugin {
   }
 
   private getPendingKey(ctx: IRequestContext, pageName: string) {
-    let key = `${ctx.session.id}:${ctx.url.protocol}`;
-    if (pageName) {
-      key += `:${pageName}`;
-    }
-    return key;
+    return `${ctx.session.id}:${ctx.url.protocol}:${pageName}`;
   }
 }

@@ -23,10 +23,10 @@ export default class OsGenerator {
       if (this.byId[id]) continue;
 
       const [releaseDate, description] = extractReleaseDateAndDescription(
-        id,
-        name,
-        osDescriptions,
-        this.slabData.osReleaseDates,
+          id,
+          name,
+          osDescriptions,
+          this.slabData.osReleaseDates,
       );
 
       const osRelease: IOperatingSystem = {

@@ -148,11 +148,11 @@ export default class Server {
 
   private async createAssignments(_, res: http.ServerResponse, params: IRequestParams) {
     const { userId, dataDir } = params;
-    if (!userId)
-      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
+    if (!userId) {
+      return sendJson(res, {message: 'Please provide a userId header or query param'}, 500);
+    }
 
-    this.activeUsersById[userId] =
-      this.activeUsersById[userId] || (await this.createUser(userId, dataDir));
+    this.activeUsersById[userId] = await this.createUser(userId, dataDir);
 
     const assignments = Object.values(this.activeUsersById[userId].assignmentsById).map(
       assignment => {
@@ -180,17 +180,19 @@ export default class Server {
 
   private async activateAssignment(_, res: http.ServerResponse, params: IRequestParams) {
     const { userId, assignmentId } = params;
-    if (!userId)
-      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
-    if (!assignmentId)
-      return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
+    if (!userId) {
+      return sendJson(res, {message: 'Please provide a userId header or query param'}, 500);
+    }
+    if (!assignmentId) {
+      return sendJson(res, {message: 'Please provide a assignmentId header or query param'}, 500);
+    }
 
     const activeScraper = this.activeUsersById[userId];
     const assignmentsById = activeScraper?.assignmentsById;
     const assignment = assignmentsById ? assignmentsById[assignmentId] : null;
     if (!assignment) return sendJson(res, { message: 'Assignment not found' }, 500);
+    if (assignment.sessionId) return sendJson(res, { message: 'Assignment already activated' }, 500);
 
-    if (assignment.sessionId) return;
     const session = await this.collect.createSession(assignment.type, assignment.userAgentString);
     assignment.sessionId = session.id;
     assignment.pagesByPlugin = session.generatePages();
@@ -316,10 +318,12 @@ function extractAssignmentProfilesDir(activeScraper: IActiveUser, assignment: IA
 
 function pipeDirToStream(dirPath: string, stream: any) {
   const archive = archiver('zip', { gzip: true, zlib: { level: 9 } });
-  const fileNames = Fs.readdirSync(dirPath);
-  for (const fileName of fileNames) {
-    const filePath = `${dirPath}/${fileName}`;
-    archive.append(Fs.createReadStream(filePath), { name: fileName });
+  if (Fs.existsSync(dirPath)) {
+    const fileNames = Fs.readdirSync(dirPath);
+    for (const fileName of fileNames) {
+      const filePath = `${dirPath}/${fileName}`;
+      archive.append(Fs.createReadStream(filePath), {name: fileName});
+    }
   }
   archive.pipe(stream);
   archive.finalize();

@@ -1,4 +1,4 @@
-import BaseCheck, { CheckType, ICheckIdentity } from './BaseCheck';
+import BaseCheck, {CheckType, ICheckIdentity, ICheckMeta} from './BaseCheck';
 
 export default class NumberCheck extends BaseCheck {
   public readonly prefix = 'NUMR';
@@ -7,8 +7,8 @@ export default class NumberCheck extends BaseCheck {
   private readonly value: number;
   private readonly label: string;
 
-  constructor(identity: ICheckIdentity, path: string, value: number, label?: string) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, value: number, label?: string) {
+    super(identity, meta);
     this.value = value;
     this.label = label;
   }

@@ -10,14 +10,14 @@ export default class HttpHeadersPlugin extends Plugin {
     this.registerRoute('all', '/page1', this.saveAndLinkToNextPage);
     this.registerRoute('all', '/page2', this.saveAndLinkToNextPage);
     this.registerRoute('all', '/page3', this.saveAndLinkToNextPage);
-    this.registerRoute('all', '/referToNext', this.linkToNextPage);
+    this.registerRoute('all', '/linkToNext', this.linkToNextPage);
     this.registerRoute('all', '/useJsToLoadNextPage', this.saveAndUseJsToLoadNextPage);
     this.registerRoute('all', '/redirectToNextPage', this.saveAndRedirectToNextPage);
     this.registerRoute('all', '/gotoNext', this.showGotoNextPage);
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https', 'http2'].forEach(protocol => {
+    ['http', 'https'].forEach(protocol => { // , 'http2'
       pages.push(
         {
           route: this.routes[protocol]['/start'],
@@ -25,7 +25,7 @@ export default class HttpHeadersPlugin extends Plugin {
           clickNext: true,
           name: 'LoadedDirect',
         },
-        { route: this.routes[protocol]['/referToNext'], domain: CrossDomain, clickNext: true },
+        { route: this.routes[protocol]['/linkToNext'], domain: CrossDomain, clickNext: true },
         {
           route: this.routes[protocol]['/page1'],
           domain: MainDomain,

@@ -84,7 +84,7 @@ export default class Document {
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <script>
-        window.pageQueue = [];
+      window.pageQueue = [];
     </script>
     <style>
       .display-inline-when-done { display: none; }
@@ -105,9 +105,6 @@ ${bodyTags.join('\n')}
 
 <script type="text/javascript">
   Promise.all(window.pageQueue)
-    .then(() => {
-      return window.afterQueueComplete ? window.afterQueueComplete() : null
-    })
     .then(() => {
       document.querySelectorAll('.display-inline-when-done').forEach(elem => {
         elem.style.display = 'inline';

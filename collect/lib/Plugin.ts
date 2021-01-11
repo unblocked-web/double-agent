@@ -112,8 +112,8 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     const fullPath = `/${this.id}${path.startsWith('/') ? path : `/${path}`}`;
 
     let url = new URL(fullPath, baseUrl).href;
-    url = addSessionIdToUrl(url, sessionId);
     url = addPageIndexToUrl(url, pageIndex);
+    url = addSessionIdToUrl(url, sessionId);
 
     const sessionPage: ISessionPage = { url };
     if (page.waitForReady || page.clickNext) {

@@ -36,7 +36,7 @@ export default class CheckGenerator {
         const rawCodecs = this.profile.data[`${codecType}Support`][entryKey];
         const path = `${codecType}Support.${entryKey}`;
         for (const codec of rawCodecs) {
-          const check = new StringArrayCheck({ userAgentId }, path, codec);
+          const check = new StringArrayCheck({ userAgentId }, { path }, codec);
           this.checksByType[codecType].push(check);
         }
       }
@@ -54,7 +54,7 @@ export default class CheckGenerator {
         ),
       );
       for (const codec of codecs) {
-        const check = new StringArrayCheck({ userAgentId }, path, codec);
+        const check = new StringArrayCheck({ userAgentId }, { path }, codec);
         this.checksByType[codecType].push(check);
       }
     }

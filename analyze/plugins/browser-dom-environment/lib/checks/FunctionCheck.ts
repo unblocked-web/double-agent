@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class FunctionCheck extends BaseCheck {
   public readonly prefix = 'FUNC';
@@ -10,12 +14,12 @@ export default class FunctionCheck extends BaseCheck {
 
   constructor(
     identity: ICheckIdentity,
-    path: string,
+    meta: ICheckMeta,
     codeString: string,
     methods: { [name: string]: string },
     invocation: string,
   ) {
-    super(identity, path);
+    super(identity, meta);
     this.codeString = codeString;
     this.methods = methods;
     this.invocation = invocation;
