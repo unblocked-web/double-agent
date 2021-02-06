@@ -1,11 +1,8 @@
-import * as Fs from 'fs';
-import * as Path from 'path';
 import PageNames from "../interfaces/PageNames";
-
-const scriptPath = Path.resolve(__dirname, '../injected-scripts/domExtractor.js');
+import DomExtractor from '../injected-scripts/DomExtractor';
 
 export default function loadDomExtractorScript() {
-  return Fs.readFileSync(scriptPath, 'utf8');
+  return DomExtractor.toString();
 }
 
 export interface IDomExtractorPageMeta {

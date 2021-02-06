@@ -9,7 +9,7 @@ import { iframePage, waitForIframe } from './lib/iframeScripts';
 import { loadServiceWorker, serviceWorkerScript } from './lib/serviceWorkerScripts';
 import { loadSharedWorker, sharedWorkerScript } from './lib/sharedWorkerScripts';
 import { dedicatedWorkerScript, loadDedicatedWorker } from './lib/dedicatedWorkerScripts';
-import loadDomExtractorScript, {IDomExtractorPageMeta} from './lib/loadDomExtractorScript';
+import loadDomExtractorScript, { IDomExtractorPageMeta } from './lib/loadDomExtractorScript';
 
 export default class BrowserDomPlugin extends Plugin {
   private pendingByKey: { [key: string]: IResolvablePromise } = {};
@@ -80,7 +80,7 @@ export default class BrowserDomPlugin extends Plugin {
     document.injectBodyTag(`
       <script type="text/javascript">
         ${loadDomExtractorScript()};
-        window.pageQueue.push(runDomExtractor('window', ${JSON.stringify(pageMeta)}));
+        window.pageQueue.push(new DomExtractor('window', ${JSON.stringify(pageMeta)}).runAndSave());
       </script>
     `);
     this.addWaitIfNeeded(document, ctx);
