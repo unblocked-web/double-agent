@@ -139,7 +139,7 @@ export default class Server {
       delete activeScraper.assignmentsById[assignmentId];
     }
 
-    const assignment = buildAssignment(userId);
+    const assignment = buildAssignment(userId, 0);
     activeScraper.assignmentsById = { [assignment.id]: assignment };
 
     params.assignmentId = assignment.id.toString();
