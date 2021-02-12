@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class UniqueFingerprintCheck extends BaseCheck {
   public readonly prefix = 'GFNG';
@@ -9,13 +13,13 @@ export default class UniqueFingerprintCheck extends BaseCheck {
   private readonly countsByFingerprint: { [fingerprint: string]: number } = {};
   private totalCount = 0;
 
-  constructor(identity: ICheckIdentity, path: string, fingerprint: string) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, fingerprint: string) {
+    super(identity, meta);
     this.fingerprint = fingerprint;
   }
 
   public get id() {
-    return `${this.path}:${this.constructor.name}`;
+    return `${this.meta}:${this.constructor.name}`;
   }
 
   public get args() {

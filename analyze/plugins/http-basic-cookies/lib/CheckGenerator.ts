@@ -2,9 +2,11 @@ import IHttpBasicCookiesProfile, {
   ICollectedCookieData,
   ICreatedCookieData,
 } from '@double-agent/collect-http-basic-cookies/interfaces/IProfile';
+import BaseCheck from '@double-agent/analyze/lib/checks/BaseCheck';
 import ReadableCookieCheck from './checks/ReadableCookieCheck';
 import UnreadableCookieCheck from './checks/UnreadableCookieCheck';
 import ICookieSetDetails from '../interfaces/ICookieSetDetails';
+import optionalCheckIds from './optionalCheckIds.json';
 
 export default class CheckGenerator {
   public readonly checks = [];
@@ -35,7 +37,7 @@ export default class CheckGenerator {
         const setDetails = setCookiesMap[key][name];
         const getDetails = { getter, httpProtocol };
         if (!setDetails) throw new Error(`no cookies created for ${key} with name: ${name}`);
-        this.checks.push(new ReadableCookieCheck({ userAgentId }, name, setDetails, getDetails));
+        this.addCheck(new ReadableCookieCheck({ userAgentId }, { path: name }, setDetails, getDetails));
         getCookiesMap[key][getter].add(name);
       }
     }
@@ -46,8 +48,8 @@ export default class CheckGenerator {
           if (names.has(name)) continue;
           const httpProtocol = key.split('-')[0];
           const getDetails = { getter, httpProtocol };
-          this.checks.push(
-            new UnreadableCookieCheck({ userAgentId }, name, setDetails, getDetails),
+          this.addCheck(
+            new UnreadableCookieCheck({ userAgentId }, { path: name }, setDetails, getDetails),
           );
         }
       }
@@ -87,5 +89,11 @@ export default class CheckGenerator {
     }
 
     return cookiesMap;
+  }
+
+  private addCheck(check: BaseCheck) {
+    const browserId = this.profile.userAgentId.split('--')[1];
+    if (optionalCheckIds[browserId] && optionalCheckIds[browserId].includes(check.id)) return;
+    this.checks.push(check);
   }
 }

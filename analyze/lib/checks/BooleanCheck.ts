@@ -1,4 +1,4 @@
-import BaseCheck, { ICheckIdentity, CheckType } from './BaseCheck';
+import BaseCheck, {ICheckIdentity, CheckType, ICheckMeta} from './BaseCheck';
 
 export default class BooleanCheck extends BaseCheck {
   public readonly prefix = 'BOOL';
@@ -6,8 +6,8 @@ export default class BooleanCheck extends BaseCheck {
 
   private readonly value: boolean;
 
-  constructor(identity: ICheckIdentity, path: string, value: boolean) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, value: boolean) {
+    super(identity, meta);
     this.value = value;
   }
 

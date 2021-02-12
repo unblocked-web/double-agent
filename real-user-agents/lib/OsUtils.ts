@@ -1,5 +1,8 @@
 import extractUserAgentMeta from './extractUserAgentMeta';
 import IOperatingSystem from '../interfaces/IOperatingSystem';
+import macOsNameToVersionMap from '../data/os-mappings/macOsNameToVersionMap.json';
+import macOsVersionAliasMap from '../data/os-mappings/macOsVersionAliasMap.json';
+import winOsNameToVersionMap from '../data/os-mappings/winOsNameToVersionMap.json';
 
 export function createOsName(name: string) {
   if (name.startsWith('Win')) return 'Windows';
@@ -12,7 +15,7 @@ export function createOsId(os: Pick<IOperatingSystem, 'name' | 'version'>) {
     .toLowerCase()
     .replace(/\s/g, '-')
     .replace('os-x', 'os');
-  const minorVersion = os.version.minor === '0' ? null : os.version.minor;
+  const minorVersion = os.name.startsWith('Win') && os.version.minor === '0' ? null : os.version.minor;
   if (['other', 'linux'].includes(name)) {
     return name;
   }
@@ -33,18 +36,24 @@ export function createOsIdFromUserAgentString(userAgentString: string) {
 export function createOsVersion(osName: string, majorVersion: string, minorVersion: string) {
   let namedVersion;
   if (majorVersion.match(/^([a-z\s]+)/i)) {
+    // majorVersion is name instead of number
     namedVersion = majorVersion;
-    if (osName.startsWith('Mac') && macNameToVersion[majorVersion]) {
-      [majorVersion, minorVersion] = macNameToVersion[majorVersion].split('.');
-    } else if (osName.startsWith('Win') && winNameToVersion[majorVersion]) {
-      [majorVersion, minorVersion] = winNameToVersion[majorVersion].split('.');
+    if (osName.startsWith('Mac') && macOsNameToVersionMap[majorVersion]) {
+      let versionString = macOsNameToVersionMap[majorVersion];
+      versionString = macOsVersionAliasMap[versionString] || versionString;
+      [majorVersion, minorVersion] = versionString.split('.');
+    } else if (osName.startsWith('Win') && winOsNameToVersionMap[majorVersion]) {
+      [majorVersion, minorVersion] = winOsNameToVersionMap[majorVersion].split('.');
     }
   } else {
-    const versionString = `${majorVersion}.${minorVersion}`;
-    if (osName.startsWith('Mac') && macVersionToName[versionString]) {
-      namedVersion = macVersionToName[versionString];
-    } else if (osName.startsWith('Win') && winVersionToName[versionString]) {
-      namedVersion = winVersionToName[versionString];
+    // majorVersion is number so let's cleanup
+    let versionString = `${majorVersion}.${minorVersion}`;
+    if (osName.startsWith('Mac')) {
+      versionString = macOsVersionAliasMap[versionString] || versionString;
+      [majorVersion, minorVersion] = versionString.split('.');
+      namedVersion = macOsVersionToNameMap[versionString];
+    } else if (osName.startsWith('Win')) {
+      namedVersion = winOsVersionToNameMap[versionString];
     }
   }
 
@@ -55,29 +64,10 @@ export function createOsVersion(osName: string, majorVersion: string, minorVersi
   };
 }
 
-const macNameToVersion = {
-  Catalina: '10.15',
-  Mojave: '10.14',
-  'High Sierra': '10.13',
-  Sierra: '10.12',
-  'El Capitan': '10.11',
-  Yosemite: '10.10',
-  Mavericks: '10.9',
-  'Mountain Lion': '10.8',
-  Lion: '10.7',
-  'Snow Leopard': '10.6',
-  Leopard: '10.5',
-};
-
-const macVersionToName = Object.entries(macNameToVersion).reduce((obj, [a, b]) => {
+const macOsVersionToNameMap = Object.entries(macOsNameToVersionMap).reduce((obj, [a, b]) => {
   return Object.assign(obj, { [b]: a });
 }, {});
 
-const winNameToVersion = {
-  Vista: '6.0',
-  XP: '5.2',
-};
-
-const winVersionToName = Object.entries(winNameToVersion).reduce((obj, [a, b]) => {
+const winOsVersionToNameMap = Object.entries(winOsNameToVersionMap).reduce((obj, [a, b]) => {
   return Object.assign(obj, { [b]: a });
 }, {});

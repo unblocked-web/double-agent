@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class StacktraceCheck extends BaseCheck {
   public readonly prefix = 'STCK';
@@ -6,8 +10,8 @@ export default class StacktraceCheck extends BaseCheck {
 
   private readonly errorClass: string;
 
-  constructor(identity: ICheckIdentity, path: string, stacktrace: string) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, stacktrace: string) {
+    super(identity, meta);
     this.errorClass = stacktrace.split('\n').shift();
   }
 

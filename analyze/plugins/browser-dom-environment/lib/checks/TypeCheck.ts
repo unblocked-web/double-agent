@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class TypeCheck extends BaseCheck {
   public readonly prefix = 'TYPE';
@@ -6,8 +10,8 @@ export default class TypeCheck extends BaseCheck {
 
   private readonly value: string;
 
-  constructor(identity: ICheckIdentity, path: string, value: string) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, value: string) {
+    super(identity, meta);
     this.value = value;
   }
 

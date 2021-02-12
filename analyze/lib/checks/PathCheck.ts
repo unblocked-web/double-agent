@@ -1,15 +1,15 @@
-import BaseCheck, { CheckType, ICheckIdentity } from './BaseCheck';
+import BaseCheck, { CheckType, ICheckIdentity, ICheckMeta } from './BaseCheck';
 
 export default class PathCheck extends BaseCheck {
   public readonly prefix = 'PATH';
   public readonly type = CheckType.Individual;
 
-  public constructor(identity: ICheckIdentity, path: string) {
-    super(identity, path);
+  public constructor(identity: ICheckIdentity, meta: ICheckMeta) {
+    super(identity, meta);
   }
 
   public get id() {
-    return `${this.path}:${this.constructor.name}`;
+    return `${this.meta}:${this.constructor.name}`;
   }
 
   public get args() {

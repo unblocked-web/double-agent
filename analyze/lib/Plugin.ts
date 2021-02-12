@@ -3,7 +3,7 @@ import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
 import ProbeBucketGenerator, { IProbeBucketMeta } from './ProbeBucketGenerator';
 import ProbeBucket from './ProbeBucket';
 import Layer from './Layer';
-import BaseCheck, { CheckType, ICheckType } from './checks/BaseCheck';
+import BaseCheck, { CheckType, ICheckMeta, ICheckType } from './checks/BaseCheck';
 
 export default abstract class Plugin {
   public id: string;
@@ -65,11 +65,12 @@ export default abstract class Plugin {
         if (probe.checkType !== checkType) continue;
         const toCheck = checksById[probe.check.id];
         const humanScore = probe.check.generateHumanScore(toCheck, profileCountOverTime);
-        // if (probe.id === 'func-aenw') {
-        //   console.log(probe.id, probe.check);
+        // if (probe.id === 'strg-acth') {
+        //   console.log(probe.check.id, probe.check);
         //   console.log('-----------')
         //   const toChecks = checks.filter(x => x.idPrefix === probe.check.idPrefix);
-        //   console.log(toCheck || toChecks.length ? toChecks : checks);
+        //   const consoleChecks = toChecks.length ? toChecks : checks.map(x => ({ idPrefix: x.idPrefix, ...x }));
+        //   console.log(toCheck || consoleChecks);
         // }
         if (humanScore < 100) {
           const probeId = probe.id;
@@ -80,9 +81,10 @@ export default abstract class Plugin {
             humanScore,
             probeId,
             probeBucketId,
+            checkId: probe.check.id,
             checkName: probe.checkName,
             checkType: probe.checkType,
-            path: probe.path,
+            checkMeta: probe.checkMeta,
             toCheckArgs: toCheck?.args,
           });
         }
@@ -99,8 +101,9 @@ export interface IResultFlag {
   probeId: string;
   pluginId: string;
   probeBucketId: string;
+  checkId: string;
   checkName: string;
   checkType: ICheckType;
-  path: string;
+  checkMeta: ICheckMeta;
   toCheckArgs: any[];
 }

@@ -9,7 +9,7 @@ import saveAssignmentToProfileDir from '../lib/saveAssignmentToProfileDir';
 
 (async function run() {
   const puppeteer = await Puppeteer.launch({
-    // headless: false,
+    headless: false,
     ignoreHTTPSErrors: true,
   });
 
@@ -45,5 +45,16 @@ function copyTmpToFinal(assignment: IAssignment, fromBaseDir: string, toBaseDir:
   for (const tmpFileName of tmpFileNames) {
     Fs.renameSync(`${fromDir}/${tmpFileName}`, `${toDir}/${tmpFileName}`);
   }
-  Fs.rmdirSync(fromBaseDir, { recursive: true });
+  removeDir(fromBaseDir);
 }
+
+function removeDir(dir: string) {
+  try {
+    Fs.rmdirSync(dir, {recursive: true});
+  } catch (error) {
+    console.log(`Error trying to remove ${dir}`, error);
+    console.log('RETRYING...');
+    removeDir(dir);
+  }
+}
+

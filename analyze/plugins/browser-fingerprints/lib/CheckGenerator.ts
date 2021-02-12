@@ -16,9 +16,9 @@ export default class CheckGenerator {
     const { userAgentId } = this.profile;
 
     const fingerprints = this.profile.data.map(x => x.browserHash);
-    this.checks.push(new SessionFingerprintCheck({ userAgentId }, 'fingerprint-js', fingerprints));
+    this.checks.push(new SessionFingerprintCheck({ userAgentId }, { path: 'fingerprint-js' }, fingerprints));
     this.checks.push(
-      new UniqueFingerprintCheck({ isUniversal: true }, 'fingerprint-js', fingerprints[0]),
+      new UniqueFingerprintCheck({ isUniversal: true }, { path: 'fingerprint-js' }, fingerprints[0]),
     );
   }
 }

@@ -15,11 +15,11 @@ export default async function buildAllAssignments() {
     const userAgentString = userAgentToTest.string;
     const id = createUserAgentIdFromString(userAgentString);
     const type = AssignmentType.Individual;
-    assignments.push(buildAssignment(id, type, userAgentString));
+    assignments.push(buildAssignment(id, assignments.length, type, userAgentString, null));
   }
 
-  assignments.push(...buildAssignmentsOverTime(userAgentsToTest, UserAgentToTestPickType.popular));
-  assignments.push(...buildAssignmentsOverTime(userAgentsToTest, UserAgentToTestPickType.random));
+  assignments.push(...buildAssignmentsOverTime(userAgentsToTest, UserAgentToTestPickType.popular, assignments.length));
+  assignments.push(...buildAssignmentsOverTime(userAgentsToTest, UserAgentToTestPickType.random, assignments.length));
 
   return assignments;
 }
@@ -29,6 +29,7 @@ export default async function buildAllAssignments() {
 function buildAssignmentsOverTime(
   userAgentsToTest: IUserAgentToTest[],
   pickType: IUserAgentToTestPickType,
+  assignmentCount: number,
 ) {
   const type = AssignmentType.OverTime;
   const assignments: IAssignment[] = [];
@@ -54,6 +55,7 @@ function buildAssignmentsOverTime(
     assignments.push(
       buildAssignment(
         createOverTimeSessionKey(pickType, assignments.length, userAgentId),
+        assignmentCount + assignments.length,
         type,
         userAgentString,
         pickType,

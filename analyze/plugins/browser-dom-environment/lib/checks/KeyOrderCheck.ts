@@ -1,4 +1,8 @@
-import BaseCheck, { CheckType, ICheckIdentity } from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export default class KeyOrderCheck extends BaseCheck {
   public readonly prefix = 'KORD';
@@ -6,8 +10,8 @@ export default class KeyOrderCheck extends BaseCheck {
 
   private readonly keys: string[];
 
-  constructor(identity: ICheckIdentity, path: string, keys: string[]) {
-    super(identity, path);
+  constructor(identity: ICheckIdentity, meta: ICheckMeta, keys: string[]) {
+    super(identity, meta);
     this.keys = keys;
   }
 

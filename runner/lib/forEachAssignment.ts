@@ -23,20 +23,24 @@ export default async function forEachAssignment(
   const userId = config.userId;
   const { assignments } = await assignmentServer('/create', { userId, dataDir });
 
-  for (const { id: assignmentId } of assignments) {
+  for (const i in assignments) {
+    const { id: assignmentId } = assignments[i];
     queue.add(async () => {
-      console.log(`Getting assignment %s of %s`, assignmentId, assignments.length);
-      const { assignment } = await assignmentServer<IAssignment>(`/activate/${assignmentId}`, { userId });
-      console.log(
-        '[%s._] RUNNING %s assignment (%s)',
-        assignment.sessionId,
-        assignment.type,
-        assignment.id,
-      );
+      console.log(`Getting assignment %s of %s`, i, assignments.length);
+      let assignment;
+      try {
+        const response = await assignmentServer<IAssignment>(`/activate/${assignmentId}`, {userId});
+        assignment = response.assignment;
+      } catch (error) {
+        console.log('ERROR activating assignment: ', error);
+        process.exit();
+      }
+      console.log('[%s._] RUNNING %s assignment (%s)', assignment.num, assignment.type, assignment.id);
       try {
         await runAssignmentFn(assignment);
       } catch (error) {
         console.log('ERROR running assignment: ', error);
+        process.exit();
       }
     });
   }
