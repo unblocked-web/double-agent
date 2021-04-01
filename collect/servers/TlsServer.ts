@@ -5,10 +5,11 @@ import createTlsRequestHandler from '../lib/createTlsRequestHandler';
 import BaseServer from './BaseServer';
 import { IRoutesByPath } from '../lib/Plugin';
 import { TlsDomain } from '../index';
+import createWebsocketHandler from '../lib/createWebsocketHandler';
 
 const certPath = process.env.LETSENCRYPT
-    ? `/etc/letsencrypt/live/${TlsDomain}`
-    : `${__dirname  }/../certs`;
+  ? `/etc/letsencrypt/live/${TlsDomain}`
+  : `${__dirname}/../certs`;
 
 export default class TlsServer extends BaseServer {
   private internalServer: TlsServerBase;
@@ -20,13 +21,15 @@ export default class TlsServer extends BaseServer {
   public async start(context: IServerContext) {
     await super.start(context);
     const tlsRequestHandler = createTlsRequestHandler(this, context);
+    const websocketHandler = createWebsocketHandler(this, context);
     const options = {
-      key: Fs.readFileSync(`${certPath  }/privkey.pem`),
-      cert: Fs.readFileSync(`${certPath  }/fullchain.pem`),
+      key: Fs.readFileSync(`${certPath}/privkey.pem`),
+      cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
     };
 
     this.internalServer = await new Promise<TlsServerBase>(resolve => {
       const server = new TlsServerBase(options, tlsRequestHandler);
+      server.on('upgrade', websocketHandler);
       server.listen(this.port, () => resolve(server));
     });
     this.internalServer.on('error', error => {

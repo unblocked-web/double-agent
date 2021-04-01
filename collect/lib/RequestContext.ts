@@ -5,7 +5,7 @@ import IRequestContext from '../interfaces/IRequestContext';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import Session from './Session';
 import { addSessionIdToUrl, DomainType } from './DomainUtils';
-import { CrossDomain, MainDomain, SubDomain } from '../index';
+import { CrossDomain, MainDomain, SubDomain, TlsDomain } from '../index';
 import BaseServer, { IServerProtocol } from '../servers/BaseServer';
 import Plugin from './Plugin';
 
@@ -58,6 +58,8 @@ export default class RequestContext implements IRequestContext {
       domain = CrossDomain;
     } else if (domainType === DomainType.MainDomain) {
       domain = MainDomain;
+    } else if (domainType === DomainType.TlsDomain) {
+      domain = TlsDomain;
     } else {
       throw new Error(`Unknown domainType: ${domainType}`);
     }

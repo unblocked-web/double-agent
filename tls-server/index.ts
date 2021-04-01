@@ -6,6 +6,7 @@ import IncomingMessage from './lib/IncomingMessage';
 import IClientHello from './interfaces/IClientHello';
 
 export default class TlsServer extends EventEmitter {
+  public static readonly minMillisBetweenConnects = 5e3;
   private child: ChildProcess;
   private port: number;
   private openSslOutput: string;

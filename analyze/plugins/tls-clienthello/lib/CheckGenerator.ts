@@ -1,22 +1,27 @@
 import StringCheck from '@double-agent/analyze/lib/checks/StringCheck';
-import ITlsClienthelloProfile from '@double-agent/collect-tls-clienthello/interfaces/IProfile';
+import ITlsClienthelloProfile, {
+  IProfileData,
+} from '@double-agent/collect-tls-clienthello/interfaces/IProfile';
 import IClientHello from '@double-agent/tls-server/interfaces/IClientHello';
 import NumberCheck from '@double-agent/analyze/lib/checks/NumberCheck';
 import BooleanCheck from '@double-agent/analyze/lib/checks/BooleanCheck';
+import BaseCheck from '@double-agent/analyze/lib/checks/BaseCheck';
 
 export const extensionTypes: Set<string> = new Set();
 export const usedExtensionTypes: Set<string> = new Set();
 
 export default class CheckGenerator {
-  public readonly checks = [];
+  public readonly checks: BaseCheck[] = [];
 
   private readonly userAgentId: string;
   private readonly clientHello: IClientHello;
   private hasGrease = false;
+  private readonly basePath: keyof IProfileData & string;
 
-  constructor(profile: ITlsClienthelloProfile) {
+  constructor(profile: ITlsClienthelloProfile, profileKey: keyof IProfileData) {
     this.userAgentId = profile.userAgentId;
-    this.clientHello = profile.data.clientHello;
+    this.clientHello = profile.data[profileKey];
+    this.basePath = profileKey;
     this.createVersionCheck();
     this.createCipherChecks();
     this.createExtensionChecks();
@@ -33,7 +38,9 @@ export default class CheckGenerator {
     const matches = clientHello.version.match(/^([^\s]+)\s\((.+)\)$/);
     const valueInt = Number(matches[1]);
     const valueStr = matches[2];
-    this.checks.push(new NumberCheck({ userAgentId }, { path: 'clientHello.version' }, valueInt, valueStr));
+    this.checks.push(
+      new NumberCheck({ userAgentId }, { path: `${this.basePath}.version` }, valueInt, valueStr),
+    );
   }
 
   private createCipherChecks() {
@@ -44,7 +51,9 @@ export default class CheckGenerator {
       const valueInt = parseInt(matches[1].replace(/0x/g, '').replace(', ', ''), 16);
       const valueStr = matches[2];
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new NumberCheck({ userAgentId }, { path: 'clientHello.ciphers' }, valueInt, valueStr));
+      this.checks.push(
+        new NumberCheck({ userAgentId }, { path: `${this.basePath}.ciphers` }, valueInt, valueStr),
+      );
     }
   }
 
@@ -52,7 +61,7 @@ export default class CheckGenerator {
     const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
-    const path = 'clientHello.extensions.decimal';
+    const path = `${this.basePath}.extensions.decimal`;
     for (const extension of clientHello.extensions) {
       if (this.isGreased(extension.decimal)) continue;
       extensionTypes.add(extension.type);
@@ -67,7 +76,7 @@ export default class CheckGenerator {
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('supported_groups');
-    const path = 'clientHello.extensions.supported_groups';
+    const path = `${this.basePath}.extensions.supported_groups`;
     const extension = clientHello.extensions.find(x => x.type === 'supported_groups');
     const values: string[] = extension?.values || [];
 
@@ -85,7 +94,7 @@ export default class CheckGenerator {
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('ec_point_formats');
-    const path = 'clientHello.extensions.ec_point_formats';
+    const path = `${this.basePath}.extensions.ec_point_formats`;
     const extension = clientHello.extensions.find(x => x.type === 'ec_point_formats');
     const values: string[] = extension?.values || [];
 
@@ -101,7 +110,7 @@ export default class CheckGenerator {
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('supported_versions');
-    const path = 'clientHello.extensions.supported_versions';
+    const path = `${this.basePath}.extensions.supported_versions`;
     const extension = clientHello.extensions.find(x => x.type === 'supported_versions');
     const values: string[] = extension?.values || [];
 
@@ -117,7 +126,7 @@ export default class CheckGenerator {
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('signature_algorithms');
-    const path = 'clientHello.extensions.signature_algorithms';
+    const path = `${this.basePath}.extensions.signature_algorithms`;
     const extension = clientHello.extensions.find(x => x.type === 'signature_algorithms');
     const values: string[] = extension?.values || [];
 
@@ -138,7 +147,7 @@ export default class CheckGenerator {
     if (!clientHello.extensions) return;
 
     usedExtensionTypes.add('application_layer_protocol_negotiation');
-    const path = 'clientHello.extensions.application_layer_protocol_negotiation';
+    const path = `${this.basePath}.extensions.application_layer_protocol_negotiation`;
     const extension = clientHello.extensions.find(
       x => x.type === 'application_layer_protocol_negotiation',
     );
@@ -152,7 +161,7 @@ export default class CheckGenerator {
   private createGreaseCheck() {
     const { userAgentId, hasGrease } = this;
 
-    const path = 'clientHello.isGreased';
+    const path = `${this.basePath}.isGreased`;
     this.checks.push(new BooleanCheck({ userAgentId }, { path }, hasGrease));
   }
 

@@ -50,6 +50,7 @@ export function cleanDomains(url: string) {
 
   return url
     .replace(RegExp(SubDomain, 'g'), 'SubDomain')
+    .replace(RegExp(TlsDomain, 'g'), 'TlsDomain')
     .replace(RegExp(MainDomain, 'g'), 'MainDomain')
     .replace(RegExp(CrossDomain, 'g'), 'CrossDomain');
 }
