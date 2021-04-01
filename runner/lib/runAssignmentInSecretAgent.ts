@@ -39,7 +39,7 @@ async function runPluginPages(agent: Agent, assignment: IAssignment, pages: ISes
     }
     isFirst = false;
     console.log('%s waitForAllContentLoaded -- %s', step, page.url);
-    await agent.waitForAllContentLoaded();
+    await agent.waitForPaintingStable();
 
     if (page.waitForElementSelector) {
       console.log('%s waitForElementSelector -- %s', step, page.waitForElementSelector);

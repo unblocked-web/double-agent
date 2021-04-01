@@ -4,7 +4,7 @@ import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment
 import runAssignmentInSecretAgent from '../lib/runAssignmentInSecretAgent';
 import forEachAssignment from '../lib/forEachAssignment';
 
-process.env.SHOW_BROWSER = 'true';
+process.env.SHOW_BROWSER = 'false';
 process.env.SA_SHOW_REPLAY = 'false';
 
 (async function run() {

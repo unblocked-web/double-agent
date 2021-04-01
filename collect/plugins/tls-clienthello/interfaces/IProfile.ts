@@ -6,5 +6,6 @@ type IProfile = IBaseProfile<IProfileData>;
 export default IProfile;
 
 export interface IProfileData {
-  clientHello: IClientHello;
+  clientHello?: IClientHello;
+  wssClientHello?: IClientHello;
 }

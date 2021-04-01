@@ -2,14 +2,13 @@ import 'source-map-support/register';
 import https from 'https';
 import tls from 'tls';
 import { IncomingMessage, ServerResponse } from 'http';
-
-const minMillisBetweenConnects = 5e3;
+import TlsServer from './index';
 
 let connectionCount = 0;
 let lastConnectionDate: Date;
-let activeConnection: { id: number; req: IncomingMessage, res: ServerResponse };
+let activeConnection: { id: number; req: IncomingMessage; res: ServerResponse };
 
-process.on('message', (message : any) => {
+process.on('message', (message: any) => {
   if (message.start) {
     const options = message.start;
     if (options.key) options.key = Buffer.from(options.key);
@@ -30,7 +29,9 @@ process.on('message', (message : any) => {
 function millisUntilNextConnect(): number {
   const currentDate = new Date();
   const elapsedMillis = Number(currentDate) - Number(lastConnectionDate);
-  return elapsedMillis >= minMillisBetweenConnects ? 0 : minMillisBetweenConnects - elapsedMillis;
+  return elapsedMillis >= TlsServer.minMillisBetweenConnects
+    ? 0
+    : TlsServer.minMillisBetweenConnects - elapsedMillis;
 }
 
 function reset() {
@@ -43,7 +44,7 @@ function reset() {
   }
 }
 
-function start(options: { port: number, key?: string, cert?: string }) {
+function start(options: { port: number; key?: string; cert?: string }) {
   try {
     const port = options.port;
     delete options.port;
@@ -60,7 +61,7 @@ function start(options: { port: number, key?: string, cert?: string }) {
     });
 
     childServer.listen(port, () => {
-      process.send({ started: true })
+      process.send({ started: true });
     });
   } catch (err) {
     console.log(err);
@@ -75,17 +76,18 @@ async function onConnection(req, res) {
     process.send({ favicon: true });
     res.end(`Favicon`);
     return;
-  } if (activeConnection) {
-    res.end(`Overloaded. Try again in ${minMillisBetweenConnects/1000} seconds`);
+  }
+  if (activeConnection) {
+    res.end(`Overloaded. Try again in ${TlsServer.minMillisBetweenConnects / 1000} seconds`);
     process.send({ overloaded: true });
     return;
   }
 
-  const connectionId = connectionCount += 1; // eslint-disable-line no-multi-assign
+  const connectionId = (connectionCount += 1); // eslint-disable-line no-multi-assign
   activeConnection = { id: connectionId, req, res };
 
   try {
-    const { remoteAddress, remotePort } = req.connection
+    const { remoteAddress, remotePort } = req.connection;
     const secureSocket = req.connection as tls.TLSSocket;
     const request = {
       connectionId,

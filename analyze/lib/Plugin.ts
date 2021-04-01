@@ -46,7 +46,7 @@ export default abstract class Plugin {
     userAgentId: string,
     checks: BaseCheck[],
     profileCountOverTime?: number,
-  ) {
+  ): IResultFlag[] {
     layerKey = layerKey.toLowerCase();
     const flags: IResultFlag[] = [];
     const checkType = profileCountOverTime ? CheckType.OverTime : CheckType.Individual;
