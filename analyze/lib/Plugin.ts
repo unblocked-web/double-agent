@@ -65,13 +65,13 @@ export default abstract class Plugin {
         if (probe.checkType !== checkType) continue;
         const toCheck = checksById[probe.check.id];
         const humanScore = probe.check.generateHumanScore(toCheck, profileCountOverTime);
-        // if (probe.id === 'strg-acth') {
-        //   console.log(probe.check.id, probe.check);
-        //   console.log('-----------')
-        //   const toChecks = checks.filter(x => x.idPrefix === probe.check.idPrefix);
-        //   const consoleChecks = toChecks.length ? toChecks : checks.map(x => ({ idPrefix: x.idPrefix, ...x }));
-        //   console.log(toCheck || consoleChecks);
-        // }
+        if (humanScore < 100 && probe.id === 'auto-aaad') {
+          console.log(probe.check.id, probe.check);
+          console.log('-----------')
+          const toChecks = checks.filter(x => x.idPrefix === probe.check.idPrefix);
+          const consoleChecks = toChecks.length ? toChecks : checks.map(x => ({ idPrefix: x.idPrefix, ...x }));
+          console.log(toCheck || consoleChecks);
+        }
         if (humanScore < 100) {
           const probeId = probe.id;
           const probeBucketId = probeBucket.id;

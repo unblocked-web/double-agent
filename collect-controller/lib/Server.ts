@@ -6,6 +6,7 @@ import * as http from 'http';
 import { pathToRegexp } from 'path-to-regexp';
 import Collect from '@double-agent/collect';
 import Plugin from '@double-agent/collect/lib/Plugin';
+import IUserAgentToTest from "@double-agent/config/interfaces/IUserAgentToTest";
 import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
 import buildAssignment from './buildAssignment';
 import buildAllAssignments from './buildAllAssignments';
@@ -14,6 +15,7 @@ interface IRequestParams {
   userId: string;
   assignmentId?: string;
   dataDir?: string;
+  userAgentsToTestPath?: string;
 }
 
 interface IAssignmentsById {
@@ -74,6 +76,13 @@ export default class Server {
 
     let endpoint;
     const params = {};
+
+    // pull from url query string
+    Object.entries(requestUrl.query).forEach(([key, value]) => {
+      params[key] = value;
+    });
+
+    // match endpoint and pull from url parameters
     for (const [regexp, meta] of this.routeMetaByRegexp.entries()) {
       const matches = requestUrl.pathname.match(regexp);
       if (matches) {
@@ -88,10 +97,6 @@ export default class Server {
     if (!endpoint) {
       return sendJson(res, { message: 'Not Found' }, 404);
     }
-
-    const userId = req.headers.userId ?? (requestUrl.query.userId as string);
-    const dataDir = req.headers.dataDir ?? requestUrl.query.dataDir;
-    Object.assign(params, { userId, dataDir }, params);
 
     await endpoint(req, res, params);
   }
@@ -147,12 +152,18 @@ export default class Server {
   }
 
   private async createAssignments(_, res: http.ServerResponse, params: IRequestParams) {
+    console.log('CREATE ASSIGNMENT');
     const { userId, dataDir } = params;
     if (!userId) {
-      return sendJson(res, {message: 'Please provide a userId header or query param'}, 500);
+      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
+    }
+    if (!params.userAgentsToTestPath) {
+      return sendJson(res, { message: 'Please provide a userAgentsToTestPath query param' }, 500);
     }
 
-    this.activeUsersById[userId] = await this.createUser(userId, dataDir);
+    const userAgentsToTestData = Fs.readFileSync(`${params.userAgentsToTestPath}.json`, 'utf8');
+    const userAgentsToTest = JSON.parse(userAgentsToTestData) as IUserAgentToTest[];
+    this.activeUsersById[userId] = await this.createUser(userId, dataDir, userAgentsToTest);
 
     const assignments = Object.values(this.activeUsersById[userId].assignmentsById).map(
       assignment => {
@@ -163,8 +174,8 @@ export default class Server {
     sendJson(res, { assignments });
   }
 
-  private async createUser(id: string, dataDir: string) {
-    const assignments = await buildAllAssignments();
+  private async createUser(id: string, dataDir: string, userAgentsToTest: IUserAgentToTest[]) {
+    const assignments = await buildAllAssignments(userAgentsToTest);
     const assignmentsById: IAssignmentsById = {};
 
     for (const assignment of assignments) {
@@ -181,17 +192,18 @@ export default class Server {
   private async activateAssignment(_, res: http.ServerResponse, params: IRequestParams) {
     const { userId, assignmentId } = params;
     if (!userId) {
-      return sendJson(res, {message: 'Please provide a userId header or query param'}, 500);
+      return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
     }
     if (!assignmentId) {
-      return sendJson(res, {message: 'Please provide a assignmentId header or query param'}, 500);
+      return sendJson(res, { message: 'Please provide a assignmentId header or query param' }, 500);
     }
 
     const activeScraper = this.activeUsersById[userId];
     const assignmentsById = activeScraper?.assignmentsById;
     const assignment = assignmentsById ? assignmentsById[assignmentId] : null;
     if (!assignment) return sendJson(res, { message: 'Assignment not found' }, 500);
-    if (assignment.sessionId) return sendJson(res, { message: 'Assignment already activated' }, 500);
+    if (assignment.sessionId)
+      return sendJson(res, { message: 'Assignment already activated' }, 500);
 
     const session = await this.collect.createSession(assignment.type, assignment.userAgentString);
     assignment.sessionId = session.id;
@@ -228,8 +240,7 @@ export default class Server {
 
   private async downloadAll(_, res: http.ServerResponse, params: IRequestParams) {
     const { userId } = params;
-    if (!userId)
-      return sendJson(res, { message: 'Please provide a userId query param' }, 500);
+    if (!userId) return sendJson(res, { message: 'Please provide a userId query param' }, 500);
 
     const activeScraper = this.activeUsersById[userId];
     for (const assignmentId of Object.keys(activeScraper.assignmentsById)) {
@@ -322,7 +333,7 @@ function pipeDirToStream(dirPath: string, stream: any) {
     const fileNames = Fs.readdirSync(dirPath);
     for (const fileName of fileNames) {
       const filePath = `${dirPath}/${fileName}`;
-      archive.append(Fs.createReadStream(filePath), {name: fileName});
+      archive.append(Fs.createReadStream(filePath), { name: fileName });
     }
   }
   archive.pipe(stream);

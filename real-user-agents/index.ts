@@ -31,6 +31,10 @@ export default class RealUserAgents {
     });
   }
 
+  public static getId(userAgentId: string) {
+    return loadById()[userAgentId];
+  }
+
   public static where(query: { browserId?: string; operatingSystemId?: string }) {
     let userAgents = this.all();
     if (query.browserId) {

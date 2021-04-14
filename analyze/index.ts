@@ -1,7 +1,6 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
 import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
-import Config from '@double-agent/config';
 import {
   UserAgentToTestPickType,
   IUserAgentToTestPickType,
@@ -33,7 +32,7 @@ interface IResultsMap {
 export default class Analyze {
   public plugins: Plugin[] = [];
 
-  private readonly dataDir: string;
+  private readonly probesDataDir: string;
   private readonly profileCountOverTime: number;
   private resultsMap: IResultsMap = {
     byUserAgentId: {},
@@ -43,10 +42,10 @@ export default class Analyze {
     },
   };
 
-  constructor(profileCountOverTime: number) {
+  constructor(profileCountOverTime: number, probesDataDir: string) {
     this.profileCountOverTime = profileCountOverTime;
-    this.dataDir = process.env.DATA_DIR ?? Config.dataDir;
-    this.plugins = loadAllPlugins(this.dataDir);
+    this.probesDataDir = probesDataDir;
+    this.plugins = loadAllPlugins(this.probesDataDir);
   }
 
   public addIndividual(individualsDir: string, userAgentId: string): IResultFlag[] {
@@ -76,7 +75,7 @@ export default class Analyze {
   }
 
   public addOverTime(sessionsDir: string, pickType: IUserAgentToTestPickType) {
-    const plugins = loadAllPlugins(this.dataDir);
+    const plugins = loadAllPlugins(this.probesDataDir);
     const dirNames = Fs.readdirSync(sessionsDir)
       .filter(x => x.startsWith(pickType))
       .sort();
@@ -157,12 +156,12 @@ export default class Analyze {
 
 // HELPERS
 
-function loadAllPlugins(dataDir: string) {
+function loadAllPlugins(probesDataDir: string) {
   const plugins = getAllPlugins();
   for (const plugin of plugins) {
-    const layersPath = Path.join(dataDir, 'layers.json');
-    const probesPath = Path.join(dataDir, 'probes', `${plugin.id}.json`);
-    const probeBucketsPath = Path.join(dataDir, 'probe-buckets', `${plugin.id}.json`);
+    const layersPath = Path.join(probesDataDir, 'layers.json');
+    const probesPath = Path.join(probesDataDir, 'probes', `${plugin.id}.json`);
+    const probeBucketsPath = Path.join(probesDataDir, 'probe-buckets', `${plugin.id}.json`);
 
     const probesById: { [id: string]: Probe } = {};
     const probeObjs = JSON.parse(Fs.readFileSync(probesPath, 'utf-8'));
