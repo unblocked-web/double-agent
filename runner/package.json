@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "setup": "yarn workspace @double-agent/external-data downloadRunnerData",
     "0": "node -r source-map-support/register scripts/0-collectFoundationalProfiles.js",
     "1": "node -r source-map-support/register scripts/4-extractFoundationalProbes.js",
     "2": "node -r source-map-support/register scripts/2-collectUserAgentsToTest.js",

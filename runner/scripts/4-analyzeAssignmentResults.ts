@@ -2,8 +2,8 @@ import * as Fs from "fs";
 import * as Path from "path";
 import Analyze from '@double-agent/analyze';
 import { IResultFlag } from '@double-agent/analyze/lib/Plugin';
-import { UserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
-import { createOverTimeSessionKey } from '@double-agent/collect-controller/lib/buildAllAssignments';
+// import { UserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
+// import { createOverTimeSessionKey } from '@double-agent/collect-controller/lib/buildAllAssignments';
 
 const probesDataDir = Path.resolve(__dirname, `../data/external/1-foundational-probes`);
 const assignmentsDataDir = Path.resolve(__dirname, `../data/external/3-assignments`);
@@ -19,14 +19,14 @@ for (const userAgentId of userAgentIds) {
   saveFlagsToPluginFiles(saveFlagsToDir, flags);
 }
 
-for (const pickType of [UserAgentToTestPickType.popular, UserAgentToTestPickType.random]) {
-  const sessionsDir = Path.resolve(assignmentsDataDir, `overtime-${pickType}`);
-  analyze.addOverTime(sessionsDir, pickType).forEach(({ userAgentId, flags }, i) => {
-    const sessionKey = createOverTimeSessionKey(pickType, i, userAgentId);
-    const flagsDir = Path.resolve(sessionsDir, sessionKey, `flags`);
-    saveFlagsToPluginFiles(flagsDir, flags);
-  });
-}
+// for (const pickType of [UserAgentToTestPickType.popular, UserAgentToTestPickType.random]) {
+//   const sessionsDir = Path.resolve(assignmentsDataDir, `overtime-${pickType}`);
+//   analyze.addOverTime(sessionsDir, pickType).forEach(({ userAgentId, flags }, i) => {
+//     const sessionKey = createOverTimeSessionKey(pickType, i, userAgentId);
+//     const flagsDir = Path.resolve(sessionsDir, sessionKey, `flags`);
+//     saveFlagsToPluginFiles(flagsDir, flags);
+//   });
+// }
 
 const testResults = analyze.generateTestResults();
 const testResultsPath = Path.resolve(resultsDir, `testResults.json`);

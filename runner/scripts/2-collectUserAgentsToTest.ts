@@ -2,27 +2,41 @@ import * as Fs from 'fs';
 import * as Path from 'path';
 import RealUserAgents from "@double-agent/real-user-agents";
 import IUserAgentToTest, {UserAgentToTestPickType} from "@double-agent/config/interfaces/IUserAgentToTest";
-import localUserAgentConfig from '../data/local/userAgentConfig.json';
+// import localUserAgentConfig from '../data/local/userAgentConfig.json';
 import externalUserAgentConfig from '../data/external/userAgentConfig.json';
 
 const dataDir = Path.join(__dirname, '../data');
 
-const localProfilesDir = `${dataDir}/local/0-foundational-profiles`;
-const localUserAgentsToTest = collectUserAgentsToTest(localProfilesDir, localUserAgentConfig);
-const localUserAgentsToTestPath = Path.join(__dirname, '../data/local/2-user-agents-to-test/userAgentsToTest.json');
-Fs.writeFileSync(localUserAgentsToTestPath, JSON.stringify(localUserAgentsToTest, null, 2));
+// const localBaseDir = `${dataDir}/local`;
+// const localUserAgentsToTest = collectUserAgentsToTest(localBaseDir, localUserAgentConfig);
+// const localUserAgentsToTestDir = Path.join(__dirname, '../data/local/2-user-agents-to-test/');
+// const localUserAgentsToTestPath = Path.join(localUserAgentsToTestDir, 'userAgentsToTest.json');
+// if (!Fs.existsSync(localUserAgentsToTestDir)) Fs.mkdirSync(localUserAgentsToTestDir);
+// Fs.writeFileSync(localUserAgentsToTestPath, JSON.stringify(localUserAgentsToTest, null, 2));
 
-const externalProfilesDir = `${dataDir}/external/0-foundational-profiles`;
-const externalUserAgentsToTest = collectUserAgentsToTest(externalProfilesDir, externalUserAgentConfig);
-const externalUserAgentsToTestPath = Path.join(__dirname, '../data/external/2-user-agents-to-test/userAgentsToTest.json');
+const externalBaseDir = `${dataDir}/external`;
+const externalUserAgentsToTest = collectUserAgentsToTest(externalBaseDir, externalUserAgentConfig);
+const externalUserAgentsToTestDir = Path.join(__dirname, '../data/external/2-user-agents-to-test/');
+const externalUserAgentsToTestPath = Path.join(externalUserAgentsToTestDir, 'userAgentsToTest.json')
+if (!Fs.existsSync(externalUserAgentsToTestDir)) Fs.mkdirSync(externalUserAgentsToTestDir);
 Fs.writeFileSync(externalUserAgentsToTestPath, JSON.stringify(externalUserAgentsToTest, null, 2));
 
 // HELPERS
 
-function collectUserAgentsToTest(profilesDir: string, userAgentConfig): IUserAgentToTest[] {
+function collectUserAgentsToTest(baseDir: string, userAgentConfig): IUserAgentToTest[] {
   const userAgentsToTest: IUserAgentToTest[] = [];
 
-  for (const userAgentId of Fs.readdirSync(profilesDir)) {
+  const tcpProbeBucketsPath = `${baseDir}/1-foundational-probes/probe-buckets/tcp.json`;
+  if (!Fs.existsSync(tcpProbeBucketsPath)) {
+    return userAgentsToTest;
+  }
+  const tcpProbeBuckets = JSON.parse(Fs.readFileSync(tcpProbeBucketsPath, 'utf8'));
+  const userAgentIds: Set<string> = new Set();
+  tcpProbeBuckets.forEach(probeBucket => {
+    probeBucket.userAgentIds.forEach(userAgentId => userAgentIds.add(userAgentId));
+  });
+
+  for (const userAgentId of userAgentIds) {
     if (!userAgentConfig.browserIds.some(x => userAgentId.includes(x))) continue;
     const userAgent = RealUserAgents.getId(userAgentId);
     if (!userAgent) throw new Error(`${userAgentId} not supported by RealUserAgents`);

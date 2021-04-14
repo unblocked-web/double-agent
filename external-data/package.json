@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "node -r source-map-support/register index.js"
+    "uploadRunnerData": "export $(cat ../.env | xargs) && node -r source-map-support/register scripts/uploadRunnerData.js",
+    "downloadRunnerData": "export $(cat ../.env | xargs) && node -r source-map-support/register scripts/downloadRunnerData.js"
   },
   "dependencies": {
+    "@double-agent/runner": "1.0.0",
+    "@octokit/core": "^3.4.0",
+    "progress": "^2.0.3",
     "tar": "^6.1.0"
   },
   "devDependencies": {}

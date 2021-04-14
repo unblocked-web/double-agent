@@ -1,10 +1,11 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
 import { Octokit } from '@octokit/core';
-import { createTarGz } from './external-data/lib/createTarGz';
-import pkg from './package.json';
+import { createTarGz } from '../lib/createTarGz';
 
 (async function run() {
+  const pkgPath = Path.resolve(__dirname, '../../package.json');
+  const pkg = JSON.parse(Fs.readFileSync(pkgPath, 'utf8'));
   const octokit = new Octokit({ auth: process.env.GITHUB_AUTH_TOKEN });
   let uploadUrl;
   let assets: any[];
@@ -31,10 +32,11 @@ import pkg from './package.json';
     assets = data.assets;
   }
 
-  const tmpDirPath = Path.resolve(__dirname, '.tmp-upload');
+  const tmpDirPath = Path.resolve(__dirname, '../.tmp-upload');
   const gzFileName = '1-foundational-probes.tar.gz';
   const gzFilePath = Path.resolve(tmpDirPath, gzFileName);
-  const baseFilesDir = Path.resolve(__dirname, 'runner/data/external/1-foundational-probes');
+  const runnerDir = Path.dirname(require.resolve('@double-agent/runner'));
+  const baseFilesDir = Path.resolve(runnerDir, 'data/external/1-foundational-probes');
   const files = [
     ...Fs.readdirSync(`${baseFilesDir}/probe-buckets`).map(x => `probe-buckets/${x}`),
     ...Fs.readdirSync(`${baseFilesDir}/probe-ids`).map(x => `probe-ids/${x}`),
