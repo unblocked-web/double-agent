@@ -8,6 +8,7 @@ interface IConfig {
   dataDir?: string;
   concurrency?: number;
   beforeFinishFn?: () => Promise<void | unknown> | void;
+  userAgentsToTestPath?: string;
 }
 
 export { IAssignment };
@@ -21,7 +22,8 @@ export default async function forEachAssignment(
 
   const dataDir = config.dataDir;
   const userId = config.userId;
-  const { assignments } = await assignmentServer('/create', { userId, dataDir });
+  const userAgentsToTestPath = config.userAgentsToTestPath;
+  const { assignments } = await assignmentServer('/create', { userId, dataDir, userAgentsToTestPath });
 
   for (const i in assignments) {
     const { id: assignmentId } = assignments[i];

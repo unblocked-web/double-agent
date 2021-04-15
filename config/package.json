@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "regenerateProbes": "node -r source-map-support/register -e 'require(\"./scripts/regenerateProbes.js\").default()'",
-    "regenerateUserAgentsToTest": "node -r source-map-support/register -e 'require(\"./scripts/updateUserAgentsToTest.js\").default()'"
+    "updatePathPatterns": "node -r source-map-support/register -e 'require(\"./scripts/updatePathPatterns.js\").default()'"
   },
   "dependencies": {
     "@double-agent/analyze": "1.0.0",

@@ -1,4 +1,3 @@
-import UserAgentsToTest from '@double-agent/config/lib/UserAgentsToTest';
 import IUserAgentToTest, {
   UserAgentToTestPickType,
   IUserAgentToTestPickType,
@@ -7,9 +6,8 @@ import { createUserAgentIdFromString } from '@double-agent/config';
 import buildAssignment from './buildAssignment';
 import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
 
-export default async function buildAllAssignments() {
+export default async function buildAllAssignments(userAgentsToTest: IUserAgentToTest[]) {
   const assignments: IAssignment[] = [];
-  const userAgentsToTest = UserAgentsToTest.all();
 
   for (const userAgentToTest of userAgentsToTest) {
     const userAgentString = userAgentToTest.string;
@@ -34,10 +32,11 @@ function buildAssignmentsOverTime(
   const type = AssignmentType.OverTime;
   const assignments: IAssignment[] = [];
   const selUserAgents = userAgentsToTest.filter(x => x.pickTypes.includes(pickType));
-  const sortedUserAgents = selUserAgents.sort(
-    (a: IUserAgentToTest, b: IUserAgentToTest) =>
-      a.usagePercent[pickType] - b.usagePercent[pickType],
-  );
+  if (!selUserAgents.length) return [];
+
+  const sortedUserAgents = selUserAgents.sort((a: IUserAgentToTest, b: IUserAgentToTest) => {
+    return a.usagePercent[pickType] - b.usagePercent[pickType];
+  });
   const countByUserAgentId: { [userAgentId: string]: number } = {};
 
   while (assignments.length < 100) {

@@ -65,7 +65,7 @@ export default abstract class Plugin {
         if (probe.checkType !== checkType) continue;
         const toCheck = checksById[probe.check.id];
         const humanScore = probe.check.generateHumanScore(toCheck, profileCountOverTime);
-        // if (probe.id === 'strg-acth') {
+        // if (humanScore < 100 && probe.id === 'auto-aaad') {
         //   console.log(probe.check.id, probe.check);
         //   console.log('-----------')
         //   const toChecks = checks.filter(x => x.idPrefix === probe.check.idPrefix);

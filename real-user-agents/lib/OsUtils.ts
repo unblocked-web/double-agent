@@ -49,7 +49,7 @@ export function createOsVersion(osName: string, majorVersion: string, minorVersi
     // majorVersion is number so let's cleanup
     let versionString = `${majorVersion}.${minorVersion}`;
     if (osName.startsWith('Mac')) {
-      versionString = macOsVersionAliasMap[versionString] || versionString;
+      versionString = convertMacOsVersionString(versionString);
       [majorVersion, minorVersion] = versionString.split('.');
       namedVersion = macOsVersionToNameMap[versionString];
     } else if (osName.startsWith('Win')) {
@@ -71,3 +71,12 @@ const macOsVersionToNameMap = Object.entries(macOsNameToVersionMap).reduce((obj,
 const winOsVersionToNameMap = Object.entries(winOsNameToVersionMap).reduce((obj, [a, b]) => {
   return Object.assign(obj, { [b]: a });
 }, {});
+
+function  convertMacOsVersionString(versionString: string) {
+  let newVersionString = macOsVersionAliasMap[versionString];
+  if (!newVersionString) {
+    const [majorVersion] = versionString.split('.');
+    newVersionString = macOsVersionAliasMap[`${majorVersion}.*`];
+  }
+  return newVersionString || versionString;
+}
