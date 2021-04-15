@@ -1,6 +1,3 @@
-import IResolvablePromise from '../interfaces/IResolvablePromise';
-import Resolvable from './Resolvable';
-
 export function bindFunctions(self: any): void {
   let object = self;
   do {
@@ -15,11 +12,4 @@ export function bindFunctions(self: any): void {
     }
     object = Reflect.getPrototypeOf(object);
   } while (object && object !== Object.prototype);
-}
-
-export function createPromise<T = any>(
-    timeoutMillis?: number,
-    timeoutMessage?: string,
-): IResolvablePromise<T> {
-  return new Resolvable<T>(timeoutMillis, timeoutMessage);
 }
