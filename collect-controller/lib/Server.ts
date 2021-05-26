@@ -64,7 +64,7 @@ export default class Server {
   }
 
   public start() {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
       this.httpServer.listen(this.httpServerPort, resolve).on('error', err => console.log(err));
     });
   }

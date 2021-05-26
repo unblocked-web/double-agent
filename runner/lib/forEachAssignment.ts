@@ -31,7 +31,8 @@ export default async function forEachAssignment(
       console.log(`Getting assignment %s of %s`, i, assignments.length);
       let assignment;
       try {
-        const response = await assignmentServer<IAssignment>(`/activate/${assignmentId}`, {userId});
+        type T = { assignment: IAssignment };
+        const response = await assignmentServer<T>(`/activate/${assignmentId}`, {userId});
         assignment = response.assignment;
       } catch (error) {
         console.log('ERROR activating assignment: ', error);

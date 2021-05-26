@@ -9,7 +9,7 @@ interface IParams {
   userAgentsToTestPath?: string;
 }
 
-export default async function assignmentServer<T = any>(path: string, params: IParams) {
+export default async function assignmentServer<T = any>(path: string, params: IParams): Promise<T> {
   const controllerDomain = process.env.DA_COLLECT_CONTROLLER_DOMAIN ?? 'localhost';
   const controllerPort = process.env.DA_COLLECT_CONTROLLER_PORT ? Number(process.env.DA_COLLECT_CONTROLLER_PORT) : 3000;
 

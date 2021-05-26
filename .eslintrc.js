@@ -26,11 +26,12 @@ module.exports = {
     'airbnb-typescript/base',
     'plugin:@typescript-eslint/recommended',
     'plugin:eslint-comments/recommended',
-    'plugin:jest/recommended',
     'plugin:promise/recommended',
     'prettier',
-    'prettier/@typescript-eslint',
     'plugin:monorepo-cop/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
   ],
   plugins: ['monorepo-cop'],
   parserOptions: {
@@ -38,6 +39,11 @@ module.exports = {
   },
   settings: {
     'import/external-module-folders': workspacesWithModules,
+    'import/resolver': {
+      typescript: {
+        project: ['tsconfig.json'],
+      },
+    },
   },
   env: {
     node: true,
@@ -74,10 +80,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: [
-          '**/**/test/**',
-          '**/*.test.ts',
-        ],
+        devDependencies:true
       },
     ],
     'eslint-comments/no-unlimited-disable': 'off',
@@ -87,6 +90,7 @@ module.exports = {
     'no-case-declarations': 'off',
     'no-parameter-reassignment': 'off',
     'array-type': 'off',
+    'arrow-body-style':'off',
     'import-name': 'off',
     'default-case': 'off',
     'no-continue': 'off',
