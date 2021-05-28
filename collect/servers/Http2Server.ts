@@ -17,7 +17,11 @@ export interface IHttp2SessionActivity {
 }
 
 export default class Http2Server extends BaseServer {
-  public sessions: { session: http2.ServerHttp2Session; activity: IHttp2SessionActivity[] }[] = [];
+  public sessions: {
+    session: http2.ServerHttp2Session;
+    id: string;
+    activity: IHttp2SessionActivity[];
+  }[] = [];
 
   private http2Server: http2.Http2SecureServer;
 
@@ -32,6 +36,7 @@ export default class Http2Server extends BaseServer {
     const options = <http2.SecureServerOptions>{
       key: Fs.readFileSync(`${certPath}/privkey.pem`),
       cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
+      allowHTTP1: true, // allow http2 for older browsers
     };
 
     this.http2Server = await new Promise<http2.Http2SecureServer>(resolve => {
@@ -50,6 +55,7 @@ export default class Http2Server extends BaseServer {
       server.on('session', session => {
         const sessionActivity = {
           session,
+          id: `${session.socket.remoteAddress}:${session.socket.remotePort}`,
           activity: [],
         };
         const activity = sessionActivity.activity;
@@ -108,6 +114,7 @@ export default class Http2Server extends BaseServer {
               scheme: headers[':scheme'],
               path: headers[':path'],
               flags,
+              weight: stream.state.weight,
               hpackOutboundSize: session.state.deflateDynamicTableSize,
               hpackInboundSize: session.state.inflateDynamicTableSize,
             },

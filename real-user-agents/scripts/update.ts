@@ -5,7 +5,7 @@ import BrowserGenerator from '../data-generators/BrowserGenerator';
 import UserAgentGenerator from '../data-generators/UserAgentGenerator';
 import ISlabData from '../interfaces/ISlabData';
 
-const slabDataDir = process.env.SLAB_DATA_DIR || Path.resolve(__dirname, '../../../slab/.data');
+const slabDataDir = process.env.SLAB_DATA_DIR || Path.resolve(__dirname, '../../../slab/vault/data');
 const slabBasicsDir = Path.join(slabDataDir, 'basics');
 
 const dataDir = Path.resolve(__dirname, '../data');

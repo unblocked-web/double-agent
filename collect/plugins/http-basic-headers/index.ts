@@ -1,7 +1,8 @@
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
-import { CrossDomain, MainDomain } from '@double-agent/collect';
+import { CrossDomain, MainDomain, SubDomain } from '@double-agent/collect';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import Document from '@double-agent/collect/lib/Document';
+import ResourceType from '@double-agent/collect/interfaces/ResourceType';
 import { IProfileData } from './interfaces/IProfile';
 
 export default class HttpHeadersPlugin extends Plugin {
@@ -17,7 +18,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https'].forEach(protocol => { // , 'http2'
+    ['http', 'https', 'http2'].forEach(protocol => {
       pages.push(
         {
           route: this.routes[protocol]['/start'],
@@ -34,15 +35,16 @@ export default class HttpHeadersPlugin extends Plugin {
         },
         {
           route: this.routes[protocol]['/useJsToLoadNextPage'],
-          domain: MainDomain,
+          domain: SubDomain,
           isRedirect: true,
-          name: 'ClickedFromSameDomain',
+          waitForReady: true,
+          name: 'JsLocationFromSameDomain',
         },
         {
           route: this.routes[protocol]['/page2'],
           domain: MainDomain,
           clickNext: true,
-          name: 'JsRedirectedFromSameDomain',
+          name: 'ClickRedirectFromSameDomain',
         },
         {
           route: this.routes[protocol]['/redirectToNextPage'],
@@ -87,6 +89,7 @@ export default class HttpHeadersPlugin extends Plugin {
   }
 
   public saveAndRedirectToNextPage(ctx: IRequestContext) {
+    saveHeadersToProfile(this, ctx);
     ctx.res.writeHead(302, { location: ctx.nextPageLink });
     ctx.res.end();
   }
@@ -109,9 +112,13 @@ export default class HttpHeadersPlugin extends Plugin {
 
 /////// /////////////////
 
-function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
+function saveHeadersToProfile(
+  plugin: Plugin,
+  ctx: IRequestContext,
+  overrideResourceType?: ResourceType,
+) {
   const pathname = ctx.url.pathname;
-  const { domainType, originType, method, referer } = ctx.requestDetails;
+  const { domainType, originType, method, referer, resourceType } = ctx.requestDetails;
   const protocol = ctx.server.protocol;
   const pageName = ctx.page.name;
   const rawHeaders: string[][] = [];
@@ -128,6 +135,7 @@ function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
     protocol,
     domainType,
     originType,
+    resourceType: overrideResourceType ?? resourceType,
     pathname,
     referer,
     rawHeaders,

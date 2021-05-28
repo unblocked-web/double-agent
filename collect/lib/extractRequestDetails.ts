@@ -70,6 +70,48 @@ export default async function extractRequestDetails(
   };
 }
 
+export function getResourceType(httpMethod: string, pathname: string): ResourceType {
+  if (httpMethod === 'OPTIONS') {
+    return ResourceType.Preflight;
+  }
+  if (pathname.endsWith('.map')) {
+    return ResourceType.Other;
+  }
+  if (pathname.endsWith('worker.js')) {
+    return ResourceType.Other;
+  }
+  if (pathname.endsWith('.js')) {
+    return ResourceType.Script;
+  }
+  if (pathname.endsWith('.css')) {
+    return ResourceType.Stylesheet;
+  }
+  if (pathname.endsWith('.png') || pathname.endsWith('.svg')) {
+    return ResourceType.Image;
+  }
+  if (pathname.endsWith('.ico')) {
+    return ResourceType.Ico;
+  }
+  if (pathname.endsWith('.mp3') || pathname.endsWith('.webm')) {
+    return ResourceType.Media;
+  }
+  if (
+    pathname.endsWith('.ttf') ||
+    pathname.endsWith('.woff2') ||
+    pathname.endsWith('.woff') ||
+    pathname.endsWith('.otf')
+  ) {
+    return ResourceType.Font;
+  }
+  if (pathname.includes('fetch')) {
+    return ResourceType.Fetch;
+  }
+  if (pathname.includes('axios') || pathname.endsWith('.json')) {
+    return ResourceType.Xhr;
+  }
+  return ResourceType.Document;
+}
+
 export function getOriginType(referer: URL, hostDomainType: DomainType) {
   if (!referer) return OriginType.None;
   const refererDomainType = getDomainType(referer);
@@ -87,32 +129,6 @@ export function getOriginType(referer: URL, hostDomainType: DomainType) {
   }
 
   return OriginType.CrossSite;
-}
-
-export function getResourceType(httpMethod: string, pathname: string) {
-  if (pathname === '/' || pathname.includes('-page')) {
-    return ResourceType.Document;
-  }
-  if (pathname === '/run' || pathname === '/results' || pathname.includes('-redirect')) {
-    return ResourceType.Redirect;
-  }
-  if (httpMethod === 'OPTIONS') {
-    return ResourceType.Preflight;
-  }
-  if (pathname.endsWith('.js')) {
-    return ResourceType.Script;
-  }
-  if (pathname.endsWith('.css')) {
-    return ResourceType.Stylesheet;
-  }
-  if (pathname.endsWith('.png') || pathname.endsWith('.svg')) {
-    return ResourceType.Image;
-  }
-  if (pathname.endsWith('.ico')) {
-    return ResourceType.Ico;
-  }
-
-  return ResourceType.Xhr;
 }
 
 function parseHeaders(rawHeaders: string[]) {

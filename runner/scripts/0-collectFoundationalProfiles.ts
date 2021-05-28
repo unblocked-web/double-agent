@@ -9,7 +9,7 @@ import assignmentServer from '../lib/assignmentServer';
 import saveAssignmentToProfileDir from '../lib/saveAssignmentToProfileDir';
 import externalUserAgentConfig from '../data/external/userAgentConfig.json';
 
-const slabDataDir = process.env.SLAB_DATA_DIR || Path.resolve(__dirname, '../../../slab/.data');
+const slabDataDir = process.env.SLAB_DATA_DIR || Path.resolve(__dirname, '../../../slab/vault/data');
 const slabProfilesDir = Path.join(slabDataDir, 'profiles');
 
 importSlabProfiles();

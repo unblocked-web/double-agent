@@ -25,7 +25,15 @@ async function runPluginPages(agent: Agent, assignment: IAssignment, pages: ISes
   for (const page of pages) {
     lastPage = page;
     const step = `[${assignment.num}.${counter}]`;
-    if (page.isRedirect) continue;
+    if (page.isRedirect) {
+      if (page.waitForElementSelector) {
+        console.log('%s waitForElementSelector on redirect -- %s', step, page.waitForElementSelector);
+        const element = agent.document.querySelector(page.waitForElementSelector);
+        await agent.waitForElement(element, { waitForVisible: true, timeoutMs: 60e3 });
+      }
+
+      continue;
+    }
     if (isFirst || page.url !== (await agent.url)) {
       console.log('%s GOTO -- %s', step, page.url);
       const resource = await agent.goto(page.url);

@@ -1,7 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import http2 from 'http2';
 import * as fs from 'fs';
-import { URL } from 'url';
 import { createUserAgentIdFromString } from '@double-agent/config';
 import IRequestContext from '../interfaces/IRequestContext';
 import extractRequestDetails from './extractRequestDetails';
@@ -77,8 +76,13 @@ export default function createHttpRequestHandler(
 }
 
 function sendPreflight(ctx: IRequestContext) {
+  let origin = ctx.req.headers.origin;
+  // set explicit domain to deal with strict origin
+  if (origin === 'null') {
+    origin = `http${ctx.requestDetails.secureDomain ? 's' : ''}://${ctx.req.headers.host}`;
+  }
   ctx.res.writeHead(204, {
-    'Access-Control-Allow-Origin': ctx.req.headers.origin,
+    'Access-Control-Allow-Origin': origin,
     'Access-Control-Allow-Methods': 'GET,POST',
     'Access-Control-Allow-Headers': ctx.req.headers['access-control-request-headers'] ?? '',
     'Content-Length': 0,
