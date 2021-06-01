@@ -14,7 +14,18 @@ export default class HttpHeadersPlugin extends Plugin {
     this.registerRoute('all', '/linkToNext', this.linkToNextPage);
     this.registerRoute('all', '/useJsToLoadNextPage', this.saveAndUseJsToLoadNextPage);
     this.registerRoute('all', '/redirectToNextPage', this.saveAndRedirectToNextPage);
-    this.registerRoute('all', '/gotoNext', this.showGotoNextPage);
+    this.registerRoute('all', '/setCookies1', this.saveSetCookiesAndLinkToNextPage);
+    this.registerRoute('all', '/setCookies2', this.saveSetCookiesAndLinkToNextPage);
+    this.registerRoute('all', '/setCookies3', this.saveSetCookiesAndLinkToNextPage);
+    this.registerRoute('all', '/page1CookieSameOrigin', this.saveAndLinkToNextPage);
+    this.registerRoute('all', '/page1Cookie', this.saveAndLinkToNextPage);
+    this.registerRoute('all', '/page2Cookie', this.saveAndLinkToNextPage);
+    this.registerRoute('all', '/page3Cookie', this.saveAndLinkToNextPage);
+    this.registerRoute('all', '/page1PostSameOrigin', this.saveAndPostToNextPage);
+    this.registerRoute('all', '/page1Post', this.saveAndPostToNextPage);
+    this.registerRoute('all', '/page2Post', this.saveAndPostToNextPage);
+    this.registerRoute('all', '/page3Post', this.saveAndLinkToNextPage);
+    this.registerRoute('all', '/cleanCookies', this.cleanCookiesAndLinkToNextPage);
 
     const pages: IPluginPage[] = [];
 
@@ -36,7 +47,6 @@ export default class HttpHeadersPlugin extends Plugin {
         {
           route: this.routes[protocol]['/useJsToLoadNextPage'],
           domain: SubDomain,
-          isRedirect: true,
           waitForReady: true,
           name: 'JsLocationFromSameDomain',
         },
@@ -63,7 +73,86 @@ export default class HttpHeadersPlugin extends Plugin {
           clickNext: true,
           name: 'LoadedSamePageAgain',
         },
-        { route: this.routes[protocol]['/gotoNext'], domain: MainDomain, waitForReady: true },
+        {
+          route: this.routes[protocol]['/setCookies1'],
+          domain: MainDomain,
+          clickNext: true,
+          name: 'SetCookiesMainDomain',
+        },
+        {
+          route: this.routes[protocol]['/setCookies2'],
+          domain: SubDomain,
+          clickNext: true,
+          name: 'SetCookiesSubDomain',
+        },
+        {
+          route: this.routes[protocol]['/setCookies3'],
+          domain: CrossDomain,
+          clickNext: true,
+          name: 'SetCookiesCrossDomain',
+        },
+        {
+          route: this.routes[protocol]['/page1CookieSameOrigin'],
+          domain: MainDomain,
+          clickNext: true,
+          name: 'CookieClickedFromSameOrigin',
+        },
+        {
+          route: this.routes[protocol]['/page1Cookie'],
+          domain: MainDomain,
+          clickNext: true,
+          name: 'CookieClickedFromSameDomain',
+        },
+        {
+          route: this.routes[protocol]['/page2Cookie'],
+          domain: SubDomain,
+          clickNext: true,
+          name: 'CookieClickedFromSubDomain',
+        },
+        {
+          route: this.routes[protocol]['/page3Cookie'],
+          domain: CrossDomain,
+          waitForReady: true,
+          name: 'CookieClickedFromCrossDomain',
+        },
+        {
+          route: this.routes[protocol]['/page1PostSameOrigin'],
+          domain: MainDomain,
+          clickNext: true,
+          name: 'ClickedToPostFromSameDomain',
+        },
+        {
+          route: this.routes[protocol]['/page1Post'],
+          domain: MainDomain,
+          clickNext: true,
+          name: 'PostFromSameDomain',
+        },
+        {
+          route: this.routes[protocol]['/page2Post'],
+          domain: SubDomain,
+          clickNext: true,
+          name: 'PostFromSubDomain',
+        },
+        {
+          route: this.routes[protocol]['/page3Post'],
+          domain: CrossDomain,
+          clickNext: true,
+          name: 'PostFromCrossDomain',
+        },
+        {
+          route: this.routes[protocol]['/cleanCookies'],
+          domain: MainDomain,
+          clickNext: true,
+        },
+        {
+          route: this.routes[protocol]['/cleanCookies'],
+          domain: SubDomain,
+          clickNext: true,
+        },
+        {
+          route: this.routes[protocol]['/cleanCookies'],
+          domain: CrossDomain,
+        },
       );
     });
 
@@ -85,6 +174,32 @@ export default class HttpHeadersPlugin extends Plugin {
     const document = new Document(ctx);
     document.addNextPageClick();
     saveHeadersToProfile(this, ctx);
+    ctx.res.end(document.html);
+  }
+
+  public saveAndPostToNextPage(ctx: IRequestContext) {
+    const document = new Document(ctx);
+    document.injectBodyTag(`<form action="${ctx.nextPageLink}" method="post">
+  <input type="hidden" value="true" name="hidden-input"/>
+  <input type="submit" id="${document.clickElementId}" name="submit">
+</form>
+`);
+    saveHeadersToProfile(this, ctx);
+    ctx.res.end(document.html);
+  }
+
+  public saveSetCookiesAndLinkToNextPage(ctx: IRequestContext) {
+    const document = new Document(ctx);
+    document.addNextPageClick();
+    saveHeadersToProfile(this, ctx);
+    ctx.res.writeHead(200, { 'set-cookie': 'cookie1=true' });
+    ctx.res.end(document.html);
+  }
+
+  public cleanCookiesAndLinkToNextPage(ctx: IRequestContext) {
+    const document = new Document(ctx);
+    document.addNextPageClick();
+    ctx.res.writeHead(200, { 'set-cookie': 'cookie1=true; expires=Thu, 01 Jan 1970 00:00:00 GMT' });
     ctx.res.end(document.html);
   }
 

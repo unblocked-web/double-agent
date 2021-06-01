@@ -12,7 +12,7 @@ export default class DefaultValueCheck extends BaseCheck {
 
   constructor(identity: ICheckIdentity, meta: ICheckMeta, value: string[]) {
     super(identity, meta);
-    this.value = value;
+    this.value = value.sort();
   }
 
   public get signature() {

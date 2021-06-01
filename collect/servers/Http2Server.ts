@@ -36,7 +36,7 @@ export default class Http2Server extends BaseServer {
     const options = <http2.SecureServerOptions>{
       key: Fs.readFileSync(`${certPath}/privkey.pem`),
       cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
-      allowHTTP1: true, // allow http2 for older browsers
+      allowHTTP1: true, // allow http1 for older browsers
     };
 
     this.http2Server = await new Promise<http2.Http2SecureServer>(resolve => {
