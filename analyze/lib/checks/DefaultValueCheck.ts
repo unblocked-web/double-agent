@@ -15,8 +15,8 @@ export default class DefaultValueCheck extends BaseCheck {
     this.value = value;
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.value.join('&')}`;
+  public get signature() {
+    return `${this.id}:${this.value.join('&')}`;
   }
 
   public get args() {

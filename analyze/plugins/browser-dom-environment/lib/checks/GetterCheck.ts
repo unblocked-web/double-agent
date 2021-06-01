@@ -17,9 +17,9 @@ export default class GetterCheck extends BaseCheck {
     this.data = data;
   }
 
-  public get id() {
+  public get signature() {
     for (const key of Object.keys(this.data)) {
-      return `${this.idPrefix}:${key}=${this.data[key]}`;
+      return `${this.id}:${key}=${this.data[key]}`;
     }
   }
 

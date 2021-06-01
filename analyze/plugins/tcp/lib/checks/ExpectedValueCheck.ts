@@ -22,8 +22,8 @@ export default class ExpectedValueCheck extends BaseCheck {
     this.value = value;
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.expectedValue}`;
+  public get signature() {
+    return `${this.id}:${this.expectedValue}`;
   }
 
   public get args() {

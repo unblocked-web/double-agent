@@ -11,8 +11,8 @@ export default class BooleanCheck extends BaseCheck {
     this.value = value;
   }
 
-  public get id() {
-    return `${this.idPrefix}:value=${this.value}`;
+  public get signature() {
+    return `${this.id}:value=${this.value}`;
   }
 
   public get args() {

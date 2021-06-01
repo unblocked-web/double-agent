@@ -15,8 +15,8 @@ export default class KeyOrderCheck extends BaseCheck {
     this.keys = keys;
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.keys.join(',')}`;
+  public get signature() {
+    return `${this.id}:${this.keys.join(',')}`;
   }
 
   public get args() {

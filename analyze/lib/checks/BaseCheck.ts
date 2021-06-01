@@ -12,11 +12,11 @@ export default abstract class BaseCheck {
     this.meta = meta;
   }
 
-  abstract get id(): string;
+  abstract get signature(): string;
 
   abstract get args(): any[];
 
-  public get idPrefix(): string {
+  public get id(): string {
     const  { protocol, httpMethod, path } = this.meta;
     return [protocol, httpMethod, path, this.constructor.name].filter(x => x).join(':');
   }
@@ -28,8 +28,8 @@ export default abstract class BaseCheck {
   }
 
   protected ensureComparableCheck(check: BaseCheck | null) {
-    if (check && this.id !== check.id) {
-      throw new Error(`Check IDs do not match: ${this.id} !== ${check.id}`);
+    if (check && this.signature !== check.signature) {
+      throw new Error(`Check Signatures do not match: ${this.signature} !== ${check.signature}`);
     }
   }
 }

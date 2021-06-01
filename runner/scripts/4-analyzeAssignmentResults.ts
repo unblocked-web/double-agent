@@ -45,7 +45,7 @@ function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]) {
     const filePath = Path.resolve(saveToDir, `${pluginId}.json`);
     Fs.writeFileSync(filePath, JSON.stringify(flagsByPluginId[pluginId], null, 2));
 
-    const idsFilePath = Path.resolve(saveToDir, `${pluginId}-ids.json`);
-    Fs.writeFileSync(idsFilePath, JSON.stringify(flagsByPluginId[pluginId].map(x => x.checkId), null, 2));
+    const signaturesFilePath = Path.resolve(saveToDir, `${pluginId}-signatures.json`);
+    Fs.writeFileSync(signaturesFilePath, JSON.stringify(flagsByPluginId[pluginId].map(x => x.checkSignature), null, 2));
   }
 }

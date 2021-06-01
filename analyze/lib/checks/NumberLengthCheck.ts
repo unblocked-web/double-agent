@@ -11,8 +11,8 @@ export default class NumberLengthCheck extends BaseCheck {
     this.length = length;
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.length}`;
+  public get signature() {
+    return `${this.id}:${this.length}`;
   }
 
   public get args() {

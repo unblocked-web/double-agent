@@ -18,7 +18,7 @@ export default class UniqueFingerprintCheck extends BaseCheck {
     this.fingerprint = fingerprint;
   }
 
-  public get id() {
+  public get signature() {
     return `${this.meta}:${this.constructor.name}`;
   }
 

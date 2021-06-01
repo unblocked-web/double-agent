@@ -20,7 +20,7 @@ export default class UnreadableCookieCheck extends BaseCheck {
     this.getDetails = getDetails;
   }
 
-  public get id() {
+  public get signature() {
     const setDetails = Object.keys(this.setDetails)
       .sort()
       .map(k => this.setDetails[k])
@@ -29,7 +29,7 @@ export default class UnreadableCookieCheck extends BaseCheck {
       .sort()
       .map(k => this.getDetails[k])
       .join(',');
-    return `${this.idPrefix}:${setDetails};${getDetails}`;
+    return `${this.id}:${setDetails};${getDetails}`;
   }
 
   public get args() {

@@ -17,9 +17,9 @@ export default class ArrayOrderIndexCheck extends BaseCheck {
     this.orderIndex = orderIndex;
   }
 
-  public get id() {
+  public get signature() {
     const index = this.orderIndex.map(i => i.join(',')).join(';');
-    return `${this.idPrefix}:${index}`;
+    return `${this.id}:${index}`;
   }
 
   public get args() {

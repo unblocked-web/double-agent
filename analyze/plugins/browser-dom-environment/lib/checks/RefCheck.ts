@@ -11,8 +11,8 @@ export default class RefCheck extends BaseCheck {
     this.value = value;
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.value}`;
+  public get signature() {
+    return `${this.id}:${this.value}`;
   }
 
   public get args() {

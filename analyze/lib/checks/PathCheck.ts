@@ -8,7 +8,7 @@ export default class PathCheck extends BaseCheck {
     super(identity, meta);
   }
 
-  public get id() {
+  public get signature() {
     return `${this.meta}:${this.constructor.name}`;
   }
 

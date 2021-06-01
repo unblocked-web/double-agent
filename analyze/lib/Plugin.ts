@@ -50,7 +50,12 @@ export default abstract class Plugin {
     layerKey = layerKey.toLowerCase();
     const flags: IResultFlag[] = [];
     const checkType = profileCountOverTime ? CheckType.OverTime : CheckType.Individual;
-    const checksById = checks.reduce((byId, c) => Object.assign(byId, { [c.id]: c }), {});
+    const checksBySignature: { [signature: string]: BaseCheck} = {}
+    const checksById: { [id: string]: BaseCheck} = {};
+    for (const check of checks) {
+      checksById[check.id] = check;
+      checksBySignature[check.signature] = check;
+    }
     const layer = this.layers.find(x => x.key === layerKey);
     if (!layer) throw new Error(`${this.id} plugin missing layer key: ${layerKey}`);
 
@@ -63,16 +68,11 @@ export default abstract class Plugin {
     for (const probeBucket of probeBuckets) {
       for (const probe of probeBucket.probes) {
         if (probe.checkType !== checkType) continue;
-        const toCheck = checksById[probe.check.id];
+        const toCheck = checksBySignature[probe.check.signature];
         const humanScore = probe.check.generateHumanScore(toCheck, profileCountOverTime);
-        // if (humanScore < 100 && probe.id === 'auto-aaad') {
-        //   console.log(probe.check.id, probe.check);
-        //   console.log('-----------')
-        //   const toChecks = checks.filter(x => x.idPrefix === probe.check.idPrefix);
-        //   const consoleChecks = toChecks.length ? toChecks : checks.map(x => ({ idPrefix: x.idPrefix, ...x }));
-        //   console.log(toCheck || consoleChecks);
-        // }
+
         if (humanScore < 100) {
+          const invalidCheckSignature = checksById[probe.check.id]?.signature ?? '[None Provided]';
           const probeId = probe.id;
           const probeBucketId = probeBucket.id;
           flags.push({
@@ -82,6 +82,8 @@ export default abstract class Plugin {
             probeId,
             probeBucketId,
             checkId: probe.check.id,
+            checkSignature: probe.check.signature,
+            invalidCheckSignature,
             checkName: probe.checkName,
             checkType: probe.checkType,
             checkMeta: probe.checkMeta,
@@ -102,6 +104,8 @@ export interface IResultFlag {
   pluginId: string;
   probeBucketId: string;
   checkId: string;
+  checkSignature: string;
+  invalidCheckSignature: string;
   checkName: string;
   checkType: ICheckType;
   checkMeta: ICheckMeta;
