@@ -6,7 +6,7 @@ import BaseCheck from '@double-agent/analyze/lib/checks/BaseCheck';
 import ReadableCookieCheck from './checks/ReadableCookieCheck';
 import UnreadableCookieCheck from './checks/UnreadableCookieCheck';
 import ICookieSetDetails from '../interfaces/ICookieSetDetails';
-import optionalCheckIds from './optionalCheckIds.json';
+import optionalCheckSignatures from './optionalCheckSignatures.json';
 
 export default class CheckGenerator {
   public readonly checks = [];
@@ -93,7 +93,7 @@ export default class CheckGenerator {
 
   private addCheck(check: BaseCheck) {
     const browserId = this.profile.userAgentId.split('--')[1];
-    if (optionalCheckIds[browserId] && optionalCheckIds[browserId].includes(check.id)) return;
+    if (optionalCheckSignatures[browserId] && optionalCheckSignatures[browserId].includes(check.signature)) return;
     this.checks.push(check);
   }
 }

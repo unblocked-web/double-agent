@@ -22,9 +22,9 @@ export function createUserAgentIdFromIds(osId: string, browserId: string) {
   return `${osId}--${browserId}`;
 }
 
-interface IProbeIdsMap {
+interface IProbeIdsMap{
   [pluginId: string]: {
-    [checkId: string]: string;
+    [checkSignature: string]: string;
   }
 }
 

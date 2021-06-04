@@ -102,30 +102,9 @@ export default class HttpHeadersPlugin extends Plugin {
 
 /////// /////////////////
 
-// ToDo: Set ResourceType
-// function getResourceCategory(request: IRequestDetails) {
-//   const siteType = request.secureDomain ? 'Https' : 'Http';
-//   switch (request.resourceType) {
-//     case ResourceType.Document:
-//     case ResourceType.Redirect:
-//       return `Standard ${siteType} Headers`;
-//     case ResourceType.WebsocketUpgrade:
-//       return 'Websocket Headers';
-//     case ResourceType.Stylesheet:
-//     case ResourceType.Script:
-//     case ResourceType.Image:
-//       return 'Asset Headers';
-//     case ResourceType.Preflight:
-//       return 'Cors Preflight Headers';
-//     case ResourceType.Xhr:
-//       return 'Xhr Headers';
-//     default:
-//       return null;
-//   }
-
 function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
   const pathname = ctx.url.pathname;
-  const { domainType, originType, method, referer } = ctx.requestDetails;
+  const { domainType, originType, method, referer, resourceType } = ctx.requestDetails;
   const protocol = ctx.server.protocol;
   const pageName = undefined;
   const rawHeaders: string[][] = [];
@@ -142,6 +121,7 @@ function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
     protocol,
     domainType,
     originType,
+    resourceType,
     pathname,
     referer,
     rawHeaders,

@@ -7,7 +7,7 @@ const dataDir = Path.resolve(__dirname, '../data');
 
 (async function run() {
   const foundationalProfilesDir = Path.resolve(dataDir, 'external/0-foundational-profiles');
-  const foundationalProbesDir = Path.resolve(__dirname, 'external/1-foundational-probes');
+  const foundationalProbesDir = Path.resolve(dataDir, 'external/1-foundational-probes');
   if (!Fs.existsSync(foundationalProbesDir)) Fs.mkdirSync(foundationalProbesDir, { recursive: true });
 
   Config.probesDataDir = foundationalProbesDir;

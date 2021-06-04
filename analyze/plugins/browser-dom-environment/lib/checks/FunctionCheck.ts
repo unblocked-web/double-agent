@@ -25,11 +25,11 @@ export default class FunctionCheck extends BaseCheck {
     this.invocation = invocation;
   }
 
-  public get id() {
+  public get signature() {
     const methods = Object.entries(this.methods)
       .map((name, value) => `${name}=${value}`)
       .join(';');
-    return `${this.idPrefix}:codeString=${this.codeString};${methods};invocation=${this.invocation}`;
+    return `${this.id}:codeString=${this.codeString};${methods};invocation=${this.invocation}`;
   }
 
   public get args() {

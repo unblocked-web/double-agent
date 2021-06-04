@@ -40,6 +40,10 @@ export default class Document {
     this.clickToNextPage = true;
   }
 
+  public get clickElementId(): string {
+    return clickElementId;
+  }
+
   public send() {
     this.ctx.res.writeHead(200, {
       'Cache-Control': 'no-cache, no-store, must-revalidate',

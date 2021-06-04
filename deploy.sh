@@ -16,6 +16,7 @@ rsync -avzhm -e "ssh -i $SERVER_PEM" --exclude-from '.rsyncignore' . root@$REMOT
 echo "-- REMOTE SCRIPT ---------------------------------------------------------------"
 ssh -i "$SERVER_PEM" "root@$REMOTE" /bin/bash << EOF
   killall node
+  rm -rf /tmp/double-agent-download-data/
   cd double-agent
   source "\$HOME/.nvm/nvm.sh"
   yarn

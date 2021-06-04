@@ -15,8 +15,8 @@ export default class ArrayCheck extends BaseCheck {
     this.hasLengthProperty = hasLengthProperty;
   }
 
-  public get id() {
-    return `${this.idPrefix}:hasLengthProperty=${this.hasLengthProperty}`;
+  public get signature() {
+    return `${this.id}:hasLengthProperty=${this.hasLengthProperty}`;
   }
 
   public get args() {

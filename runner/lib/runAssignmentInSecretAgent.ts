@@ -20,7 +20,12 @@ export default async function runAssignmentInSecretAgent(agent: Agent, assignmen
   }
 }
 
-async function runPluginPages(agent: Agent, assignment: IAssignment, pages: ISessionPage[], counter: number) {
+async function runPluginPages(
+  agent: Agent,
+  assignment: IAssignment,
+  pages: ISessionPage[],
+  counter: number,
+) {
   let isFirst = true;
   for (const page of pages) {
     lastPage = page;

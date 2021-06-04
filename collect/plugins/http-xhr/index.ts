@@ -54,7 +54,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https'].forEach(protocol => { // http2
+    ['http', 'https', 'http2'].forEach(protocol => {
       pages.push({ route: this.routes[protocol]['/run'], waitForReady: true });
     });
 
@@ -97,7 +97,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
 function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
   const pathname = ctx.url.pathname;
-  const { domainType, originType, method, referer } = ctx.requestDetails;
+  const { domainType, originType, method, referer, resourceType } = ctx.requestDetails;
   const protocol = ctx.server.protocol;
   const pageName = undefined;
   const rawHeaders: string[][] = [];
@@ -114,6 +114,7 @@ function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
     protocol,
     domainType,
     originType,
+    resourceType,
     pathname,
     referer,
     rawHeaders,

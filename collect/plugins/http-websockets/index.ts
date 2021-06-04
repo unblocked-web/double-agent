@@ -1,6 +1,7 @@
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import Document from '@double-agent/collect/lib/Document';
+import ResourceType from '@double-agent/collect/interfaces/ResourceType';
 import { IProfileData } from './interfaces/IProfile';
 import websocketsScript from './websocketsScript';
 
@@ -49,6 +50,7 @@ function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
     method,
     protocol,
     domainType,
+    resourceType: ResourceType.WebsocketUpgrade,
     originType,
     pathname,
     referer,

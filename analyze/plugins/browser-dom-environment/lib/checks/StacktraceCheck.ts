@@ -15,8 +15,8 @@ export default class StacktraceCheck extends BaseCheck {
     this.errorClass = stacktrace.split('\n').shift();
   }
 
-  public get id() {
-    return `${this.idPrefix}:errorClass=${this.errorClass}`;
+  public get signature() {
+    return `${this.id}:errorClass=${this.errorClass}`;
   }
 
   public get args() {

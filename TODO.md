@@ -14,9 +14,6 @@ http/headers + http/cookies:
 * Regular Http post on page (form)
 * Http delete/update (trigger from forms?)
 * Direct loads without referrers
-* Fonts 
-* Audio
-* Video
 * Prefetch
 * Signed Exchange
 * Http2 headers/trailers

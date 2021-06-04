@@ -2,7 +2,7 @@ import BaseCheck, {
   CheckType,
   ICheckIdentity,
   ICheckMeta,
-} from '@double-agent/analyze/lib/checks/BaseCheck';
+} from './BaseCheck';
 
 export default class DefaultValueCheck extends BaseCheck {
   public readonly prefix = 'DVAL';
@@ -12,11 +12,11 @@ export default class DefaultValueCheck extends BaseCheck {
 
   constructor(identity: ICheckIdentity, meta: ICheckMeta, value: string[]) {
     super(identity, meta);
-    this.value = value;
+    this.value = value.sort();
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.value.join('&')}`;
+  public get signature() {
+    return `${this.id}:${this.value.join('&')}`;
   }
 
   public get args() {

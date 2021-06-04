@@ -13,8 +13,8 @@ export default class NumberCheck extends BaseCheck {
     this.label = label;
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.value}`;
+  public get signature() {
+    return `${this.id}:${this.value}`;
   }
 
   public get args() {

@@ -65,6 +65,8 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
   public id: string;
   public dir: string;
   public summary: string;
+  public outputFiles = 1;
+
   public pagesByAssignmentType: IPagesByAssignmentType = {
     [AssignmentType.Individual]: [],
     [AssignmentType.OverTime]: [],

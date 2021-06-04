@@ -15,7 +15,7 @@ export default class SessionFingerprintCheck extends BaseCheck {
     this.fingerprints = fingerprints;
   }
 
-  public get id() {
+  public get signature() {
     return `${this.meta}:${this.constructor.name}`;
   }
 

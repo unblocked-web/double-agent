@@ -5,6 +5,7 @@ import { MainDomain, SubDomain, CrossDomain } from '@double-agent/collect';
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
 import Document from '@double-agent/collect/lib/Document';
 import { cleanDomains, DomainType } from '@double-agent/collect/lib/DomainUtils';
+import IPlugin from '@double-agent/collect/interfaces/IPlugin';
 import {
   CookieGetter,
   CookieSetter,
@@ -18,7 +19,11 @@ import {
 export default class HttpCookiesPlugin extends Plugin {
   public initialize() {
     this.registerRoute('allHttp1', '/start', this.start);
-    this.registerRoute('allHttp1', '/saveLoadAssetsAndReadFromJs', this.saveLoadAssetsAndReadFromJs);
+    this.registerRoute(
+      'allHttp1',
+      '/saveLoadAssetsAndReadFromJs',
+      this.saveLoadAssetsAndReadFromJs,
+    );
     this.registerRoute('allHttp1', '/saveFromJs', this.saveFromJs);
     this.registerRoute('allHttp1', '/test.css', this.saveFromCss);
     this.registerRoute('allHttp1', '/redirectToNextPage', this.redirectToNextPage);
@@ -93,6 +98,11 @@ export default class HttpCookiesPlugin extends Plugin {
     });
 
     this.registerPages(...pages);
+  }
+
+  public changePluginOrder(plugins: IPlugin[]) {
+    plugins.splice(plugins.indexOf(this), 1);
+    plugins.push(this);
   }
 
   private start(ctx: IRequestContext) {

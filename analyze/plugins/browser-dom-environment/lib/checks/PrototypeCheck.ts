@@ -15,8 +15,8 @@ export default class PrototypeCheck extends BaseCheck {
     this.prototypes = (prototypes ?? []).sort();
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.prototypes.join(',')}`;
+  public get signature() {
+    return `${this.id}:${this.prototypes.join(',')}`;
   }
 
   public get args() {

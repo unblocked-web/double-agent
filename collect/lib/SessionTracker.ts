@@ -1,4 +1,3 @@
-import { URL } from 'url';
 import { IAssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
 import http from 'http';
 import * as http2 from 'http2';

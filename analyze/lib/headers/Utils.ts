@@ -1,15 +1,3 @@
-export function extractOfficialHeaderKeys(rawHeaders: string[][]) {
-  return rawHeaders
-    .map(x => x[0])
-    .filter(x => {
-      const lower = x.toLowerCase();
-      for (const prefix of officialHeaderPrefixes) {
-        if (lower.startsWith(prefix)) return true;
-      }
-      return officialHeaderKeys.has(lower);
-    });
-}
-
 export function isOfficialHeader(key: string) {
   const keyLower = key.toLowerCase();
   for (const prefix of officialHeaderPrefixes) {
@@ -18,37 +6,29 @@ export function isOfficialHeader(key: string) {
   return officialHeaderKeys.has(keyLower);
 }
 
-// ToDo: Need to add these into officialDefaultValueKeys
-// if (ctx.requestDetails.resourceType === ResourceType.WebsocketUpgrade) {
-//   extraDefaultHeaders = ['Upgrade', 'Sec-WebSocket-Version', 'Sec-WebSocket-Extensions'];
-// }
-
 export function isOfficialDefaultValueKey(key: string) {
   return officialDefaultValueKeys.has(key.toLowerCase());
 }
 
 /////// /////////
 
-const officialHeaderPrefixes = new Set([
+const officialHeaderPrefixes = [
   'sec-', // sec-fetch-mode, sec-fetch-site, sec-fetch-user, sec-origin-policy
   'proxy-', // proxy-authenticate, proxy-authorization, proxy-connection
-]);
+  'access-control-',
+];
 
 const officialHeaderKeys = new Set([
+  ':method',
+  ':authority',
+  ':scheme',
+  ':path',
   'accept',
   'accept-charset',
   'accept-encoding',
   'accept-language',
   'accept-patch',
   'accept-ranges',
-  'access-control-allow-credentials',
-  'access-control-allow-headers',
-  'access-control-allow-methods',
-  'access-control-allow-origin',
-  'access-control-expose-headers',
-  'access-control-max-age',
-  'access-control-request-headers',
-  'access-control-request-method',
   'age',
   'allow',
   'alt-svc',
@@ -98,12 +78,16 @@ const officialHeaderKeys = new Set([
 
 const officialDefaultValueKeys = new Set([
   'connection',
-  'accept',
   'sec-fetch-site',
   'sec-fetch-mode',
   'sec-fetch-user',
   'sec-fetch-dest',
-  'upgrade-insecure-requests',
+  'sec-ch-ua-mobile',
+  'sec-websocket-version',
+  'sec-websocket-extensions',
+  'accept',
   'accept-encoding',
   'accept-language', // Chrome headless will send en-US, while headed will send en-US,en;q=0.9 or en-US,en;q=0.9,und;q=0.8
+  'upgrade',
+  'upgrade-insecure-requests',
 ]);

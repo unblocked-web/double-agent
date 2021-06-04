@@ -9,7 +9,7 @@ export default async function saveAssignmentToProfileDir(assignment: IAssignment
   const filesDir = Path.join(baseDir, userId);
   if (!Fs.existsSync(filesDir)) Fs.mkdirSync(filesDir, { recursive: true });
 
-  await new Promise(resolve => {
+  await new Promise<void>(resolve => {
     filesStream.pipe(unzipper.Extract({ path: filesDir }));
     filesStream.on('finish', () => resolve());
   });

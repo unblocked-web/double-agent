@@ -16,7 +16,7 @@ const dataDir = Path.join(__dirname, '../data');
 
 const externalBaseDir = `${dataDir}/external`;
 const externalUserAgentsToTest = collectUserAgentsToTest(externalBaseDir, externalUserAgentConfig);
-const externalUserAgentsToTestDir = Path.join(__dirname, '../data/external/2-user-agents-to-test/');
+const externalUserAgentsToTestDir = Path.join(externalBaseDir, '/2-user-agents-to-test/');
 const externalUserAgentsToTestPath = Path.join(externalUserAgentsToTestDir, 'userAgentsToTest.json')
 if (!Fs.existsSync(externalUserAgentsToTestDir)) Fs.mkdirSync(externalUserAgentsToTestDir);
 Fs.writeFileSync(externalUserAgentsToTestPath, JSON.stringify(externalUserAgentsToTest, null, 2));

@@ -11,8 +11,8 @@ export default class FlagsCheck extends BaseCheck {
     this.flags = (flags ?? []).sort();
   }
 
-  public get id() {
-    return `${this.idPrefix}:${this.flags.join('')}`;
+  public get signature() {
+    return `${this.id}:${this.flags.join('')}`;
   }
 
   public get args() {

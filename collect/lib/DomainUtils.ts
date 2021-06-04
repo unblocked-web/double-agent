@@ -2,10 +2,10 @@ import { URL } from 'url';
 import { CrossDomain, MainDomain, SubDomain, TlsDomain } from '../index';
 
 export enum DomainType {
-  MainDomain = 'MainDomain', // eslint-disable-line no-shadow
-  SubDomain = 'SubDomain', // eslint-disable-line no-shadow
-  TlsDomain = 'TlsDomain', // eslint-disable-line no-shadow
-  CrossDomain = 'CrossDomain', // eslint-disable-line no-shadow
+  MainDomain = 'MainDomain', // eslint-disable-line @typescript-eslint/no-shadow
+  SubDomain = 'SubDomain', // eslint-disable-line @typescript-eslint/no-shadow
+  TlsDomain = 'TlsDomain', // eslint-disable-line @typescript-eslint/no-shadow
+  CrossDomain = 'CrossDomain', // eslint-disable-line @typescript-eslint/no-shadow
 }
 
 export function getDomainType(url: URL | string) {

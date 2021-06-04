@@ -8,8 +8,8 @@ export default class AutomationCheck extends BaseCheck {
     super(identity, meta);
   }
 
-  public get id() {
-    return this.idPrefix;
+  public get signature() {
+    return this.id;
   }
 
   public get args() {
