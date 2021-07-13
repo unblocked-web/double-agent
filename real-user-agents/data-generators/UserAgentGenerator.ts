@@ -11,6 +11,8 @@ import { FILE_PATH as BROWSER_FILE_PATH } from '../lib/Browsers';
 import extractUserAgentMeta from '../lib/extractUserAgentMeta';
 import ISlabData from '../interfaces/ISlabData';
 
+const compareVersions = require('compare-versions');
+
 export default class UserAgentGenerator {
   private byId: { [id: string]: IUserAgent } = {};
 
@@ -64,17 +66,23 @@ export default class UserAgentGenerator {
     const matches = userAgentString.match(regexp);
     const fullVersion = matches[1];
     const patchVersion = matches[2];
-    const builds = this.slabData.chromiumBuildVersions
-      .filter(x => x.startsWith(`${version.major}.${version.minor}.${patchVersion}`))
-      .sort()
-      .reverse();
-    if (!builds.some(x => userAgentString.includes(x))) {
+    const buildVersions = this.slabData.chromiumBuildVersions.filter(x =>
+      x.startsWith(`${version.major}.${version.minor}.${patchVersion}`),
+    );
+
+    if (!buildVersions.some(x => userAgentString.includes(x))) {
       throw new Error(`COULD NOT FIND BUILD: ${userAgentString}`);
     }
-    const strings = [userAgentString];
 
-    for (const build of builds) {
-      strings.push(userAgentString.replace(`Chrome/${fullVersion}`, `Chrome/${build}`));
+    const strings: string[] = [];
+    const versionsToBuild = buildVersions
+        .sort(compareVersions)
+        .reverse()
+        .slice(0, 10);
+
+    for (const versionToBuild of versionsToBuild) {
+      const str = userAgentString.replace(`Chrome/${fullVersion}`, `Chrome/${versionToBuild}`);
+      if (!strings.includes(str)) strings.push(str);
     }
 
     return strings;
