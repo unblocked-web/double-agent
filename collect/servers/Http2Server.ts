@@ -13,7 +13,7 @@ const certPath = process.env.LETSENCRYPT
 
 export interface IHttp2SessionActivity {
   type: string;
-  data: any;
+  data?: any;
 }
 
 export default class Http2Server extends BaseServer {
@@ -47,6 +47,7 @@ export default class Http2Server extends BaseServer {
         session.activity.push({
           type: 'checkContinue',
           data: {
+            remoteWindowSize: session.session?.state?.remoteWindowSize,
             headers: request.headers,
           },
         });
@@ -56,9 +57,17 @@ export default class Http2Server extends BaseServer {
         const sessionActivity = {
           session,
           id: `${session.socket.remoteAddress}:${session.socket.remotePort}`,
-          activity: [],
+          activity: [] as IHttp2SessionActivity[],
         };
         const activity = sessionActivity.activity;
+        session.on('connect', sess => {
+          activity.push({
+            type: 'connect',
+            data: {
+              remoteWindowSize: session.state?.remoteWindowSize,
+            },
+          });
+        });
 
         this.sessions.push(sessionActivity);
         session.on('ping', bytes => {
@@ -70,6 +79,9 @@ export default class Http2Server extends BaseServer {
         session.on('close', () => {
           activity.push({
             type: 'close',
+            data: {
+              remoteWindowSize: session.state?.remoteWindowSize,
+            },
           });
         });
         session.on('frameError', (frameType: number, errorCode: number, streamID: number) => {
@@ -79,19 +91,34 @@ export default class Http2Server extends BaseServer {
               frameType,
               errorCode,
               streamID,
+              remoteWindowSize: session.state?.remoteWindowSize,
             },
           });
         });
-        session.on('remoteSettings', settings => {
+        session.on('remoteSettings', remoteSettings => {
+          const settings: any = {};
+          for (const [key, value] of Object.entries(http2.getDefaultSettings())) {
+            // aliased property
+            if (key === 'maxHeaderSize') continue;
+            if (remoteSettings[key] !== value) {
+              settings[key] = remoteSettings[key];
+            }
+          }
           activity.push({
             type: 'remoteSettings',
-            data: settings,
+            data: {
+              settings,
+              remoteWindowSize: session.state?.remoteWindowSize,
+            },
           });
         });
         session.on('localSettings', settings => {
           activity.push({
             type: 'localSettings',
-            data: settings,
+            data: {
+              settings,
+              remoteWindowSize: session.state?.remoteWindowSize,
+            },
           });
         });
         session.on('goaway', (errorCode: number, lastStreamID: number, opaqueData: Buffer) => {
@@ -101,6 +128,7 @@ export default class Http2Server extends BaseServer {
               errorCode,
               lastStreamID,
               opaqueData,
+              remoteWindowSize: session.state?.remoteWindowSize,
             },
           });
         });
@@ -117,12 +145,13 @@ export default class Http2Server extends BaseServer {
               weight: stream.state.weight,
               hpackOutboundSize: session.state.deflateDynamicTableSize,
               hpackInboundSize: session.state.inflateDynamicTableSize,
+              remoteWindowSize: session.state.remoteWindowSize,
             },
           });
           stream.on('streamClosed', code => {
             activity.push({
               type: 'streamClosed',
-              data: { code },
+              data: { code, remoteWindowSize: session.state?.remoteWindowSize },
             });
           });
           stream.on('trailers', (trailers, trailerFlags) => {
@@ -131,6 +160,7 @@ export default class Http2Server extends BaseServer {
               data: {
                 trailers,
                 flags: trailerFlags,
+                remoteWindowSize: session.state?.remoteWindowSize,
               },
             });
           });
