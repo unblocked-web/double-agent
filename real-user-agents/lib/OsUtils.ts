@@ -3,6 +3,7 @@ import IOperatingSystem from '../interfaces/IOperatingSystem';
 import macOsNameToVersionMap from '../data/os-mappings/macOsNameToVersionMap.json';
 import macOsVersionAliasMap from '../data/os-mappings/macOsVersionAliasMap.json';
 import winOsNameToVersionMap from '../data/os-mappings/winOsNameToVersionMap.json';
+import IOperatingSystemVersion from '../interfaces/IOperatingSystemVersion';
 
 export function createOsName(name: string) {
   if (name.startsWith('Win')) return 'Windows';
@@ -10,12 +11,32 @@ export function createOsName(name: string) {
   return name;
 }
 
+export function getOsNameFromId(osId: string): string {
+  if (osId.startsWith('win')) return 'Windows';
+  if (osId.startsWith('mac')) return 'Mac OS';
+  return osId;
+}
+
+export function getOsVersionFromOsId(osId: string): IOperatingSystemVersion {
+  const [major, minor] = osId.replace('windows-', '').replace('mac-os-', '').split('-');
+  const rawVersion = [major, minor].filter(Boolean).join('.');
+
+  if (osId.startsWith('win')) {
+    for (const [name, version] of Object.entries(winOsNameToVersionMap)) {
+      if (version === rawVersion) return { name, major, minor };
+    }
+  } else if (osId.startsWith('mac')) {
+    for (const [name, version] of Object.entries(macOsNameToVersionMap)) {
+      if (version === rawVersion) return { name, major, minor };
+    }
+  }
+  return { major, minor };
+}
+
 export function createOsId(os: Pick<IOperatingSystem, 'name' | 'version'>) {
-  const name = os.name
-    .toLowerCase()
-    .replace(/\s/g, '-')
-    .replace('os-x', 'os');
-  const minorVersion = os.name.startsWith('Win') && os.version.minor === '0' ? null : os.version.minor;
+  const name = os.name.toLowerCase().replace(/\s/g, '-').replace('os-x', 'os');
+  const minorVersion =
+    os.name.startsWith('Win') && os.version.minor === '0' ? null : os.version.minor;
   if (['other', 'linux'].includes(name)) {
     return name;
   }
@@ -33,19 +54,34 @@ export function createOsIdFromUserAgentString(userAgentString: string) {
   return createOsId({ name, version });
 }
 
-export function createOsVersion(osName: string, majorVersion: string, minorVersion: string) {
+export function createOsVersion(
+  osName: string,
+  majorVersion: string,
+  minorVersion: string,
+): IOperatingSystemVersion {
   let namedVersion;
   if (majorVersion.match(/^([a-z\s]+)/i)) {
     // majorVersion is name instead of number
     namedVersion = majorVersion;
-    if (osName.startsWith('Mac') && macOsNameToVersionMap[majorVersion]) {
-      let versionString = macOsNameToVersionMap[majorVersion];
-      versionString = macOsVersionAliasMap[versionString] || versionString;
-      [majorVersion, minorVersion] = versionString.split('.');
+    if (osName.startsWith('Mac')) {
+      const versionString = macOsNameToVersionMap[majorVersion];
+      if (versionString) {
+        [majorVersion, minorVersion] = versionString.split('.');
+      } else {
+        const embeddedVersion = majorVersion.match(/(\d+[.\d+]?)/);
+        if (embeddedVersion) {
+          const converted = convertMacOsVersionString(embeddedVersion[1]);
+          [majorVersion, minorVersion] = converted.split('.');
+          namedVersion = macOsVersionToNameMap[versionString];
+        }
+      }
     } else if (osName.startsWith('Win') && winOsNameToVersionMap[majorVersion]) {
       [majorVersion, minorVersion] = winOsNameToVersionMap[majorVersion].split('.');
     }
   } else {
+    if (majorVersion.includes('.')) {
+      [majorVersion, minorVersion] = majorVersion.split('.');
+    }
     // majorVersion is number so let's cleanup
     let versionString = `${majorVersion}.${minorVersion}`;
     if (osName.startsWith('Mac')) {
@@ -72,7 +108,7 @@ const winOsVersionToNameMap = Object.entries(winOsNameToVersionMap).reduce((obj,
   return Object.assign(obj, { [b]: a });
 }, {});
 
-function  convertMacOsVersionString(versionString: string) {
+function convertMacOsVersionString(versionString: string) {
   let newVersionString = macOsVersionAliasMap[versionString];
   if (!newVersionString) {
     const [majorVersion] = versionString.split('.');

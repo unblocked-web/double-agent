@@ -4,7 +4,6 @@ import IUserAgent from '../interfaces/IUserAgent';
 import { FILE_PATH } from '../index';
 import IBrowser from '../interfaces/IBrowser';
 import IOperatingSystem from '../interfaces/IOperatingSystem';
-import { createOsIdFromUserAgentString } from '../lib/OsUtils';
 import { createBrowserId } from '../lib/BrowserUtils';
 import { FILE_PATH as OS_FILE_PATH } from '../lib/OperatingSystems';
 import { FILE_PATH as BROWSER_FILE_PATH } from '../lib/Browsers';
@@ -24,10 +23,11 @@ export default class UserAgentGenerator {
     // eslint-disable-next-line global-require,import/no-dynamic-require
     const browsersById = require(BROWSER_FILE_PATH) as { [id: string]: IBrowser };
 
-    for (const userAgentString of this.slabData.userAgentStrings) {
+    for (const value of this.slabData.userAgents) {
+      const userAgentString = value.string;
       const { name, version } = extractUserAgentMeta(userAgentString);
       const browserId = createBrowserId({ name, version });
-      const osId = createOsIdFromUserAgentString(userAgentString);
+      const osId = value.osId;
       const userAgentId = createUserAgentIdFromIds(osId, browserId);
       const strings =
         name === 'Chrome' ? this.expandChromeString(userAgentString, version) : [userAgentString];
