@@ -179,9 +179,9 @@ export default class HttpHeadersPlugin extends Plugin {
 
   public saveAndPostToNextPage(ctx: IRequestContext) {
     const document = new Document(ctx);
-    document.injectBodyTag(`<form action="${ctx.nextPageLink}" method="post">
-  <input type="hidden" value="true" name="hidden-input"/>
-  <input type="submit" id="${document.clickElementId}" name="submit">
+    // Chrome < 66 Page crashes if the form is submitted with an input/button. Workaround with link...
+    document.injectBodyTag(`<form id="form" action="${ctx.nextPageLink}" method="post">
+  <a href="javascript:void(0)" id="${document.clickElementId}" onclick="document.getElementById('form').submit();">Next</a>
 </form>
 `);
     saveHeadersToProfile(this, ctx);
