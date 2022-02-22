@@ -107,7 +107,7 @@ export function getResourceType(httpMethod: string, pathname: string): ResourceT
     return ResourceType.Fetch;
   }
   if (pathname.includes('axios') || pathname.endsWith('.json')) {
-    return ResourceType.Xhr;
+    return ResourceType.XHR;
   }
   return ResourceType.Document;
 }

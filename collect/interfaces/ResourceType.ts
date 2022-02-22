@@ -5,7 +5,7 @@ enum ResourceType {
   Preflight = 'Preflight',
   Script = 'Script',
   Stylesheet = 'Stylesheet',
-  Xhr = 'Xhr',
+  XHR = 'XHR',
   Fetch = 'Fetch',
   Image = 'Image',
   Media = 'Media',
