@@ -1,5 +1,5 @@
-import { createUserAgentIdFromString } from '@double-agent/config';
 import { IAssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
+import { createUserAgentIdFromString } from '@double-agent/config';
 import ISession from '../interfaces/ISession';
 import IAsset from '../interfaces/IAsset';
 import IRequestDetails from '../interfaces/IRequestDetails';
@@ -11,6 +11,7 @@ import IBaseProfile from '../interfaces/IBaseProfile';
 
 export default class Session implements ISession {
   public readonly id: string;
+  public userAgentId: string;
   public readonly assignmentType: IAssignmentType;
   public readonly assetsNotLoaded: IAsset[] = [];
   public readonly expectedAssets: (IAsset & { fromUrl?: string })[] = [];
@@ -29,6 +30,7 @@ export default class Session implements ISession {
   private readonly currentPageIndexByPluginId: { [pluginId: string]: number } = {};
   constructor(
     id: string,
+    userAgentId: string,
     assignmentType: IAssignmentType,
     sessionTracker: SessionTracker,
     pluginDelegate: PluginDelegate,
@@ -37,6 +39,7 @@ export default class Session implements ISession {
     this.assignmentType = assignmentType;
     this.sessionTracker = sessionTracker;
     this.pluginDelegate = pluginDelegate;
+    this.userAgentId = userAgentId;
   }
 
   public trackCurrentPageIndex(pluginId: string, currentPageIndex: number) {
@@ -78,12 +81,16 @@ export default class Session implements ISession {
 
   public setUserAgentString(userAgentString: string) {
     this.userAgentString = userAgentString;
+    // only do this as a backup since Chrome stopped sending valid Operating System info > 90
+    if (!this.userAgentId && !userAgentString.startsWith('axios')) {
+      this.userAgentId = createUserAgentIdFromString(this.userAgentString);
+    }
   }
 
   public getPluginProfileData<TProfileData>(plugin: Plugin, data: TProfileData): TProfileData {
     if (!this.profilesByPluginId[plugin.id]) {
       this.profilesByPluginId[plugin.id] = {
-        userAgentId: createUserAgentIdFromString(this.userAgentString),
+        userAgentId: this.userAgentId,
         data,
       };
     }
@@ -96,7 +103,7 @@ export default class Session implements ISession {
     options: { keepInMemory?: boolean; filenameSuffix?: string } = {},
   ) {
     const profile: IBaseProfile = {
-      userAgentId: createUserAgentIdFromString(this.userAgentString),
+      userAgentId: this.userAgentId,
       data,
     };
     if (this.onSavePluginProfile) {

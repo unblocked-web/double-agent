@@ -1,7 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import http2 from 'http2';
 import * as fs from 'fs';
-import { createUserAgentIdFromString } from '@double-agent/config';
 import IRequestContext from '../interfaces/IRequestContext';
 import extractRequestDetails from './extractRequestDetails';
 import RequestContext from './RequestContext';
@@ -48,7 +47,7 @@ export default function createHttpRequestHandler(
       }
       const { requestDetails } = await extractRequestDetails(server, req, session);
       const ctx = new RequestContext(server, req, res, requestUrl, requestDetails, session);
-      const userAgentId = createUserAgentIdFromString(req.headers['user-agent']);
+      const userAgentId = session.userAgentId;
       session.recordRequest(requestDetails);
 
       console.log(userAgentId, req.headers['user-agent']);

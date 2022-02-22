@@ -4,6 +4,7 @@ import IAssignment, { IAssignmentType, AssignmentType } from '../interfaces/IAss
 export default function buildAssignment(
   id: string,
   num: number,
+  userAgentId: string,
   type: IAssignmentType = AssignmentType.Individual,
   userAgentString: string = null,
   pickType: IUserAgentToTestPickType = null,
@@ -13,6 +14,7 @@ export default function buildAssignment(
     id,
     num,
     type,
+    userAgentId,
     userAgentString,
     pickType,
     usagePercent,

@@ -22,10 +22,10 @@ export function createUserAgentIdFromIds(osId: string, browserId: string) {
   return `${osId}--${browserId}`;
 }
 
-interface IProbeIdsMap{
+interface IProbeIdsMap {
   [pluginId: string]: {
     [checkSignature: string]: string;
-  }
+  };
 }
 
 let probeIdsMap: IProbeIdsMap;
@@ -79,16 +79,21 @@ export default class Config {
 
   static isAutomationPath(path: string): boolean {
     if (devtoolsIndicators.added.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (devtoolsIndicators.extraAdded.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    return false;  }
+    if (devtoolsIndicators.extraAdded.some(pattern => pathIsPatternMatch(path, pattern)))
+      return true;
+    return false;
+  }
 
   static isVariationPath(path: string): boolean {
     if (instanceVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (instanceVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern))) return true;
+    if (instanceVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
+      return true;
     if (locationVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (locationVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern))) return true;
+    if (locationVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
+      return true;
     if (windowVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (windowVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern))) return true;
+    if (windowVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
+      return true;
     return false;
   }
 

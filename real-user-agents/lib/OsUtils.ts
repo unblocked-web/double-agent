@@ -100,15 +100,7 @@ export function createOsVersion(
   };
 }
 
-const macOsVersionToNameMap = Object.entries(macOsNameToVersionMap).reduce((obj, [a, b]) => {
-  return Object.assign(obj, { [b]: a });
-}, {});
-
-const winOsVersionToNameMap = Object.entries(winOsNameToVersionMap).reduce((obj, [a, b]) => {
-  return Object.assign(obj, { [b]: a });
-}, {});
-
-function convertMacOsVersionString(versionString: string) {
+export function convertMacOsVersionString(versionString: string) {
   let newVersionString = macOsVersionAliasMap[versionString];
   if (!newVersionString) {
     const [majorVersion] = versionString.split('.');
@@ -116,3 +108,11 @@ function convertMacOsVersionString(versionString: string) {
   }
   return newVersionString || versionString;
 }
+
+const macOsVersionToNameMap = Object.entries(macOsNameToVersionMap).reduce((obj, [a, b]) => {
+  return Object.assign(obj, { [b]: a });
+}, {});
+
+const winOsVersionToNameMap = Object.entries(winOsNameToVersionMap).reduce((obj, [a, b]) => {
+  return Object.assign(obj, { [b]: a });
+}, {});

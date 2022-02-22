@@ -5,6 +5,7 @@ export default interface IAssignment {
   id: string;
   num: number;
   type: IAssignmentType;
+  userAgentId: string;
   userAgentString: string;
   pickType: IUserAgentToTestPickType;
   usagePercent: number;

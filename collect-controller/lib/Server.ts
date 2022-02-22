@@ -13,6 +13,7 @@ import buildAllAssignments from './buildAllAssignments';
 
 interface IRequestParams {
   userId: string;
+  userAgentId?: string;
   assignmentId?: string;
   dataDir?: string;
   userAgentsToTestPath?: string;
@@ -144,7 +145,7 @@ export default class Server {
       delete activeScraper.assignmentsById[assignmentId];
     }
 
-    const assignment = buildAssignment(userId, 0);
+    const assignment = buildAssignment(userId, 0, params.userAgentId);
     activeScraper.assignmentsById = { [assignment.id]: assignment };
 
     params.assignmentId = assignment.id.toString();
@@ -205,7 +206,7 @@ export default class Server {
     if (assignment.sessionId)
       return sendJson(res, { message: 'Assignment already activated' }, 500);
 
-    const session = await this.collect.createSession(assignment.type, assignment.userAgentString);
+    const session = await this.collect.createSession(assignment.type, assignment.userAgentId, assignment.userAgentString);
     assignment.sessionId = session.id;
     assignment.pagesByPlugin = session.generatePages();
 
