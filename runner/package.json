@@ -5,7 +5,7 @@
   "scripts": {
     "downloadRunnerData": "yarn workspace @double-agent/external-data downloadRunnerData",
     "0": "node -r source-map-support/register scripts/0-collectFoundationalProfiles.js",
-    "1": "node -r source-map-support/register scripts/1-extractFoundationalProbes.js",
+    "1": "node -r source-map-support/register --max-old-space-size=10000 scripts/1-extractFoundationalProbes.js",
     "2": "node -r source-map-support/register scripts/2-collectUserAgentsToTest.js",
     "3": "node -r source-map-support/register scripts/3-runAssignments.js",
     "4": "node -r source-map-support/register scripts/4-analyzeAssignmentResults.js"
@@ -17,7 +17,9 @@
     "@double-agent/real-user-agents": "1.0.0",
     "@double-agent/config": "1.0.0",
     "@secret-agent/core": "^1.6.4",
-    "secret-agent": "^1.6.4",
+    "@ulixee/hero-fullstack": "^1.5.4",
+    "@ulixee/hero-core": "^1.5.4",
+    "@ulixee/chrome-97-0": "^4692.99.4",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
     "puppeteer": "2.1.1",

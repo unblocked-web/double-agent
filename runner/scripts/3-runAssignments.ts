@@ -1,8 +1,9 @@
 import * as Path from 'path';
-import { Agent } from 'secret-agent';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
-import Core from '@secret-agent/core';
-import runAssignmentInSecretAgent from '../lib/runAssignmentInSecretAgent';
+import Core from '@ulixee/hero-core';
+import Hero from '@ulixee/hero-fullstack';
+import RealUserAgents from '@double-agent/real-user-agents';
+import runAssignmentInHero from '../lib/runAssignmentInHero';
 import forEachAssignment from '../lib/forEachAssignment';
 
 // process.env.SA_SHOW_BROWSER = 'true';
@@ -11,20 +12,26 @@ process.env.SA_SHOW_REPLAY = 'false';
 const TYPE = 'external';
 
 (async function run() {
-  const coreServerPort = await startCore();
-  const connectionToCore = { host: `localhost:${coreServerPort}` };
+  await Core.start();
 
   const runAssignment = async (assignment: IAssignment) => {
-    const agent = new Agent({
-      connectionToCore,
-      userAgent: assignment.userAgentString,
+    const agentMeta = RealUserAgents.extractMetaFromUserAgentId(assignment.userAgentId);
+
+    const agent = new Hero({
+      userAgent: `~ ${agentMeta.operatingSystemName} = ${agentMeta.operatingSystemVersion.replace(
+        '-',
+        '.',
+      )} & ${agentMeta.browserName} = ${agentMeta.browserVersion.replace('-0', '')}`,
     });
     console.log(assignment.userAgentString);
     console.log('AGENT: ', await agent.meta);
-    await runAssignmentInSecretAgent(agent as any, assignment);
+    await runAssignmentInHero(agent as any, assignment);
     await agent.close();
   };
-  const userAgentsToTestPath = Path.join(__dirname, `../data/${TYPE}/2-user-agents-to-test/userAgentsToTest`);
+  const userAgentsToTestPath = Path.join(
+    __dirname,
+    `../data/${TYPE}/2-user-agents-to-test/userAgentsToTest`,
+  );
 
   const config = {
     userId: 'testing',
@@ -33,11 +40,6 @@ const TYPE = 'external';
     userAgentsToTestPath,
   };
   await forEachAssignment(config, assignment => runAssignment(assignment));
-})().then(() => process.exit()).catch(console.log);
-
-async function startCore() {
-  Core.onShutdown = () => process.exit();
-  const coreServerPort = 7007;
-  await Core.start({ coreServerPort });
-  return coreServerPort;
-}
+})()
+  .then(() => process.exit())
+  .catch(console.log);
