@@ -1,7 +1,6 @@
 import http from 'http';
 import WebSocket from 'ws';
 import * as net from 'net';
-import { createUserAgentIdFromString } from '@double-agent/config';
 import ResourceType from '../interfaces/ResourceType';
 import extractRequestDetails from './extractRequestDetails';
 import RequestContext from './RequestContext';
@@ -24,7 +23,7 @@ export default function createWebsocketHandler(
       ResourceType.WebsocketUpgrade,
     );
     const ctx = new RequestContext(server, req, null, requestUrl, requestDetails, session);
-    const userAgentId = createUserAgentIdFromString(req.headers['user-agent']);
+    const userAgentId = ctx.session.userAgentId;
     session.recordRequest(requestDetails);
 
     console.log(

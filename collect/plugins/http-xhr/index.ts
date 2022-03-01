@@ -41,6 +41,12 @@ export default class HttpHeadersPlugin extends Plugin {
     );
     this.registerRoute(
       'all',
+      '/post-nocustom-headers.json',
+      this.saveHeaders,
+      this.savePreflightHeaders,
+    );
+    this.registerRoute(
+      'all',
       '/fetch-custom-headers.json',
       this.saveHeaders,
       this.savePreflightHeaders,
@@ -51,7 +57,12 @@ export default class HttpHeadersPlugin extends Plugin {
       this.saveHeaders,
       this.savePreflightHeaders,
     );
-
+    this.registerRoute(
+      'all',
+      '/post-custom-headers.json',
+      this.saveHeaders,
+      this.savePreflightHeaders,
+    );
     const pages: IPluginPage[] = [];
 
     ['http', 'https', 'http2'].forEach(protocol => {

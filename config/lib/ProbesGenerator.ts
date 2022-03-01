@@ -35,10 +35,13 @@ export default class ProbesGenerator {
     if (!Fs.existsSync(probeIdsDir)) Fs.mkdirSync(probeIdsDir, { recursive: true });
 
     for (const plugin of this.plugins) {
+      console.log('---------------------------------------');
+      console.log(`GET PROFILES ${plugin.id}`);
+
       const profiledProfiles = this.getProfiles<IBaseProfile>(plugin.id);
+      console.log(`LOADED ${plugin.id}`);
       plugin.initialize(profiledProfiles);
 
-      console.log('---------------------------------------');
       console.log(`SAVING ${plugin.id}`);
 
       const probeBucketsData = JSON.stringify(plugin.probeBuckets, null, 2);

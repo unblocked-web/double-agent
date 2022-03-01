@@ -1,7 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import http2 from 'http2';
 import * as fs from 'fs';
-import { createUserAgentIdFromString } from '@double-agent/config';
 import IRequestContext from '../interfaces/IRequestContext';
 import extractRequestDetails from './extractRequestDetails';
 import RequestContext from './RequestContext';
@@ -48,7 +47,7 @@ export default function createHttpRequestHandler(
       }
       const { requestDetails } = await extractRequestDetails(server, req, session);
       const ctx = new RequestContext(server, req, res, requestUrl, requestDetails, session);
-      const userAgentId = createUserAgentIdFromString(req.headers['user-agent']);
+      const userAgentId = session.userAgentId;
       session.recordRequest(requestDetails);
 
       console.log(userAgentId, req.headers['user-agent']);
@@ -91,8 +90,9 @@ function sendPreflight(ctx: IRequestContext) {
   ctx.res.end('');
 }
 
+let favicon:Buffer;
 function sendFavicon(res: ServerResponse | http2.Http2ServerResponse) {
-  const asset = fs.readFileSync(`${__dirname}/../public/favicon.ico`);
+  favicon ??= fs.readFileSync(`${__dirname}/../public/favicon.ico`);
   res.writeHead(200, { 'Content-Type': 'image/x-icon' });
-  res.end(asset);
+  res.end(favicon);
 }

@@ -12,7 +12,7 @@ const dataDir = Path.resolve(__dirname, '../data');
 const osMappingsDir = Path.join(dataDir, 'os-mappings');
 
 const slabData: ISlabData = {
-  userAgentStrings: JSON.parse(Fs.readFileSync(`${slabBasicsDir}/userAgentStrings.json`, 'utf8')),
+  userAgents: JSON.parse(Fs.readFileSync(`${slabBasicsDir}/userAgents.json`, 'utf8')),
   chromiumBuildVersions: JSON.parse(Fs.readFileSync(`${slabBasicsDir}/chromiumBuildVersions.json`, 'utf8')),
   browserReleaseDates: JSON.parse(Fs.readFileSync(`${slabBasicsDir}/browserReleaseDates.json`, 'utf8')),
   osReleaseDates: JSON.parse(Fs.readFileSync(`${slabBasicsDir}/osReleaseDates.json`, 'utf8')),

@@ -1,5 +1,5 @@
 export default interface ISlabData {
-  userAgentStrings: string[];
+  userAgents: { id: string; string: string, osId: string }[];
   chromiumBuildVersions: string[];
   browserReleaseDates: IReleaseDates;
   osReleaseDates: IReleaseDates;

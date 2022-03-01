@@ -36,9 +36,10 @@ NOTE if not using dockers:
 
   public async createSession(
     assignmentType: IAssignmentType,
+    userAgentId: string,
     expectedUserAgentString?: string,
   ): Promise<Session> {
-    const session = await this.sessionTracker.createSession(assignmentType);
+    const session = await this.sessionTracker.createSession(assignmentType, userAgentId);
     session.expectedUserAgentString = expectedUserAgentString;
 
     return session;

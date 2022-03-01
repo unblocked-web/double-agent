@@ -1,8 +1,8 @@
 import IUserAgentToTest, {
-  UserAgentToTestPickType,
   IUserAgentToTestPickType,
+  UserAgentToTestPickType,
 } from '@double-agent/config/interfaces/IUserAgentToTest';
-import { createUserAgentIdFromString } from '@double-agent/config';
+import { createUserAgentIdFromIds } from '@double-agent/config';
 import buildAssignment from './buildAssignment';
 import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
 
@@ -11,13 +11,28 @@ export default async function buildAllAssignments(userAgentsToTest: IUserAgentTo
 
   for (const userAgentToTest of userAgentsToTest) {
     const userAgentString = userAgentToTest.string;
-    const id = createUserAgentIdFromString(userAgentString);
+    const id = createUserAgentIdFromIds(
+      userAgentToTest.operatingSystemId,
+      userAgentToTest.browserId,
+    );
     const type = AssignmentType.Individual;
-    assignments.push(buildAssignment(id, assignments.length, type, userAgentString, null));
+    assignments.push(buildAssignment(id, assignments.length, id, type, userAgentString, null));
   }
 
-  assignments.push(...buildAssignmentsOverTime(userAgentsToTest, UserAgentToTestPickType.popular, assignments.length));
-  assignments.push(...buildAssignmentsOverTime(userAgentsToTest, UserAgentToTestPickType.random, assignments.length));
+  assignments.push(
+    ...buildAssignmentsOverTime(
+      userAgentsToTest,
+      UserAgentToTestPickType.popular,
+      assignments.length,
+    ),
+  );
+  assignments.push(
+    ...buildAssignmentsOverTime(
+      userAgentsToTest,
+      UserAgentToTestPickType.random,
+      assignments.length,
+    ),
+  );
 
   return assignments;
 }
@@ -45,7 +60,10 @@ function buildAssignmentsOverTime(
     let userAgentId: string;
     for (userAgentToTest of sortedUserAgents) {
       userAgentString = userAgentToTest.string;
-      userAgentId = createUserAgentIdFromString(userAgentString);
+      userAgentId = createUserAgentIdFromIds(
+        userAgentToTest.operatingSystemId,
+        userAgentToTest.browserId,
+      );
       countByUserAgentId[userAgentId] = countByUserAgentId[userAgentId] || 0;
       const pctIncluded = (countByUserAgentId[userAgentId] / assignments.length) * 100;
       if (pctIncluded < userAgentToTest.usagePercent[pickType]) break;
@@ -56,6 +74,7 @@ function buildAssignmentsOverTime(
         createOverTimeSessionKey(pickType, assignments.length, userAgentId),
         assignmentCount + assignments.length,
         type,
+        userAgentId,
         userAgentString,
         pickType,
         userAgentToTest.usagePercent[pickType],

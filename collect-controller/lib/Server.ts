@@ -6,13 +6,14 @@ import * as http from 'http';
 import { pathToRegexp } from 'path-to-regexp';
 import Collect from '@double-agent/collect';
 import Plugin from '@double-agent/collect/lib/Plugin';
-import IUserAgentToTest from "@double-agent/config/interfaces/IUserAgentToTest";
+import IUserAgentToTest from '@double-agent/config/interfaces/IUserAgentToTest';
 import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
 import buildAssignment from './buildAssignment';
 import buildAllAssignments from './buildAllAssignments';
 
 interface IRequestParams {
   userId: string;
+  userAgentId?: string;
   assignmentId?: string;
   dataDir?: string;
   userAgentsToTestPath?: string;
@@ -39,6 +40,7 @@ export default class Server {
   private readonly httpServer: http.Server;
   private readonly httpServerPort: number;
   private readonly routeMetaByRegexp: Map<RegExp, any> = new Map();
+  private favicon: Buffer;
 
   private readonly endpointsByRoute = {
     '/': this.createBasicAssignment.bind(this),
@@ -116,9 +118,10 @@ export default class Server {
   }
 
   private async sendFavicon(_, res: http.ServerResponse) {
-    const asset = Fs.readFileSync(`${__dirname}/../public/favicon.ico`);
+    this.favicon ??= await Fs.promises.readFile(`${__dirname}/../public/favicon.ico`);
+
     res.writeHead(200, { 'Content-Type': 'image/x-icon' });
-    res.end(asset);
+    res.end(this.favicon);
   }
 
   private async createBasicAssignment(_, res: http.ServerResponse, params: IRequestParams) {
@@ -144,7 +147,7 @@ export default class Server {
       delete activeScraper.assignmentsById[assignmentId];
     }
 
-    const assignment = buildAssignment(userId, 0);
+    const assignment = buildAssignment(userId, 0, params.userAgentId);
     activeScraper.assignmentsById = { [assignment.id]: assignment };
 
     params.assignmentId = assignment.id.toString();
@@ -161,7 +164,7 @@ export default class Server {
       return sendJson(res, { message: 'Please provide a userAgentsToTestPath query param' }, 500);
     }
 
-    const userAgentsToTestData = Fs.readFileSync(`${params.userAgentsToTestPath}.json`, 'utf8');
+    const userAgentsToTestData = await Fs.promises.readFile(`${params.userAgentsToTestPath}.json`, 'utf8');
     const userAgentsToTest = JSON.parse(userAgentsToTestData) as IUserAgentToTest[];
     this.activeUsersById[userId] = await this.createUser(userId, dataDir, userAgentsToTest);
 
@@ -205,7 +208,11 @@ export default class Server {
     if (assignment.sessionId)
       return sendJson(res, { message: 'Assignment already activated' }, 500);
 
-    const session = await this.collect.createSession(assignment.type, assignment.userAgentString);
+    const session = await this.collect.createSession(
+      assignment.type,
+      assignment.userAgentId,
+      assignment.userAgentString,
+    );
     assignment.sessionId = session.id;
     assignment.pagesByPlugin = session.generatePages();
 
@@ -233,9 +240,9 @@ export default class Server {
     const assignment = assignmentsById ? assignmentsById[assignmentId] : null;
     if (!assignment) return sendJson(res, { message: 'Assignment not found' }, 500);
 
-    this.saveMetaFiles(activeScraper, assignment);
+    await this.saveMetaFiles(activeScraper, assignment);
     const profilesDir = extractAssignmentProfilesDir(activeScraper, assignment);
-    pipeDirToStream(profilesDir, res);
+    await pipeDirToStream(profilesDir, res);
   }
 
   private async downloadAll(_, res: http.ServerResponse, params: IRequestParams) {
@@ -278,26 +285,34 @@ export default class Server {
     sendJson(res, { finished: true });
   }
 
-  private saveMetaFiles(activeScraper: IActiveUser, assignment: IAssignment) {
+  private async saveMetaFiles(activeScraper: IActiveUser, assignment: IAssignment) {
     const baseDirPath = extractAssignmentDir(activeScraper, assignment);
-    this.saveFile(baseDirPath, 'assignment.json', assignment);
+    await this.saveFile(baseDirPath, 'assignment.json', assignment);
 
     // ToDo: We need to save session.json but without the DOM export (and other unneeded data) -- too large
     // this.saveFile(baseDirPath, 'session.json', session.toJSON());
   }
 
-  private saveFile(dirPath: string, fileName: string, data: any) {
+  private async saveFile(dirPath: string, fileName: string, data: any) {
     const prevUmask = process.umask();
     process.umask(0);
-    if (!Fs.existsSync(dirPath)) {
-      Fs.mkdirSync(dirPath, { recursive: true, mode: 0o775 });
+    if (!(await existsAsync(dirPath))) {
+      await Fs.promises.mkdir(dirPath, { recursive: true, mode: 0o775 });
     }
-    Fs.writeFileSync(`${dirPath}/${fileName}`, JSON.stringify(data, null, 2));
+    await Fs.promises.writeFile(`${dirPath}/${fileName}`, JSON.stringify(data, null, 2));
     console.log(`SAVED ${dirPath}/${fileName}`);
     process.umask(prevUmask);
   }
 }
 
+async function existsAsync(path: string): Promise<boolean> {
+  try {
+    await Fs.promises.access(path);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
 function sendJson(res: http.ServerResponse, json: any, status = 200) {
   res.writeHead(status, {
     'content-type': 'application/json',
@@ -315,9 +330,8 @@ function extractBaseDir(activeScraper: IActiveUser) {
 function extractAssignmentDir(activeScraper: IActiveUser, assignment: IAssignment) {
   const baseDir = extractBaseDir(activeScraper);
   const isIndividual = assignment.type === AssignmentType.Individual;
-  const folder = (isIndividual
-    ? assignment.type
-    : `${assignment.type}-${assignment.pickType}`
+  const folder = (
+    isIndividual ? assignment.type : `${assignment.type}-${assignment.pickType}`
   ).toLowerCase();
   return `${baseDir}/${folder}/${assignment.id}`;
 }
@@ -327,10 +341,10 @@ function extractAssignmentProfilesDir(activeScraper: IActiveUser, assignment: IA
   return `${baseDirPath}/raw-data`;
 }
 
-function pipeDirToStream(dirPath: string, stream: any) {
+async function pipeDirToStream(dirPath: string, stream: any) {
   const archive = archiver('zip', { gzip: true, zlib: { level: 9 } });
-  if (Fs.existsSync(dirPath)) {
-    const fileNames = Fs.readdirSync(dirPath);
+  if (await existsAsync(dirPath)) {
+    const fileNames = await Fs.promises.readdir(dirPath);
     for (const fileName of fileNames) {
       const filePath = `${dirPath}/${fileName}`;
       archive.append(Fs.createReadStream(filePath), { name: fileName });

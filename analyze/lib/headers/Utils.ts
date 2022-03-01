@@ -83,6 +83,8 @@ const officialDefaultValueKeys = new Set([
   'sec-fetch-user',
   'sec-fetch-dest',
   'sec-ch-ua-mobile',
+  'sec-ch-ua',
+  'sec-ch-ua-platform',
   'sec-websocket-version',
   'sec-websocket-extensions',
   'accept',

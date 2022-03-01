@@ -14,16 +14,27 @@ export default class BrowserGenerator {
   constructor(private slabData: ISlabData) {}
 
   public run() {
-    for (const userAgentString of this.slabData.userAgentStrings) {
+    for (const { string: userAgentString } of this.slabData.userAgents) {
       const { name, version } = extractUserAgentMeta(userAgentString);
       const browserId = createBrowserId({ name, version });
-      const marketshare = this.slabData.marketshare.byBrowserId[browserId];
-      const [releaseDate, description] = extractReleaseDateAndDescription(
-        browserId,
-        name,
-        browserDescriptions,
-        this.slabData.browserReleaseDates,
-      );
+      const marketshare = this.slabData.marketshare.byBrowserId[browserId] ?? 0;
+      let releaseDate = 'unknown';
+      let description = '';
+      try {
+        [releaseDate, description] = extractReleaseDateAndDescription(
+          browserId,
+          name,
+          browserDescriptions,
+          this.slabData.browserReleaseDates,
+        );
+      } catch (err) {
+        console.warn(
+          '%s. Update descriptions at "%s" and release dates at "%s"',
+          err.message,
+          `../data/manual/browserDescriptions.json`,
+          `<SLAB_DATA>/basic/browserReleaseDates.json`,
+        );
+      }
       const browser: IBrowser = {
         id: browserId,
         name,

@@ -11,10 +11,10 @@ export default class SessionTracker {
   private pluginDelegate: PluginDelegate = new PluginDelegate();
   private sessions: { [sessionId: string]: Session } = {};
 
-  public async createSession(assignmentType: IAssignmentType) {
+  public async createSession(assignmentType: IAssignmentType, userAgentId:string) {
     const sessionId = String((sessionIdCounter += 1));
-    console.log('CREATED SESSION ', sessionId);
-    const session = new Session(sessionId, assignmentType, this, this.pluginDelegate);
+    console.log('CREATED SESSION ', sessionId, userAgentId);
+    const session = new Session(sessionId, userAgentId, assignmentType, this, this.pluginDelegate);
     await session.startServers();
 
     this.sessions[sessionId] = session;

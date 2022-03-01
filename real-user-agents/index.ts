@@ -1,5 +1,4 @@
 import * as Path from 'path';
-import { createUserAgentIdFromString } from '@double-agent/config';
 import UserAgent from './lib/UserAgent';
 import Browsers from './lib/Browsers';
 import OperatingSystems from './lib/OperatingSystems';
@@ -46,9 +45,8 @@ export default class RealUserAgents {
     return userAgents;
   }
 
-  public static findByString(userAgentString: string) {
-    if (!userAgentString) return;
-    const userAgentId = createUserAgentIdFromString(userAgentString);
+  public static findById(userAgentId: string) {
+    if (!userAgentId) return;
     return loadById()[userAgentId];
   }
 

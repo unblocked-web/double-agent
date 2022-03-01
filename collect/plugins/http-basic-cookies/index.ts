@@ -242,7 +242,7 @@ function createCookies(ctx: IRequestContext) {
   const domainType = ctx.requestDetails.domainType;
   const cookieGroup = ctx.page.data?.cookieGroup;
   const prefix = `${ctx.server.protocol}-${cookieGroup}`;
-  const userAgent = RealUserAgents.findByString(ctx.session.expectedUserAgentString);
+  const userAgent = RealUserAgents.findById(ctx.session.userAgentId);
   const isChrome80 = userAgent?.browserId.startsWith('chrome-80');
 
   const cookies = [

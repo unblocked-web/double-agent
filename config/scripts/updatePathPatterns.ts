@@ -6,7 +6,7 @@ const slabDataDir = process.env.SLAB_DATA_DIR || Path.resolve(__dirname, '../../
 const slabPathPatternsDir = Path.join(slabDataDir, 'dom-bridges/path-patterns');
 const localPathPatternsDir = Path.join(Config.dataDir, 'path-patterns');
 
-export default async function updatePathPatterns() {
+export default function updatePathPatterns() {
   if (!Fs.existsSync(localPathPatternsDir)) Fs.mkdirSync(localPathPatternsDir, { recursive: true });
 
   for (const fileName of Fs.readdirSync(slabPathPatternsDir)) {
