@@ -16,7 +16,7 @@ export default async function buildAllAssignments(userAgentsToTest: IUserAgentTo
       userAgentToTest.browserId,
     );
     const type = AssignmentType.Individual;
-    assignments.push(buildAssignment(id, assignments.length, type, id, userAgentString, null));
+    assignments.push(buildAssignment(id, assignments.length, id, type, userAgentString, null));
   }
 
   assignments.push(
@@ -73,8 +73,8 @@ function buildAssignmentsOverTime(
       buildAssignment(
         createOverTimeSessionKey(pickType, assignments.length, userAgentId),
         assignmentCount + assignments.length,
-        type,
         userAgentId,
+        type,
         userAgentString,
         pickType,
         userAgentToTest.usagePercent[pickType],
