@@ -27,7 +27,10 @@ export default class TcpPlugin extends Plugin {
   }
 
   public async extractData(ctx: IRequestContext) {
-    if (this.tracker.hasError) return ctx.res.end();
+    if (this.tracker.hasError) {
+      ctx.res.end();
+      return;
+    }
 
     const profileData = await this.tracker.getPacket(ctx.requestDetails.remoteAddress);
     ctx.session.savePluginProfileData<IProfileData>(this, profileData);

@@ -73,8 +73,8 @@ function buildAssignmentsOverTime(
       buildAssignment(
         createOverTimeSessionKey(pickType, assignments.length, userAgentId),
         assignmentCount + assignments.length,
-        type,
         userAgentId,
+        type,
         userAgentString,
         pickType,
         userAgentToTest.usagePercent[pickType],
