@@ -201,7 +201,20 @@
     progress "^2.0.3"
     tar "^6.1.0"
 
-"@secret-agent/commons@1.6.4":
+"@secret-agent/client@1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@secret-agent/client/-/client-1.6.4.tgz#3863c9b13d23d9541ea0ee5e8a41d9c80a53cfc8"
+  integrity sha512-WgCkgDahhqkd8uEFG4BE82f+B07Xke8yfIi0UfDm3FiD9KUhhcdPo+ySWU35g27lWp9VTk3Xu3gYPDFt8/TOMA==
+  dependencies:
+    "@secret-agent/commons" "1.6.4"
+    "@secret-agent/interfaces" "1.6.4"
+    "@secret-agent/plugin-utils" "1.6.4"
+    "@secret-agent/replay" "1.6.4"
+    awaited-dom "1.3.1"
+    uuid "^8.3.2"
+    ws "^7.4.6"
+
+"@secret-agent/commons@1.6.4", "@secret-agent/commons@^1.4.1-alpha.5":
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/@secret-agent/commons/-/commons-1.6.4.tgz#f0707738ed91c5940524046a2a1dc3c285e62b32"
   integrity sha512-mIb4Nz3b5IQ2m9atJFfJxkmAg931nqMV5By+S5PwzwxH9UsWpYiXj6GehQz5bBz7VsVrZBItW2nP6cIlQmT06w==
@@ -211,7 +224,7 @@
     source-map-support "^0.5.19"
     uuid "^8.3.2"
 
-"@secret-agent/core@^1.6.4":
+"@secret-agent/core@1.6.4", "@secret-agent/core@^1.6.4":
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/@secret-agent/core/-/core-1.6.4.tgz#abb65b396811cf8c66060c30e81915cd24de07a2"
   integrity sha512-R0OH+9c78H0XuW0cbzgm6g38P/PCRB9NnVHj8XHqAW9zqE4ZO9E0szbHJ8V5M/p77PeaQwpeaMsYd+ctnw6+Zg==
@@ -247,6 +260,14 @@
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/@secret-agent/default-human-emulator/-/default-human-emulator-1.6.4.tgz#c667db2adc8bb26815d9b13f4fb4769e6d985a82"
   integrity sha512-hpfx/rQF6w/HWZrLXjB24o/oAs3TjbJYO4pvFrnlUOKErTqRsGy9SK4vPH17tT7i5jya9ybqirJBwyuU/lru7g==
+  dependencies:
+    "@secret-agent/interfaces" "1.6.4"
+    "@secret-agent/plugin-utils" "1.6.4"
+
+"@secret-agent/execute-js-plugin@1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@secret-agent/execute-js-plugin/-/execute-js-plugin-1.6.4.tgz#200b4afdac5c20be99445d92b6a96c8229cfcc0c"
+  integrity sha512-hvxJxTx04GFG68ggqEaPlZpv9jJwVFz18uSdp+kKJjZoLrAdqnZXWESLR+j3u8E9zYi8xRMyQlt6wSKw1vLS5Q==
   dependencies:
     "@secret-agent/interfaces" "1.6.4"
     "@secret-agent/plugin-utils" "1.6.4"
@@ -310,6 +331,17 @@
     "@secret-agent/interfaces" "1.6.4"
     "@secret-agent/puppet-chrome" "1.6.4"
     ws "^7.4.6"
+
+"@secret-agent/replay@1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@secret-agent/replay/-/replay-1.6.4.tgz#b158a49ae6a5a2caea24f2933425bdbe256bdcce"
+  integrity sha512-WH9d1uoLIk6bhOc6Iw160hgBXpOm97fomC4xYZ2MUko4P2eBl23AcAhC9mSo9QUPHgCZk4xvodF0iAwkERKPoA==
+  dependencies:
+    "@secret-agent/commons" "^1.4.1-alpha.5"
+    compare-versions "^3.6.0"
+    progress "^2.0.3"
+    proper-lockfile "^4.1.1"
+    tar "^6.1.11"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -2369,6 +2401,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.2.0, graceful-fs@^4.2.2:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
 
+graceful-fs@^4.2.4:
+  version "4.2.9"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
+  integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
+
 har-schema@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/har-schema/-/har-schema-2.0.0.tgz#a94c2224ebcac04782a0d9035521f24735b7ec92"
@@ -3735,6 +3772,15 @@ prop-types@^15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
+proper-lockfile@^4.1.1:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/proper-lockfile/-/proper-lockfile-4.1.2.tgz#c8b9de2af6b2f1601067f98e01ac66baa223141f"
+  integrity sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==
+  dependencies:
+    graceful-fs "^4.2.4"
+    retry "^0.12.0"
+    signal-exit "^3.0.2"
+
 proxy-from-env@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
@@ -3981,6 +4027,11 @@ restore-cursor@^3.1.0:
     onetime "^5.1.0"
     signal-exit "^3.0.2"
 
+retry@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
+  integrity sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=
+
 reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
@@ -4028,6 +4079,17 @@ safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+secret-agent@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/secret-agent/-/secret-agent-1.6.4.tgz#8686b7e7ab49c71073fcc0d3e65294ae6fa64092"
+  integrity sha512-rDxnHsHPUXdCN1WSdeTe3rcK5R/T5T40lS3cNeiBxieeAS9K/Lb/haP085MAHiYtYGsWGm0PPEooU5UZeAdXlg==
+  dependencies:
+    "@secret-agent/client" "1.6.4"
+    "@secret-agent/commons" "1.6.4"
+    "@secret-agent/core" "1.6.4"
+    "@secret-agent/execute-js-plugin" "1.6.4"
+    "@secret-agent/interfaces" "1.6.4"
 
 semver-compare@^1.0.0:
   version "1.0.0"
