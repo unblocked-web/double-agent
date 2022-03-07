@@ -38,7 +38,7 @@ function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]) {
     flagsByPluginId[flag.pluginId] = flagsByPluginId[flag.pluginId] || [];
     flagsByPluginId[flag.pluginId].push(flag);
   });
-  if (Fs.existsSync(saveToDir)) Fs.rmdirSync(saveToDir, { recursive: true });
+  if (Fs.existsSync(saveToDir)) Fs.rmSync(saveToDir, { recursive: true });
   Fs.mkdirSync(saveToDir, { recursive: true });
 
   for (const pluginId of Object.keys(flagsByPluginId)) {
