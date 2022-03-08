@@ -44,7 +44,7 @@ function parseNumber(value: string): number {
 
 program
   .option('-r, --runner <hero|sa|secret-agent|pptr|puppeteer>', 'select the runner to run', parseRunnerID, RunnerID.Hero)
-  .option('--secret-agent-port <port>', 'select port to use for secret agent (flag only used if puppeteer runner is selected)', parseNumber, 7007);
+  .option('--secret-agent-port <port>', 'select port to use for secret agent (flag only used if secret agent runner is selected)', parseNumber, 7007);
 program.parse();
 const options = program.opts();
 
