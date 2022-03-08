@@ -1,46 +1,106 @@
 /* eslint-disable no-console */
 import puppeteer from 'puppeteer';
+import { IRunner, IRunnerFactory } from '../interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
-export default async function runAssignmentInPuppeteer(
-  puppPage: puppeteer.Page,
-  assignment: IAssignment,
-  setUserAgentString = true,
-) {
-  if (assignment.userAgentString && setUserAgentString === true) {
-    await puppPage.setUserAgent(assignment.userAgentString);
+class PuppeteerRunnerFactory implements IRunnerFactory {
+  browser?: puppeteer.Browser;
+
+  public async startFactory() {
+    this.browser = await puppeteer.launch({
+      headless: true,
+      ignoreHTTPSErrors: true,
+    });
   }
 
-  let pageCount = 0;
-  for (const pages of Object.values(assignment.pagesByPlugin)) {
-    await runPagesInPuppeteer(pages, puppPage);
-    pageCount += pages.length;
+  public async spawnRunner(assignment: IAssignment): Promise<IRunner> {
+    const session = await this.browser.createIncognitoBrowserContext();
+    const page = await session.newPage();
+    await page.setUserAgent(assignment.userAgentString);
+    return new PuppeteerRunner(page);
   }
-  console.log(''.padEnd(100, '-'));
-  console.log(`RAN ${pageCount} pages`);
-  console.log(''.padEnd(100, '-'));
+
+  public async stopFactory() {
+    await this.browser.close();
+  }
 }
 
-async function runPagesInPuppeteer(pages: ISessionPage[], puppPage: puppeteer.Page) {
-  for (const page of pages) {
-    console.log(''.padEnd(100, '-'));
-    console.log(`RUNNING: `, page);
-    if (page.isRedirect) continue;
-    if (page.url !== puppPage.url()) {
-      console.log('- goto ', page.url);
-      await puppPage.goto(page.url, { waitUntil: 'networkidle0' });
-    }
-    if (page.waitForElementSelector) {
-      console.log('- waiting for selector %s', page.waitForElementSelector);
-      await puppPage.waitForSelector(page.waitForElementSelector);
-    }
-    if (page.clickElementSelector) {
-      console.log('- clicking selector %s', page.clickElementSelector);
-      await Promise.all([
-        puppPage.click(page.clickElementSelector),
-        puppPage.waitForNavigation({ waitUntil: 'networkidle0' }),
-      ]);
+class PuppeteerRunner implements IRunner {
+  lastPage?: ISessionPage;
+  page: puppeteer.Page;
+
+  constructor(page: puppeteer.Page) {
+    this.page = page;
+  }
+
+  public async run(assignment: IAssignment) {
+    console.log('--------------------------------------');
+    console.log('STARTING ', assignment.id, assignment.userAgentString);
+    let counter = 0;
+    try {
+      for (const pages of Object.values(assignment.pagesByPlugin)) {
+        counter = await this.runPluginPages(assignment, pages, counter);
+      }
+      console.log(`[%s.✔] FINISHED ${assignment.id}`, assignment.num);
+    } catch (err) {
+      console.log('[%s.x] Error on %s', assignment.num, this.lastPage?.url, err);
+      process.exit();
     }
   }
+
+  async runPluginPages(
+    assignment: IAssignment,
+    pages: ISessionPage[],
+    counter: number,
+  ) {
+    let isFirst = true;
+    for (const page of pages) {
+      this.lastPage = page;
+      const step = `[${assignment.num}.${counter}]`;
+      if (page.isRedirect) continue;
+      if (isFirst || page.url !== this.page.url()) {
+        console.log('%s GOTO -- %s', step, page.url);
+        const response = await this.page.goto(page.url, {
+          waitUntil: 'domcontentloaded',
+        });
+        console.log('%s Waiting for statusCode -- %s', step, page.url);
+        const statusCode = await response.status();
+        if (statusCode >= 400) {
+          console.log(`${statusCode} ERROR: `, await response.text());
+          console.log(page.url);
+          process.exit();
+        }
+      }
+      isFirst = false;
+
+      if (page.waitForElementSelector) {
+        console.log('%s waitForElementSelector -- %s', step, page.waitForElementSelector);
+        await this.page.waitForSelector(page.waitForElementSelector, {
+          visible: true,
+          timeout: 60e3
+        });
+      }
+
+      if (page.clickElementSelector) {
+        console.log('%s Wait for clickElementSelector -- %s', step, page.clickElementSelector);
+        const clickable = await this.page.waitForSelector(page.clickElementSelector, {
+          visible: true
+        });
+        console.log('%s Click -- %s', step, page.clickElementSelector);
+        await clickable.click();
+        await this.page.waitForNavigation();
+        console.log('%s Location Changed -- %s', step, page.url);
+      }
+      counter += 1;
+    }
+
+    return counter;
+  }
+
+  async stop() {
+    await this.page.close();
+  }
 }
+
+export { PuppeteerRunnerFactory };
