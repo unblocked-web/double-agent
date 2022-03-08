@@ -8,6 +8,9 @@
     "1": "node -r source-map-support/register --max-old-space-size=10000 scripts/1-extractFoundationalProbes.js",
     "2": "node -r source-map-support/register scripts/2-collectUserAgentsToTest.js",
     "3": "node -r source-map-support/register scripts/3-runAssignments.js",
+    "3-hero": "yarn 3",
+    "3-secretAgent": "node -r source-map-support/register scripts/3-runAssignments.js --runner=secret-agent",
+    "3-puppeteer": "node -r source-map-support/register scripts/3-runAssignments.js --runner=puppeteer",
     "4": "node -r source-map-support/register scripts/4-analyzeAssignmentResults.js"
   },
   "dependencies": {
