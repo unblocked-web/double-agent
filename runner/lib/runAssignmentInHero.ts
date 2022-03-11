@@ -1,9 +1,9 @@
 import Hero from '@ulixee/hero-fullstack';
 import Core from '@ulixee/hero-core';
 import { IRunnerFactory, IRunner } from '../interfaces/runner';
-import IAssignment from '@double-hero/collect-controller/interfaces/IAssignment';
+import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import RealUserAgents from '@double-agent/real-user-agents';
-import ISessionPage from '@double-hero/collect/interfaces/ISessionPage';
+import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
 class HeroRunnerFactory implements IRunnerFactory {
   public async startFactory() {
