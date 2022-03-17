@@ -1,24 +1,31 @@
-import Hero from '@ulixee/hero-fullstack';
-import Core from '@ulixee/hero-core';
+import { Agent } from 'secret-agent';
+import Core from '@secret-agent/core';
 import { IRunnerFactory, IRunner } from '../interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
-import RealUserAgents from '@double-agent/real-user-agents';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
-class HeroRunnerFactory implements IRunnerFactory {
+export default class SecretAgentRunnerFactory implements IRunnerFactory {
+  connectionServerPort: number;
+  connectionToCore: { host: string };
+
+  constructor(port: number) {
+    this.connectionServerPort = port;
+    this.connectionToCore = {
+      host: `localhost:${port}`,
+    };
+  }
+
   public async startFactory() {
-    await Core.start();
+    Core.onShutdown = () => process.exit();
+    await Core.start({ coreServerPort: this.connectionServerPort });
   }
 
   public async spawnRunner(assignment: IAssignment): Promise<IRunner> {
-    const agentMeta = RealUserAgents.extractMetaFromUserAgentId(assignment.userAgentId);
-    const hero = new Hero({
-      userAgent: `~ ${agentMeta.operatingSystemName} = ${agentMeta.operatingSystemVersion.replace(
-        '-',
-        '.',
-      )} & ${agentMeta.browserName} = ${agentMeta.browserVersion.replace('-0', '')}`,
+    const agent = new Agent({
+      connectionToCore: this.connectionToCore,
+      userAgent: assignment.userAgentString,
     });
-    return new HeroRunner(hero);
+    return new SecretAgentRunner(agent);
   }
 
   public async stopFactory() {
@@ -26,18 +33,18 @@ class HeroRunnerFactory implements IRunnerFactory {
   }
 }
 
-class HeroRunner implements IRunner {
+class SecretAgentRunner implements IRunner {
   lastPage?: ISessionPage;
-  hero: Hero;
+  agent: Agent;
 
-  constructor(hero: Hero) {
-    this.hero = hero;
+  constructor(agent: Agent) {
+    this.agent = agent;
   }
 
   public async run(assignment: IAssignment) {
     console.log('--------------------------------------');
     console.log('STARTING ', assignment.id, assignment.userAgentString);
-    console.log('Session ID: ', await this.hero.sessionId);
+    console.log('Session ID: ', await this.agent.sessionId);
     let counter = 0;
     try {
       for (const pages of Object.values(assignment.pagesByPlugin)) {
@@ -60,9 +67,9 @@ class HeroRunner implements IRunner {
       this.lastPage = page;
       const step = `[${assignment.num}.${counter}]`;
       if (page.isRedirect) continue;
-      if (isFirst || page.url !== (await this.hero.url)) {
+      if (isFirst || page.url !== (await this.agent.url)) {
         console.log('%s GOTO -- %s', step, page.url);
-        const resource = await this.hero.goto(page.url);
+        const resource = await this.agent.goto(page.url);
         console.log('%s Waiting for statusCode -- %s', step, page.url);
         const statusCode = await resource.response.statusCode;
         if (statusCode >= 400) {
@@ -73,21 +80,21 @@ class HeroRunner implements IRunner {
       }
       isFirst = false;
       console.log('%s waitForPaintingStable -- %s', step, page.url);
-      await this.hero.waitForPaintingStable();
+      await this.agent.waitForPaintingStable();
 
       if (page.waitForElementSelector) {
         console.log('%s waitForElementSelector -- %s', step, page.waitForElementSelector);
-        const element = this.hero.document.querySelector(page.waitForElementSelector);
-        await this.hero.waitForElement(element, { waitForVisible: true, timeoutMs: 60e3 });
+        const element = this.agent.document.querySelector(page.waitForElementSelector);
+        await this.agent.waitForElement(element, { waitForVisible: true, timeoutMs: 60e3 });
       }
 
       if (page.clickElementSelector) {
         console.log('%s Wait for clickElementSelector -- %s', step, page.clickElementSelector);
-        const clickable = this.hero.document.querySelector(page.clickElementSelector);
-        await this.hero.waitForElement(clickable, { waitForVisible: true });
+        const clickable = this.agent.document.querySelector(page.clickElementSelector);
+        await this.agent.waitForElement(clickable, { waitForVisible: true });
         console.log('%s Click -- %s', step, page.clickElementSelector);
-        await this.hero.click(clickable);
-        await this.hero.waitForLocation('change');
+        await this.agent.click(clickable);
+        await this.agent.waitForLocation('change');
         console.log('%s Location Changed -- %s', step, page.url);
       }
       counter += 1;
@@ -97,8 +104,6 @@ class HeroRunner implements IRunner {
   }
 
   async stop() {
-    await this.hero.close();
+    await this.agent.close();
   }
 }
-
-export { HeroRunnerFactory };

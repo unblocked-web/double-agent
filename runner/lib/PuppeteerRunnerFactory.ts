@@ -1,50 +1,42 @@
-import { Agent } from 'secret-agent';
-import Core from '@secret-agent/core';
-import { IRunnerFactory, IRunner } from '../interfaces/runner';
+/* eslint-disable no-console */
+import puppeteer from 'puppeteer';
+import { IRunner, IRunnerFactory } from '../interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
-class SecretAgentRunnerFactory implements IRunnerFactory {
-  connectionServerPort: number;
-  connectionToCore: { host: string };
-
-  constructor(port: number) {
-    this.connectionServerPort = port;
-    this.connectionToCore = {
-      host: `localhost:${port}`,
-    };
-  }
+export default class PuppeteerRunnerFactory implements IRunnerFactory {
+  browser?: puppeteer.Browser;
 
   public async startFactory() {
-    Core.onShutdown = () => process.exit();
-    await Core.start({ coreServerPort: this.connectionServerPort });
+    this.browser = await puppeteer.launch({
+      headless: true,
+      ignoreHTTPSErrors: true,
+    });
   }
 
   public async spawnRunner(assignment: IAssignment): Promise<IRunner> {
-    const agent = new Agent({
-      connectionToCore: this.connectionToCore,
-      userAgent: assignment.userAgentString,
-    });
-    return new SecretAgentRunner(agent);
+    const session = await this.browser.createIncognitoBrowserContext();
+    const page = await session.newPage();
+    await page.setUserAgent(assignment.userAgentString);
+    return new PuppeteerRunner(page);
   }
 
   public async stopFactory() {
-    return;
+    await this.browser.close();
   }
 }
 
-class SecretAgentRunner implements IRunner {
+class PuppeteerRunner implements IRunner {
   lastPage?: ISessionPage;
-  agent: Agent;
+  page: puppeteer.Page;
 
-  constructor(agent: Agent) {
-    this.agent = agent;
+  constructor(page: puppeteer.Page) {
+    this.page = page;
   }
 
   public async run(assignment: IAssignment) {
     console.log('--------------------------------------');
     console.log('STARTING ', assignment.id, assignment.userAgentString);
-    console.log('Session ID: ', await this.agent.sessionId);
     let counter = 0;
     try {
       for (const pages of Object.values(assignment.pagesByPlugin)) {
@@ -67,34 +59,37 @@ class SecretAgentRunner implements IRunner {
       this.lastPage = page;
       const step = `[${assignment.num}.${counter}]`;
       if (page.isRedirect) continue;
-      if (isFirst || page.url !== (await this.agent.url)) {
+      if (isFirst || page.url !== this.page.url()) {
         console.log('%s GOTO -- %s', step, page.url);
-        const resource = await this.agent.goto(page.url);
+        const response = await this.page.goto(page.url, {
+          waitUntil: 'domcontentloaded',
+        });
         console.log('%s Waiting for statusCode -- %s', step, page.url);
-        const statusCode = await resource.response.statusCode;
+        const statusCode = await response.status();
         if (statusCode >= 400) {
-          console.log(`${statusCode} ERROR: `, await resource.response.text());
+          console.log(`${statusCode} ERROR: `, await response.text());
           console.log(page.url);
           process.exit();
         }
       }
       isFirst = false;
-      console.log('%s waitForPaintingStable -- %s', step, page.url);
-      await this.agent.waitForPaintingStable();
 
       if (page.waitForElementSelector) {
         console.log('%s waitForElementSelector -- %s', step, page.waitForElementSelector);
-        const element = this.agent.document.querySelector(page.waitForElementSelector);
-        await this.agent.waitForElement(element, { waitForVisible: true, timeoutMs: 60e3 });
+        await this.page.waitForSelector(page.waitForElementSelector, {
+          visible: true,
+          timeout: 60e3
+        });
       }
 
       if (page.clickElementSelector) {
         console.log('%s Wait for clickElementSelector -- %s', step, page.clickElementSelector);
-        const clickable = this.agent.document.querySelector(page.clickElementSelector);
-        await this.agent.waitForElement(clickable, { waitForVisible: true });
+        const clickable = await this.page.waitForSelector(page.clickElementSelector, {
+          visible: true
+        });
         console.log('%s Click -- %s', step, page.clickElementSelector);
-        await this.agent.click(clickable);
-        await this.agent.waitForLocation('change');
+        await clickable.click();
+        await this.page.waitForNavigation();
         console.log('%s Location Changed -- %s', step, page.url);
       }
       counter += 1;
@@ -104,8 +99,6 @@ class SecretAgentRunner implements IRunner {
   }
 
   async stop() {
-    await this.agent.close();
+    await this.page.close();
   }
 }
-
-export { SecretAgentRunnerFactory };

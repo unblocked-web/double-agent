@@ -1,42 +1,43 @@
-/* eslint-disable no-console */
-import puppeteer from 'puppeteer';
-import { IRunner, IRunnerFactory } from '../interfaces/runner';
+import Hero from '@ulixee/hero-fullstack';
+import Core from '@ulixee/hero-core';
+import { IRunnerFactory, IRunner } from '../interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
+import RealUserAgents from '@double-agent/real-user-agents';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
-class PuppeteerRunnerFactory implements IRunnerFactory {
-  browser?: puppeteer.Browser;
-
+export default class HeroRunnerFactory implements IRunnerFactory {
   public async startFactory() {
-    this.browser = await puppeteer.launch({
-      headless: true,
-      ignoreHTTPSErrors: true,
-    });
+    await Core.start();
   }
 
   public async spawnRunner(assignment: IAssignment): Promise<IRunner> {
-    const session = await this.browser.createIncognitoBrowserContext();
-    const page = await session.newPage();
-    await page.setUserAgent(assignment.userAgentString);
-    return new PuppeteerRunner(page);
+    const agentMeta = RealUserAgents.extractMetaFromUserAgentId(assignment.userAgentId);
+    const hero = new Hero({
+      userAgent: `~ ${agentMeta.operatingSystemName} = ${agentMeta.operatingSystemVersion.replace(
+        '-',
+        '.',
+      )} & ${agentMeta.browserName} = ${agentMeta.browserVersion.replace('-0', '')}`,
+    });
+    return new HeroRunner(hero);
   }
 
   public async stopFactory() {
-    await this.browser.close();
+    return;
   }
 }
 
-class PuppeteerRunner implements IRunner {
+class HeroRunner implements IRunner {
   lastPage?: ISessionPage;
-  page: puppeteer.Page;
+  hero: Hero;
 
-  constructor(page: puppeteer.Page) {
-    this.page = page;
+  constructor(hero: Hero) {
+    this.hero = hero;
   }
 
   public async run(assignment: IAssignment) {
     console.log('--------------------------------------');
     console.log('STARTING ', assignment.id, assignment.userAgentString);
+    console.log('Session ID: ', await this.hero.sessionId);
     let counter = 0;
     try {
       for (const pages of Object.values(assignment.pagesByPlugin)) {
@@ -59,37 +60,34 @@ class PuppeteerRunner implements IRunner {
       this.lastPage = page;
       const step = `[${assignment.num}.${counter}]`;
       if (page.isRedirect) continue;
-      if (isFirst || page.url !== this.page.url()) {
+      if (isFirst || page.url !== (await this.hero.url)) {
         console.log('%s GOTO -- %s', step, page.url);
-        const response = await this.page.goto(page.url, {
-          waitUntil: 'domcontentloaded',
-        });
+        const resource = await this.hero.goto(page.url);
         console.log('%s Waiting for statusCode -- %s', step, page.url);
-        const statusCode = await response.status();
+        const statusCode = await resource.response.statusCode;
         if (statusCode >= 400) {
-          console.log(`${statusCode} ERROR: `, await response.text());
+          console.log(`${statusCode} ERROR: `, await resource.response.text());
           console.log(page.url);
           process.exit();
         }
       }
       isFirst = false;
+      console.log('%s waitForPaintingStable -- %s', step, page.url);
+      await this.hero.waitForPaintingStable();
 
       if (page.waitForElementSelector) {
         console.log('%s waitForElementSelector -- %s', step, page.waitForElementSelector);
-        await this.page.waitForSelector(page.waitForElementSelector, {
-          visible: true,
-          timeout: 60e3
-        });
+        const element = this.hero.document.querySelector(page.waitForElementSelector);
+        await this.hero.waitForElement(element, { waitForVisible: true, timeoutMs: 60e3 });
       }
 
       if (page.clickElementSelector) {
         console.log('%s Wait for clickElementSelector -- %s', step, page.clickElementSelector);
-        const clickable = await this.page.waitForSelector(page.clickElementSelector, {
-          visible: true
-        });
+        const clickable = this.hero.document.querySelector(page.clickElementSelector);
+        await this.hero.waitForElement(clickable, { waitForVisible: true });
         console.log('%s Click -- %s', step, page.clickElementSelector);
-        await clickable.click();
-        await this.page.waitForNavigation();
+        await this.hero.click(clickable);
+        await this.hero.waitForLocation('change');
         console.log('%s Location Changed -- %s', step, page.url);
       }
       counter += 1;
@@ -99,8 +97,6 @@ class PuppeteerRunner implements IRunner {
   }
 
   async stop() {
-    await this.page.close();
+    await this.hero.close();
   }
 }
-
-export { PuppeteerRunnerFactory };

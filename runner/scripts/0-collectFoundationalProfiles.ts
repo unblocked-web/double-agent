@@ -3,7 +3,7 @@ import * as Path from 'path';
 import Puppeteer from 'puppeteer';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import RealUserAgents from "@double-agent/real-user-agents";
-import runAssignmentInPuppeteer from '../lib/runAssignmentInPuppeteer';
+import runAssignmentInPuppeteer from '../lib/PuppeteerRunnerFactory';
 import cleanPuppeteerPageCache from '../lib/cleanPuppeteerPageCache';
 import assignmentServer from '../lib/assignmentServer';
 import saveAssignmentToProfileDir from '../lib/saveAssignmentToProfileDir';
