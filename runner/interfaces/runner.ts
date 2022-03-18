@@ -3,6 +3,10 @@ import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment
 // Each assignment requires a fresh runner. The runner is created
 // by a factory object implementing this interface.
 interface IRunnerFactory {
+    // returns a unique identifier which uniquely identifies the kind/type of runners,
+    // the factory spawns.
+    runnerId(): string;
+
     // creation of resources and any other kind of preparative initialization/configuration
     // work is to be done within this function. If this method fails it is up to the
     // implementation to clean up the resources it already created in the process.

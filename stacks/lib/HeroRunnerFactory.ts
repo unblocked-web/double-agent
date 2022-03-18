@@ -1,11 +1,16 @@
-import Hero from '@ulixee/hero-fullstack';
-import Core from '@ulixee/hero-core';
-import { IRunnerFactory, IRunner } from '../interfaces/runner';
+import { IRunnerFactory, IRunner } from '@double-agent/runner/interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import RealUserAgents from '@double-agent/real-user-agents';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 
+import Hero from '@ulixee/hero-fullstack';
+import Core from '@ulixee/hero-core';
+
 export default class HeroRunnerFactory implements IRunnerFactory {
+  public runnerId(): string {
+      return 'hero';
+  }
+
   public async startFactory() {
     await Core.start();
   }
