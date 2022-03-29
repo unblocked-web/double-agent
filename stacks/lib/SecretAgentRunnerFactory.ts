@@ -1,8 +1,9 @@
-import { Agent } from 'secret-agent';
-import Core from '@secret-agent/core';
-import { IRunnerFactory, IRunner } from '../interfaces/runner';
+import { IRunnerFactory, IRunner } from '@double-agent/runner/interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
+
+import { Agent } from 'secret-agent';
+import Core from '@secret-agent/core';
 
 export default class SecretAgentRunnerFactory implements IRunnerFactory {
   connectionServerPort: number;
@@ -13,6 +14,10 @@ export default class SecretAgentRunnerFactory implements IRunnerFactory {
     this.connectionToCore = {
       host: `localhost:${port}`,
     };
+  }
+
+  public runnerId(): string {
+      return 'secret-agent';
   }
 
   public async startFactory() {
