@@ -7,15 +7,15 @@ import IUserAgentToTest, {
 } from '@double-agent/config/interfaces/IUserAgentToTest';
 
 import { UserAgentConfig } from '../interfaces/userAgent';
+import Config from '@double-agent/config/index';
 
 const FsPromises = Fs.promises;
 
 async function writeUserAgentsToTest(
-  probeTcpFilePath: string,
   userAgentConfig: UserAgentConfig,
   outFilePath: string,
-) {
-  const userAgentsToTest = await collectUserAgentsToTest(probeTcpFilePath, userAgentConfig);
+): Promise<void> {
+  const userAgentsToTest = await collectUserAgentsToTest(userAgentConfig);
 
   const outDir = Path.dirname(outFilePath);
   await FsPromises.mkdir(outDir, { recursive: true });
@@ -24,11 +24,12 @@ async function writeUserAgentsToTest(
 }
 
 async function collectUserAgentsToTest(
-  probeTcpFilePath: string,
   userAgentConfig: UserAgentConfig,
 ): Promise<IUserAgentToTest[]> {
   const userAgentsToTest: IUserAgentToTest[] = [];
 
+  // use TcpProbes to determine user agents
+  const probeTcpFilePath = Path.join(Config.probesDataDir, '/probe-buckets/tcp.json');
   if (!(await exists(probeTcpFilePath))) {
     return userAgentsToTest;
   }

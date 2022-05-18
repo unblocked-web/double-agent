@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as http2 from 'http2';
 import { URL } from 'url';
 import IServerContext from '../interfaces/IServerContext';
-import Plugin, { IRoutesByPath } from '../lib/Plugin';
+import Plugin, { IRoute, IRoutesByPath } from '../lib/Plugin';
 
 export type IServerProtocol = 'tls' | 'http' | 'https' | 'http2';
 
@@ -42,7 +42,7 @@ export default class BaseServer {
     return this.routesByPath[cleanedPath]?.handlerFn;
   }
 
-  public getRoute(rawPath: string) {
+  public getRoute(rawPath: string): IRoute {
     const cleanedPath = this.cleanPath(rawPath);
     return this.routesByPath[cleanedPath];
   }

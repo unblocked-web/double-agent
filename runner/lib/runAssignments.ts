@@ -21,23 +21,23 @@ async function runFactoryRunners(
     userAgentsToTestPath,
   };
 
-  await forEachAssignment(config, async assignment => {
+  await forEachAssignment(config, async (assignment) => {
     let runner: IRunner;
     try {
       runner = await runnerFactory.spawnRunner(assignment);
     } catch (error) {
-      console.error(`failed to create runner ${runnerID}: ${error}`);
+      console.error(`failed to create runner ${runnerID}`, error);
       return;
     }
     try {
       await runner.run(assignment);
     } catch (error) {
-      console.error(`runner ${runnerID} run failed with exception: ${error}`);
+      console.error(`runner ${runnerID} run failed with exception`, error);
     } finally {
       try {
         await runner.stop();
       } catch (error) {
-        console.error(`failed to stop runner ${runnerID}: ${error}`);
+        console.error(`failed to stop runner ${runnerID}`, error);
       }
     }
   });
@@ -66,7 +66,7 @@ async function runAssignments(
   try {
     await runnerFactory.startFactory();
   } catch (error) {
-    console.error(`failed to start runner factory ${runnerID}: ${error}`);
+    console.error(`failed to start runner factory ${runnerID}`, error);
     return;
   }
 
@@ -79,12 +79,12 @@ async function runAssignments(
       options.concurrency,
     );
   } catch (error) {
-    console.error(`failed to run runners for factory runner with runner Id ${runnerID}: ${error}`);
+    console.error(`failed to run runners for factory runner with runner Id ${runnerID}`, error);
   } finally {
     try {
       await runnerFactory.stopFactory();
     } catch (error) {
-      console.error(`failed to stop runner factory with Id ${runnerID}: ${error}`);
+      console.error(`failed to stop runner factory with Id ${runnerID}`, error);
     }
   }
 }

@@ -1,7 +1,7 @@
 import { IRunner, IRunnerFactory } from '@double-agent/runner/interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
-import * as puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
 
 export default class PuppeteerRunnerFactory implements IRunnerFactory {
   browser?: puppeteer.Browser;
@@ -11,6 +11,7 @@ export default class PuppeteerRunnerFactory implements IRunnerFactory {
   }
 
   public async startFactory() {
+    // eslint-disable-next-line import/no-named-as-default-member
     this.browser = await puppeteer.launch({
       headless: true,
       ignoreHTTPSErrors: true,

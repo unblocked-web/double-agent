@@ -1,8 +1,6 @@
-import * as Path from 'path';
 import { extractFoundationalProbes } from '@double-agent/runner/lib/extractFoundationalProbes';
+import { getExternalDataPath } from '../paths';
 
-const dataDir = Path.resolve(__dirname, '../data');
-const foundationalProfilesDir = Path.resolve(dataDir, 'external/0-foundational-profiles');
-const foundationalProbesDir = Path.resolve(dataDir, 'external/1-foundational-probes');
+const foundationalProfilesDir = getExternalDataPath('/0-foundational-profiles');
 
-extractFoundationalProbes(foundationalProfilesDir, foundationalProbesDir).catch(console.log);
+extractFoundationalProbes(foundationalProfilesDir).catch(console.log);

@@ -12,19 +12,18 @@ tsconfig.tsbuildinfo
 *.js
 !**/public/*.js
 !**/injected-scripts/*.js
+!**/.eslintrc.js
 *.pem
 **/cookiejar.txt
 **/test-profiles/
 !/docs/js/*.js
-/scrapers/secretagent/.cache/
 
 .tmp-upload
 .plugins
-.http-mitm-proxy
-.sessions
-.mitm-ca
 .yalc
 .eslintcache
-/runner/scripts/external
+/stacks/data/external
 /runner/sessions/
 /build
+!/adjustPaths.js
+!/alsoCopy.js

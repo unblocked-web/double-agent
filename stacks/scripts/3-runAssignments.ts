@@ -1,5 +1,3 @@
-import * as Path from 'path';
-
 import { program } from 'commander';
 import { exit } from 'process';
 
@@ -8,6 +6,7 @@ import { IRunnerFactory } from '@double-agent/runner/interfaces/runner';
 
 import UnblockedRunnerFactory from '../lib/UnblockedRunnerFactory';
 import PuppeteerRunnerFactory from '../lib/PuppeteerRunnerFactory';
+import { getExternalDataPath } from '../paths';
 
 // RunnerId groups together all supported runner implementations.
 enum RunnerId {
@@ -43,12 +42,8 @@ program.option(
 program.parse();
 const options = program.opts();
 
-const TYPE = 'external';
-const userAgentsToTestPath = Path.join(
-  __dirname,
-  `../data/${TYPE}/2-user-agents-to-test/userAgentsToTest`,
-);
-const dataDir = Path.resolve(__dirname, `../data/${TYPE}/3-assignments`);
+const userAgentsToTestPath = getExternalDataPath(`/2-user-agents-to-test/userAgentsToTest`);
+const dataDir = getExternalDataPath(`/3-assignments`);
 
 const runnerId = options.runner || RunnerId.Puppeteer;
 let runnerFactory: IRunnerFactory;

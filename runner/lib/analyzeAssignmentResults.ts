@@ -3,16 +3,13 @@ import * as Path from 'path';
 
 import Analyze from '@double-agent/analyze';
 import { IResultFlag } from '@double-agent/analyze/lib/Plugin';
+import { probesDataDir } from '@double-agent/config/paths';
 // import { UserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
 // import { createOverTimeSessionKey } from '@double-agent/collect-controller/lib/buildAllAssignments';
 
 const FsPromises = Fs.promises;
 
-async function analyzeAssignmentResults(
-  probesDataDir: string,
-  assignmentsDataDir: string,
-  resultsDir: string,
-) {
+async function analyzeAssignmentResults(assignmentsDataDir: string, resultsDir: string) {
   const userAgentIds = await FsPromises.readdir(`${assignmentsDataDir}/individual`);
   const analyze = new Analyze(userAgentIds.length, probesDataDir);
 
@@ -42,7 +39,7 @@ async function analyzeAssignmentResults(
 
 async function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]) {
   const flagsByPluginId: { [pluginId: string]: IResultFlag[] } = {};
-  flags.forEach(flag => {
+  flags.forEach((flag) => {
     flagsByPluginId[flag.pluginId] = flagsByPluginId[flag.pluginId] || [];
     flagsByPluginId[flag.pluginId].push(flag);
   });
@@ -56,7 +53,7 @@ async function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]) {
     await FsPromises.writeFile(
       signaturesFilePath,
       JSON.stringify(
-        flagsByPluginId[pluginId].map(x => x.checkSignature),
+        flagsByPluginId[pluginId].map((x) => x.checkSignature),
         null,
         2,
       ),

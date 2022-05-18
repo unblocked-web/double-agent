@@ -54,7 +54,7 @@ function start(options: { port: number; key?: string; cert?: string }) {
     });
     const childServer = https.createServer(options, onConnection);
 
-    childServer.on('error', err => {
+    childServer.on('error', (err) => {
       process.send({ error: err.message });
       console.log(err);
     });

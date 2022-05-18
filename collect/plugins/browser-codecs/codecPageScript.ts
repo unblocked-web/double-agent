@@ -95,18 +95,18 @@ export default function codecPageScript(ctx: IRequestContext) {
 </script>`;
 }
 
-const audioMimeAlternatives = csv(readFileSync(`${__dirname}/mime/audio-mimetypes.csv`, 'utf8'))
+const audioMimeAlternatives = csv(readFileSync(`${__dirname}/assets/mime/audio-mimetypes.csv`, 'utf8'))
   .slice(1)
   .map(x => x[1].toLowerCase())
   .filter(Boolean);
 
-const videoMimeAlternatives = csv(readFileSync(`${__dirname}/mime/video-mimetypes.csv`, 'utf8'))
+const videoMimeAlternatives = csv(readFileSync(`${__dirname}/assets/mime/video-mimetypes.csv`, 'utf8'))
   .slice(1)
   .map(x => x[1].toLowerCase())
   .filter(Boolean);
 
 const applicationMimeAlternatives = csv(
-  readFileSync(`${__dirname}/mime/application-mimetypes.csv`, 'utf8'),
+  readFileSync(`${__dirname}/assets/mime/application-mimetypes.csv`, 'utf8'),
 )
   .slice(1)
   .map(x => x[1].toLowerCase())
