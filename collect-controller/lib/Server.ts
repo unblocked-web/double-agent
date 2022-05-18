@@ -164,7 +164,10 @@ export default class Server {
       return sendJson(res, { message: 'Please provide a userAgentsToTestPath query param' }, 500);
     }
 
-    const userAgentsToTestData = await Fs.promises.readFile(`${params.userAgentsToTestPath}.json`, 'utf8');
+    const userAgentsToTestData = await Fs.promises.readFile(
+      `${params.userAgentsToTestPath}.json`,
+      'utf8',
+    );
     const userAgentsToTest = JSON.parse(userAgentsToTestData) as IUserAgentToTest[];
     this.activeUsersById[userId] = await this.createUser(userId, dataDir, userAgentsToTest);
 
@@ -220,7 +223,7 @@ export default class Server {
       session.onSavePluginProfile = (plugin: Plugin, data: any, filenameSuffix: string) => {
         const profilesDir = extractAssignmentProfilesDir(activeScraper, assignment);
         const filename = `${plugin.id}${filenameSuffix ? `--${filenameSuffix}` : ''}`;
-        this.saveFile(profilesDir, `${filename}.json`, data);
+        void this.saveFile(profilesDir, `${filename}.json`, data);
       };
     }
 
@@ -256,7 +259,7 @@ export default class Server {
     }
 
     const profilesDir = extractBaseDir(activeScraper);
-    pipeDirToStream(profilesDir, res);
+    void pipeDirToStream(profilesDir, res).catch(console.error);
   }
 
   private async finishAssignments(_, res: http.ServerResponse, params: IRequestParams) {
@@ -272,7 +275,7 @@ export default class Server {
 
     for (const assignment of assignments) {
       const session = this.collect.getSession(assignment.sessionId);
-      this.saveMetaFiles(activeScraper, assignment);
+      void this.saveMetaFiles(activeScraper, assignment);
       await this.collect.deleteSession(session);
     }
     delete this.activeUsersById[userId];
@@ -285,23 +288,27 @@ export default class Server {
     sendJson(res, { finished: true });
   }
 
-  private async saveMetaFiles(activeScraper: IActiveUser, assignment: IAssignment) {
+  private saveMetaFiles(activeScraper: IActiveUser, assignment: IAssignment): void {
     const baseDirPath = extractAssignmentDir(activeScraper, assignment);
-    await this.saveFile(baseDirPath, 'assignment.json', assignment);
+    void this.saveFile(baseDirPath, 'assignment.json', assignment);
 
     // ToDo: We need to save session.json but without the DOM export (and other unneeded data) -- too large
     // this.saveFile(baseDirPath, 'session.json', session.toJSON());
   }
 
-  private async saveFile(dirPath: string, fileName: string, data: any) {
-    const prevUmask = process.umask();
-    process.umask(0);
-    if (!(await existsAsync(dirPath))) {
-      await Fs.promises.mkdir(dirPath, { recursive: true, mode: 0o775 });
+  private async saveFile(dirPath: string, fileName: string, data: any): Promise<void> {
+    try {
+      const prevUmask = process.umask();
+      process.umask(0);
+      if (!(await existsAsync(dirPath))) {
+        await Fs.promises.mkdir(dirPath, { recursive: true, mode: 0o775 });
+      }
+      await Fs.promises.writeFile(`${dirPath}/${fileName}`, JSON.stringify(data, null, 2));
+      console.log(`SAVED ${dirPath}/${fileName}`);
+      process.umask(prevUmask);
+    } catch (error) {
+      console.log('ERROR trying to save file', { dirPath, fileName, error });
     }
-    await Fs.promises.writeFile(`${dirPath}/${fileName}`, JSON.stringify(data, null, 2));
-    console.log(`SAVED ${dirPath}/${fileName}`);
-    process.umask(prevUmask);
   }
 }
 
@@ -341,7 +348,7 @@ function extractAssignmentProfilesDir(activeScraper: IActiveUser, assignment: IA
   return `${baseDirPath}/raw-data`;
 }
 
-async function pipeDirToStream(dirPath: string, stream: any) {
+async function pipeDirToStream(dirPath: string, stream: any): Promise<void> {
   const archive = archiver('zip', { gzip: true, zlib: { level: 9 } });
   if (await existsAsync(dirPath)) {
     const fileNames = await Fs.promises.readdir(dirPath);

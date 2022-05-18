@@ -1,4 +1,4 @@
-import BaseCheck, {CheckType, ICheckIdentity, ICheckMeta} from './BaseCheck';
+import BaseCheck, { CheckType, ICheckIdentity, ICheckMeta } from './BaseCheck';
 
 export default class NumberCheck extends BaseCheck {
   public readonly prefix = 'NUMR';

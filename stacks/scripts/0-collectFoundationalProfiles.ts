@@ -1,6 +1,9 @@
 import * as Path from 'path';
 
-import { CollectFoundationalProfilesOptions, importSlabProfiles } from '@double-agent/runner/lib/collectFoundationalProfiles';
+import {
+  CollectFoundationalProfilesOptions,
+  importSlabProfiles,
+} from '@double-agent/runner/lib/collectFoundationalProfiles';
 
 import externalUserAgentConfig from '../data/external/userAgentConfig.json';
 
@@ -9,4 +12,4 @@ const options: CollectFoundationalProfilesOptions = {
 };
 const profilesDir = Path.join(__dirname, '../data/external/0-foundational-profiles');
 
-importSlabProfiles(profilesDir, externalUserAgentConfig, options);
+importSlabProfiles(profilesDir, externalUserAgentConfig, options).catch(console.error);

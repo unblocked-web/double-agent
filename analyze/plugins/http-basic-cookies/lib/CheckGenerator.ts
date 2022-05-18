@@ -37,7 +37,9 @@ export default class CheckGenerator {
         const setDetails = setCookiesMap[key][name];
         const getDetails = { getter, httpProtocol };
         if (!setDetails) throw new Error(`no cookies created for ${key} with name: ${name}`);
-        this.addCheck(new ReadableCookieCheck({ userAgentId }, { path: name }, setDetails, getDetails));
+        this.addCheck(
+          new ReadableCookieCheck({ userAgentId }, { path: name }, setDetails, getDetails),
+        );
         getCookiesMap[key][getter].add(name);
       }
     }
@@ -93,7 +95,11 @@ export default class CheckGenerator {
 
   private addCheck(check: BaseCheck) {
     const browserId = this.profile.userAgentId.split('--')[1];
-    if (optionalCheckSignatures[browserId] && optionalCheckSignatures[browserId].includes(check.signature)) return;
+    if (
+      optionalCheckSignatures[browserId] &&
+      optionalCheckSignatures[browserId].includes(check.signature)
+    )
+      return;
     this.checks.push(check);
   }
 }

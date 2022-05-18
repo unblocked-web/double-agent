@@ -50,8 +50,8 @@ export default abstract class Plugin {
     layerKey = layerKey.toLowerCase();
     const flags: IResultFlag[] = [];
     const checkType = profileCountOverTime ? CheckType.OverTime : CheckType.Individual;
-    const checksBySignature: { [signature: string]: BaseCheck} = {}
-    const checksById: { [id: string]: BaseCheck} = {};
+    const checksBySignature: { [signature: string]: BaseCheck } = {};
+    const checksById: { [id: string]: BaseCheck } = {};
     for (const check of checks) {
       checksById[check.id] = check;
       checksBySignature[check.signature] = check;

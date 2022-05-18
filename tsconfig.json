@@ -1,18 +1,10 @@
 {
-  "compileOnSave": true,
+  "extends": "./node_modules/@ulixee/repo-tools/tsconfig.json",
   "compilerOptions": {
-    "incremental": true,
-    "target": "es2018",
-    "module": "commonjs",
-    "lib": ["es2018", "dom"],
-    "noImplicitAny": false,
-    "inlineSourceMap": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "preserveSymlinks": false,
-    "experimentalDecorators": true
+    "rootDir": ".",
+    "outDir": "./build",
+    "esModuleInterop": true
   },
-  "exclude": ["node_modules", "*.d.ts", "*.js", "**/injected-scripts", "runner/data/*", "runner/sessions", "external"]
+  "include": ["**/*.ts", "**/*.js", "**/*.json", ".eslintrc.js"],
+  "exclude": ["build", "build-dist", "node_modules", "probe-data", "*.d.ts", "runner/sessions"]
 }

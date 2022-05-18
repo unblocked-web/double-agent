@@ -1,5 +1,5 @@
 import http from 'http';
-import WebSocket from 'ws';
+import * as WebSocket from 'ws';
 import * as net from 'net';
 import ResourceType from '../interfaces/ResourceType';
 import extractRequestDetails from './extractRequestDetails';

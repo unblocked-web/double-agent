@@ -9,6 +9,6 @@ export type IProfileData = {
   sessions: {
     id: string;
     activity: IHttp2SessionActivity[];
-    origins?: string[]
+    origins?: string[];
   }[];
 };

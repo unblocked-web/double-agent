@@ -73,9 +73,9 @@ function DomExtractor(selfName, pageMeta = {}) {
       _$protos: await loadProtoHierarchy(obj, parentPath),
     };
     if (
-        parentPath.includes(`${selfName}.document.`) &&
-        !parentPath.includes(`${selfName}.document.documentElement`) &&
-        newObj._$protos.includes('HTMLElement.prototype')
+      parentPath.includes(`${selfName}.document.`) &&
+      !parentPath.includes(`${selfName}.document.documentElement`) &&
+      newObj._$protos.includes('HTMLElement.prototype')
     ) {
       newObj._$skipped = 'SKIPPED ELEMENT';
       return newObj;
@@ -103,13 +103,13 @@ function DomExtractor(selfName, pageMeta = {}) {
       while (!!proto) {
         proto = Object.getPrototypeOf(proto);
         if (
-            !proto ||
-            proto === Object ||
-            proto === Object.prototype ||
-            proto === Function ||
-            proto === Function.prototype ||
-            proto === HTMLElement.prototype ||
-            proto === EventTarget.prototype
+          !proto ||
+          proto === Object ||
+          proto === Object.prototype ||
+          proto === Function ||
+          proto === Function.prototype ||
+          proto === HTMLElement.prototype ||
+          proto === EventTarget.prototype
         )
           break;
         for (const key of Object.getOwnPropertyNames(proto)) {
@@ -128,15 +128,15 @@ function DomExtractor(selfName, pageMeta = {}) {
       if (path.endsWith('_GLOBAL_HOOK__')) continue;
       const prop = '' + String(key);
       if (
-          path.startsWith(`${selfName}.document`) &&
-          typeof key === 'string' &&
-          (key.startsWith('child') ||
-              key.startsWith('first') ||
-              key.startsWith('last') ||
-              key.startsWith('next') ||
-              key.startsWith('prev') ||
-              key === 'textContent' ||
-              key === 'text')
+        path.startsWith(`${selfName}.document`) &&
+        typeof key === 'string' &&
+        (key.startsWith('child') ||
+          key.startsWith('first') ||
+          key.startsWith('last') ||
+          key.startsWith('next') ||
+          key.startsWith('prev') ||
+          key === 'textContent' ||
+          key === 'text')
       ) {
         newObj[prop] = { _$type: 'dom', _$skipped: 'SKIPPED DOM' };
         continue;
@@ -160,11 +160,11 @@ function DomExtractor(selfName, pageMeta = {}) {
       }
       try {
         const isOwnProp =
-            obj.hasOwnProperty && obj.hasOwnProperty(key) && !inheritedProps.includes(key);
+          obj.hasOwnProperty && obj.hasOwnProperty(key) && !inheritedProps.includes(key);
         const value = await extractPropValue(obj, key, path, !isOwnProp);
         if (value && typeof value === 'string' && value.startsWith('REF:') && !isOwnProp) {
           // don't assign here
-          //console.log('skipping ref', value);
+          // console.log('skipping ref', value);
         } else {
           newObj[prop] = value;
         }
@@ -245,13 +245,13 @@ function DomExtractor(selfName, pageMeta = {}) {
       accessException = err;
     });
     if (
-        value &&
-        path !== `${selfName}.document` &&
-        (typeof value === 'function' || typeof value === 'object' || typeof value === 'symbol')
+      value &&
+      path !== `${selfName}.document` &&
+      (typeof value === 'function' || typeof value === 'object' || typeof value === 'symbol')
     ) {
       if (loadedObjects.has(value)) {
         // TODO: re-enable invoking re-used functions once we are on stable ground with chrome flags
-        const shouldContinue = false; //typeof value === 'function' && (isInherited || !path.replace(String(key), '').includes(String(key)));
+        const shouldContinue = false; // typeof value === 'function' && (isInherited || !path.replace(String(key), '').includes(String(key)));
         if (!shouldContinue) return 'REF: ' + loadedObjects.get(value);
       }
       // safari will end up in an infinite loop since each plugin is a new object as your traverse
@@ -433,9 +433,9 @@ function DomExtractor(selfName, pageMeta = {}) {
       if (obj.constructor) {
         const constructorName = obj.constructor.name;
         if (
-            constructorName &&
-            constructorName !== Function.name &&
-            constructorName !== Object.name
+          constructorName &&
+          constructorName !== Function.name &&
+          constructorName !== Object.name
         ) {
           name = constructorName;
         }
@@ -486,4 +486,4 @@ function DomExtractor(selfName, pageMeta = {}) {
   return this;
 }
 module.exports = DomExtractor;
-//# sourceMappingURL=DomExtractor.js.map
+// # sourceMappingURL=DomExtractor.js.map

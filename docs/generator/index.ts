@@ -5,4 +5,4 @@ import buildReadme from './buildReadme';
   await buildPluginsList('collect');
   await buildPluginsList('analyze');
   await buildReadme();
-})();
+})().catch(console.error);

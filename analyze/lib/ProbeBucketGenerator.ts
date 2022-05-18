@@ -29,7 +29,8 @@ export default class ProbeBucketGenerator {
     const probesByCheckSignature: { [signature: string]: Probe } = {};
     for (const check of meta.checks) {
       const signature = check.signature;
-      probesByCheckSignature[signature] = probesByCheckSignature[signature] || Probe.create(check, pluginId);
+      probesByCheckSignature[signature] =
+        probesByCheckSignature[signature] || Probe.create(check, pluginId);
       if (check.identity.userAgentId) {
         userAgentIdsByCheckSignature[signature] ??= new Set();
         userAgentIdsByCheckSignature[signature].add(check.identity.userAgentId);
@@ -42,7 +43,11 @@ export default class ProbeBucketGenerator {
 
     // organize initial groups
     const groupsById: {
-      [groupId: string]: { userAgentIds: string[]; checkType: ICheckType; checkSignatures: string[] };
+      [groupId: string]: {
+        userAgentIds: string[];
+        checkType: ICheckType;
+        checkSignatures: string[];
+      };
     } = {};
     for (const checkSignature of Object.keys(userAgentIdsByCheckSignature)) {
       const probe = probesByCheckSignature[checkSignature];

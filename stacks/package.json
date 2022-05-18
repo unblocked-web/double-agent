@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "downloadRunnerData": "yarn workspace @double-agent/external-data downloadRunnerData",
     "0": "node -r source-map-support/register scripts/0-collectFoundationalProfiles.js",
     "1": "node -r source-map-support/register --max-old-space-size=10000 scripts/1-extractFoundationalProbes.js",
     "2": "node -r source-map-support/register scripts/2-collectUserAgentsToTest.js",
@@ -18,12 +17,12 @@
     "@double-agent/collect-controller": "1.0.0",
     "@double-agent/real-user-agents": "1.0.0",
     "@double-agent/collect": "1.0.0",
-    "@secret-agent/core": "^1.6.4",
-    "secret-agent": "^1.6.4",
-    "@ulixee/hero-fullstack": "^1.5.4",
-    "@ulixee/hero-core": "^1.5.4",
-    "@ulixee/chrome-97-0": "^4692.99.4",
-    "puppeteer": "2.1.1"
+    "@unblocked-web/agent": "^2.0.0-alpha.1",
+    "@unblocked-web/default-human-emulator": "^2.0.0-alpha.1",
+    "@unblocked-web/default-browser-emulator": "^2.0.0-alpha.1",
+    "@ulixee/chrome-98-0": "^4758.102.4",
+    "puppeteer": "2.1.1",
+    "commander": "^9.2.0"
   },
   "devDependencies": {
     "@types/puppeteer": "2.0.0"

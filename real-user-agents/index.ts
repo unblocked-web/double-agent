@@ -97,7 +97,14 @@ export default class RealUserAgents {
     const browserId = matches[5];
     const browserName = matches[6];
     const browserVersion = matches[7];
-    return { operatingSystemId, operatingSystemName, operatingSystemVersion, browserId, browserName, browserVersion };
+    return {
+      operatingSystemId,
+      operatingSystemName,
+      operatingSystemVersion,
+      browserId,
+      browserName,
+      browserVersion,
+    };
   }
 }
 

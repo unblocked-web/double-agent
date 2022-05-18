@@ -5,14 +5,12 @@ import Config from '@double-agent/config';
 const FsPromises = Fs.promises;
 
 async function extractFoundationalProbes(profilesDir: string, probesDir: string) {
-    await FsPromises.mkdir(probesDir, { recursive: true });
+  await FsPromises.mkdir(probesDir, { recursive: true });
 
-    Config.probesDataDir = probesDir;
-    const probesGenerator = new ProbesGenerator(profilesDir);
-    await probesGenerator.run();
-    await probesGenerator.save();
+  Config.probesDataDir = probesDir;
+  const probesGenerator = new ProbesGenerator(profilesDir);
+  await probesGenerator.run();
+  await probesGenerator.save();
 }
 
-export {
-    extractFoundationalProbes,
-};
+export { extractFoundationalProbes };

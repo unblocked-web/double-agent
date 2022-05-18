@@ -17,7 +17,7 @@ export default abstract class BaseCheck {
   abstract get args(): any[];
 
   public get id(): string {
-    const  { protocol, httpMethod, path } = this.meta;
+    const { protocol, httpMethod, path } = this.meta;
     return [protocol, httpMethod, path, this.constructor.name].filter(x => x).join(':');
   }
 

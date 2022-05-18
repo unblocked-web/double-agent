@@ -31,10 +31,8 @@ export default class CheckGenerator {
 
   private extractWindowSizeChecks() {
     const { userAgentId } = this.profile;
-    const {
-      operatingSystemName,
-      operatingSystemVersion,
-    } = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
+    const { operatingSystemName, operatingSystemVersion } =
+      RealUserAgents.extractMetaFromUserAgentId(userAgentId);
 
     let expectedValues = expectedWindowSizes[operatingSystemName];
 

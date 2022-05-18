@@ -3,7 +3,10 @@ import Fs from 'fs';
 import unzipper from 'unzipper';
 import assignmentServer, { IAssignment } from './assignmentServer';
 
-export default async function saveAssignmentToProfileDir(assignment: IAssignment, baseDir: string): Promise<string> {
+export default async function saveAssignmentToProfileDir(
+  assignment: IAssignment,
+  baseDir: string,
+): Promise<string> {
   const userId = assignment.id;
   const filesStream = await assignmentServer<any>(`/download/${assignment.id}`, { userId });
   const filesDir = Path.join(baseDir, userId);

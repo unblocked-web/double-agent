@@ -1,3 +1,3 @@
-Check DOM rendering 
+Check DOM rendering
 images
 fonts

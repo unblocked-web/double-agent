@@ -18,10 +18,7 @@ export default function parseHelloMessage(isClientHello: boolean, lines: string[
       prop = 'random';
       message.random = {} as any;
     } else if (helloLine.startsWith('session_id')) {
-      message.sessionId = helloLine
-        .split(':')
-        .pop()
-        .trim();
+      message.sessionId = helloLine.split(':').pop().trim();
     } else if (helloLine.startsWith('cipher_suites')) {
       (message as IClientHello).ciphers = [];
       prop = 'ciphers';
@@ -53,21 +50,9 @@ export default function parseHelloMessage(isClientHello: boolean, lines: string[
     } else if (prop === 'extensions') {
       if (helloLine.includes('extension_type=')) {
         message.extensions.push({
-          type: helloLine
-            .split('extension_type=')
-            .pop()
-            .split('(')
-            .shift()
-            .trim(),
+          type: helloLine.split('extension_type=').pop().split('(').shift().trim(),
           decimal: Number(
-            helloLine
-              .split('extension_type=')
-              .pop()
-              .split('(')
-              .pop()
-              .split(')')
-              .shift()
-              .trim(),
+            helloLine.split('extension_type=').pop().split('(').pop().split(')').shift().trim(),
           ),
           values: [],
         });
@@ -107,22 +92,8 @@ export default function parseHelloMessage(isClientHello: boolean, lines: string[
 }
 
 const greaseCodes = [
-  0x0a0a,
-  0x1a1a,
-  0x2a2a,
-  0x3a3a,
-  0x4a4a,
-  0x5a5a,
-  0x6a6a,
-  0x7a7a,
-  0x8a8a,
-  0x9a9a,
-  0xaaaa,
-  0xbaba,
-  0xcaca,
-  0xdada,
-  0xeaea,
-  0xfafa,
+  0x0a0a, 0x1a1a, 0x2a2a, 0x3a3a, 0x4a4a, 0x5a5a, 0x6a6a, 0x7a7a, 0x8a8a, 0x9a9a, 0xaaaa, 0xbaba,
+  0xcaca, 0xdada, 0xeaea, 0xfafa,
 ];
 
 export { greaseCodes };

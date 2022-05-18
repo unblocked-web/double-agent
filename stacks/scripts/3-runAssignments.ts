@@ -3,34 +3,27 @@ import * as Path from 'path';
 import { program } from 'commander';
 import { exit } from 'process';
 
-import { runAssignments } from '@double-agent/runner/lib/runAssignments'
+import { runAssignments } from '@double-agent/runner/lib/runAssignments';
 import { IRunnerFactory } from '@double-agent/runner/interfaces/runner';
 
-import HeroRunnerFactory from '../lib/HeroRunnerFactory';
-import SecretAgentRunnerFactory from '../lib/SecretAgentRunnerFactory';
+import UnblockedRunnerFactory from '../lib/UnblockedRunnerFactory';
 import PuppeteerRunnerFactory from '../lib/PuppeteerRunnerFactory';
 
 // RunnerId groups together all supported runner implementations.
 enum RunnerId {
   Puppeteer = 'puppeteer',
-  SecretAgent = 'secret-agent',
-  Hero = 'hero',
+  Unblocked = 'unblocked',
 }
 
 function parseRunnerID(value: string, previous: RunnerId): RunnerId {
   switch (value.toLowerCase().trim()) {
-    case "hero": {
-      return RunnerId.Hero;
+    case 'unblocked':
+    case 'ubk': {
+      return RunnerId.Unblocked;
     }
 
-    case "secret-agent":
-    case "secretagent":
-    case "sa": {
-      return RunnerId.SecretAgent;
-    }
-
-    case "puppeteer":
-    case "pptr": {
+    case 'puppeteer':
+    case 'pptr': {
       return RunnerId.Puppeteer;
     }
 
@@ -41,21 +34,20 @@ function parseRunnerID(value: string, previous: RunnerId): RunnerId {
   }
 }
 
-function parseNumber(value: string): number {
-  return parseInt(value);
-}
-
-program
-  .option('-r, --runner <hero|sa|secret-agent|pptr|puppeteer>', 'select the runner to run', parseRunnerID, RunnerId.Hero)
-  .option('--secret-agent-port <port>', 'select port to use for secret agent (flag only used if secret agent runner is selected)', parseNumber, 7007);
+program.option(
+  '-r, --runner <unblocked|ubk|pptr|puppeteer>',
+  'select the runner to run',
+  parseRunnerID,
+  RunnerId.Unblocked,
+);
 program.parse();
 const options = program.opts();
 
-// process.env.SA_SHOW_BROWSER = 'true';
-process.env.SA_SHOW_REPLAY = 'false';
-
 const TYPE = 'external';
-const userAgentsToTestPath = Path.join(__dirname, `../data/${TYPE}/2-user-agents-to-test/userAgentsToTest`);
+const userAgentsToTestPath = Path.join(
+  __dirname,
+  `../data/${TYPE}/2-user-agents-to-test/userAgentsToTest`,
+);
 const dataDir = Path.resolve(__dirname, `../data/${TYPE}/3-assignments`);
 
 const runnerId = options.runner || RunnerId.Puppeteer;
@@ -67,13 +59,8 @@ switch (runnerId) {
     break;
   }
 
-  case RunnerId.SecretAgent: {
-    runnerFactory = new SecretAgentRunnerFactory(options.secretAgentPort);
-    break;
-  }
-
-  case RunnerId.Hero: {
-    runnerFactory = new HeroRunnerFactory();
+  case RunnerId.Unblocked: {
+    runnerFactory = new UnblockedRunnerFactory();
     break;
   }
 

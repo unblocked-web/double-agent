@@ -1,8 +1,4 @@
-import BaseCheck, {
-  CheckType,
-  ICheckIdentity,
-  ICheckMeta,
-} from './BaseCheck';
+import BaseCheck, { CheckType, ICheckIdentity, ICheckMeta } from './BaseCheck';
 
 export default class DefaultValueCheck extends BaseCheck {
   public readonly prefix = 'DVAL';

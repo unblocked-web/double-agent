@@ -1,4 +1,4 @@
-import pcap from 'pcap';
+import * as pcap from 'pcap';
 import { EventEmitter } from 'events';
 import * as os from 'os';
 
@@ -21,25 +21,29 @@ export default function trackRemoteTcpVars(serverPort: string | number) {
   try {
     const tcpTracker = new pcap.TCPTracker();
     // @ts-ignore
-    pcapSession = new pcap.PcapSession(true, device, `ip proto \\tcp and (tcp port ${serverPort || 443})`);
+    pcapSession = new pcap.PcapSession(
+      true,
+      device,
+      `ip proto \\tcp and (tcp port ${serverPort || 443})`,
+    );
 
     if (isDebug) {
-      tcpTracker.on('session', (session) => {
-        console.log(`Start of session between ${  session.src_name  } and ${  session.dst_name}`);
+      tcpTracker.on('session', session => {
+        console.log(`Start of session between ${session.src_name} and ${session.dst_name}`);
       });
 
-      tcpTracker.on('end', (session) => {
-        console.log(`End of TCP session between ${  session.src_name  } and ${  session.dst_name}`);
+      tcpTracker.on('end', session => {
+        console.log(`End of TCP session between ${session.src_name} and ${session.dst_name}`);
       });
     }
 
-    pcapSession.on('packet', (raw_packet) => {
+    pcapSession.on('packet', raw_packet => {
       const packet = pcap.decode.packet(raw_packet);
       const ethPayload = packet.payload;
       const ipv4 = ethPayload.payload;
       const tcpPayload = ipv4.payload;
       if (!tcpPayload || !ipv4) return;
-      const addr = `${ipv4.saddr  }:${  tcpPayload.sport}`;
+      const addr = `${ipv4.saddr}:${tcpPayload.sport}`;
       if (!packets[addr]) {
         packets[addr] = {
           // store without hops
