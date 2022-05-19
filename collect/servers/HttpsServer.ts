@@ -9,7 +9,7 @@ import { MainDomain } from '../index';
 
 const certPath = process.env.LETSENCRYPT
   ? `/etc/letsencrypt/live/${MainDomain}`
-  : `${__dirname  }/../certs`;
+  : `${__dirname}/../certs`;
 
 export default class HttpServer extends BaseServer {
   private httpsServer: https.Server;
@@ -23,8 +23,8 @@ export default class HttpServer extends BaseServer {
     const httpRequestHandler = createHttpRequestHandler(this, context);
     const websocketHandler = createWebsocketHandler(this, context);
     const options = {
-      key: Fs.readFileSync(`${certPath  }/privkey.pem`),
-      cert: Fs.readFileSync(`${certPath  }/fullchain.pem`),
+      key: Fs.readFileSync(`${certPath}/privkey.pem`),
+      cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
     };
 
     this.httpsServer = await new Promise<https.Server>(resolve => {

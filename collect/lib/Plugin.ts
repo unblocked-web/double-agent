@@ -31,7 +31,7 @@ type IHandlerFn = (ctx: IRequestContext) => Promise<void> | void;
 type IRoutableServerProtocol = IServerProtocol | 'ws' | 'wss';
 type IFlexibleServerProtocol = IRoutableServerProtocol | 'all' | 'allHttp1';
 
-interface IRoute {
+export interface IRoute {
   protocol: IRoutableServerProtocol;
   path: string;
   handlerFn: IHandlerFn;

@@ -33,7 +33,9 @@ export default class CheckGenerator {
     const matches = clientHello.version.match(/^([^\s]+)\s\((.+)\)$/);
     const valueInt = Number(matches[1]);
     const valueStr = matches[2];
-    this.checks.push(new NumberCheck({ userAgentId }, { path: 'clientHello.version' }, valueInt, valueStr));
+    this.checks.push(
+      new NumberCheck({ userAgentId }, { path: 'clientHello.version' }, valueInt, valueStr),
+    );
   }
 
   private createCipherChecks() {
@@ -44,7 +46,9 @@ export default class CheckGenerator {
       const valueInt = parseInt(matches[1].replace(/0x/g, '').replace(', ', ''), 16);
       const valueStr = matches[2];
       if (this.isGreased(valueInt)) continue;
-      this.checks.push(new NumberCheck({ userAgentId }, { path: 'clientHello.ciphers' }, valueInt, valueStr));
+      this.checks.push(
+        new NumberCheck({ userAgentId }, { path: 'clientHello.ciphers' }, valueInt, valueStr),
+      );
     }
   }
 
@@ -122,12 +126,7 @@ export default class CheckGenerator {
     const values: string[] = extension?.values || [];
 
     for (const value of values) {
-      const valueInt = Number(
-        value
-          .split('(')
-          .pop()
-          .replace(')', ''),
-      );
+      const valueInt = Number(value.split('(').pop().replace(')', ''));
       if (this.isGreased(valueInt)) continue;
       this.checks.push(new StringCheck({ userAgentId }, { path }, value));
     }
@@ -164,20 +163,6 @@ export default class CheckGenerator {
 }
 
 const greaseCiphers = [
-  0x0a0a,
-  0x1a1a,
-  0x2a2a,
-  0x3a3a,
-  0x4a4a,
-  0x5a5a,
-  0x6a6a,
-  0x7a7a,
-  0x8a8a,
-  0x9a9a,
-  0xaaaa,
-  0xbaba,
-  0xcaca,
-  0xdada,
-  0xeaea,
-  0xfafa,
+  0x0a0a, 0x1a1a, 0x2a2a, 0x3a3a, 0x4a4a, 0x5a5a, 0x6a6a, 0x7a7a, 0x8a8a, 0x9a9a, 0xaaaa, 0xbaba,
+  0xcaca, 0xdada, 0xeaea, 0xfafa,
 ];

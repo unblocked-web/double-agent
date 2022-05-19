@@ -90,7 +90,7 @@ function sendPreflight(ctx: IRequestContext) {
   ctx.res.end('');
 }
 
-let favicon:Buffer;
+let favicon: Buffer;
 function sendFavicon(res: ServerResponse | http2.Http2ServerResponse) {
   favicon ??= fs.readFileSync(`${__dirname}/../public/favicon.ico`);
   res.writeHead(200, { 'Content-Type': 'image/x-icon' });

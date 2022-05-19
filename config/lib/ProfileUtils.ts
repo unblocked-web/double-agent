@@ -1,7 +1,11 @@
-import Fs from "fs";
-import Path from "path";
+import Fs from 'fs';
+import Path from 'path';
 
-export function extractProfilePathsMap(profileDir: string, userAgentId: string, profilePathsMap: IProfilePathsMap = {}) {
+export function extractProfilePathsMap(
+  profileDir: string,
+  userAgentId: string,
+  profilePathsMap: IProfilePathsMap = {},
+) {
   for (const fileName of Fs.readdirSync(profileDir)) {
     if (!fileName.endsWith('.json') || fileName.startsWith('_')) continue;
     const [pluginId, filenameSuffix] = fileName.replace('.json', '').split('--');

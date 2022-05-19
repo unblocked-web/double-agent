@@ -1,4 +1,8 @@
-import BaseCheck, {CheckType, ICheckIdentity, ICheckMeta} from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 import ICookieGetDetails from '../../interfaces/ICookieGetDetails';
 import ICookieSetDetails from '../../interfaces/ICookieSetDetails';
 

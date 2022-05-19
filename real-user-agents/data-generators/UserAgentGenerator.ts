@@ -75,10 +75,7 @@ export default class UserAgentGenerator {
     }
 
     const strings: string[] = [];
-    const versionsToBuild = buildVersions
-        .sort(compareVersions)
-        .reverse()
-        .slice(0, 10);
+    const versionsToBuild = buildVersions.sort(compareVersions).reverse().slice(0, 10);
 
     for (const versionToBuild of versionsToBuild) {
       const str = userAgentString.replace(`Chrome/${fullVersion}`, `Chrome/${versionToBuild}`);

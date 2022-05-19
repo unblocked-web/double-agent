@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import 'source-map-support/register';
 import Collect from '@double-agent/collect';
 import Server from './lib/Server';
@@ -25,4 +24,4 @@ Run the suite:
 5. Follow the assignment, and then ask this same url for your next assignment. Assignments will be returned until the test suite is completed.
     `,
   );
-})();
+})().catch(console.error);

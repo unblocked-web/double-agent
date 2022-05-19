@@ -1,4 +1,4 @@
-import BaseCheck, {ICheckIdentity, CheckType, ICheckMeta} from './BaseCheck';
+import BaseCheck, { ICheckIdentity, CheckType, ICheckMeta } from './BaseCheck';
 
 export default class BooleanCheck extends BaseCheck {
   public readonly prefix = 'BOOL';

@@ -7,6 +7,7 @@ import devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
 import instanceVariations from './data/path-patterns/instance-variations.json';
 import locationVariations from './data/path-patterns/location-variations.json';
 import windowVariations from './data/path-patterns/window-variations.json';
+import { probesDataDir } from './paths';
 
 const dataDir = Path.join(__dirname, 'data');
 
@@ -35,7 +36,7 @@ let probeIdsMap: IProbeIdsMap;
 export default class Config {
   static userAgentIds: string[] = [];
   static dataDir = dataDir;
-  static probesDataDir: string;
+  static readonly probesDataDir = probesDataDir;
 
   static get probeIdsMap(): IProbeIdsMap {
     if (!this.probesDataDir) {
@@ -58,41 +59,43 @@ export default class Config {
 
   static get browserNames(): string[] {
     const names = this.userAgentIds.map(
-      userAgentId => RealUserAgents.extractMetaFromUserAgentId(userAgentId).browserName,
+      (userAgentId) => RealUserAgents.extractMetaFromUserAgentId(userAgentId).browserName,
     );
     return Array.from(new Set(names));
   }
 
   static get osNames(): string[] {
     const names = this.userAgentIds.map(
-      userAgentId => RealUserAgents.extractMetaFromUserAgentId(userAgentId).operatingSystemName,
+      (userAgentId) => RealUserAgents.extractMetaFromUserAgentId(userAgentId).operatingSystemName,
     );
     return Array.from(new Set(names));
   }
 
   static findUserAgentIdsByName(name: string) {
-    return this.userAgentIds.filter(userAgentId => {
+    return this.userAgentIds.filter((userAgentId) => {
       const meta = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
       return [meta.operatingSystemName, meta.browserName].includes(name);
     });
   }
 
   static isAutomationPath(path: string): boolean {
-    if (devtoolsIndicators.added.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (devtoolsIndicators.extraAdded.some(pattern => pathIsPatternMatch(path, pattern)))
+    if (devtoolsIndicators.added.some((pattern) => pathIsPatternMatch(path, pattern))) return true;
+    if (devtoolsIndicators.extraAdded.some((pattern) => pathIsPatternMatch(path, pattern)))
       return true;
     return false;
   }
 
   static isVariationPath(path: string): boolean {
-    if (instanceVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (instanceVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
+    if (instanceVariations.changed.some((pattern) => pathIsPatternMatch(path, pattern)))
       return true;
-    if (locationVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (locationVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
+    if (instanceVariations.extraChanged.some((pattern) => pathIsPatternMatch(path, pattern)))
       return true;
-    if (windowVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
-    if (windowVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
+    if (locationVariations.changed.some((pattern) => pathIsPatternMatch(path, pattern)))
+      return true;
+    if (locationVariations.extraChanged.some((pattern) => pathIsPatternMatch(path, pattern)))
+      return true;
+    if (windowVariations.changed.some((pattern) => pathIsPatternMatch(path, pattern))) return true;
+    if (windowVariations.extraChanged.some((pattern) => pathIsPatternMatch(path, pattern)))
       return true;
     return false;
   }

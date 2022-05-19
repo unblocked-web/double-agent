@@ -75,7 +75,9 @@ export default class CheckGenerator {
       for (const name of Object.keys(object._$functionMethods)) {
         const methodPath = `${path}.${name}`;
         const methodObj = object._$functionMethods[name];
-        this.add(new FlagsCheck({ userAgentId }, { path: methodPath }, methodObj._$flags.split('')));
+        this.add(
+          new FlagsCheck({ userAgentId }, { path: methodPath }, methodObj._$flags.split('')),
+        );
       }
     }
   }
@@ -119,7 +121,13 @@ export default class CheckGenerator {
       }
     }
 
-    const functionCheck = new FunctionCheck({ userAgentId }, { path }, codeString, methods, invocation);
+    const functionCheck = new FunctionCheck(
+      { userAgentId },
+      { path },
+      codeString,
+      methods,
+      invocation,
+    );
     this.add(functionCheck);
   }
 
@@ -143,7 +151,11 @@ export default class CheckGenerator {
     const { userAgentId } = this;
     this.add(new GetterCheck({ userAgentId }, { path }, { codeString: object._$get }));
     this.add(
-      new GetterCheck({ userAgentId }, { path }, { codeStringToString: object._$getToStringToString }),
+      new GetterCheck(
+        { userAgentId },
+        { path },
+        { codeStringToString: object._$getToStringToString },
+      ),
     );
 
     if (object._$accessException) {
@@ -159,7 +171,11 @@ export default class CheckGenerator {
     const { userAgentId } = this;
     this.add(new SetterCheck({ userAgentId }, { path }, { codeString: object._$set }));
     this.add(
-      new SetterCheck({ userAgentId }, { path }, { codeStringToString: object._$setToStringToString }),
+      new SetterCheck(
+        { userAgentId },
+        { path },
+        { codeStringToString: object._$setToStringToString },
+      ),
     );
   }
 
@@ -178,8 +194,8 @@ export default class CheckGenerator {
     this.add(new ClassCheck({ userAgentId }, { path }, { hasFunction }));
 
     const constructorPath = `${path}.new()`;
-    const constructorException = this.endpointsByPath[constructorPath]?.object
-      ._$constructorException;
+    const constructorException =
+      this.endpointsByPath[constructorPath]?.object._$constructorException;
     if (constructorException) {
       this.add(new ClassCheck({ userAgentId }, { path }, { constructorException }));
     }

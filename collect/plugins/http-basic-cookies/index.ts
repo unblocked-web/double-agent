@@ -1,4 +1,4 @@
-import Cookie from 'cookie';
+import * as Cookie from 'cookie';
 import RealUserAgents from '@double-agent/real-user-agents';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import { MainDomain, SubDomain, CrossDomain } from '@double-agent/collect';

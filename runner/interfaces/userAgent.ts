@@ -1,7 +1,5 @@
 interface UserAgentConfig {
-    browserIds: string[];
+  browserIds: string[];
 }
 
-export {
-    UserAgentConfig,
-};
+export { UserAgentConfig };

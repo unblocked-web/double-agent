@@ -169,7 +169,10 @@ export default class BrowserDomPlugin extends Plugin {
   }
 
   private async waitUntilFinished(ctx: IRequestContext) {
-    const pendingKey = this.getPendingKey(ctx, ctx.url.searchParams.get('pageName') || PageNames.BrowserDom);
+    const pendingKey = this.getPendingKey(
+      ctx,
+      ctx.url.searchParams.get('pageName') || PageNames.BrowserDom,
+    );
     this.pendingByKey[pendingKey] = createPromise();
     await this.pendingByKey[pendingKey].promise;
     ctx.res.end();

@@ -1,4 +1,8 @@
-import BaseCheck, {CheckType, ICheckIdentity, ICheckMeta} from '@double-agent/analyze/lib/checks/BaseCheck';
+import BaseCheck, {
+  CheckType,
+  ICheckIdentity,
+  ICheckMeta,
+} from '@double-agent/analyze/lib/checks/BaseCheck';
 
 type IData = { hasFunction: boolean } | { constructorException: string };
 

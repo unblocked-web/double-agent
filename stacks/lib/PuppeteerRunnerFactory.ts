@@ -1,17 +1,17 @@
 import { IRunner, IRunnerFactory } from '@double-agent/runner/interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
-
 import puppeteer from 'puppeteer';
 
 export default class PuppeteerRunnerFactory implements IRunnerFactory {
   browser?: puppeteer.Browser;
 
   public runnerId(): string {
-      return 'puppeteer';
+    return 'puppeteer';
   }
 
   public async startFactory() {
+    // eslint-disable-next-line import/no-named-as-default-member
     this.browser = await puppeteer.launch({
       headless: true,
       ignoreHTTPSErrors: true,
@@ -53,11 +53,7 @@ class PuppeteerRunner implements IRunner {
     }
   }
 
-  async runPluginPages(
-    assignment: IAssignment,
-    pages: ISessionPage[],
-    counter: number,
-  ) {
+  async runPluginPages(assignment: IAssignment, pages: ISessionPage[], counter: number) {
     let isFirst = true;
     for (const page of pages) {
       this.lastPage = page;
@@ -82,14 +78,14 @@ class PuppeteerRunner implements IRunner {
         console.log('%s waitForElementSelector -- %s', step, page.waitForElementSelector);
         await this.page.waitForSelector(page.waitForElementSelector, {
           visible: true,
-          timeout: 60e3
+          timeout: 60e3,
         });
       }
 
       if (page.clickElementSelector) {
         console.log('%s Wait for clickElementSelector -- %s', step, page.clickElementSelector);
         const clickable = await this.page.waitForSelector(page.clickElementSelector, {
-          visible: true
+          visible: true,
         });
         console.log('%s Click -- %s', step, page.clickElementSelector);
         await clickable.click();

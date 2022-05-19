@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Queue from 'p-queue';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import assignmentServer from './assignmentServer';
@@ -23,22 +22,31 @@ export default async function forEachAssignment(
   const dataDir = config.dataDir;
   const userId = config.userId;
   const userAgentsToTestPath = config.userAgentsToTestPath;
-  const { assignments } = await assignmentServer('/create', { userId, dataDir, userAgentsToTestPath });
+  const { assignments } = await assignmentServer('/create', {
+    userId,
+    dataDir,
+    userAgentsToTestPath,
+  });
 
   for (const i in assignments) {
     const { id: assignmentId } = assignments[i];
-    queue.add(async () => {
+    void queue.add(async () => {
       console.log(`Getting assignment %s of %s`, i, assignments.length);
       let assignment;
       try {
         type T = { assignment: IAssignment };
-        const response = await assignmentServer<T>(`/activate/${assignmentId}`, {userId});
+        const response = await assignmentServer<T>(`/activate/${assignmentId}`, { userId });
         assignment = response.assignment;
       } catch (error) {
         console.log('ERROR activating assignment: ', error);
         process.exit();
       }
-      console.log('[%s._] RUNNING %s assignment (%s)', assignment.num, assignment.type, assignment.id);
+      console.log(
+        '[%s._] RUNNING %s assignment (%s)',
+        assignment.num,
+        assignment.type,
+        assignment.id,
+      );
       try {
         await runAssignmentFn(assignment);
       } catch (error) {

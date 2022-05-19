@@ -1,4 +1,4 @@
-import PageNames from "../interfaces/PageNames";
+import PageNames from '../interfaces/PageNames';
 import DomExtractor from '../injected-scripts/DomExtractor';
 
 export default function loadDomExtractorScript() {

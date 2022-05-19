@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import * as http from 'http';
-import cookie from 'cookie';
-import http2 from 'http2';
+import * as cookie from 'cookie';
+import * as http2 from 'http2';
 import ResourceType from '../interfaces/ResourceType';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import OriginType from '../interfaces/OriginType';
