@@ -1,26 +1,25 @@
 import { IRunner, IRunnerFactory } from '@double-agent/runner/interfaces/runner';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
-import puppeteer from 'puppeteer';
+import { Browser, Page, launch } from 'puppeteer';
 
 export default class PuppeteerRunnerFactory implements IRunnerFactory {
-  browser?: puppeteer.Browser;
+  browser?: Browser;
 
   public runnerId(): string {
     return 'puppeteer';
   }
 
   public async startFactory() {
-    // eslint-disable-next-line import/no-named-as-default-member
-    this.browser = await puppeteer.launch({
+    this.browser = await launch({
       headless: true,
       ignoreHTTPSErrors: true,
     });
   }
 
   public async spawnRunner(assignment: IAssignment): Promise<IRunner> {
-    const session = await this.browser.createIncognitoBrowserContext();
-    const page = await session.newPage();
+    const browserContext = await this.browser.createIncognitoBrowserContext();
+    const page = await browserContext.newPage();
     await page.setUserAgent(assignment.userAgentString);
     return new PuppeteerRunner(page);
   }
@@ -32,9 +31,9 @@ export default class PuppeteerRunnerFactory implements IRunnerFactory {
 
 class PuppeteerRunner implements IRunner {
   lastPage?: ISessionPage;
-  page: puppeteer.Page;
+  page: Page;
 
-  constructor(page: puppeteer.Page) {
+  constructor(page: Page) {
     this.page = page;
   }
 
