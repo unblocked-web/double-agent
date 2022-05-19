@@ -8,7 +8,7 @@ import DefaultBrowserEmulator, { IEmulatorOptions } from '@unblocked-web/default
 
 export default class UnblockedRunnerFactory implements IRunnerFactory {
   private pool = new Pool({
-    unblockedPlugins: [DefaultBrowserEmulator, DefaultHumanEmulator],
+    plugins: [DefaultBrowserEmulator, DefaultHumanEmulator],
   });
 
   public runnerId(): string {
