@@ -1,6 +1,5 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
-
 import Analyze from '@double-agent/analyze';
 import { IResultFlag } from '@double-agent/analyze/lib/Plugin';
 import { probesDataDir } from '@double-agent/config/paths';

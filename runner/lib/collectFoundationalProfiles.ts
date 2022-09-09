@@ -1,8 +1,6 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
-
 import RealUserAgents from '@double-agent/real-user-agents';
-
 import { UserAgentConfig } from '../interfaces/userAgent';
 
 const FsPromises = Fs.promises;

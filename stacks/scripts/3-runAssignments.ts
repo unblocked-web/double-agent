@@ -1,9 +1,7 @@
 import { program } from 'commander';
 import { exit } from 'process';
-
 import { runAssignments } from '@double-agent/runner/lib/runAssignments';
 import { IRunnerFactory } from '@double-agent/runner/interfaces/runner';
-
 import UnblockedRunnerFactory from '../lib/UnblockedRunnerFactory';
 import PuppeteerRunnerFactory from '../lib/PuppeteerRunnerFactory';
 import { getExternalDataPath } from '../paths';

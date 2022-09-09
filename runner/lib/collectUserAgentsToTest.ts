@@ -1,11 +1,9 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
-
 import RealUserAgents from '@double-agent/real-user-agents';
 import IUserAgentToTest, {
   UserAgentToTestPickType,
 } from '@double-agent/config/interfaces/IUserAgentToTest';
-
 import { UserAgentConfig } from '../interfaces/userAgent';
 import Config from '@double-agent/config/index';
 

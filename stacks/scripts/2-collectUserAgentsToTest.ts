@@ -1,5 +1,4 @@
 import { writeUserAgentsToTest } from '@double-agent/runner/lib/collectUserAgentsToTest';
-
 import externalUserAgentConfig from '../data/external/userAgentConfig.json';
 import { getExternalDataPath } from '../paths';
 
