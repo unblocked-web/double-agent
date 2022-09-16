@@ -4,7 +4,7 @@ import { createOsIdFromUserAgentString } from '@unblocked-web/real-user-agents/l
 import { createBrowserIdFromUserAgentString } from '@unblocked-web/real-user-agents/lib/BrowserUtils';
 import RealUserAgents from '@unblocked-web/real-user-agents';
 import { getCacheDirectory } from '@ulixee/commons/lib/dirUtils';
-import { loadEnv, parseEnvBool, parseEnvInt } from '@ulixee/commons/lib/envUtils';
+import { loadEnv, parseEnvInt } from '@ulixee/commons/lib/envUtils';
 import * as devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
 import * as instanceVariations from './data/path-patterns/instance-variations.json';
 import * as locationVariations from './data/path-patterns/location-variations.json';
@@ -143,4 +143,10 @@ export function pathIsPatternMatch(path: string, pattern: string) {
     return path.includes(pattern.substr(1));
   }
   return path.startsWith(pattern);
+}
+
+function parseEnvBool(envvar: string): boolean {
+  if (envvar === '1' || envvar?.toLowerCase() === 'true' || envvar?.toLowerCase() === 'yes')
+    return true;
+  return false;
 }
