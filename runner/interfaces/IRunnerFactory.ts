@@ -2,7 +2,7 @@ import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment
 
 // Each assignment requires a fresh runner. The runner is created
 // by a factory object implementing this interface.
-interface IRunnerFactory {
+export interface IRunnerFactory {
   // returns a unique identifier which uniquely identifies the kind/type of runners,
   // the factory spawns.
   runnerId(): string;
@@ -29,12 +29,14 @@ interface IRunnerFactory {
 
 // IRunner is the interface used for a runner which
 // is to successfully complete any IAssignment thrown its way.
-interface IRunner {
+export interface IRunner {
   // run the assignment and return only when finished.
-  run(assignment: IAssignment): Promise<void>;
+  run(assignment: IAssignment, filters?: IRunnerFilter): Promise<void>;
 
   // clean up any resources owned by the Runner implementation.
   stop(): Promise<void>;
 }
 
-export { IRunnerFactory, IRunner };
+export interface IRunnerFilter {
+  onlyRunPluginIds: string[]
+}

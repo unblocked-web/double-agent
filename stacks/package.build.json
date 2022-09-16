@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "0": "node -r source-map-support/register scripts/0-collectFoundationalProfiles.js",
-    "1": "node -r source-map-support/register --max-old-space-size=10000 scripts/1-extractFoundationalProbes.js",
-    "2": "node -r source-map-support/register scripts/2-collectUserAgentsToTest.js",
-    "3": "node -r source-map-support/register scripts/3-runAssignments.js",
-    "3-unblocked": "node -r source-map-support/register scripts/3-runAssignments.js --runner=unblocked",
-    "3-puppeteer": "node -r source-map-support/register scripts/3-runAssignments.js --runner=puppeteer",
-    "4": "node -r source-map-support/register scripts/4-analyzeAssignmentResults.js"
+    "0": "node scripts/0-importFoundationalProfiles.js",
+    "1": "node --max-old-space-size=10000 scripts/1-extractFoundationalProbes.js",
+    "2": "node scripts/2-collectUserAgentsToTest.js",
+    "3": "node scripts/3-runAssignments.js",
+    "3-unblocked": "node scripts/3-runAssignments.js --runner=unblocked",
+    "3-puppeteer": "node scripts/3-runAssignments.js --runner=puppeteer",
+    "4": "node scripts/4-analyzeAssignmentResults.js"
   }
 }

@@ -1,0 +1,40 @@
+name: Rsync
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy latest to Digital Ocean
+    timeout-minutes: 30
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Yarn build
+        run: yarn build
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          name: id_rsa_ulixee_digital_ocean
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: rsync over ssh
+        run: ./run.sh
+        env:
+          REMOTE: 174.138.36.46

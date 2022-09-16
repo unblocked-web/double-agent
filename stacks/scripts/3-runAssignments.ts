@@ -1,7 +1,8 @@
+import '@ulixee/commons/lib/SourceMapSupport';
 import { program } from 'commander';
 import { exit } from 'process';
-import { runAssignments } from '@double-agent/runner/lib/runAssignments';
-import { IRunnerFactory } from '@double-agent/runner/interfaces/runner';
+import { IRunnerFactory } from '@double-agent/runner/interfaces/IRunnerFactory';
+import AssignmentRunner from '@double-agent/runner/lib/AssignmentRunner';
 import UnblockedRunnerFactory from '../lib/UnblockedRunnerFactory';
 import PuppeteerRunnerFactory from '../lib/PuppeteerRunnerFactory';
 import { getExternalDataPath } from '../paths';
@@ -62,6 +63,6 @@ switch (runnerId) {
     exit(1);
 }
 
-runAssignments(runnerFactory, userAgentsToTestPath, dataDir)
-  .then(() => process.exit())
+new AssignmentRunner(runnerFactory, userAgentsToTestPath, dataDir)
+  .run()
   .catch(console.log);

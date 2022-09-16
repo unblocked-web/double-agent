@@ -1,4 +1,5 @@
-import { analyzeAssignmentResults } from '@double-agent/runner/lib/analyzeAssignmentResults';
+import '@ulixee/commons/lib/SourceMapSupport';
+import analyzeAssignmentResults from '@double-agent/runner/lib/analyzeAssignmentResults';
 import { getExternalDataPath } from '../paths';
 
 const assignmentsDataDir = getExternalDataPath(`/3-assignments`);
