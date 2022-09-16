@@ -13,6 +13,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - name: Install pcap
+        run: sudo apt-get install -y libpcap-dev
+
       - uses: actions/checkout@v2
         with:
           submodules: 'true'
@@ -23,18 +26,20 @@ jobs:
           cache: 'yarn'
 
       - name: Yarn build
-        run: yarn && yarn build
+        run: yarn build
 
       - uses: actions/checkout@v2
         with:
           submodules: 'true'
+
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
           name: id_rsa_ulixee_digital_ocean
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
       - name: rsync over ssh
-        run: rsync -avzhm -e "ssh -i $SERVER_PEM" --exclude-from '.rsyncignore' . root@$REMOTE:~/double-agent
+        run: ./run.sh
         env:
           REMOTE: 174.138.36.46
