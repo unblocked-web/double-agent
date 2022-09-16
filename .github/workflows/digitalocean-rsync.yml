@@ -26,7 +26,7 @@ jobs:
           cache: 'yarn'
 
       - name: Yarn build
-        run: yarn build
+        run: yarn && yarn build
 
       - uses: actions/checkout@v2
         with:
@@ -40,6 +40,20 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
       - name: rsync over ssh
-        run: ./run.sh
+        run: rsync -avzhm -e "ssh -i ~/.ssh/id_rsa_ulixee_digital_ocean.pub" --exclude-from '.rsyncignore' . root@$REMOTE:~/double-agent
+        env:
+          REMOTE: 174.138.36.46
+
+      - name: reboot server
+        run: |
+          ssh -i "~/.ssh/id_rsa_ulixee_digital_ocean.pub" "root@$REMOTE" /bin/bash << EOF
+            killall node
+            rm -rf /tmp/double-agent-download-data/
+            cd double-agent
+            source "~/.nvm/nvm.sh"
+            yarn
+            yarn build
+            yarn prod &
+          EOF
         env:
           REMOTE: 174.138.36.46
