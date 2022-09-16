@@ -22,12 +22,12 @@ export default class BrowserFingerprints extends Plugin {
     });
   }
 
-  runIndividual(profile: IFingerprintProfile) {
+  override runIndividual(profile: IFingerprintProfile) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('FNG', profile.userAgentId, checkGenerator.checks);
   }
 
-  runOverTime(profile: IFingerprintProfile, profileCountOverTime: number) {
+  override runOverTime(profile: IFingerprintProfile, profileCountOverTime: number) {
     if (!profileCountOverTime) {
       throw new Error('profileCountOverTime must be > 0');
     }

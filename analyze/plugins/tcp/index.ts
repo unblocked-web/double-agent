@@ -33,7 +33,7 @@ export default class TcpPlugin extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return [
       ...this.runProbes('TTL', profile.userAgentId, checkGenerator.ttlChecks),

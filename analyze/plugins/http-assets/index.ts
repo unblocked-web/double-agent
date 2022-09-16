@@ -24,7 +24,7 @@ export default class HttpAssetHeaders extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('ASH', profile.userAgentId, checkGenerator.checks);
   }

@@ -22,7 +22,7 @@ export default class TlsClienthello extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('CLH', profile.userAgentId, checkGenerator.checks);
   }

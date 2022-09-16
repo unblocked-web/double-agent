@@ -1,16 +1,16 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
-import RealUserAgents from '@double-agent/real-user-agents';
+import RealUserAgents from '@unblocked-web/real-user-agents';
 import IUserAgentToTest, {
   UserAgentToTestPickType,
 } from '@double-agent/config/interfaces/IUserAgentToTest';
-import { UserAgentConfig } from '../interfaces/userAgent';
 import Config from '@double-agent/config/index';
+import IUserAgentConfig from '../interfaces/IUserAgentConfig';
 
 const FsPromises = Fs.promises;
 
 async function writeUserAgentsToTest(
-  userAgentConfig: UserAgentConfig,
+  userAgentConfig: IUserAgentConfig,
   outFilePath: string,
 ): Promise<void> {
   const userAgentsToTest = await collectUserAgentsToTest(userAgentConfig);
@@ -22,7 +22,7 @@ async function writeUserAgentsToTest(
 }
 
 async function collectUserAgentsToTest(
-  userAgentConfig: UserAgentConfig,
+  userAgentConfig: IUserAgentConfig,
 ): Promise<IUserAgentToTest[]> {
   const userAgentsToTest: IUserAgentToTest[] = [];
 

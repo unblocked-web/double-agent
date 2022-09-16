@@ -1,4 +1,4 @@
-import 'source-map-support/register';
+import '@ulixee/commons/lib/SourceMapSupport';
 import https from 'https';
 import tls from 'tls';
 import { IncomingMessage, ServerResponse } from 'http';

@@ -22,7 +22,7 @@ export default class HttpXhrHeaders extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('XHR', profile.userAgentId, checkGenerator.checks);
   }

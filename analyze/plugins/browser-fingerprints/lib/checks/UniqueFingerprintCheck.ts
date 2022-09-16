@@ -26,7 +26,7 @@ export default class UniqueFingerprintCheck extends BaseCheck {
     return [this.fingerprint];
   }
 
-  public generateHumanScore(
+  public override generateHumanScore(
     check: UniqueFingerprintCheck | null,
     profileCountOverTime: number,
   ): number {

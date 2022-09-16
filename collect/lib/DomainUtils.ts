@@ -28,7 +28,7 @@ export function getDomainType(url: URL | string) {
 
 export function isRecognizedDomain(host: string, recognizedDomains: string[]) {
   const domain = extractDomainFromHost(host);
-  return recognizedDomains.some(x => x === domain);
+  return recognizedDomains.some((x) => x === domain);
 }
 
 export function addSessionIdToUrl(url: string, sessionId: string) {

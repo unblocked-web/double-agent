@@ -21,7 +21,7 @@ export default class BrowserDom extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('DOM', profile.userAgentId, checkGenerator.checks);
   }

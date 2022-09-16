@@ -2,14 +2,14 @@ import StringCheck from './StringCheck';
 import { CheckType } from './BaseCheck';
 
 export default class StringCaseCheck extends StringCheck {
-  public readonly prefix = 'STRC';
-  public readonly type = CheckType.Individual;
+  public override readonly prefix = 'STRC';
+  public override readonly type = CheckType.Individual;
 
-  public get signature() {
+  public override get signature() {
     return `${this.id}:${this.value}`;
   }
 
-  public get args() {
+  public override get args() {
     return [this.value];
   }
 }

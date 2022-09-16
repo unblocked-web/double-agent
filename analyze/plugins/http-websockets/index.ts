@@ -22,7 +22,7 @@ export default class HttpWebsocketHeaders extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('WSH', profile.userAgentId, checkGenerator.checks);
   }

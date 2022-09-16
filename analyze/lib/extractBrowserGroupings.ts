@@ -1,5 +1,5 @@
 import Config from '@double-agent/config';
-import RealUserAgents from '@double-agent/real-user-agents';
+import RealUserAgents from '@unblocked-web/real-user-agents';
 
 export default function extractBrowserGroupings(userAgentIds: string[]): [string, string[]][] {
   const { idsByGroup, hasAllOf, hasAllExcept, hasNone } = extractGroupedIds(userAgentIds);

@@ -43,14 +43,14 @@ export default class HttpHeadersPlugin extends Plugin {
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https', 'http2'].forEach(protocol => {
+    ['http', 'https', 'http2'].forEach((protocol) => {
       pages.push({ route: this.routes[protocol]['/'], waitForReady: true });
     });
 
     this.registerPages(...pages);
   }
 
-  public sendDocument(ctx: IRequestContext) {
+  public sendDocument(ctx: IRequestContext): void {
     const document = new Document(ctx);
     for (const domainType of [
       DomainType.MainDomain,
@@ -73,17 +73,15 @@ export default class HttpHeadersPlugin extends Plugin {
     ctx.res.end(document.html);
   }
 
-  public savePreflightHeaders(ctx: IRequestContext) {
+  public savePreflightHeaders(ctx: IRequestContext): void {
     saveHeadersToProfile(this, ctx);
   }
 
-  public saveHeadersAndSendAsset(ctx: IRequestContext) {
+  public saveHeadersAndSendAsset(ctx: IRequestContext): void {
     saveHeadersToProfile(this, ctx);
 
     const pathname = ctx.url.pathname.replace(`/${this.id}`, '');
-    if (!cachedAssetsByPath[pathname]) {
-      cachedAssetsByPath[pathname] = fs.readFileSync(`${__dirname}/public${pathname}`);
-    }
+    cachedAssetsByPath[pathname] ??= fs.readFileSync(`${__dirname}/public${pathname}`);
 
     let assetContents: any = cachedAssetsByPath[pathname];
     if (pathname === '/test.css') {
@@ -102,7 +100,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
 /////// /////////////////
 
-function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
+function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext): void {
   const pathname = ctx.url.pathname;
   const { domainType, originType, method, referer, resourceType } = ctx.requestDetails;
   const protocol = ctx.server.protocol;

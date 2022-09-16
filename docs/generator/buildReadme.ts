@@ -1,7 +1,7 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
 
-export default function buildReadme() {
+export default function buildReadme():void {
   const readmeTemplatePath = Path.join(__dirname, '../readme-template.md');
   let main = Fs.readFileSync(readmeTemplatePath, 'utf8');
 

@@ -29,7 +29,7 @@ export default class HttpHeadersPlugin extends Plugin {
 
     const pages: IPluginPage[] = [];
 
-    ['http', 'https', 'http2'].forEach(protocol => {
+    ['http', 'https', 'http2'].forEach((protocol) => {
       pages.push(
         {
           route: this.routes[protocol]['/start'],

@@ -22,7 +22,7 @@ export default class HttpCookies extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('BAC', profile.userAgentId, checkGenerator.checks);
   }

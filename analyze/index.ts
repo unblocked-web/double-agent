@@ -1,3 +1,4 @@
+import '@ulixee/commons/lib/SourceMapSupport';
 import * as Fs from 'fs';
 import * as Path from 'path';
 import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
@@ -74,10 +75,11 @@ export default class Analyze {
     return this.resultsMap.byUserAgentId[userAgentId];
   }
 
-  public addOverTime(sessionsDir: string, pickType: IUserAgentToTestPickType) {
+  public addOverTime(sessionsDir: string, pickType: IUserAgentToTestPickType): IResult[] {
     const plugins = loadAllPlugins(this.probesDataDir);
+    if (!Fs.existsSync(sessionsDir)) return [];
     const dirNames = Fs.readdirSync(sessionsDir)
-      .filter(x => x.startsWith(pickType))
+      .filter((x) => x.startsWith(pickType))
       .sort();
 
     for (const dirName of dirNames) {
@@ -144,7 +146,7 @@ export default class Analyze {
       }
       humanScoreMap.sessionsByPickType[pickType] = sessionDetails;
       humanScoreMap.total[pickType] = sessionDetails
-        .map(x => x.humanScore.total)
+        .map((x) => x.humanScore.total)
         .reduce((a, b) => Math.min(a, b), 100);
     }
 
@@ -165,19 +167,19 @@ function loadAllPlugins(probesDataDir: string) {
 
     const probesById: { [id: string]: Probe } = {};
     const probeObjs = JSON.parse(Fs.readFileSync(probesPath, 'utf-8'));
-    probeObjs.forEach(probeObj => {
+    probeObjs.forEach((probeObj) => {
       probesById[probeObj.id] = Probe.load(probeObj, plugin.id);
     });
 
     const probeBucketObjs = JSON.parse(Fs.readFileSync(probeBucketsPath, 'utf-8'));
-    plugin.probeBuckets = probeBucketObjs.map(obj => {
+    plugin.probeBuckets = probeBucketObjs.map((obj) => {
       return ProbeBucket.load(obj, probesById);
     });
 
     const layerObjs = JSON.parse(Fs.readFileSync(layersPath, 'utf-8')).filter(
-      x => x.pluginId === plugin.id,
+      (x) => x.pluginId === plugin.id,
     );
-    plugin.layers = layerObjs.map(obj => Layer.load(obj));
+    plugin.layers = layerObjs.map((obj) => Layer.load(obj));
   }
   return plugins;
 }

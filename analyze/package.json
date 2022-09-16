@@ -4,12 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "initialize": "node -r source-map-support/register initialize.js"
+    "initialize": "node initialize.js"
   },
   "dependencies": {
+    "@ulixee/commons": "2.0.0-alpha.11",
     "@double-agent/config": "1.0.0",
     "@double-agent/collect": "1.0.0",
-    "@double-agent/real-user-agents": "1.0.0",
+    "@unblocked-web/real-user-agents": "1.0.0",
     "humanize-string": "^2.1.0",
     "initialism": "^1.0.2",
     "lodash": "^4.17.21",

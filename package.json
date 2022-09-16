@@ -1,6 +1,6 @@
 {
   "name": "double-agent",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "Double agent is a detection system for when an http request or browser interaction is not the user agent it says it is",
   "scripts": {
@@ -19,16 +19,12 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {
-    "@ulixee/repo-tools": "^1.0.15",
-    "source-map-support": "^0.5.21"
-  },
   "devDependencies": {
-    "cross-env": "^7.0.3",
+    "@ulixee/repo-tools": "^1.0.15",
     "@types/node": "^14.18.18",
     "husky": "^7.0.1",
     "lint-staged": "^10.2.11",
-    "typescript": "^4.5.5"
+    "typescript": "^4.7.4"
   },
   "workspaces": {
     "packages": [
@@ -39,12 +35,13 @@
       "collect-controller",
       "config",
       "docs",
-      "real-user-agents",
       "tls-server",
       "runner",
       "stacks",
       "../agent/build/*",
-      "../build/plugins/*"
+      "../build/plugins/*",
+      "../real-user-agents/build",
+      "../../shared/build/*"
     ]
   },
   "lint-staged": {

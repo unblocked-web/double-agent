@@ -64,7 +64,7 @@ function buildAssignmentsOverTime(
         userAgentToTest.operatingSystemId,
         userAgentToTest.browserId,
       );
-      countByUserAgentId[userAgentId] = countByUserAgentId[userAgentId] || 0;
+      countByUserAgentId[userAgentId] ??= 0;
       const pctIncluded = (countByUserAgentId[userAgentId] / assignments.length) * 100;
       if (pctIncluded < userAgentToTest.usagePercent[pickType]) break;
     }

@@ -23,7 +23,7 @@ export default class SessionFingerprintCheck extends BaseCheck {
     return [this.fingerprints];
   }
 
-  public generateHumanScore(check: SessionFingerprintCheck | null): number {
+  public override generateHumanScore(check: SessionFingerprintCheck | null): number {
     super.generateHumanScore(check);
     const allMatch = check.fingerprints.every(x => x === check.fingerprints[0]);
     return allMatch ? 100 : 0;

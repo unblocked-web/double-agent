@@ -6,7 +6,7 @@ import getAllAnalyzePlugins from '@double-agent/analyze/lib/getAllPlugins';
 const header = `Name | Description
 --- | :---`;
 
-export default function buildPluginsList(pluginType: 'collect' | 'analyze') {
+export default function buildPluginsList(pluginType: 'collect' | 'analyze'): void {
   const outputFile = Path.resolve(__dirname, `../output/${pluginType}-plugins.md`);
   const getAllPlugins = pluginType === 'collect' ? getAllCollectPlugins : getAllAnalyzePlugins;
   const allPlugins = getAllPlugins(true);

@@ -4,7 +4,7 @@ const path = require('path');
 let relativeDirectory = process.argv[2] || '/build';
 // eslint-disable-next-line no-console
 console.log('Updating paths relative to %s', relativeDirectory);
-if (!relativeDirectory.startsWith('/')) relativeDirectory = '/' + relativeDirectory;
+if (!relativeDirectory.startsWith('/')) relativeDirectory = `/${relativeDirectory}`;
 
 function processDir(dir) {
   for (const fileOrDir of fs.readdirSync(dir)) {

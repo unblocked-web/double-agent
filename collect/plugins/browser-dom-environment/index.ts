@@ -12,7 +12,7 @@ import { dedicatedWorkerScript, loadDedicatedWorker } from './lib/dedicatedWorke
 import loadDomExtractorScript, { IDomExtractorPageMeta } from './lib/loadDomExtractorScript';
 
 export default class BrowserDomPlugin extends Plugin {
-  public outputFiles = 2; // TODO: update to include workers as they are output
+  public override outputFiles = 2; // TODO: update to include workers as they are output
   private pendingByKey: { [key: string]: IResolvablePromise } = {};
 
   public initialize() {

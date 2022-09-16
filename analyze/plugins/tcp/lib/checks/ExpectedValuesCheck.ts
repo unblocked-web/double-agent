@@ -30,7 +30,7 @@ export default class ExpectedValueCheck extends BaseCheck {
     return [this.expectedValues, this.value];
   }
 
-  public generateHumanScore(check: ExpectedValueCheck | null): number {
+  public override generateHumanScore(check: ExpectedValueCheck | null): number {
     super.generateHumanScore(check);
     return 100;
   }

@@ -22,7 +22,7 @@ export default class Http2SessionHeaders extends Plugin {
     });
   }
 
-  runIndividual(profile: any) {
+  override runIndividual(profile: any) {
     const checkGenerator = new CheckGenerator(profile);
     return this.runProbes('H2S', profile.userAgentId, checkGenerator.checks);
   }

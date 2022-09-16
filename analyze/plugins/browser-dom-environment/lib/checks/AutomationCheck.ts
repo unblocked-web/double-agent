@@ -20,7 +20,7 @@ export default class AutomationCheck extends BaseCheck {
     return [];
   }
 
-  public generateHumanScore(check: AutomationCheck | null): number {
+  public override generateHumanScore(check: AutomationCheck | null): number {
     super.generateHumanScore(check);
     return check ? 0 : 100;
   }

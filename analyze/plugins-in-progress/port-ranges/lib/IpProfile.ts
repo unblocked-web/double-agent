@@ -9,7 +9,7 @@
 // export default class IpProfile {
 //   constructor(readonly userAgentString: string, readonly requests: IIpRequest[]) {}
 //
-//   public save() {
+//   public save(): void {
 //     if (!process.env.GENERATE_PROFILES) return;
 //     const data = { userAgentString: this.userAgentString, requests: this.requests } as IIpProfile;
 //     Config.saveProfile(pluginId, this.userAgentString, data);

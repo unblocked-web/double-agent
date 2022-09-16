@@ -61,7 +61,7 @@ export default class Http2SessionPlugin extends Plugin {
       sessions: [],
     };
     for (const session of server.sessions) {
-      const isMatch = session.activity.some(x => x.data?.path?.includes(sessionParam));
+      const isMatch = session.activity.some((x) => x.data?.path?.includes(sessionParam));
 
       if (isMatch) {
         profileData.sessions.push({

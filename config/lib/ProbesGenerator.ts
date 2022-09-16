@@ -26,7 +26,7 @@ export default class ProbesGenerator {
     this.plugins = getAllPlugins();
   }
 
-  public save() {
+  public save(): void {
     const probeBucketsDir = Path.join(Config.probesDataDir, 'probe-buckets');
     const probesDir = Path.join(Config.probesDataDir, 'probes');
     const probeIdsDir = Path.join(Config.probesDataDir, 'probe-ids');
