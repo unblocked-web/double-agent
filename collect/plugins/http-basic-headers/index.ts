@@ -238,6 +238,7 @@ function saveHeadersToProfile(
   const { domainType, originType, method, referer, resourceType } = ctx.requestDetails;
   const protocol = ctx.server.protocol;
   const pageName = ctx.page.name;
+  const isRedirect = ctx.page.isRedirect;
   const rawHeaders: string[][] = [];
   for (let i = 0; i < ctx.req.rawHeaders.length; i += 2) {
     const key = ctx.req.rawHeaders[i];
@@ -253,6 +254,7 @@ function saveHeadersToProfile(
     domainType,
     originType,
     resourceType: overrideResourceType ?? resourceType,
+    isRedirect,
     pathname,
     referer,
     rawHeaders,

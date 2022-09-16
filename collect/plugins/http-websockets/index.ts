@@ -50,6 +50,7 @@ function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
     method,
     protocol,
     domainType,
+    isRedirect: ctx.page.isRedirect ?? false,
     resourceType: ResourceType.WebsocketUpgrade,
     originType,
     pathname,

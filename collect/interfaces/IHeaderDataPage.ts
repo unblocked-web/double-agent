@@ -6,6 +6,7 @@ import ResourceType from './ResourceType';
 export default interface IHeaderDataPage {
   pageName: string;
   method: string;
+  isRedirect: boolean;
   protocol: IServerProtocol;
   domainType: DomainType;
   originType: OriginType;
