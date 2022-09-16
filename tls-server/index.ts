@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 import { ChildProcess, fork } from 'child_process';
+import Config from '@double-agent/config';
 import parseTlsRecordFromStderr from './lib/parseTlsRecordFromStderr';
 import ServerResponse from './lib/ServerResponse';
 import IncomingMessage from './lib/IncomingMessage';
@@ -97,7 +98,7 @@ export default class TlsServer extends EventEmitter {
 
   private handleOpenSslOutput(message: string) {
     if (this.activeRequest.isProcessing) return;
-    if (process.env.PRINT_RAW) {
+    if (Config.collect.tlsPrintRaw) {
       console.log('\n------RAW------\n%s\n\n', message);
     }
     this.openSslOutput += message;

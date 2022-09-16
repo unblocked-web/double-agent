@@ -1,5 +1,7 @@
 import { URL } from 'url';
-import { CrossDomain, MainDomain, SubDomain, TlsDomain } from '../index';
+import Config from '@double-agent/config/index';
+
+const { CrossDomain, MainDomain, SubDomain, TlsDomain } = Config.collect.domains;
 
 export enum DomainType {
   MainDomain = 'MainDomain', // eslint-disable-line @typescript-eslint/no-shadow

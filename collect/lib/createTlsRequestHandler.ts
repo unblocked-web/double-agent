@@ -1,10 +1,12 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import Config from '@double-agent/config/index';
 import IServerContext from '../interfaces/IServerContext';
 import extractRequestDetails from './extractRequestDetails';
 import RequestContext from './RequestContext';
 import BaseServer from '../servers/BaseServer';
-import { TlsDomain } from '../index';
 import { isRecognizedDomain } from './DomainUtils';
+
+const { TlsDomain } = Config.collect.domains;
 
 export default function createTlsRequestHandler(server: BaseServer, serverContext: IServerContext) {
   return async function requestHandler(req: IncomingMessage, res: ServerResponse) {

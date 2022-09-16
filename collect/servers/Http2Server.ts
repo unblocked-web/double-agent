@@ -1,15 +1,10 @@
 import * as http2 from 'http2';
-import * as Fs from 'fs';
+import Certs from './Certs';
 import createHttpRequestHandler from '../lib/createHttpRequestHandler';
 import createWebsocketHandler from '../lib/createWebsocketHandler';
 import IServerContext from '../interfaces/IServerContext';
 import BaseServer from './BaseServer';
 import { IRoutesByPath } from '../lib/Plugin';
-import { MainDomain } from '../index';
-
-const certPath = process.env.LETSENCRYPT
-  ? `/etc/letsencrypt/live/${MainDomain}`
-  : `${__dirname}/../certs`;
 
 export interface IHttp2SessionActivity {
   type: string;
@@ -29,21 +24,20 @@ export default class Http2Server extends BaseServer {
     super('http2', port, routesByPath);
   }
 
-  public async start(context: IServerContext) {
+  public override async start(context: IServerContext): Promise<this> {
     await super.start(context);
     const httpRequestHandler = createHttpRequestHandler(this, context);
     const websocketHandler = createWebsocketHandler(this, context);
     const options = <http2.SecureServerOptions>{
-      key: Fs.readFileSync(`${certPath}/privkey.pem`),
-      cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
+      ...Certs,
       allowHTTP1: true, // allow http1 for older browsers
     };
 
-    this.http2Server = await new Promise<http2.Http2SecureServer>(resolve => {
+    this.http2Server = await new Promise<http2.Http2SecureServer>((resolve) => {
       const server = http2.createSecureServer(options, httpRequestHandler);
       server.on('upgrade', websocketHandler);
       server.on('checkContinue', (request, response) => {
-        const session = this.sessions.find(x => x.session === request.stream.session);
+        const session = this.sessions.find((x) => x.session === request.stream.session);
         session.activity.push({
           type: 'checkContinue',
           data: {
@@ -53,7 +47,7 @@ export default class Http2Server extends BaseServer {
         });
         response.writeContinue();
       });
-      server.on('session', session => {
+      server.on('session', (session) => {
         const sessionActivity = {
           session,
           id: `${session.socket.remoteAddress}:${session.socket.remotePort}`,
@@ -70,7 +64,7 @@ export default class Http2Server extends BaseServer {
         });
 
         this.sessions.push(sessionActivity);
-        session.on('ping', bytes => {
+        session.on('ping', (bytes) => {
           activity.push({
             type: 'ping',
             data: bytes.toString('utf8'),
@@ -95,7 +89,7 @@ export default class Http2Server extends BaseServer {
             },
           });
         });
-        session.on('remoteSettings', remoteSettings => {
+        session.on('remoteSettings', (remoteSettings) => {
           const settings: any = {};
           for (const [key, value] of Object.entries(http2.getDefaultSettings())) {
             // aliased property
@@ -112,7 +106,7 @@ export default class Http2Server extends BaseServer {
             },
           });
         });
-        session.on('localSettings', settings => {
+        session.on('localSettings', (settings) => {
           activity.push({
             type: 'localSettings',
             data: {
@@ -148,7 +142,7 @@ export default class Http2Server extends BaseServer {
               remoteWindowSize: session.state.remoteWindowSize,
             },
           });
-          stream.on('streamClosed', code => {
+          stream.on('streamClosed', (code) => {
             activity.push({
               type: 'streamClosed',
               data: { code, remoteWindowSize: session.state?.remoteWindowSize },
@@ -173,7 +167,7 @@ export default class Http2Server extends BaseServer {
   }
 
   public async stop(): Promise<any> {
-    this.sessions.forEach(x => x.session.close());
+    this.sessions.forEach((x) => x.session.close());
     this.http2Server.close();
     console.log(`HTTPS Server closed (port: ${this.port}`);
   }

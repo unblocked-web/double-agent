@@ -40,7 +40,7 @@ program.option(
 program.parse();
 const options = program.opts();
 
-const userAgentsToTestPath = getExternalDataPath(`/2-user-agents-to-test/userAgentsToTest`);
+const userAgentsToTestPath = getExternalDataPath(`/2-user-agents-to-test/userAgentsToTest.json`);
 const dataDir = getExternalDataPath(`/3-assignments`);
 
 const runnerId = options.runner || RunnerId.Puppeteer;

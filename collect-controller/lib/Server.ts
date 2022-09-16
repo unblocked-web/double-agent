@@ -1,6 +1,6 @@
 import url from 'url';
 import archiver from 'archiver';
-import * as Fs from 'fs';
+import { createReadStream, existsSync, promises as Fs, rmdirSync } from 'fs';
 import * as Path from 'path';
 import * as http from 'http';
 import { pathToRegexp } from 'path-to-regexp';
@@ -32,7 +32,7 @@ interface IActiveUser {
 
 const DOWNLOAD = 'download';
 const downloadDir = '/tmp/double-agent-download-data';
-if (Fs.existsSync(downloadDir)) Fs.rmdirSync(downloadDir, { recursive: true });
+if (existsSync(downloadDir)) rmdirSync(downloadDir, { recursive: true });
 
 export default class Server {
   private activeUsersById: { [id: string]: IActiveUser } = {};
@@ -49,7 +49,6 @@ export default class Server {
     '/download': this.downloadAll.bind(this),
     '/download/:assignmentId': this.downloadAssignmentProfiles.bind(this),
     '/finish': this.finishAssignments.bind(this),
-    '/load-navigator': this.extractNavigatorDetails.bind(this),
     '/favicon.ico': this.sendFavicon.bind(this),
   };
 
@@ -58,20 +57,20 @@ export default class Server {
     this.httpServerPort = httpServerPort;
     this.httpServer = new http.Server(this.handleRequest.bind(this));
 
-    Object.keys(this.endpointsByRoute).forEach(route => {
+    Object.keys(this.endpointsByRoute).forEach((route) => {
       const keys = [];
       const regexp = pathToRegexp(route, keys);
       this.routeMetaByRegexp.set(regexp, { route, keys });
     });
   }
 
-  public start() {
-    return new Promise<void>(resolve => {
-      this.httpServer.listen(this.httpServerPort, resolve).on('error', err => console.log(err));
+  public start(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.httpServer.listen(this.httpServerPort, resolve).on('error', (err) => console.log(err));
     });
   }
 
-  private async handleRequest(req: http.IncomingMessage, res: http.ServerResponse) {
+  private async handleRequest(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
     const requestUrl = url.parse(req.url, true);
 
     console.log('Assignment %s', `${req.headers.host}${req.url}`);
@@ -103,28 +102,18 @@ export default class Server {
     await endpoint(req, res, params);
   }
 
-  private async extractNavigatorDetails(req: http.IncomingMessage, res: http.ServerResponse) {
-    const userAgentString = req.headers['user-agent'];
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(`
-      <div id="userAgent">${userAgentString}</div>
-      <div id="platform"></div>
-      <div id="buildID"></div>
-      <script>
-      document.querySelector('#platform').innerText = window.navigator.platform;
-      document.querySelector('#buildID').innerText = window.navigator.buildID;
-      </script>
-    `);
-  }
-
-  private async sendFavicon(_, res: http.ServerResponse) {
-    this.favicon ??= await Fs.promises.readFile(`${__dirname}/../public/favicon.ico`);
+  private async sendFavicon(_, res: http.ServerResponse): Promise<void> {
+    this.favicon ??= await Fs.readFile(`${__dirname}/../public/favicon.ico`);
 
     res.writeHead(200, { 'Content-Type': 'image/x-icon' });
     res.end(this.favicon);
   }
 
-  private async createBasicAssignment(_, res: http.ServerResponse, params: IRequestParams) {
+  private async createBasicAssignment(
+    _,
+    res: http.ServerResponse,
+    params: IRequestParams,
+  ): Promise<void> {
     const { userId, dataDir } = params;
     if (!userId)
       return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
@@ -154,7 +143,11 @@ export default class Server {
     await this.activateAssignment(_, res, params);
   }
 
-  private async createAssignments(_, res: http.ServerResponse, params: IRequestParams) {
+  private async createAssignments(
+    _,
+    res: http.ServerResponse,
+    params: IRequestParams,
+  ): Promise<void> {
     console.log('CREATE ASSIGNMENT');
     const { userId, dataDir } = params;
     if (!userId) {
@@ -164,15 +157,12 @@ export default class Server {
       return sendJson(res, { message: 'Please provide a userAgentsToTestPath query param' }, 500);
     }
 
-    const userAgentsToTestData = await Fs.promises.readFile(
-      `${params.userAgentsToTestPath}.json`,
-      'utf8',
-    );
+    const userAgentsToTestData = await Fs.readFile(params.userAgentsToTestPath, 'utf8');
     const userAgentsToTest = JSON.parse(userAgentsToTestData) as IUserAgentToTest[];
     this.activeUsersById[userId] = await this.createUser(userId, dataDir, userAgentsToTest);
 
     const assignments = Object.values(this.activeUsersById[userId].assignmentsById).map(
-      assignment => {
+      (assignment) => {
         return { ...assignment, pagesByPlugin: undefined };
       },
     );
@@ -180,7 +170,11 @@ export default class Server {
     sendJson(res, { assignments });
   }
 
-  private async createUser(id: string, dataDir: string, userAgentsToTest: IUserAgentToTest[]) {
+  private async createUser(
+    id: string,
+    dataDir: string,
+    userAgentsToTest: IUserAgentToTest[],
+  ): Promise<{ id: string; dataDir: string; assignmentsById: IAssignmentsById }> {
     const assignments = await buildAllAssignments(userAgentsToTest);
     const assignmentsById: IAssignmentsById = {};
 
@@ -231,7 +225,11 @@ export default class Server {
     sendJson(res, { assignment: { dataDir, ...assignment } });
   }
 
-  private async downloadAssignmentProfiles(_, res: http.ServerResponse, params: IRequestParams) {
+  private async downloadAssignmentProfiles(
+    _,
+    res: http.ServerResponse,
+    params: Pick<IRequestParams, 'userId' | 'assignmentId'>,
+  ): Promise<void> {
     const { userId, assignmentId } = params;
     if (!userId)
       return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
@@ -248,7 +246,11 @@ export default class Server {
     await pipeDirToStream(profilesDir, res);
   }
 
-  private async downloadAll(_, res: http.ServerResponse, params: IRequestParams) {
+  private async downloadAll(
+    _,
+    res: http.ServerResponse,
+    params: Pick<IRequestParams, 'userId'>,
+  ): Promise<void> {
     const { userId } = params;
     if (!userId) return sendJson(res, { message: 'Please provide a userId query param' }, 500);
 
@@ -262,7 +264,11 @@ export default class Server {
     void pipeDirToStream(profilesDir, res).catch(console.error);
   }
 
-  private async finishAssignments(_, res: http.ServerResponse, params: IRequestParams) {
+  private async finishAssignments(
+    _,
+    res: http.ServerResponse,
+    params: Pick<IRequestParams, 'userId'>,
+  ): Promise<void> {
     const { userId } = params;
     if (!userId)
       return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
@@ -282,7 +288,7 @@ export default class Server {
 
     if (activeScraper.dataDir === DOWNLOAD) {
       const dataDir = extractBaseDir(activeScraper);
-      Fs.rmdirSync(dataDir, { recursive: true });
+      await Fs.rm(dataDir, { recursive: true });
     }
 
     sendJson(res, { finished: true });
@@ -301,9 +307,9 @@ export default class Server {
       const prevUmask = process.umask();
       process.umask(0);
       if (!(await existsAsync(dirPath))) {
-        await Fs.promises.mkdir(dirPath, { recursive: true, mode: 0o775 });
+        await Fs.mkdir(dirPath, { recursive: true, mode: 0o775 });
       }
-      await Fs.promises.writeFile(`${dirPath}/${fileName}`, JSON.stringify(data, null, 2));
+      await Fs.writeFile(`${dirPath}/${fileName}`, JSON.stringify(data, null, 2));
       console.log(`SAVED ${dirPath}/${fileName}`);
       process.umask(prevUmask);
     } catch (error) {
@@ -314,27 +320,27 @@ export default class Server {
 
 async function existsAsync(path: string): Promise<boolean> {
   try {
-    await Fs.promises.access(path);
+    await Fs.access(path);
     return true;
   } catch (_) {
     return false;
   }
 }
-function sendJson(res: http.ServerResponse, json: any, status = 200) {
+function sendJson(res: http.ServerResponse, json: any, status = 200): void {
   res.writeHead(status, {
     'content-type': 'application/json',
   });
   res.end(JSON.stringify(json));
 }
 
-function extractBaseDir(activeScraper: IActiveUser) {
+function extractBaseDir(activeScraper: IActiveUser): string {
   if (activeScraper.dataDir === DOWNLOAD) {
     return Path.join(downloadDir, activeScraper.id);
   }
   return activeScraper.dataDir;
 }
 
-function extractAssignmentDir(activeScraper: IActiveUser, assignment: IAssignment) {
+function extractAssignmentDir(activeScraper: IActiveUser, assignment: IAssignment): string {
   const baseDir = extractBaseDir(activeScraper);
   const isIndividual = assignment.type === AssignmentType.Individual;
   const folder = (
@@ -343,7 +349,7 @@ function extractAssignmentDir(activeScraper: IActiveUser, assignment: IAssignmen
   return `${baseDir}/${folder}/${assignment.id}`;
 }
 
-function extractAssignmentProfilesDir(activeScraper: IActiveUser, assignment: IAssignment) {
+function extractAssignmentProfilesDir(activeScraper: IActiveUser, assignment: IAssignment): string {
   const baseDirPath = extractAssignmentDir(activeScraper, assignment);
   return `${baseDirPath}/raw-data`;
 }
@@ -351,10 +357,10 @@ function extractAssignmentProfilesDir(activeScraper: IActiveUser, assignment: IA
 async function pipeDirToStream(dirPath: string, stream: any): Promise<void> {
   const archive = archiver('zip', { gzip: true, zlib: { level: 9 } });
   if (await existsAsync(dirPath)) {
-    const fileNames = await Fs.promises.readdir(dirPath);
+    const fileNames = await Fs.readdir(dirPath);
     for (const fileName of fileNames) {
       const filePath = `${dirPath}/${fileName}`;
-      archive.append(Fs.createReadStream(filePath), { name: fileName });
+      archive.append(createReadStream(filePath), { name: fileName });
     }
   }
   archive.pipe(stream);

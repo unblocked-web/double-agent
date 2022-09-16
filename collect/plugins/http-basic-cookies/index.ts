@@ -1,11 +1,11 @@
 import * as Cookie from 'cookie';
-import RealUserAgents from '@double-agent/real-user-agents';
+import RealUserAgents from '@unblocked-web/real-user-agents';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
-import { MainDomain, SubDomain, CrossDomain } from '@double-agent/collect';
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
 import Document from '@double-agent/collect/lib/Document';
 import { cleanDomains, DomainType } from '@double-agent/collect/lib/DomainUtils';
 import IPlugin from '@double-agent/collect/interfaces/IPlugin';
+import Config from '@double-agent/config/index';
 import {
   CookieGetter,
   CookieSetter,
@@ -15,6 +15,8 @@ import {
   ICookieSetter,
   IProfileData,
 } from './interfaces/IProfile';
+
+const { MainDomain, CrossDomain,SubDomain } = Config.collect.domains;
 
 export default class HttpCookiesPlugin extends Plugin {
   public initialize() {

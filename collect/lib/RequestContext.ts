@@ -1,11 +1,11 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { URL } from 'url';
 import * as http2 from 'http2';
+import Config from '@double-agent/config/index';
 import IRequestContext from '../interfaces/IRequestContext';
 import IRequestDetails from '../interfaces/IRequestDetails';
 import Session from './Session';
 import { addSessionIdToUrl, DomainType } from './DomainUtils';
-import { CrossDomain, MainDomain, SubDomain } from '../index';
 import BaseServer, { IServerProtocol } from '../servers/BaseServer';
 import Plugin from './Plugin';
 
@@ -50,6 +50,7 @@ export default class RequestContext implements IRequestContext {
     protocol = protocol || this.server.protocol;
 
     const { port, plugin } = this.plugin.getServer(protocol, this.session.id, this.server.protocol);
+    const { CrossDomain, MainDomain, SubDomain } = Config.collect.domains;
 
     let domain: string;
     if (domainType === DomainType.SubDomain) {

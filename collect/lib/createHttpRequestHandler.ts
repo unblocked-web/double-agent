@@ -1,13 +1,15 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import http2 from 'http2';
 import * as fs from 'fs';
+import Config from '@double-agent/config/index';
 import IRequestContext from '../interfaces/IRequestContext';
 import extractRequestDetails from './extractRequestDetails';
 import RequestContext from './RequestContext';
 import IServerContext from '../interfaces/IServerContext';
 import BaseServer from '../servers/BaseServer';
-import { CrossDomain, MainDomain, SubDomain } from '../index';
 import { isRecognizedDomain } from './DomainUtils';
+
+const { CrossDomain, MainDomain, SubDomain } = Config.collect.domains;
 
 export default function createHttpRequestHandler(
   server: BaseServer,

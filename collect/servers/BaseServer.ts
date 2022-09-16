@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as http2 from 'http2';
 import { URL } from 'url';
 import IServerContext from '../interfaces/IServerContext';
-import Plugin, { IRoute, IRoutesByPath } from '../lib/Plugin';
+import Plugin, { IHandlerFn, IRoute, IRoutesByPath } from '../lib/Plugin';
 
 export type IServerProtocol = 'tls' | 'http' | 'https' | 'http2';
 
@@ -23,7 +23,7 @@ export default class BaseServer {
     return this.context.plugin;
   }
 
-  public async start(context: IServerContext) {
+  public async start(context: IServerContext): Promise<this> {
     this.context = context;
     return this;
   }
@@ -33,11 +33,11 @@ export default class BaseServer {
     return new URL(`${this.protocol}://${host}${req.url}`);
   }
 
-  public cleanPath(rawPath: string) {
+  public cleanPath(rawPath: string): string {
     return rawPath.replace(new RegExp(`^/${this.plugin.id}`), '');
   }
 
-  public getHandlerFn(rawPath: string) {
+  public getHandlerFn(rawPath: string): IHandlerFn {
     const cleanedPath = this.cleanPath(rawPath);
     return this.routesByPath[cleanedPath]?.handlerFn;
   }

@@ -1,15 +1,18 @@
 import Fs from 'fs';
 import Path from 'path';
-import { createOsIdFromUserAgentString } from '@double-agent/real-user-agents/lib/OsUtils';
-import { createBrowserIdFromUserAgentString } from '@double-agent/real-user-agents/lib/BrowserUtils';
-import RealUserAgents from '@double-agent/real-user-agents';
+import { createOsIdFromUserAgentString } from '@unblocked-web/real-user-agents/lib/OsUtils';
+import { createBrowserIdFromUserAgentString } from '@unblocked-web/real-user-agents/lib/BrowserUtils';
+import RealUserAgents from '@unblocked-web/real-user-agents';
+import { getCacheDirectory } from '@ulixee/commons/lib/dirUtils';
+import { loadEnv, parseEnvBool, parseEnvInt } from '@ulixee/commons/lib/envUtils';
 import devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
 import instanceVariations from './data/path-patterns/instance-variations.json';
 import locationVariations from './data/path-patterns/location-variations.json';
 import windowVariations from './data/path-patterns/window-variations.json';
-import { probesDataDir } from './paths';
+import { probesDataDir, rootDir } from './paths';
 
-const dataDir = Path.join(__dirname, 'data');
+loadEnv(Path.resolve(__dirname, '..'));
+const env = process.env;
 
 /////// /////////////////////////////////////////////////////////////////////////////////////
 
@@ -35,7 +38,35 @@ let probeIdsMap: IProbeIdsMap;
 
 export default class Config {
   static userAgentIds: string[] = [];
-  static dataDir = dataDir;
+  static dataDir = Path.join(rootDir, 'data');
+
+  // copied from browser-profiler
+  static profilesDataDir = Path.join(getCacheDirectory(), 'unblocked', 'browser-profiles');
+
+  static collect = {
+    port: parseEnvInt(env.COLLECT_PORT),
+    domains: {
+      MainDomain: env.MAIN_DOMAIN,
+      SubDomain: env.SUB_DOMAIN,
+      TlsDomain: env.TLS_DOMAIN,
+      CrossDomain: env.CROSS_DOMAIN,
+    },
+    shouldGenerateProfiles: parseEnvBool(env.GENERATE_PROFILES),
+    pluginStartingPort: parseEnvInt(env.PLUGIN_STARTING_PORT),
+
+    // collect plugins
+    tcpNetworkDevice: env.TCP_NETWORK_DEVICE,
+    tcpDebug: parseEnvBool(env.TCP_DEBUG),
+    tlsPrintRaw: parseEnvBool(env.TLS_PRINT_RAW),
+
+    // path to letsencrypt certs
+    enableLetsEncrypt: parseEnvBool(env.LETSENCRYPT),
+  };
+
+  static runner = {
+    assignmentsHost: env.DA_COLLECT_CONTROLLER_HOST,
+  };
+
   static readonly probesDataDir = probesDataDir;
 
   static get probeIdsMap(): IProbeIdsMap {

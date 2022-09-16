@@ -1,8 +1,10 @@
-import 'source-map-support/register';
+import '@ulixee/commons/lib/SourceMapSupport';
+import '@double-agent/config/load';
 import Collect from '@double-agent/collect';
+import Config from '@double-agent/config';
 import Server from './lib/Server';
 
-const serverPort = Number(process.env.PORT ?? 3000);
+const serverPort = Config.collect.port;
 
 (async function run() {
   // this server loads all the modules in the "detections" directory and runs a bot detector
@@ -12,7 +14,7 @@ const serverPort = Number(process.env.PORT ?? 3000);
   const server = new Server(collect, serverPort);
   await server.start();
 
-  if (process.env.GENERATE_PROFILES) {
+  if (Config.collect.shouldGenerateProfiles) {
     return;
   }
 

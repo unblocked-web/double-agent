@@ -2,6 +2,7 @@ import * as Path from 'path';
 import { URL } from 'url';
 import EventEmitter from 'events';
 import { AssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
+import Config from '@double-agent/config';
 import IPlugin from '../interfaces/IPlugin';
 import IRequestContext from '../interfaces/IRequestContext';
 import { IServerProtocol } from '../servers/BaseServer';
@@ -9,7 +10,6 @@ import TlsServer from '../servers/TlsServer';
 import HttpServer from '../servers/HttpServer';
 import HttpsServer from '../servers/HttpsServer';
 import IServerContext from '../interfaces/IServerContext';
-import { MainDomain, TlsDomain } from '../index';
 import ISessionPage from '../interfaces/ISessionPage';
 import { addPageIndexToUrl, addSessionIdToUrl } from './DomainUtils';
 import Document from './Document';
@@ -27,7 +27,7 @@ enum Protocol {
   tls = 'tls',
 }
 
-type IHandlerFn = (ctx: IRequestContext) => Promise<void> | void;
+export type IHandlerFn = (ctx: IRequestContext) => Promise<void> | void;
 type IRoutableServerProtocol = IServerProtocol | 'ws' | 'wss';
 type IFlexibleServerProtocol = IRoutableServerProtocol | 'all' | 'allHttp1';
 
@@ -54,7 +54,7 @@ export interface IPluginPage {
 }
 
 const releasedPorts: number[] = [];
-let portCounter = Number(process.env.STARTING_PORT ?? 3001);
+let portCounter = Config.collect.pluginStartingPort;
 
 interface IPagesByAssignmentType {
   [AssignmentType.Individual]: IPluginPage[];
@@ -103,6 +103,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
 
   public convertToSessionPage(page: IPluginPage, sessionId: string, pageIndex: number) {
     const { protocol, path } = page.route;
+    const { MainDomain, TlsDomain } = Config.collect.domains;
     const domain = page.domain || (protocol === Protocol.tls ? TlsDomain : MainDomain);
     const server = this.getServer(protocol, sessionId);
 

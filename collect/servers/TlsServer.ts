@@ -1,14 +1,9 @@
-import Fs from 'fs';
 import TlsServerBase from '@double-agent/tls-server';
 import IServerContext from '../interfaces/IServerContext';
 import createTlsRequestHandler from '../lib/createTlsRequestHandler';
 import BaseServer from './BaseServer';
 import { IRoutesByPath } from '../lib/Plugin';
-import { TlsDomain } from '../index';
-
-const certPath = process.env.LETSENCRYPT
-  ? `/etc/letsencrypt/live/${TlsDomain}`
-  : `${__dirname}/../certs`;
+import { tlsCerts } from './Certs';
 
 export default class TlsServer extends BaseServer {
   private internalServer: TlsServerBase;
@@ -17,19 +12,15 @@ export default class TlsServer extends BaseServer {
     super('tls', port, routesByPath);
   }
 
-  public async start(context: IServerContext) {
+  public override async start(context: IServerContext) {
     await super.start(context);
     const tlsRequestHandler = createTlsRequestHandler(this, context);
-    const options = {
-      key: Fs.readFileSync(`${certPath}/privkey.pem`),
-      cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
-    };
 
-    this.internalServer = await new Promise<TlsServerBase>(resolve => {
-      const server = new TlsServerBase(options, tlsRequestHandler);
+    this.internalServer = await new Promise<TlsServerBase>((resolve) => {
+      const server = new TlsServerBase(tlsCerts, tlsRequestHandler);
       server.listen(this.port, () => resolve(server));
     });
-    this.internalServer.on('error', error => {
+    this.internalServer.on('error', (error) => {
       console.log('TlsServer ERROR: ', error);
     });
     return this;

@@ -1,11 +1,12 @@
 import * as pcap from 'pcap';
 import { EventEmitter } from 'events';
 import * as os from 'os';
+import Config from '@double-agent/config';
 
-let device = process.env.NETWORK_DEVICE ?? 'lo0';
+let device = Config.collect.tcpNetworkDevice;
 if (os.platform() === 'linux') device = 'eth0';
 
-const isDebug = !!process.env.DEBUG;
+const isDebug = !!Config.collect.tcpDebug;
 
 export default function trackRemoteTcpVars(serverPort: string | number) {
   const packets: {

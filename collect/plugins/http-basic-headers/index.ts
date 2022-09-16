@@ -1,9 +1,11 @@
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
-import { CrossDomain, MainDomain, SubDomain } from '@double-agent/collect';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import Document from '@double-agent/collect/lib/Document';
 import ResourceType from '@double-agent/collect/interfaces/ResourceType';
+import Config from '@double-agent/config/index';
 import { IProfileData } from './interfaces/IProfile';
+
+const { MainDomain, CrossDomain, SubDomain } = Config.collect.domains;
 
 export default class HttpHeadersPlugin extends Plugin {
   public initialize() {

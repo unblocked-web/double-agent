@@ -2,8 +2,10 @@ import Plugin from '@double-agent/collect/lib/Plugin';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import Http2Server from '@double-agent/collect/servers/Http2Server';
 import Document from '@double-agent/collect/lib/Document';
-import { MainDomain } from '@double-agent/collect';
+import Config from '@double-agent/config/index';
 import { IProfileData } from './interfaces/IProfile';
+
+const { MainDomain } = Config.collect.domains;
 
 export default class Http2SessionPlugin extends Plugin {
   public initialize() {
