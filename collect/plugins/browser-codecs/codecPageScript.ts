@@ -1,4 +1,4 @@
-import csv from 'csv-parse/lib/sync';
+import * as csv from 'csv-parse/lib/sync';
 import { readFileSync } from 'fs';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 

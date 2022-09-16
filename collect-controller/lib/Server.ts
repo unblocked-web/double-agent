@@ -1,4 +1,4 @@
-import url from 'url';
+import * as url from 'url';
 import archiver from 'archiver';
 import { createReadStream, existsSync, promises as Fs, rmdirSync } from 'fs';
 import * as Path from 'path';

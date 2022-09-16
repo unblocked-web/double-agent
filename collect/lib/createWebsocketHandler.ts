@@ -1,4 +1,4 @@
-import http from 'http';
+import * as http from 'http';
 import * as WebSocket from 'ws';
 import * as net from 'net';
 import ResourceType from '../interfaces/ResourceType';

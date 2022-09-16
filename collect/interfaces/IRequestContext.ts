@@ -1,6 +1,6 @@
 import { URL } from 'url';
 import { IncomingMessage, ServerResponse } from 'http';
-import http2 from 'http2';
+import * as http2 from 'http2';
 import IRequestDetails from './IRequestDetails';
 import Session from '../lib/Session';
 import { DomainType } from '../lib/DomainUtils';

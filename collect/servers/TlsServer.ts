@@ -12,7 +12,7 @@ export default class TlsServer extends BaseServer {
     super('tls', port, routesByPath);
   }
 
-  public override async start(context: IServerContext) {
+  public override async start(context: IServerContext): Promise<this> {
     await super.start(context);
     const tlsRequestHandler = createTlsRequestHandler(this, context);
 

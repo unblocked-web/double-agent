@@ -9,8 +9,8 @@ enum CodecType {
 export default class CheckGenerator {
   private readonly profile: ICodecProfile;
   private readonly checksByType = {
-    [CodecType.audio]: [],
-    [CodecType.video]: [],
+    [CodecType.audio]: [] as StringArrayCheck[],
+    [CodecType.video]: [] as StringArrayCheck[],
   };
 
   constructor(profile: ICodecProfile) {
@@ -18,17 +18,17 @@ export default class CheckGenerator {
     this.extractChecks();
   }
 
-  public get audioChecks() {
+  public get audioChecks(): StringArrayCheck[] {
     return this.checksByType[CodecType.audio];
   }
 
-  public get videoChecks() {
+  public get videoChecks(): StringArrayCheck[] {
     return this.checksByType[CodecType.video];
   }
 
   // if (checksById[check.id]) throw new Error(`check already exists: ${check.id}`);
 
-  private extractChecks() {
+  private extractChecks(): void {
     const { userAgentId } = this.profile;
 
     for (const codecType of [CodecType.audio, CodecType.video]) {
@@ -48,7 +48,7 @@ export default class CheckGenerator {
       const rawCodecs = this.profile.data[path];
       const codecs: string[] = Array.from(
         new Set(
-          rawCodecs.map(codec => {
+          rawCodecs.map((codec) => {
             return `${codec.clockRate}-${codec.mimeType ?? (codec as any).name}`;
           }),
         ),

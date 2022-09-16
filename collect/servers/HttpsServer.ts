@@ -1,4 +1,4 @@
-import https from 'https';
+import * as https from 'https';
 import createHttpRequestHandler from '../lib/createHttpRequestHandler';
 import createWebsocketHandler from '../lib/createWebsocketHandler';
 import IServerContext from '../interfaces/IServerContext';

@@ -6,7 +6,7 @@ import BaseCheck from '@double-agent/analyze/lib/checks/BaseCheck';
 import ReadableCookieCheck from './checks/ReadableCookieCheck';
 import UnreadableCookieCheck from './checks/UnreadableCookieCheck';
 import ICookieSetDetails from '../interfaces/ICookieSetDetails';
-import optionalCheckSignatures from './optionalCheckSignatures.json';
+import * as optionalCheckSignatures from './optionalCheckSignatures.json';
 
 export default class CheckGenerator {
   public readonly checks = [];
@@ -18,7 +18,7 @@ export default class CheckGenerator {
     this.extractChecks();
   }
 
-  private extractChecks() {
+  private extractChecks(): void {
     const { userAgentId } = this.profile;
 
     const setCookiesMap = this.extractSetCookieDetails();
@@ -58,7 +58,7 @@ export default class CheckGenerator {
     }
   }
 
-  private extractSetCookieDetails() {
+  private extractSetCookieDetails(): { [key: string]: { [name: string]: ICookieSetDetails } } {
     const cookiesMap: { [key: string]: { [name: string]: ICookieSetDetails } } = {};
 
     for (const cookieData of this.profile.data) {
@@ -69,17 +69,17 @@ export default class CheckGenerator {
       cookiesMap[key] = cookiesMap[key] || {};
 
       for (const createCookieStr of cookies) {
-        const parts = createCookieStr.split(';').map(x => x.trim());
+        const parts = createCookieStr.split(';').map((x) => x.trim());
         const name = parts.splice(0, 1)[0].split('=')[0];
         const previouslyCreated = !!cookiesMap[key][name];
         const attributes: any = parts
-          .map(part => {
+          .map((part) => {
             // eslint-disable-next-line prefer-const
             let [n, v] = part.split('=');
             if (n === 'expires') v = '[PAST DATE]';
             return v ? [n, v].join('=') : n;
           })
-          .filter(x => x);
+          .filter((x) => x);
 
         cookiesMap[key][name] = {
           setter,
@@ -93,7 +93,7 @@ export default class CheckGenerator {
     return cookiesMap;
   }
 
-  private addCheck(check: BaseCheck) {
+  private addCheck(check: BaseCheck): void {
     const browserId = this.profile.userAgentId.split('--')[1];
     if (
       optionalCheckSignatures[browserId] &&

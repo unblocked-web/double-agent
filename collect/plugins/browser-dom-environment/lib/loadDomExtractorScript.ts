@@ -1,7 +1,7 @@
 import PageNames from '../interfaces/PageNames';
-import DomExtractor from '../injected-scripts/DomExtractor';
+import DomExtractor = require('../injected-scripts/DomExtractor');
 
-export default function loadDomExtractorScript() {
+export default function loadDomExtractorScript(): string {
   return DomExtractor.toString();
 }
 

@@ -1,8 +1,8 @@
-import extensions from '../spec/extensions.json';
+import * as extensions from '../spec/extensions.json';
 import IClientHello from '../interfaces/IClientHello';
 import IServerHello from '../interfaces/IServerHello';
 
-export default function parseHelloMessage(isClientHello: boolean, lines: string[]) {
+export default function parseHelloMessage(isClientHello: boolean, lines: string[]): IClientHello | IServerHello {
   const message = isClientHello
     ? ({ type: 'ClientHello' } as IClientHello)
     : ({ type: 'ServerHello' } as IServerHello);
@@ -76,6 +76,7 @@ export default function parseHelloMessage(isClientHello: boolean, lines: string[
             ext.type = extensions[ext.decimal] ?? 'UNKNOWN';
           }
         }
+        // eslint-disable-next-line guard-for-in
         for (const x in ext.values) {
           const value = ext.values[x];
           for (const grease of greaseCodes) {

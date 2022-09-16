@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import Plugin, { IPluginPage } from '@double-agent/collect/lib/Plugin';
 import IRequestContext from '@double-agent/collect/interfaces/IRequestContext';
 import Document from '@double-agent/collect/lib/Document';

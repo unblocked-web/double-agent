@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { ChildProcess, fork } from 'child_process';
 import Config from '@double-agent/config';
 import parseTlsRecordFromStderr from './lib/parseTlsRecordFromStderr';

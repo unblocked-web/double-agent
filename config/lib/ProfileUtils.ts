@@ -1,5 +1,5 @@
-import Fs from 'fs';
-import Path from 'path';
+import * as Fs from 'fs';
+import * as Path from 'path';
 
 export function extractProfilePathsMap(
   profileDir: string,

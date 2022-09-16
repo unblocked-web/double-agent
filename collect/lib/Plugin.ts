@@ -1,6 +1,6 @@
 import * as Path from 'path';
 import { URL } from 'url';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { AssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
 import Config from '@double-agent/config';
 import IPlugin from '../interfaces/IPlugin';
@@ -101,7 +101,11 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     );
   }
 
-  public convertToSessionPage(page: IPluginPage, sessionId: string, pageIndex: number) {
+  public convertToSessionPage(
+    page: IPluginPage,
+    sessionId: string,
+    pageIndex: number,
+  ): ISessionPage {
     const { protocol, path } = page.route;
     const { MainDomain, TlsDomain } = Config.collect.domains;
     const domain = page.domain || (protocol === Protocol.tls ? TlsDomain : MainDomain);
@@ -134,7 +138,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     return sessionPage;
   }
 
-  public async createServersForSession(session: Session) {
+  public async createServersForSession(session: Session): Promise<void> {
     if (!this.pagesByAssignmentType[session.assignmentType].length) return;
     const { sessionTracker, pluginDelegate } = session;
     const serverContext = { sessionTracker, pluginDelegate, plugin: this };
@@ -148,15 +152,15 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     }
   }
 
-  public onServerStart(protocol: IServerProtocol, callback: () => void) {
+  public onServerStart(protocol: IServerProtocol, callback: () => void): void {
     this.once(`${protocol}-started`, callback);
   }
 
-  public onServerStop(protocol: IServerProtocol, callback: () => void) {
+  public onServerStop(protocol: IServerProtocol, callback: () => void): void {
     this.once(`${protocol}-stopped`, callback);
   }
 
-  public async closeServersForSession(sessionId: string) {
+  public async closeServersForSession(sessionId: string): Promise<void> {
     if (!this.tlsServerBySessionId[sessionId]) return;
     await this.tlsServerBySessionId[sessionId].stop();
     releasedPorts.push(this.tlsServerBySessionId[sessionId].port);
@@ -166,7 +170,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     protocol: IRoutableServerProtocol,
     sessionId: string,
     currentProtocol?: IServerProtocol,
-  ) {
+  ): Http2Server | HttpsServer | HttpServer | TlsServer {
     if (protocol === Protocol.ws || protocol === Protocol.wss) {
       protocol = currentProtocol;
     }
@@ -189,7 +193,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     path: string,
     handlerFn: IHandlerFn,
     preflightHandlerFn?: IHandlerFn,
-  ) {
+  ): void {
     if (protocol === Protocol.all || protocol === Protocol.ws || protocol === Protocol.allHttp1) {
       this.registerRoute(Protocol.http, path, handlerFn, preflightHandlerFn);
       this.registerRoute(Protocol.https, path, handlerFn, preflightHandlerFn);
@@ -215,7 +219,11 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     this.routes[protocol][path] = route;
   }
 
-  protected registerAsset(protocol: IFlexibleServerProtocol, path: string, handler: IHandlerFn) {
+  protected registerAsset(
+    protocol: IFlexibleServerProtocol,
+    path: string,
+    handler: IHandlerFn,
+  ): void {
     if (protocol === Protocol.all || protocol === Protocol.allHttp1) {
       this.registerAsset(Protocol.http, path, handler);
       this.registerAsset(Protocol.https, path, handler);
@@ -239,11 +247,11 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     this.routes[protocol][path] = route;
   }
 
-  protected registerPages(...pages: IPluginPage[]) {
+  protected registerPages(...pages: IPluginPage[]): void {
     this.pagesByAssignmentType[AssignmentType.Individual] = pages;
   }
 
-  protected registerPagesOverTime(...pages: IPluginPage[]) {
+  protected registerPagesOverTime(...pages: IPluginPage[]): void {
     this.pagesByAssignmentType[AssignmentType.OverTime] = pages;
   }
 
@@ -252,7 +260,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     serverContext: IServerContext,
     sessionId: string,
     routesByPath: IRoutesByPath,
-  ) {
+  ): Promise<void> {
     const port = generatePort();
     if (protocol === Protocol.tls) {
       this.tlsServerBySessionId[sessionId] = await new TlsServer(port, routesByPath).start(
@@ -276,7 +284,7 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
   }
 }
 
-function generatePort() {
+function generatePort(): number {
   if (releasedPorts.length) {
     return releasedPorts.shift();
   }

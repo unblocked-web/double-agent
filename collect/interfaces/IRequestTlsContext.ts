@@ -1,4 +1,4 @@
-import http from 'http';
+import * as http from 'http';
 import IncomingMessage from '@double-agent/tls-server/lib/IncomingMessage';
 import IRequestContext from './IRequestContext';
 

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import Config from '@double-agent/config';
-import qs from 'querystring';
+import * as qs from 'querystring';
 import { Stream } from 'stream';
 import unzipper from 'unzipper';
 import { existsAsync } from '@ulixee/commons/lib/fileUtils';

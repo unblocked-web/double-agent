@@ -1,5 +1,5 @@
 import { IAssignmentType } from '@double-agent/collect-controller/interfaces/IAssignment';
-import http from 'http';
+import * as http from 'http';
 import * as http2 from 'http2';
 import Session from './Session';
 import PluginDelegate from './PluginDelegate';

@@ -1,5 +1,5 @@
-import Path from 'path';
-import Paths from './paths.json';
+import * as Path from 'path';
+import * as Paths from './paths.json';
 
 export const externalDataDir = Path.resolve(__dirname, Paths['external-data']);
 

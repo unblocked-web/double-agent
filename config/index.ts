@@ -1,14 +1,14 @@
-import Fs from 'fs';
-import Path from 'path';
+import * as Fs from 'fs';
+import * as Path from 'path';
 import { createOsIdFromUserAgentString } from '@unblocked-web/real-user-agents/lib/OsUtils';
 import { createBrowserIdFromUserAgentString } from '@unblocked-web/real-user-agents/lib/BrowserUtils';
 import RealUserAgents from '@unblocked-web/real-user-agents';
 import { getCacheDirectory } from '@ulixee/commons/lib/dirUtils';
 import { loadEnv, parseEnvBool, parseEnvInt } from '@ulixee/commons/lib/envUtils';
-import devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
-import instanceVariations from './data/path-patterns/instance-variations.json';
-import locationVariations from './data/path-patterns/location-variations.json';
-import windowVariations from './data/path-patterns/window-variations.json';
+import * as devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
+import * as instanceVariations from './data/path-patterns/instance-variations.json';
+import * as locationVariations from './data/path-patterns/location-variations.json';
+import * as windowVariations from './data/path-patterns/window-variations.json';
 import { probesDataDir, rootDir } from './paths';
 
 loadEnv(Path.resolve(__dirname, '..'));
@@ -22,7 +22,7 @@ export function createUserAgentIdFromString(userAgentString: string): string {
   return createUserAgentIdFromIds(osKey, browserKey);
 }
 
-export function createUserAgentIdFromIds(osId: string, browserId: string) {
+export function createUserAgentIdFromIds(osId: string, browserId: string): string {
   return `${osId}--${browserId}`;
 }
 
@@ -102,7 +102,7 @@ export default class Config {
     return Array.from(new Set(names));
   }
 
-  static findUserAgentIdsByName(name: string) {
+  static findUserAgentIdsByName(name: string): string[] {
     return this.userAgentIds.filter((userAgentId) => {
       const meta = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
       return [meta.operatingSystemName, meta.browserName].includes(name);

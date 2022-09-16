@@ -1,6 +1,6 @@
 import '@ulixee/commons/lib/SourceMapSupport';
-import https from 'https';
-import tls from 'tls';
+import * as https from 'https';
+import * as tls from 'tls';
 import { IncomingMessage, ServerResponse } from 'http';
 
 const minMillisBetweenConnects = 5e3;
