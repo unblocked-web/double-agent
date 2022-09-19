@@ -55,14 +55,13 @@ jobs:
       - name: reboot server
         run: |
           ssh -i "~/.ssh/id_rsa_ulixee_digital_ocean" "root@$REMOTE" /bin/bash << EOF
-            killall node
             rm -rf /tmp/double-agent-download-data/
             cd double-agent
+            pm2 stop da  &> /dev/null
             nvm use
             yarn
             yarn build
-            rm prod-console.log
-            yarn prod &> prod-console.log &
+            pm2 start "yarn prod" --name=da --time
           EOF
         env:
           REMOTE: 174.138.36.46
