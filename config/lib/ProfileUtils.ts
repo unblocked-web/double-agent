@@ -5,7 +5,7 @@ export function extractProfilePathsMap(
   profileDir: string,
   userAgentId: string,
   profilePathsMap: IProfilePathsMap = {},
-) {
+): IProfilePathsMap {
   for (const fileName of Fs.readdirSync(profileDir)) {
     if (!fileName.endsWith('.json') || fileName.startsWith('_')) continue;
     const [pluginId, filenameSuffix] = fileName.replace('.json', '').split('--');
@@ -21,7 +21,7 @@ export function extractProfilePathsMap(
   return profilePathsMap;
 }
 
-export function importProfile<TProfile>(profilePath: IProfilePath) {
+export function importProfile<TProfile>(profilePath: IProfilePath): TProfile {
   if (typeof profilePath === 'string') {
     const rawData = Fs.readFileSync(profilePath, 'utf8');
     try {

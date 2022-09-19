@@ -10,7 +10,7 @@ export default class PuppeteerRunnerFactory implements IRunnerFactory {
     return 'puppeteer';
   }
 
-  public async startFactory() {
+  public async startFactory(): Promise<void> {
     this.browser = await launch({
       headless: true,
       ignoreHTTPSErrors: true,
@@ -24,7 +24,7 @@ export default class PuppeteerRunnerFactory implements IRunnerFactory {
     return new PuppeteerRunner(page);
   }
 
-  public async stopFactory() {
+  public async stopFactory(): Promise<void> {
     await this.browser.close();
   }
 }

@@ -16,7 +16,7 @@ export default class Layer {
     this.pluginId = pluginId;
   }
 
-  static extractKeyFromProbeMeta(meta: IProbeBucketMeta) {
+  static extractKeyFromProbeMeta(meta: IProbeBucketMeta): string {
     let key = meta.layerKey;
     if (!key) {
       const title = humanizeString(meta.layerName);
@@ -27,12 +27,12 @@ export default class Layer {
     return key.toLowerCase();
   }
 
-  public static create(key: string, name: string, pluginId: string) {
+  public static create(key: string, name: string, pluginId: string): Layer {
     const id = slugify(name, '-').toLowerCase();
     return new this(id, key, name, pluginId);
   }
 
-  public static load(obj: any) {
+  public static load(obj: any): Layer {
     const { id, key, name, pluginId } = obj;
     return new this(id, key, name, pluginId);
   }

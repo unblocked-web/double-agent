@@ -31,7 +31,7 @@ export default class Probe {
     this.pluginId = pluginId;
   }
 
-  public get check() {
+  public get check(): BaseCheck {
     if (!this._check) {
       const checksDir = Path.resolve(__dirname, `checks`);
       const pluginChecksDir = Path.resolve(__dirname, `../plugins/${this.pluginId}/lib/checks`);
@@ -48,7 +48,7 @@ export default class Probe {
     return this._check;
   }
 
-  public toJSON() {
+  public toJSON(): Pick<Probe, 'id' | 'checkName' | 'checkMeta' | 'checkType' | 'args'> {
     return {
       id: this.id,
       checkName: this.checkName,
@@ -58,12 +58,12 @@ export default class Probe {
     };
   }
 
-  public static create(check: BaseCheck, pluginId: string) {
+  public static create(check: BaseCheck, pluginId: string): Probe {
     const id = generateId(check, pluginId);
     return new this(id, check.constructor.name, check.type, check.meta, check.args, pluginId);
   }
 
-  public static load(probeObj: any, pluginId: string) {
+  public static load(probeObj: any, pluginId: string): Probe {
     const { id, checkName, checkType, checkMeta, args } = probeObj;
     return new this(id, checkName, checkType, checkMeta, args, pluginId);
   }
@@ -71,7 +71,7 @@ export default class Probe {
 
 // HELPERS //////
 
-function generateId(check: BaseCheck, pluginId: string) {
+function generateId(check: BaseCheck, pluginId: string): string {
   Config.probeIdsMap[pluginId] = Config.probeIdsMap[pluginId] || {};
   let id = Config.probeIdsMap[pluginId][check.signature];
   if (!id) {
@@ -83,7 +83,7 @@ function generateId(check: BaseCheck, pluginId: string) {
   return id;
 }
 
-function convertToAlpha(num) {
+function convertToAlpha(num): string {
   let t;
   let s = '';
   while (num > 0) {

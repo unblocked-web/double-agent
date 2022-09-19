@@ -70,6 +70,11 @@ export default class Server {
     });
   }
 
+  public async close(): Promise<void> {
+    this.httpServer.close();
+    await this.collect.shutdown();
+  }
+
   private async handleRequest(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
     const requestUrl = url.parse(req.url, true);
 
@@ -189,7 +194,7 @@ export default class Server {
     };
   }
 
-  private async activateAssignment(_, res: http.ServerResponse, params: IRequestParams) {
+  private async activateAssignment(_, res: http.ServerResponse, params: IRequestParams): Promise<void> {
     const { userId, assignmentId } = params;
     if (!userId) {
       return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);

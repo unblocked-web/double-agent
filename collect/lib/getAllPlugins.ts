@@ -5,7 +5,7 @@ import IPlugin from '../interfaces/IPlugin';
 
 export const pluginsDir = Path.resolve(__dirname, '../plugins');
 
-export default function getAllPlugins(print = false, filter?: string[]) {
+export default function getAllPlugins(print = false, filter?: string[]): Plugin[] {
   const plugins: Plugin[] = [];
 
   for (const pluginDirName of Fs.readdirSync(pluginsDir)) {
@@ -39,7 +39,7 @@ export default function getAllPlugins(print = false, filter?: string[]) {
   if (print) {
     console.log(
       'Collect Plugins Activated',
-      sortedPlugins.map(x => `${x ? '✓' : 'x'} ${x.id} - ${x.summary}`),
+      sortedPlugins.map((x) => `${x ? '✓' : 'x'} ${x.id} - ${x.summary}`),
     );
   }
 

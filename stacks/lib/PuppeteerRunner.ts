@@ -50,7 +50,7 @@ export default class PuppeteerRunner extends BaseRunner {
     }
   }
 
-  async stop() {
+  async stop(): Promise<void> {
     await this.page.close();
   }
 }

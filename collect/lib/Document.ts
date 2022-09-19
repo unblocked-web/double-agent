@@ -20,23 +20,23 @@ export default class Document {
     this.ctx = ctx;
   }
 
-  public get html() {
+  public get html(): string {
     return this.generateHtml();
   }
 
-  public injectBodyTag(tag: string) {
+  public injectBodyTag(tag: string): void {
     this.bodyTags.push(tag);
   }
 
-  public injectHeadTag(tag: string) {
+  public injectHeadTag(tag: string): void {
     this.headTags.push(tag);
   }
 
-  public injectFooterTag(tag: string) {
+  public injectFooterTag(tag: string): void {
     this.footerTags.push(tag);
   }
 
-  public addNextPageClick() {
+  public addNextPageClick(): void {
     this.clickToNextPage = true;
   }
 
@@ -44,7 +44,7 @@ export default class Document {
     return clickElementId;
   }
 
-  public send() {
+  public send(): void {
     this.ctx.res.writeHead(200, {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
@@ -54,7 +54,7 @@ export default class Document {
     this.ctx.res.end(this.html);
   }
 
-  public redirectTo(location: string, domainType: DomainType) {
+  public redirectTo(location: string, domainType: DomainType): void {
     this.ctx.res.writeHead(302, {
       location: `${this.ctx.buildUrl(location, domainType)}`,
     });
@@ -63,7 +63,7 @@ export default class Document {
 
   // PRIVATE
 
-  private generateHtml() {
+  private generateHtml(): string {
     const headTags = this.headTags;
     const bodyTags = this.bodyTags;
     const footerTags = this.footerTags;

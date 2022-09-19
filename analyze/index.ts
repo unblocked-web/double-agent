@@ -102,8 +102,8 @@ export default class Analyze {
     return this.resultsMap.byPickType[pickType];
   }
 
-  public generateTestResults() {
-    const humanScoreMap = {
+  public generateTestResults(): IAnalyzeScore {
+    const humanScoreMap: IAnalyzeScore = {
       total: {
         [UserAgentToTestPickType.popular]: 100,
         [UserAgentToTestPickType.random]: 100,
@@ -124,7 +124,7 @@ export default class Analyze {
 
     const pickTypes = [UserAgentToTestPickType.popular, UserAgentToTestPickType.random];
     for (const pickType of pickTypes) {
-      const sessionDetails = [];
+      const sessionDetails: ISessionScore[] = [];
       for (const sessionResult of this.resultsMap.byPickType[pickType]) {
         const { userAgentId, flags } = sessionResult;
         const humanScoreIndividual = humanScoreMap.individualByUserAgentId[userAgentId];
@@ -158,7 +158,7 @@ export default class Analyze {
 
 // HELPERS
 
-function loadAllPlugins(probesDataDir: string) {
+function loadAllPlugins(probesDataDir: string): Plugin[] {
   const plugins = getAllPlugins();
   for (const plugin of plugins) {
     const layersPath = Path.join(probesDataDir, 'layers.json');
@@ -182,4 +182,24 @@ function loadAllPlugins(probesDataDir: string) {
     plugin.layers = layerObjs.map((obj) => Layer.load(obj));
   }
   return plugins;
+}
+
+export interface IAnalyzeScore {
+  total: {
+    [UserAgentToTestPickType.popular]: number;
+    [UserAgentToTestPickType.random]: number;
+  };
+  individualByUserAgentId: { [userAgentId: string]: number };
+  sessionsByPickType: {
+    [UserAgentToTestPickType.popular]: ISessionScore[];
+    [UserAgentToTestPickType.random]: ISessionScore[];
+  };
+}
+export interface ISessionScore {
+  userAgentId: string;
+  humanScore: {
+    individual: number;
+    overTime: number;
+    total: number;
+  };
 }

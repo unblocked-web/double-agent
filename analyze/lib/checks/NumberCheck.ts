@@ -13,11 +13,11 @@ export default class NumberCheck extends BaseCheck {
     this.label = label;
   }
 
-  public get signature() {
+  public get signature(): string {
     return `${this.id}:${this.value}`;
   }
 
-  public get args() {
+  public get args(): any[] {
     return [this.value, this.label];
   }
 }

@@ -32,12 +32,12 @@ export default class ProbeBucket {
     this.matcher = matcher;
     this.scorer = scorer;
     this.probes = probes;
-    if (probes.some(x => x.checkType !== checkType)) {
+    if (probes.some((x) => x.checkType !== checkType)) {
       throw new Error('Probes within a ProbeBucket must share the same CheckType');
     }
   }
 
-  public toJSON() {
+  public toJSON(): any {
     return {
       id: this.id,
       layerId: this.layerId,
@@ -45,7 +45,7 @@ export default class ProbeBucket {
       userAgentIds: this.userAgentIds,
       matcher: this.matcher,
       scorer: this.scorer,
-      probeIds: this.probes.map(p => p.id),
+      probeIds: this.probes.map((p) => p.id),
     };
   }
 
@@ -55,15 +55,15 @@ export default class ProbeBucket {
     userAgentIds: string[],
     matcher: Constructable<BaseMatcher>,
     scorer: Constructable<BaseScorer>,
-  ) {
+  ): ProbeBucket {
     const id = generateId(layer);
     const layerId = layer.id;
     const checkType = probes[0].checkType;
     return new this(id, layerId, checkType, matcher.name, scorer.name, userAgentIds, probes);
   }
 
-  public static load(probeBucketObj: any, probesById: { [id: string]: Probe }) {
-    const probes = probeBucketObj.probeIds.map(id => probesById[id]);
+  public static load(probeBucketObj: any, probesById: { [id: string]: Probe }): ProbeBucket {
+    const probes = probeBucketObj.probeIds.map((id) => probesById[id]);
     const { id, layerId, checkType, userAgentIds, matcher, scorer } = probeBucketObj;
     return new this(id, layerId, checkType, matcher, scorer, userAgentIds, probes);
   }
@@ -71,7 +71,7 @@ export default class ProbeBucket {
 
 // HELPERS //////
 
-function generateId(layer: Layer) {
+function generateId(layer: Layer): string {
   layerMetaMap[layer.key] = layerMetaMap[layer.key] || {
     counter: COUNTER_START,
     pluginId: layer.pluginId,

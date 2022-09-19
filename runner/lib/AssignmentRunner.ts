@@ -16,7 +16,7 @@ export default class AssignmentRunner {
     this.queue = new Queue({ concurrency: runnerConcurrency });
   }
 
-  async run() {
+  async run(): Promise<void> {
     const runnerID = this.runnerFactory.runnerId();
 
     try {

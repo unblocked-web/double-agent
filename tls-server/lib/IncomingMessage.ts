@@ -27,12 +27,12 @@ export default class IncomingMessage {
     Object.assign(this, data);
   }
 
-  [Symbol.asyncIterator]() {
+  [Symbol.asyncIterator](): AsyncIterator<string> {
     return {
       i: 0,
       next() {
-        return Promise.resolve({ done: true });
+        return Promise.resolve({ value: null, done: true });
       },
-    };
+    } as any;
   }
 }

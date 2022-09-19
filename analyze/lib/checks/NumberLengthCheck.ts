@@ -11,11 +11,11 @@ export default class NumberLengthCheck extends BaseCheck {
     this.length = length;
   }
 
-  public get signature() {
+  public get signature(): string {
     return `${this.id}:${this.length}`;
   }
 
-  public get args() {
+  public get args(): any[] {
     return [this.length];
   }
 }

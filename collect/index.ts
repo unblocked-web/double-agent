@@ -35,7 +35,11 @@ ${CertsMessage}`);
     return this.sessionTracker.getSession(sessionId);
   }
 
-  public async deleteSession(session: Session) {
+  public async deleteSession(session: Session): Promise<void> {
     await this.sessionTracker.deleteSession(session.id);
+  }
+
+  public async shutdown(): Promise<void> {
+    await this.sessionTracker.shutdown();
   }
 }

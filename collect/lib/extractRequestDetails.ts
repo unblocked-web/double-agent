@@ -14,7 +14,7 @@ export default async function extractRequestDetails(
   req: http.IncomingMessage | http2.Http2ServerRequest,
   session: Session,
   overrideResourceType?: ResourceType,
-) {
+): Promise<{ requestDetails: IRequestDetails; requestUrl: URL }> {
   const time = new Date();
   const userAgentString = req.headers['user-agent'];
   const addr = `${req.socket.remoteAddress.split(':').pop()}:${req.socket.remotePort}`;
@@ -45,7 +45,7 @@ export default async function extractRequestDetails(
     originType: OriginType.None,
     referer: cleanUrl(req.headers.referer, session.id),
     method: req.method,
-    headers: rawHeaders.map(x => cleanUrl(x, session.id)),
+    headers: rawHeaders.map((x) => cleanUrl(x, session.id)),
     domainType: getDomainType(requestUrl),
     secureDomain: ['https', 'tls', 'http2'].includes(server.protocol),
     resourceType: overrideResourceType ?? getResourceType(req.method, requestUrl.pathname),
@@ -112,7 +112,7 @@ export function getResourceType(httpMethod: string, pathname: string): ResourceT
   return ResourceType.Document;
 }
 
-export function getOriginType(referer: URL, hostDomainType: DomainType) {
+export function getOriginType(referer: URL, hostDomainType: DomainType): OriginType {
   if (!referer) return OriginType.None;
   const refererDomainType = getDomainType(referer);
 
@@ -131,7 +131,7 @@ export function getOriginType(referer: URL, hostDomainType: DomainType) {
   return OriginType.CrossSite;
 }
 
-function parseHeaders(rawHeaders: string[]) {
+function parseHeaders(rawHeaders: string[]): string[] {
   const headers = rawHeaders;
   const headerPrintout: string[] = [];
   for (let i = 0; i < headers.length; i += 2) {
@@ -142,10 +142,10 @@ function parseHeaders(rawHeaders: string[]) {
   return headerPrintout;
 }
 
-function cleanUrl(url: string, sessionId: string) {
+function cleanUrl(url: string, sessionId: string): string {
   if (!url) return url;
 
   return cleanDomains(url)
     .replace(RegExp(`sessionId=${sessionId}`, 'g'), 'sessionId=X')
-    .replace(RegExp(':[0-9]+/'), '/');
+    .replace(/:[0-9]+\//, '/');
 }

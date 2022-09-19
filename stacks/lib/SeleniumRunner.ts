@@ -75,7 +75,7 @@ export default class SeleniumRunner extends BaseRunner {
     }
   }
 
-  async stop() {
+  async stop(): Promise<void> {
     await this.driver?.quit();
   }
 

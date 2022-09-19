@@ -11,18 +11,24 @@ import { isRecognizedDomain } from './DomainUtils';
 
 const { CrossDomain, MainDomain, SubDomain } = Config.collect.domains;
 
+type IHttpRequestHandler = (
+  req: IncomingMessage | http2.Http2ServerRequest,
+  res: ServerResponse | http2.Http2ServerResponse,
+) => Promise<void>;
+
 export default function createHttpRequestHandler(
   server: BaseServer,
   serverContext: IServerContext,
-) {
+): IHttpRequestHandler {
   return async function requestHandler(
     req: IncomingMessage | http2.Http2ServerRequest,
     res: ServerResponse | http2.Http2ServerResponse,
-  ) {
+  ): Promise<void> {
     if (req.method === 'HEAD') {
       // BrowserStack sends head requests to check if a domain is active. not part of the tests..
       console.log('HEAD request inbound. Should not be getting this.', req.url, req.headers);
-      return res.end();
+      res.end();
+      return;
     }
 
     const { sessionTracker } = serverContext;
@@ -76,7 +82,7 @@ export default function createHttpRequestHandler(
   };
 }
 
-function sendPreflight(ctx: IRequestContext) {
+function sendPreflight(ctx: IRequestContext): void {
   let origin = ctx.req.headers.origin;
   // set explicit domain to deal with strict origin
   if (origin === 'null') {
@@ -93,7 +99,7 @@ function sendPreflight(ctx: IRequestContext) {
 }
 
 let favicon: Buffer;
-function sendFavicon(res: ServerResponse | http2.Http2ServerResponse) {
+function sendFavicon(res: ServerResponse | http2.Http2ServerResponse): void {
   favicon ??= fs.readFileSync(`${__dirname}/../public/favicon.ico`);
   res.writeHead(200, { 'Content-Type': 'image/x-icon' });
   res.end(favicon);

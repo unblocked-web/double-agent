@@ -33,7 +33,7 @@ export default function extractBrowserGroupings(userAgentIds: string[]): [string
   return Object.entries(details);
 }
 
-function extractGroupedIds(userAgentIds: string[]) {
+function extractGroupedIds(userAgentIds: string[]): IBrowserGrouping {
   let idsByGroup: { [groupName: string]: string[] };
   let hasAllOf: { [groupName: string]: boolean };
   let hasAllExcept: { [groupName: string]: string[] };
@@ -57,7 +57,7 @@ function extractGroupedIds(userAgentIds: string[]) {
   return { idsByGroup, hasAllOf, hasAllExcept, hasNone };
 }
 
-function extractGroupedIdsBy(names: string[], userAgentIds: string[]) {
+function extractGroupedIdsBy(names: string[], userAgentIds: string[]): IBrowserGrouping {
   const idsByGroup: { [groupName: string]: string[] } = {};
   const hasAllOf: { [groupName: string]: boolean } = {};
   const hasAllExcept: { [groupName: string]: string[] } = {};
@@ -65,8 +65,8 @@ function extractGroupedIdsBy(names: string[], userAgentIds: string[]) {
 
   for (const name of names) {
     idsByGroup[name] = Config.findUserAgentIdsByName(name);
-    const misses = idsByGroup[name].filter(x => !userAgentIds.includes(x));
-    const matches = userAgentIds.filter(x => idsByGroup[name].includes(x));
+    const misses = idsByGroup[name].filter((x) => !userAgentIds.includes(x));
+    const matches = userAgentIds.filter((x) => idsByGroup[name].includes(x));
     const groupCount = idsByGroup[name].length;
     const missCount = misses.length;
     const matchCount = matches.length;
@@ -77,10 +77,17 @@ function extractGroupedIdsBy(names: string[], userAgentIds: string[]) {
     } else {
       continue;
     }
-    matches.forEach(x => groupedIds.add(x));
+    matches.forEach((x) => groupedIds.add(x));
   }
 
-  const hasNone = userAgentIds.filter(x => !groupedIds.has(x));
+  const hasNone = userAgentIds.filter((x) => !groupedIds.has(x));
 
   return { idsByGroup, hasAllOf, hasAllExcept, hasNone };
+}
+
+interface IBrowserGrouping {
+  idsByGroup: { [groupName: string]: string[] };
+  hasAllOf: { [groupName: string]: boolean };
+  hasAllExcept: { [groupName: string]: string[] };
+  hasNone: string[];
 }

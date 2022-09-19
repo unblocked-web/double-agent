@@ -11,7 +11,10 @@ export default class SessionTracker {
   private pluginDelegate: PluginDelegate = new PluginDelegate();
   private sessions: { [sessionId: string]: Session } = {};
 
-  public async createSession(assignmentType: IAssignmentType, userAgentId: string) {
+  public async createSession(
+    assignmentType: IAssignmentType,
+    userAgentId: string,
+  ): Promise<Session> {
     const sessionId = String((sessionIdCounter += 1));
     console.log('CREATED SESSION ', sessionId, userAgentId);
     const session = new Session(sessionId, userAgentId, assignmentType, this, this.pluginDelegate);
@@ -21,14 +24,14 @@ export default class SessionTracker {
     return session;
   }
 
-  public getSession(sessionId: string) {
+  public getSession(sessionId: string): Session {
     return this.sessions[sessionId];
   }
 
   public getSessionIdFromServerRequest(
     server: BaseServer,
     req: http.IncomingMessage | http2.Http2ServerRequest,
-  ) {
+  ): string {
     const requestUrl = server.getRequestUrl(req);
     const sessionId = requestUrl.searchParams.get('sessionId');
     if (!sessionId) throw new Error(`Missing session: ${requestUrl}`);
@@ -38,14 +41,19 @@ export default class SessionTracker {
   public getSessionFromServerRequest(
     server: BaseServer,
     req: http.IncomingMessage | http2.Http2ServerRequest,
-  ) {
+  ): Session {
     const sessionId = this.getSessionIdFromServerRequest(server, req);
     return this.sessions[sessionId];
   }
 
-  public async deleteSession(sessionId: string) {
+  public async deleteSession(sessionId: string): Promise<void> {
     if (!this.sessions[sessionId]) return;
     await this.sessions[sessionId].close();
     delete this.sessions[sessionId];
+  }
+
+  public async shutdown(): Promise<void> {
+    await Promise.allSettled(Object.values(this.sessions).map((x) => x.close()));
+    await Promise.allSettled(this.pluginDelegate.plugins.map((x) => x.stop()));
   }
 }

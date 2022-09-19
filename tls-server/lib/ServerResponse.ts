@@ -1,4 +1,5 @@
 import { ChildProcess } from 'child_process';
+import { IncomingHttpHeaders } from 'http';
 
 export default class ServerResponse {
   private readonly child: ChildProcess;
@@ -9,7 +10,11 @@ export default class ServerResponse {
     this.connectionId = connectionId;
   }
 
-  end(body?: string) {
+  writeHead(status: number, headers: IncomingHttpHeaders): void {
+    console.log('TlS Server Issues!', status, headers);
+  }
+
+  end(body?: string): void {
     this.child.send({
       response: {
         connectionId: this.connectionId,

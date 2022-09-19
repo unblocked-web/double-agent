@@ -11,11 +11,11 @@ export default class BooleanCheck extends BaseCheck {
     this.value = value;
   }
 
-  public get signature() {
+  public get signature(): string {
     return `${this.id}:value=${this.value}`;
   }
 
-  public get args() {
+  public get args(): any[] {
     return [this.value];
   }
 }

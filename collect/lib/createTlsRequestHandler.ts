@@ -1,5 +1,6 @@
-import { IncomingMessage, ServerResponse } from 'http';
 import Config from '@double-agent/config/index';
+import ServerResponse from '@double-agent/tls-server/lib/ServerResponse';
+import IncomingMessage from '@double-agent/tls-server/lib/IncomingMessage';
 import IServerContext from '../interfaces/IServerContext';
 import extractRequestDetails from './extractRequestDetails';
 import RequestContext from './RequestContext';
@@ -8,10 +9,13 @@ import { isRecognizedDomain } from './DomainUtils';
 
 const { TlsDomain } = Config.collect.domains;
 
-export default function createTlsRequestHandler(server: BaseServer, serverContext: IServerContext) {
-  return async function requestHandler(req: IncomingMessage, res: ServerResponse) {
+export default function createTlsRequestHandler(
+  server: BaseServer,
+  serverContext: IServerContext,
+): (req: IncomingMessage, res: ServerResponse) => Promise<void> {
+  return async function requestHandler(req: any, res: any): Promise<void> {
     const { sessionTracker } = serverContext;
-    const requestUrl = server.getRequestUrl(req);
+    const requestUrl = server.getRequestUrl(req as any);
 
     if (!isRecognizedDomain(req.headers.host, [TlsDomain])) {
       throw new Error('Invalid domain used to access site');

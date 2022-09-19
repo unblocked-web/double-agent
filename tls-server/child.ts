@@ -33,7 +33,7 @@ function millisUntilNextConnect(): number {
   return elapsedMillis >= minMillisBetweenConnects ? 0 : minMillisBetweenConnects - elapsedMillis;
 }
 
-function reset() {
+function reset(): void {
   const millisWait = millisUntilNextConnect();
   if (millisWait) {
     setTimeout(reset, millisWait);
@@ -43,7 +43,7 @@ function reset() {
   }
 }
 
-function start(options: { port: number; key?: string; cert?: string }) {
+function start(options: { port: number; key?: string; cert?: string }): void {
   try {
     const port = options.port;
     delete options.port;
@@ -67,7 +67,7 @@ function start(options: { port: number; key?: string; cert?: string }) {
   }
 }
 
-async function onConnection(req, res) {
+async function onConnection(req, res): Promise<void> {
   lastConnectionDate = new Date();
   res.connection.setKeepAlive(false);
 

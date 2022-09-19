@@ -160,10 +160,18 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
     this.once(`${protocol}-stopped`, callback);
   }
 
+  public async stop(): Promise<void> {
+    await Promise.all([this.http2Server?.stop(), this.httpServer?.stop(), this.httpsServer.stop()]);
+    for (const tls of Object.values(this.tlsServerBySessionId)) {
+      await tls.stop();
+    }
+  }
+
   public async closeServersForSession(sessionId: string): Promise<void> {
     if (!this.tlsServerBySessionId[sessionId]) return;
     await this.tlsServerBySessionId[sessionId].stop();
     releasedPorts.push(this.tlsServerBySessionId[sessionId].port);
+    delete this.tlsServerBySessionId[sessionId];
   }
 
   public getServer(

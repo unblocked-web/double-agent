@@ -2,6 +2,7 @@ import '@ulixee/commons/lib/SourceMapSupport';
 import '@double-agent/config/load';
 import Collect from '@double-agent/collect';
 import Config from '@double-agent/config';
+import ShutdownHandler from '@ulixee/commons/lib/ShutdownHandler';
 import Server from './lib/Server';
 
 const serverPort = Config.collect.port;
@@ -12,6 +13,7 @@ const serverPort = Config.collect.port;
 
   // this server simply provides assignments for a scraper to follow to "test" their stack
   const server = new Server(collect, serverPort);
+  ShutdownHandler.register(() => server.close());
   await server.start();
 
   if (Config.collect.shouldGenerateProfiles) {

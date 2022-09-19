@@ -6,7 +6,7 @@ interface IRecord {
   details?: string;
 }
 
-export default function parseTlsRecordFromStderr(str: string) {
+export default function parseTlsRecordFromStderr(str: string): IRecord {
   const lines = str.split('\n');
   const record = {
     header: {},
@@ -45,7 +45,7 @@ export default function parseTlsRecordFromStderr(str: string) {
         break;
       } else {
         record.header.content = (line.substr(lineIndent) +
-          lines.map(x => x.substr(lineIndent)).join('\n')) as any;
+          lines.map((x) => x.substr(lineIndent)).join('\n')) as any;
         break;
       }
     }

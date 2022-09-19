@@ -4,7 +4,7 @@ import Plugin from './Plugin';
 
 export const pluginsDir = Path.resolve(__dirname, '../plugins');
 
-export default function getAllPlugins(print = false, filter?: string[]) {
+export default function getAllPlugins(print = false, filter?: string[]): Plugin[] {
   const plugins: Plugin[] = [];
 
   for (const pluginDirName of Fs.readdirSync(pluginsDir)) {

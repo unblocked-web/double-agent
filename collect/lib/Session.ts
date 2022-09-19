@@ -8,6 +8,7 @@ import Plugin from './Plugin';
 import SessionTracker from './SessionTracker';
 import PluginDelegate from './PluginDelegate';
 import IBaseProfile from '../interfaces/IBaseProfile';
+import ISessionPage from '../interfaces/ISessionPage';
 
 export default class Session implements ISession {
   public readonly id: string;
@@ -42,7 +43,7 @@ export default class Session implements ISession {
     this.userAgentId = userAgentId;
   }
 
-  public trackCurrentPageIndex(pluginId: string, currentPageIndex: number) {
+  public trackCurrentPageIndex(pluginId: string, currentPageIndex: number): void {
     const lastPageIndex = this.currentPageIndexByPluginId[pluginId] || 0;
     if (currentPageIndex < lastPageIndex) {
       throw new Error(
@@ -52,8 +53,8 @@ export default class Session implements ISession {
     this.currentPageIndexByPluginId[pluginId] = currentPageIndex;
   }
 
-  public generatePages() {
-    const pagesByPluginId = {};
+  public generatePages(): { [pluginId: string]: ISessionPage[] } {
+    const pagesByPluginId: { [pluginId: string]: ISessionPage[] } = {};
     for (const plugin of this.pluginDelegate.plugins) {
       const pages = plugin.pagesForSession(this);
       if (pages.length) {
@@ -63,13 +64,13 @@ export default class Session implements ISession {
     return pagesByPluginId;
   }
 
-  public async startServers() {
+  public async startServers(): Promise<void> {
     for (const plugin of this.pluginDelegate.plugins) {
       await plugin.createServersForSession(this);
     }
   }
 
-  public recordRequest(requestDetails: IRequestDetails) {
+  public recordRequest(requestDetails: IRequestDetails): void {
     const { userAgentString } = requestDetails;
 
     if (!this.userAgentString || this.userAgentString.startsWith('axios')) {
@@ -79,7 +80,7 @@ export default class Session implements ISession {
     this.requests.push(requestDetails);
   }
 
-  public setUserAgentString(userAgentString: string) {
+  public setUserAgentString(userAgentString: string): void {
     this.userAgentString = userAgentString;
     // only do this as a backup since Chrome stopped sending valid Operating System info > 90
     if (!this.userAgentId && !userAgentString.startsWith('axios')) {
@@ -101,7 +102,7 @@ export default class Session implements ISession {
     plugin: Plugin,
     data: TProfileData,
     options: { keepInMemory?: boolean; filenameSuffix?: string } = {},
-  ) {
+  ): void {
     const profile: IBaseProfile = {
       userAgentId: this.userAgentId,
       data,
@@ -116,7 +117,7 @@ export default class Session implements ISession {
     }
   }
 
-  public toJSON() {
+  public toJSON(): any {
     return {
       id: this.id,
       assetsNotLoaded: this.assetsNotLoaded,
@@ -129,7 +130,7 @@ export default class Session implements ISession {
     };
   }
 
-  public async close() {
+  public async close(): Promise<void> {
     for (const plugin of this.pluginDelegate.plugins) {
       await plugin.closeServersForSession(this.id);
     }

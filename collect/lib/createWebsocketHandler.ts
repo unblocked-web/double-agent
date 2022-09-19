@@ -10,10 +10,14 @@ import BaseServer from '../servers/BaseServer';
 export default function createWebsocketHandler(
   server: BaseServer,
   detectionContext: IServerContext,
-) {
+): (req: http.IncomingMessage, socket: net.Socket, head) => Promise<void> {
   const wss = new WebSocket.Server({ clientTracking: false, noServer: true });
 
-  return async function websocketHandler(req: http.IncomingMessage, socket: net.Socket, head) {
+  return async function websocketHandler(
+    req: http.IncomingMessage,
+    socket: net.Socket,
+    head,
+  ): Promise<void> {
     const { sessionTracker } = detectionContext;
     const session = sessionTracker.getSessionFromServerRequest(server, req);
     const { requestDetails, requestUrl } = await extractRequestDetails(
@@ -36,7 +40,7 @@ export default function createWebsocketHandler(
 
     const handlerFn = server.getHandlerFn(requestUrl.pathname);
 
-    wss.handleUpgrade(req, socket, head, async ws => {
+    wss.handleUpgrade(req, socket, head, async (ws) => {
       if (handlerFn) {
         await handlerFn(ctx);
       }

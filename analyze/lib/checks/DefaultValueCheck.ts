@@ -11,11 +11,11 @@ export default class DefaultValueCheck extends BaseCheck {
     this.value = value.sort();
   }
 
-  public get signature() {
+  public get signature(): string {
     return `${this.id}:${this.value.join('&')}`;
   }
 
-  public get args() {
+  public get args(): any[] {
     return [this.value];
   }
 }

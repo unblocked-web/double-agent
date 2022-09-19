@@ -10,7 +10,7 @@ export enum DomainType {
   CrossDomain = 'CrossDomain', // eslint-disable-line @typescript-eslint/no-shadow
 }
 
-export function getDomainType(url: URL | string) {
+export function getDomainType(url: URL | string): DomainType {
   const host = typeof url === 'string' ? url : url.host;
   const domain = extractDomainFromHost(host);
   if (domain === MainDomain || domain === DomainType.MainDomain.toLowerCase()) {
@@ -28,26 +28,26 @@ export function getDomainType(url: URL | string) {
   throw new Error(`Unknown domain type: ${domain}`);
 }
 
-export function isRecognizedDomain(host: string, recognizedDomains: string[]) {
+export function isRecognizedDomain(host: string, recognizedDomains: string[]): boolean {
   const domain = extractDomainFromHost(host);
   return recognizedDomains.some((x) => x === domain);
 }
 
-export function addSessionIdToUrl(url: string, sessionId: string) {
+export function addSessionIdToUrl(url: string, sessionId: string): string {
   if (!url) return url;
   const startUrl = new URL(url);
   startUrl.searchParams.set('sessionId', sessionId);
   return startUrl.href;
 }
 
-export function addPageIndexToUrl(url: string, pageIndex: number) {
+export function addPageIndexToUrl(url: string, pageIndex: number): string {
   if (!url) return url;
   const startUrl = new URL(url);
   startUrl.searchParams.set('pageIndex', pageIndex.toString());
   return startUrl.href;
 }
 
-export function cleanDomains(url: string) {
+export function cleanDomains(url: string): string {
   if (!url) return url;
 
   return url
@@ -56,6 +56,6 @@ export function cleanDomains(url: string) {
     .replace(RegExp(CrossDomain, 'g'), 'CrossDomain');
 }
 
-function extractDomainFromHost(host: string) {
+function extractDomainFromHost(host: string): string {
   return host.split(':')[0];
 }

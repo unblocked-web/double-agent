@@ -11,11 +11,11 @@ export default class StringArrayCheck extends BaseCheck {
     this.value = value;
   }
 
-  public get signature() {
+  public get signature(): string {
     return `${this.id}:${this.value}`;
   }
 
-  public get args() {
+  public get args(): any[] {
     return [this.value];
   }
 }

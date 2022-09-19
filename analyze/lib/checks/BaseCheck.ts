@@ -27,7 +27,7 @@ export default abstract class BaseCheck {
     return check ? 100 : 0;
   }
 
-  protected ensureComparableCheck(check: BaseCheck | null) {
+  protected ensureComparableCheck(check: BaseCheck | null): void {
     if (check && this.signature !== check.signature) {
       throw new Error(`Check Signatures do not match: ${this.signature} !== ${check.signature}`);
     }

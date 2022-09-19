@@ -1,4 +1,4 @@
-export function isOfficialHeader(key: string) {
+export function isOfficialHeader(key: string): boolean {
   const keyLower = key.toLowerCase();
   for (const prefix of officialHeaderPrefixes) {
     if (keyLower.startsWith(prefix)) return true;
@@ -6,7 +6,7 @@ export function isOfficialHeader(key: string) {
   return officialHeaderKeys.has(keyLower);
 }
 
-export function isOfficialDefaultValueKey(key: string) {
+export function isOfficialDefaultValueKey(key: string): boolean {
   return officialDefaultValueKeys.has(key.toLowerCase());
 }
 

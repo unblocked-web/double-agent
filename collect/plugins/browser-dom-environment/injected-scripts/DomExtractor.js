@@ -100,7 +100,7 @@ function DomExtractor(selfName, pageMeta = {}) {
     const inheritedProps = [];
     if (isNewObject) {
       let proto = obj;
-      while (!!proto) {
+      while (proto) {
         proto = Object.getPrototypeOf(proto);
         if (
           !proto ||
@@ -124,9 +124,9 @@ function DomExtractor(selfName, pageMeta = {}) {
         continue;
       }
       if (key === 'constructor') continue;
-      const path = parentPath + '.' + String(key);
+      const path = `${parentPath  }.${  String(key)}`;
       if (path.endsWith('_GLOBAL_HOOK__')) continue;
-      const prop = '' + String(key);
+      const prop = `${  String(key)}`;
       if (
         path.startsWith(`${selfName}.document`) &&
         typeof key === 'string' &&
@@ -184,7 +184,7 @@ function DomExtractor(selfName, pageMeta = {}) {
         newObj['new()'] = { _$type: 'constructor', _$constructorException: constructorException };
       } else {
         try {
-          newObj['new()'] = await extractPropsFromObject(instance, parentPath + '.new()');
+          newObj['new()'] = await extractPropsFromObject(instance, `${parentPath  }.new()`);
           newObj['new()']._$type = 'constructor';
         } catch (err) {
           newObj['new()'] = err.toString();
@@ -197,17 +197,17 @@ function DomExtractor(selfName, pageMeta = {}) {
     const hierarchy = [];
     let proto = obj;
     if (typeof proto === 'function') return hierarchy;
-    while (!!proto) {
+    while (proto) {
       proto = Object.getPrototypeOf(proto);
       if (!proto) break;
       try {
-        let name = getObjectName(proto);
+        const name = getObjectName(proto);
         if (name && !hierarchy.includes(name)) hierarchy.push(name);
         if (loadedObjects.has(proto)) continue;
         let path = `${selfName}.${name}`;
-        let topType = name.split('.').shift();
+        const topType = name.split('.').shift();
         if (!(topType in self)) {
-          path = 'detached.' + name;
+          path = `detached.${  name}`;
         }
         if (!hierarchyNav.has(path)) {
           hierarchyNav.set(path, {});
@@ -226,7 +226,7 @@ function DomExtractor(selfName, pageMeta = {}) {
       return undefined;
     }
     let accessException;
-    let value = await new Promise(async (resolve, reject) => {
+    const value = await new Promise(async (resolve, reject) => {
       let didResolve = false;
       // if you wait on a promise, it will hang!
       const t = setTimeout(() => reject('Likely a Promise'), 600);
@@ -252,7 +252,7 @@ function DomExtractor(selfName, pageMeta = {}) {
       if (loadedObjects.has(value)) {
         // TODO: re-enable invoking re-used functions once we are on stable ground with chrome flags
         const shouldContinue = false; // typeof value === 'function' && (isInherited || !path.replace(String(key), '').includes(String(key)));
-        if (!shouldContinue) return 'REF: ' + loadedObjects.get(value);
+        if (!shouldContinue) return `REF: ${  loadedObjects.get(value)}`;
       }
       // safari will end up in an infinite loop since each plugin is a new object as your traverse
       if (path.includes('.navigator') && path.endsWith('.enabledPlugin')) {
@@ -267,7 +267,7 @@ function DomExtractor(selfName, pageMeta = {}) {
     const descriptor = await getDescriptor(obj, key, accessException, path);
     if (!Object.keys(descriptor).length && !Object.keys(details).length) return undefined;
     const prop = Object.assign(details, descriptor);
-    if (prop._$value === 'REF: ' + path) {
+    if (prop._$value === `REF: ${  path}`) {
       prop._$value = undefined;
     }
     return prop;
@@ -302,7 +302,7 @@ function DomExtractor(selfName, pageMeta = {}) {
         _$getToStringToString: objDesc.get ? objDesc.get.toString.toString() : undefined,
         _$setToStringToString: objDesc.set ? objDesc.set.toString.toString() : undefined,
       };
-    } else {
+    }
       const plainObject = {};
       if (accessException && String(accessException).includes('Likely a Promise')) {
         plainObject._$value = 'Likely a Promise';
@@ -319,7 +319,7 @@ function DomExtractor(selfName, pageMeta = {}) {
       plainObject._$function = functionDetails.func;
       plainObject._$invocation = functionDetails.invocation;
       return plainObject;
-    }
+    
   }
   async function getFunctionDetails(value, obj, key, type, path) {
     let func;
@@ -372,16 +372,17 @@ function DomExtractor(selfName, pageMeta = {}) {
     }
     try {
       if (value && typeof value === 'symbol') {
-        value = '' + String(value);
+        value = `${  String(value)}`;
       } else if (value && (value instanceof Promise || typeof value.then === 'function')) {
         value = 'Promise';
       } else if (value && typeof value === 'object') {
         const values = [];
         if (loadedObjects.has(value)) {
-          return 'REF: ' + loadedObjects.get(value);
+          return `REF: ${  loadedObjects.get(value)}`;
         }
         if (value.join !== undefined) {
           // is array
+          // eslint-disable-next-line guard-for-in
           for (const prop in value) {
             values.push(getJsonUsableValue(value[prop]));
           }
@@ -389,7 +390,7 @@ function DomExtractor(selfName, pageMeta = {}) {
         }
         for (const prop in value) {
           if (value.hasOwnProperty(prop)) {
-            values.push(prop + ': ' + getJsonUsableValue(value[prop]));
+            values.push(`${prop  }: ${  getJsonUsableValue(value[prop])}`);
           }
         }
         return `{${values.map(x => x.toString()).join(',')}}`;
@@ -406,7 +407,7 @@ function DomExtractor(selfName, pageMeta = {}) {
             value = value.replace(pageHost, '<HOST>');
           }
         }
-        value = value.replace(/<url>\:\d+\:\d+/g, '<url>:<lines>');
+        value = value.replace(/<url>:\d+:\d+/g, '<url>:<lines>');
       } else {
         return value;
       }
@@ -420,7 +421,7 @@ function DomExtractor(selfName, pageMeta = {}) {
     if (obj === Object.prototype) return 'Object.prototype';
     try {
       if (typeof obj === 'symbol') {
-        return '' + String(obj);
+        return `${  String(obj)}`;
       }
     } catch (err) {}
     try {
@@ -449,11 +450,11 @@ function DomExtractor(selfName, pageMeta = {}) {
         return obj.constructor.name;
       }
       if (!name) return;
-      return name + '.prototype';
+      return `${name  }.prototype`;
     } catch (err) {}
   }
   async function runAndSave() {
-    self.addEventListener('unhandledrejection', function (promiseRejectionEvent) {
+    self.addEventListener('unhandledrejection', (promiseRejectionEvent) => {
       console.log(promiseRejectionEvent);
     });
     const props = await extractPropsFromObject(self, selfName);

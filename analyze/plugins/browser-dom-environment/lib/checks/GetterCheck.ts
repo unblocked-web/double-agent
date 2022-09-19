@@ -17,13 +17,12 @@ export default class GetterCheck extends BaseCheck {
     this.data = data;
   }
 
-  public get signature() {
-    for (const key of Object.keys(this.data)) {
-      return `${this.id}:${key}=${this.data[key]}`;
-    }
+  public get signature(): string {
+    const [key] = Object.keys(this.data);
+    return `${this.id}:${key}=${this.data[key]}`;
   }
 
-  public get args() {
+  public get args(): any[] {
     return [this.data];
   }
 }

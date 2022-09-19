@@ -12,7 +12,7 @@ export default class HttpServer extends BaseServer {
     super('http', port, routesByPath);
   }
 
-  public override async start(context: IServerContext) {
+  public override async start(context: IServerContext): Promise<this> {
     await super.start(context);
     const options = {} as http.ServerOptions;
 

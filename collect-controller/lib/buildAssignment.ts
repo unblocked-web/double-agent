@@ -10,7 +10,7 @@ export default function buildAssignment(
   userAgentString: string = null,
   pickType: IUserAgentToTestPickType = null,
   usagePercent: number = null,
-) {
+): IAssignment {
   const userAgentMeta = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
   userAgentMeta.browserVersion.replace('-', '.');
   userAgentMeta.operatingSystemVersion.replace('-', '.');

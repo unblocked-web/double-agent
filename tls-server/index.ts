@@ -13,16 +13,22 @@ export default class TlsServer extends EventEmitter {
   private activeRequest: { https?: any; clientHello?: IClientHello; isProcessing?: boolean } = {};
   private listenCallback: () => void;
 
-  private readonly options: any;
-  private readonly secureConnectionListener: any;
+  private readonly options: { key: Buffer; cert: Buffer };
+  private readonly secureConnectionListener: (
+    req: IncomingMessage,
+    res: ServerResponse,
+  ) => Promise<void>;
 
-  constructor(options: any, secureConnectionListener) {
+  constructor(
+    options: { key: Buffer; cert: Buffer },
+    secureConnectionListener: (req: IncomingMessage, res: ServerResponse) => Promise<void>,
+  ) {
     super();
     this.options = options;
     this.secureConnectionListener = secureConnectionListener;
   }
 
-  public listen(port: number, callback?: () => void) {
+  public listen(port: number, callback?: () => void): void {
     this.port = port;
     this.listenCallback = callback;
 
@@ -42,11 +48,11 @@ export default class TlsServer extends EventEmitter {
     });
   }
 
-  public close() {
+  public close(): void {
     this.child.kill();
   }
 
-  private emitRequest() {
+  private emitRequest(): void {
     if (!this.activeRequest) return;
     if (!this.activeRequest.https) return;
     if (!this.activeRequest.clientHello) return;
@@ -58,10 +64,10 @@ export default class TlsServer extends EventEmitter {
       clientHello: this.activeRequest.clientHello,
     });
     const res = new ServerResponse(this.child, req);
-    this.secureConnectionListener(req, res);
+    void this.secureConnectionListener(req, res);
   }
 
-  private handleChildMessage(message: any) {
+  private handleChildMessage(message: any): void {
     if (message.started) {
       if (this.listenCallback) this.listenCallback();
       return;
@@ -96,7 +102,7 @@ export default class TlsServer extends EventEmitter {
     }
   }
 
-  private handleOpenSslOutput(message: string) {
+  private handleOpenSslOutput(message: string): void {
     if (this.activeRequest.isProcessing) return;
     if (Config.collect.tlsPrintRaw) {
       console.log('\n------RAW------\n%s\n\n', message);
@@ -119,12 +125,12 @@ export default class TlsServer extends EventEmitter {
     }
   }
 
-  private emitError(message: string) {
+  private emitError(message: string): void {
     this.emit('error', message);
     console.log(`ERROR: ${message}`);
   }
 
-  static createServer(options, secureConnectionListener) {
+  static createServer(options, secureConnectionListener): TlsServer {
     return new TlsServer(options, secureConnectionListener);
   }
 }

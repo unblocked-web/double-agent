@@ -7,7 +7,7 @@ import IRequestDetails from '../interfaces/IRequestDetails';
 import Session from './Session';
 import { addSessionIdToUrl, DomainType } from './DomainUtils';
 import BaseServer, { IServerProtocol } from '../servers/BaseServer';
-import Plugin from './Plugin';
+import Plugin, { IPluginPage } from './Plugin';
 
 export default class RequestContext implements IRequestContext {
   private readonly plugin: Plugin;
@@ -34,18 +34,18 @@ export default class RequestContext implements IRequestContext {
     }
   }
 
-  public get page() {
+  public get page(): IPluginPage {
     return this.plugin.pagesByAssignmentType[this.session.assignmentType][this.currentPageIndex];
   }
 
-  public get nextPageLink() {
+  public get nextPageLink(): string {
     if (this.nextPageIndex === undefined) return;
     const pageIndex = this.nextPageIndex;
     const page = this.plugin.pagesByAssignmentType[this.session.assignmentType][pageIndex];
     return this.plugin.convertToSessionPage(page, this.session.id, pageIndex).url;
   }
 
-  public buildUrl(path: string, domainType?: DomainType, protocol?: IServerProtocol) {
+  public buildUrl(path: string, domainType?: DomainType, protocol?: IServerProtocol): string {
     domainType = domainType || this.requestDetails.domainType;
     protocol = protocol || this.server.protocol;
 

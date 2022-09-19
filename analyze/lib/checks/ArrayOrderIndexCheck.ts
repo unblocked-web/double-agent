@@ -13,12 +13,12 @@ export default class ArrayOrderIndexCheck extends BaseCheck {
     this.orderIndex = orderIndex;
   }
 
-  public get signature() {
-    const index = this.orderIndex.map(i => i.join(',')).join(';');
+  public get signature(): string {
+    const index = this.orderIndex.map((i) => i.join(',')).join(';');
     return `${this.id}:${index}`;
   }
 
-  public get args() {
+  public get args(): any[] {
     return [this.orderIndex];
   }
 }

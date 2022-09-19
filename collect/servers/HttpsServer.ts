@@ -13,7 +13,7 @@ export default class HttpServer extends BaseServer {
     super('https', port, routesByPath);
   }
 
-  public override async start(context: IServerContext) {
+  public override async start(context: IServerContext): Promise<this> {
     await super.start(context);
     const httpRequestHandler = createHttpRequestHandler(this, context);
     const websocketHandler = createWebsocketHandler(this, context);

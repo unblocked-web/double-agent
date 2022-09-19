@@ -6,7 +6,9 @@ import { createUserAgentIdFromIds } from '@double-agent/config';
 import buildAssignment from './buildAssignment';
 import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
 
-export default async function buildAllAssignments(userAgentsToTest: IUserAgentToTest[]) {
+export default async function buildAllAssignments(
+  userAgentsToTest: IUserAgentToTest[],
+): Promise<IAssignment[]> {
   const assignments: IAssignment[] = [];
 
   for (const userAgentToTest of userAgentsToTest) {
@@ -43,10 +45,10 @@ function buildAssignmentsOverTime(
   userAgentsToTest: IUserAgentToTest[],
   pickType: IUserAgentToTestPickType,
   assignmentCount: number,
-) {
+): IAssignment[] {
   const type = AssignmentType.OverTime;
   const assignments: IAssignment[] = [];
-  const selUserAgents = userAgentsToTest.filter(x => x.pickTypes.includes(pickType));
+  const selUserAgents = userAgentsToTest.filter((x) => x.pickTypes.includes(pickType));
   if (!selUserAgents.length) return [];
 
   const sortedUserAgents = selUserAgents.sort((a: IUserAgentToTest, b: IUserAgentToTest) => {
@@ -89,11 +91,15 @@ export function createOverTimeSessionKey(
   pickType: IUserAgentToTestPickType,
   indexPos: number,
   userAgentId: string,
-) {
+): string {
   return `${pickType}-${indexPos.toString().padStart(2, '0')}:${userAgentId}`;
 }
 
-export function extractMetaFromOverTimeSessionKey(sessionKey: string) {
+export function extractMetaFromOverTimeSessionKey(sessionKey: string): {
+  pickType: IUserAgentToTestPickType;
+  indexPos: number;
+  userAgentId: string;
+} {
   // this function is used in ScraperReport
   const [pickType, indexPos, userAgentId] = sessionKey.match(/^([a-z]+)-([0-9]+):(.+)$/).slice(1);
   return {

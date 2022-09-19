@@ -14,7 +14,7 @@ export default abstract class BaseRunner implements IRunner {
       let counter = 0;
       // eslint-disable-next-line prefer-const
       for (let [pluginId, pages] of Object.entries(assignment.pagesByPlugin)) {
-        if (filters?.onlyRunPluginIds && filters?.onlyRunPluginIds.includes(pluginId)) {
+        if (filters?.onlyRunPluginIds && !filters?.onlyRunPluginIds.includes(pluginId)) {
           console.log('SKIPPING: ', pluginId);
           continue;
         }

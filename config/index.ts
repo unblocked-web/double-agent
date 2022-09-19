@@ -138,7 +138,7 @@ export default class Config {
   }
 }
 
-export function pathIsPatternMatch(path: string, pattern: string) {
+export function pathIsPatternMatch(path: string, pattern: string): boolean {
   if (pattern.charAt(0) === '*') {
     return path.includes(pattern.substr(1));
   }
