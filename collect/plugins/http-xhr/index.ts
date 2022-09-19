@@ -126,7 +126,7 @@ function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext) {
     domainType,
     originType,
     resourceType,
-    isRedirect: ctx.page.isRedirect ?? false,
+    isRedirect: ctx.page?.isRedirect ?? false,
     pathname,
     referer,
     rawHeaders,

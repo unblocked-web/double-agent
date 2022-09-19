@@ -117,7 +117,7 @@ function saveHeadersToProfile(plugin: Plugin, ctx: IRequestContext): void {
     pageName,
     method,
     protocol,
-    isRedirect: ctx.page.isRedirect ?? false,
+    isRedirect: ctx.page?.isRedirect ?? false,
     domainType,
     originType,
     resourceType,

@@ -3,7 +3,7 @@ import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment
 import Config from '@double-agent/config';
 import * as qs from 'querystring';
 import { Stream } from 'stream';
-import unzipper from 'unzipper';
+import * as unzipper from 'unzipper';
 import { existsAsync } from '@ulixee/commons/lib/fileUtils';
 import { promises as Fs } from 'fs';
 
@@ -54,7 +54,12 @@ export default class AssignmentsClient {
     userAgentId: string,
     dataDir?: string,
   ): Promise<IAssignment> {
-    return await this.get('/', { userId: this.userId, userAgentId, dataDir });
+    const { assignment } = await this.get<{ assignment: IAssignment }>('/', {
+      userId: this.userId,
+      userAgentId,
+      dataDir,
+    });
+    return assignment;
   }
 
   async start(params: { dataDir: string; userAgentsToTestPath: string }): Promise<IAssignment[]> {
