@@ -20,5 +20,6 @@ ssh -i "$SERVER_PEM" "root@$REMOTE" /bin/bash << EOF
   cd double-agent
   source "\$HOME/.nvm/nvm.sh"
   yarn
+  yarn build
   yarn prod
 EOF

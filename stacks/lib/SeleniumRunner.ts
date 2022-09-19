@@ -1,4 +1,12 @@
-import { By, Key, until, WebDriver, WebElement, WebElementPromise } from 'selenium-webdriver';
+import {
+  Builder,
+  By,
+  Key,
+  until,
+  WebDriver,
+  WebElement,
+  WebElementPromise,
+} from 'selenium-webdriver';
 import IAssignment from '@double-agent/collect-controller/interfaces/IAssignment';
 import ISessionPage from '@double-agent/collect/interfaces/ISessionPage';
 import BaseRunner from './BaseRunner';
@@ -68,7 +76,7 @@ export default class SeleniumRunner extends BaseRunner {
   }
 
   async stop() {
-    await this.driver.quit();
+    await this.driver?.quit();
   }
 
   private async checkErrorPage(page: ISessionPage, currentUrl: string): Promise<boolean> {
@@ -102,7 +110,7 @@ export default class SeleniumRunner extends BaseRunner {
   private async clickElement(elem: WebElement): Promise<void> {
     if (this.needsEnterKey) {
       // safari 13.0 has a known bug where clicks don't work that's making this necessary
-      await this.driver.actions().mouseMove(elem).click(elem).perform();
+      await this.driver.actions().move({ origin: elem }).click(elem).perform();
       try {
         await elem.click();
       } catch (error) {
@@ -129,5 +137,9 @@ export default class SeleniumRunner extends BaseRunner {
       options.needsErrorPageChecks = browserMajor === 12 && browserMinor === 1;
     }
     return options;
+  }
+
+  public static async createDriver(url: string, capabilities: any): Promise<WebDriver> {
+    return await new Builder().usingServer(url).withCapabilities(capabilities).build();
   }
 }

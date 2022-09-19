@@ -3,8 +3,8 @@ import * as Path from 'path';
 import { createOsIdFromUserAgentString } from '@unblocked-web/real-user-agents/lib/OsUtils';
 import { createBrowserIdFromUserAgentString } from '@unblocked-web/real-user-agents/lib/BrowserUtils';
 import RealUserAgents from '@unblocked-web/real-user-agents';
-import { getCacheDirectory } from '@ulixee/commons/lib/dirUtils';
-import { loadEnv, parseEnvBool, parseEnvInt } from '@ulixee/commons/lib/envUtils';
+import { loadEnv, parseEnvInt } from '@ulixee/commons/lib/envUtils';
+import * as Paths from './paths';
 import * as devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
 import * as instanceVariations from './data/path-patterns/instance-variations.json';
 import * as locationVariations from './data/path-patterns/location-variations.json';
@@ -41,7 +41,7 @@ export default class Config {
   static dataDir = Path.join(rootDir, 'data');
 
   // copied from browser-profiler
-  static profilesDataDir = Path.join(getCacheDirectory(), 'unblocked', 'browser-profiles');
+  static profilesDataDir = Path.resolve(Paths.rootDir, '../..', 'browser-profile-data');
 
   static collect = {
     port: parseEnvInt(env.COLLECT_PORT),
@@ -143,4 +143,10 @@ export function pathIsPatternMatch(path: string, pattern: string) {
     return path.includes(pattern.substr(1));
   }
   return path.startsWith(pattern);
+}
+
+function parseEnvBool(envvar: string): boolean {
+  if (envvar === '1' || envvar?.toLowerCase() === 'true' || envvar?.toLowerCase() === 'yes')
+    return true;
+  return false;
 }

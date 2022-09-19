@@ -1,5 +1,5 @@
 import * as url from 'url';
-import archiver from 'archiver';
+import archiver = require('archiver');
 import { createReadStream, existsSync, promises as Fs, rmdirSync } from 'fs';
 import * as Path from 'path';
 import * as http from 'http';
@@ -244,6 +244,11 @@ export default class Server {
     await this.saveMetaFiles(activeScraper, assignment);
     const profilesDir = extractAssignmentProfilesDir(activeScraper, assignment);
     await pipeDirToStream(profilesDir, res);
+
+    const session = this.collect.getSession(assignment.sessionId);
+    await this.collect.deleteSession(session);
+
+    delete this.activeUsersById[userId];
   }
 
   private async downloadAll(
@@ -261,7 +266,7 @@ export default class Server {
     }
 
     const profilesDir = extractBaseDir(activeScraper);
-    void pipeDirToStream(profilesDir, res).catch(console.error);
+    await pipeDirToStream(profilesDir, res).catch(console.error);
   }
 
   private async finishAssignments(
@@ -278,6 +283,7 @@ export default class Server {
     if (!activeScraper) {
       return sendJson(res, { message: `No assignments were found for ${userId}` }, 500);
     }
+    console.log('Finish assignments %s', `${userId}`);
 
     for (const assignment of assignments) {
       const session = this.collect.getSession(assignment.sessionId);
@@ -359,10 +365,11 @@ async function pipeDirToStream(dirPath: string, stream: any): Promise<void> {
   if (await existsAsync(dirPath)) {
     const fileNames = await Fs.readdir(dirPath);
     for (const fileName of fileNames) {
-      const filePath = `${dirPath}/${fileName}`;
-      archive.append(createReadStream(filePath), { name: fileName });
+      archive.append(createReadStream(`${dirPath}/${fileName}`), { name: fileName });
     }
   }
   archive.pipe(stream);
-  archive.finalize();
+  const isFinished = new Promise<void>((resolve) => archive.on('close', resolve));
+  await archive.finalize();
+  await isFinished;
 }

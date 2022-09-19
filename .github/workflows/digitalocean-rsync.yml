@@ -16,17 +16,25 @@ jobs:
       - name: Install pcap
         run: sudo apt-get install -y libpcap-dev
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: 'true'
 
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
           cache: 'yarn'
 
+      - name: (TEMP) Clone ulixee/shared
+        run: git clone --recurse-submodules -j8 https://github.com/ulixee/shared.git
+        working-directory: ../..
+
+      - name: (TEMP) Install ulixee/shared
+        run: pwd & yarn && yarn build
+        working-directory: ../../shared
+
       - name: Yarn build
-        run: yarn && yarn build
+        run: pwd && yarn && yarn build
 
       - uses: actions/checkout@v2
         with:
@@ -40,20 +48,21 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
       - name: rsync over ssh
-        run: rsync -avzhm -e "ssh -i ~/.ssh/id_rsa_ulixee_digital_ocean.pub" --exclude-from '.rsyncignore' . root@$REMOTE:~/double-agent
+        run: rsync -avzhm -e "ssh -i ~/.ssh/id_rsa_ulixee_digital_ocean" --exclude-from '.rsyncignore' . root@$REMOTE:~/double-agent
         env:
           REMOTE: 174.138.36.46
 
       - name: reboot server
         run: |
-          ssh -i "~/.ssh/id_rsa_ulixee_digital_ocean.pub" "root@$REMOTE" /bin/bash << EOF
+          ssh -i "~/.ssh/id_rsa_ulixee_digital_ocean" "root@$REMOTE" /bin/bash << EOF
             killall node
             rm -rf /tmp/double-agent-download-data/
             cd double-agent
-            source "~/.nvm/nvm.sh"
+            nvm use
             yarn
             yarn build
-            yarn prod &
+            rm prod-console.log
+            yarn prod &> prod-console.log &
           EOF
         env:
           REMOTE: 174.138.36.46
