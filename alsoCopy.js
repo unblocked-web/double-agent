@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const copyfiles = require('copyfiles');
+const Fs = require('fs');
 
 void (async () => {
   await new Promise((resolve) => {
@@ -8,5 +9,6 @@ void (async () => {
       console.log('Extra DA Files Copied');
       resolve();
     });
+    
   });
 })();

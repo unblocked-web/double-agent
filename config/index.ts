@@ -5,8 +5,9 @@ import { createBrowserIdFromUserAgentString } from '@unblocked-web/real-user-age
 import RealUserAgents from '@unblocked-web/real-user-agents';
 import { loadEnv, parseEnvInt } from '@ulixee/commons/lib/envUtils';
 import * as Paths from './paths';
-import * as devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
+import * as browserstackIndicators from './data/path-patterns/browserstack-indicators.json';
 import * as instanceVariations from './data/path-patterns/instance-variations.json';
+import * as devtoolsIndicators from './data/path-patterns/devtools-indicators.json';
 import * as locationVariations from './data/path-patterns/location-variations.json';
 import * as windowVariations from './data/path-patterns/window-variations.json';
 import { probesDataDir, rootDir } from './paths';
@@ -41,7 +42,7 @@ export default class Config {
   static dataDir = Path.join(rootDir, 'data');
 
   // copied from browser-profiler
-  static profilesDataDir = Path.resolve(Paths.rootDir, '../..', 'browser-profile-data');
+  static profilesDataDir = Path.resolve(Paths.rootDir, '../../..', 'browser-profile-data');
 
   static collect = {
     port: parseEnvInt(env.COLLECT_PORT),
@@ -90,49 +91,55 @@ export default class Config {
 
   static get browserNames(): string[] {
     const names = this.userAgentIds.map(
-      (userAgentId) => RealUserAgents.extractMetaFromUserAgentId(userAgentId).browserName,
+      userAgentId => RealUserAgents.extractMetaFromUserAgentId(userAgentId).browserName,
     );
     return Array.from(new Set(names));
   }
 
   static get osNames(): string[] {
     const names = this.userAgentIds.map(
-      (userAgentId) => RealUserAgents.extractMetaFromUserAgentId(userAgentId).operatingSystemName,
+      userAgentId => RealUserAgents.extractMetaFromUserAgentId(userAgentId).operatingSystemName,
     );
     return Array.from(new Set(names));
   }
 
   static findUserAgentIdsByName(name: string): string[] {
-    return this.userAgentIds.filter((userAgentId) => {
+    return this.userAgentIds.filter(userAgentId => {
       const meta = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
       return [meta.operatingSystemName, meta.browserName].includes(name);
     });
   }
 
-  static isAutomationPath(path: string): boolean {
-    if (devtoolsIndicators.added.some((pattern) => pathIsPatternMatch(path, pattern))) return true;
-    if (devtoolsIndicators.extraAdded.some((pattern) => pathIsPatternMatch(path, pattern)))
-      return true;
-    return false;
+  static getProfilerIndicators(): typeof browserstackIndicators {
+    return browserstackIndicators;
+  }
+
+  static getDevtoolsIndicators(): typeof devtoolsIndicators {
+    return devtoolsIndicators;
   }
 
   static isVariationPath(path: string): boolean {
-    if (instanceVariations.changed.some((pattern) => pathIsPatternMatch(path, pattern)))
+    if (instanceVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
+    if (instanceVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
       return true;
-    if (instanceVariations.extraChanged.some((pattern) => pathIsPatternMatch(path, pattern)))
+    if (locationVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
+    if (locationVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
       return true;
-    if (locationVariations.changed.some((pattern) => pathIsPatternMatch(path, pattern)))
-      return true;
-    if (locationVariations.extraChanged.some((pattern) => pathIsPatternMatch(path, pattern)))
-      return true;
-    if (windowVariations.changed.some((pattern) => pathIsPatternMatch(path, pattern))) return true;
-    if (windowVariations.extraChanged.some((pattern) => pathIsPatternMatch(path, pattern)))
+    if (windowVariations.changed.some(pattern => pathIsPatternMatch(path, pattern))) return true;
+    if (windowVariations.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
       return true;
     return false;
   }
 
   static shouldIgnorePathValue(path: string): boolean {
-    if (this.isAutomationPath(path)) return true;
+    if (devtoolsIndicators.added.some(pattern => pathIsPatternMatch(path, pattern))) return true;
+    if (devtoolsIndicators.extraAdded.some(pattern => pathIsPatternMatch(path, pattern)))
+      return true;
+    if (devtoolsIndicators.extraChanged.some(pattern => pathIsPatternMatch(path, pattern)))
+      return true;
+    if (browserstackIndicators.changedOrder.some(pattern => pathIsPatternMatch(path, pattern)))
+      return true;
+
     if (this.isVariationPath(path)) return true;
     return false;
   }

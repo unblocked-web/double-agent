@@ -12,7 +12,7 @@ export default class HttpAssetHeaders extends Plugin {
       checks.push(...checkGenerator.checks);
     }
 
-    // ToDo: ensure assets are loaded, otherwise probably bot (counts by type?)
+    // TODO: ensure assets are loaded, otherwise probably bot (counts by type?)
 
     this.initializeProbes({
       layerKey: 'ASH',

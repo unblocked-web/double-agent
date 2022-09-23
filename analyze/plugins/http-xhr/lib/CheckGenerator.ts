@@ -21,7 +21,17 @@ export default class CheckGenerator {
 
     this.checks.push(
       ...checks.createHeaderCaseChecks('x-lower-sessionid', 'x-header-sessionid'),
-      ...checks.createHeaderOrderChecks('content-type'), // content-type location varies in the headers
+      // XHR have all kinds of order changes. For now, we're just going to remove anything that moves
+      ...checks.createHeaderOrderChecks(
+        'sec-ch-ua',
+        'sec-ua-mobile',
+        'sec-fetch-mode',
+        'sec-fetch-dest',
+        'user-agent',
+        'accept',
+        'content-type',
+        'content-length',
+      ), // content-type location varies in the headers
       ...checks.createDefaultValueChecks(),
     );
   }

@@ -76,7 +76,7 @@ export default class SharedCheckGenerator {
     const headerKeysMap: {
       [protocol: string]: {
         [httpMethod: string]: {
-          [resourceType: string]: {
+          [resourceType_redirect: string]: {
             [originType: string]: string[][];
           };
         };
@@ -84,8 +84,9 @@ export default class SharedCheckGenerator {
     } = {};
 
     for (const page of this.data) {
-      const { protocol, method: httpMethod, originType, resourceType } = page;
+      const { protocol, method: httpMethod, originType, resourceType, isRedirect } = page;
 
+      const resourceKey = `${resourceType}_${isRedirect ? 'redirect' : 'direct'}`;
       const keys = page.rawHeaders
         .map(x => x[0].toLowerCase())
         .filter(isOfficialHeader)
@@ -94,9 +95,9 @@ export default class SharedCheckGenerator {
 
       headerKeysMap[protocol] ??= {};
       headerKeysMap[protocol][httpMethod] ??= {};
-      headerKeysMap[protocol][httpMethod][resourceType] ??= {};
-      headerKeysMap[protocol][httpMethod][resourceType][originType] ??= [];
-      const entries = headerKeysMap[protocol][httpMethod][resourceType][originType];
+      headerKeysMap[protocol][httpMethod][resourceKey] ??= {};
+      headerKeysMap[protocol][httpMethod][resourceKey][originType] ??= [];
+      const entries = headerKeysMap[protocol][httpMethod][resourceKey][originType];
       if (!entries.some(x => x.toString() === keys.toString())) {
         entries.push(keys);
       }

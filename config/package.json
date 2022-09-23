@@ -2,6 +2,9 @@
   "name": "@double-agent/config",
   "version": "1.0.0",
   "license": "MIT",
+  "scripts": {
+    "sync": "cd ../build/config && yarn sync"
+  },
   "dependencies": {
     "@ulixee/commons": "2.0.0-alpha.11",
     "@double-agent/analyze": "1.0.0",

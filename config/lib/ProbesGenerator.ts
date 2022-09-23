@@ -22,6 +22,13 @@ export default class ProbesGenerator {
     }
   }
 
+  public async clearBuckets(): Promise<void> {
+    const probeBucketsDir = Path.join(Config.probesDataDir, 'probe-buckets');
+    const probesDir = Path.join(Config.probesDataDir, 'probes');
+    await Fs.promises.rm(probeBucketsDir, { recursive: true }).catch(() => null);
+    await Fs.promises.rm(probesDir, { recursive: true }).catch(() => null);
+  }
+
   public run(): void {
     this.plugins = getAllPlugins();
   }
@@ -56,8 +63,8 @@ export default class ProbesGenerator {
       this.layers.push(...plugin.layers);
 
       for (const layer of plugin.layers) {
-        const probeBuckets = plugin.probeBuckets.filter((x) => x.layerId === layer.id);
-        const checkCount = probeBuckets.map((p) => p.probes.length).reduce((a, b) => a + b, 0);
+        const probeBuckets = plugin.probeBuckets.filter(x => x.layerId === layer.id);
+        const checkCount = probeBuckets.map(p => p.probes.length).reduce((a, b) => a + b, 0);
         this.totalChecks += checkCount;
         console.log(
           `${layer.name} (${layer.id} has ${probeBuckets.length} probe buckets (${checkCount} checks)`,
@@ -76,7 +83,7 @@ export default class ProbesGenerator {
     const profiles: TProfile[] = [];
     if (!this.profilePathsMap[pluginId]) return profiles;
 
-    Object.values(this.profilePathsMap[pluginId]).forEach((profilePath) => {
+    Object.values(this.profilePathsMap[pluginId]).forEach(profilePath => {
       const profile = importProfile<TProfile>(profilePath);
       profiles.push(profile as TProfile);
     });

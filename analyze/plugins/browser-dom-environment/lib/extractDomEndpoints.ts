@@ -1,4 +1,5 @@
 import { IProfileData } from '@double-agent/collect-browser-dom-environment/interfaces/IProfile';
+import IDomDescriptor from '../interfaces/IDomDescriptor';
 
 export const metaKeys = new Set([
   '_$protos',
@@ -23,13 +24,13 @@ export const metaKeys = new Set([
 
 export interface IEndpoint {
   path: string;
-  object: any;
+  object: IDomDescriptor;
 }
 
 export const unknownMetaKeys: Set<string> = new Set();
 export const metaValues: { [key: string]: Set<any> } = {};
 
-export default function extractDomEndpoints(dom: IProfileData) {
+export default function extractDomEndpoints(dom: IProfileData): { [path: string]: IEndpoint } {
   const objectsToExtract: any[] = [{ path: [], object: dom }];
   const endpoints: IEndpoint[] = [];
 
@@ -73,10 +74,13 @@ export default function extractDomEndpoints(dom: IProfileData) {
   return endpointsByPath;
 }
 
-function extractObjectMeta(path: string[], object: any) {
+function extractObjectMeta(
+  path: string[],
+  object: IDomDescriptor,
+): IDomDescriptor {
   if (object === null || object === undefined) return {};
 
-  const objectMeta: { [key: string]: any } = {};
+  const objectMeta: IDomDescriptor = {};
   const objectMetaKeys: string[] = [];
   const currentKey = path[path.length - 1];
 
@@ -147,7 +151,7 @@ function extractObjectMeta(path: string[], object: any) {
   return objectMeta;
 }
 
-function convertRefs(object: any) {
+function convertRefs(object: any): any {
   if (typeof object !== 'string') return object;
   if (object.startsWith('REF: ')) {
     return {

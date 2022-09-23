@@ -309,7 +309,7 @@ export default class Server {
     const baseDirPath = extractAssignmentDir(activeScraper, assignment);
     void this.saveFile(baseDirPath, 'assignment.json', assignment);
 
-    // ToDo: We need to save session.json but without the DOM export (and other unneeded data) -- too large
+    // TODO: We need to save session.json but without the DOM export (and other unneeded data) -- too large
     // this.saveFile(baseDirPath, 'session.json', session.toJSON());
   }
 

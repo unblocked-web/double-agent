@@ -12,7 +12,7 @@ export function extractProfilePathsMap(
     const profilePath = Path.join(profileDir, fileName);
     profilePathsMap[pluginId] = profilePathsMap[pluginId] || {};
     if (filenameSuffix) {
-      profilePathsMap[pluginId][userAgentId] = profilePathsMap[pluginId][userAgentId] || {};
+      profilePathsMap[pluginId][userAgentId] ??= {};
       profilePathsMap[pluginId][userAgentId][filenameSuffix] = profilePath;
     } else {
       profilePathsMap[pluginId][userAgentId] = profilePath;

@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "tsc": "tsc -b -i && ulx-repo-after-build && node adjustPaths.js && node alsoCopy.js",
-    "build": "yarn tsc && cd build && yarn",
+    "build": "yarn tsc && cd build && yarn && yarn workspace @double-agent/config sync",
     "watch": "yarn tsc && tsc -b -w",
     "docs": "node build/docs/generator",
     "start": "cd build && yarn workspace @double-agent/collect-controller start",

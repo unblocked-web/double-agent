@@ -5,7 +5,7 @@ import BooleanCheck from '@double-agent/analyze/lib/checks/BooleanCheck';
 import DecimalLengthCheck from '@double-agent/analyze/lib/checks/DecimalLengthCheck';
 import NumberLengthCheck from '@double-agent/analyze/lib/checks/NumberLengthCheck';
 import IBaseProfile from '@double-agent/collect/interfaces/IBaseProfile';
-import Config from '@double-agent/config';
+import Config, { pathIsPatternMatch } from '@double-agent/config';
 import extractDomEndpoints, { IEndpoint } from './extractDomEndpoints';
 import EndpointType, { IEndpointType } from '../interfaces/EndpointType';
 import KeyOrderCheck from './checks/KeyOrderCheck';
@@ -21,6 +21,7 @@ import ClassCheck from './checks/ClassCheck';
 import ArrayCheck from './checks/ArrayCheck';
 import SymbolCheck from './checks/SymbolCheck';
 import AutomationCheck from './checks/AutomationCheck';
+import IDomDescriptor from '../interfaces/IDomDescriptor';
 
 export default class CheckGenerator {
   public checks: BaseCheck[] = [];
@@ -29,12 +30,10 @@ export default class CheckGenerator {
   private readonly userAgentId: string;
 
   constructor(profile: IBaseProfile<any>) {
-    const httpDom = profile.data.https;
     this.userAgentId = profile.userAgentId;
-    this.endpointsByPath = extractDomEndpoints(httpDom);
+    this.endpointsByPath = extractDomEndpoints(profile.data.https);
     for (const { path, object } of Object.values(this.endpointsByPath)) {
-      this.addAutomationChecks(path);
-      if (Config.isAutomationPath(path)) continue;
+      if (this.didAddAutomationChecks(path, object)) continue;
       this.addKeyOrderChecks(path, object);
       this.addFlagChecks(path, object);
       this.addPrototypeChecks(path, object);
@@ -52,7 +51,7 @@ export default class CheckGenerator {
     }
   }
 
-  private addKeyOrderChecks(path: string, object) {
+  private addKeyOrderChecks(path: string, object: IDomDescriptor) {
     if (
       !['object', 'prototype', 'function', 'class', 'constructor', 'array'].includes(object._$type)
     )
@@ -60,11 +59,13 @@ export default class CheckGenerator {
     if (!object._$keyOrder?.length) return;
 
     const { userAgentId } = this;
+    // TODO: this is a flawed approach. We need to either get true profiles, or compare only this part to a true profile
+    // ALTERNATIVELY: we could require a plugin for each Profiler/Devtools diff that explicitly checks the valid profiles
     const keys = removeAutomationKeys(path, object._$keyOrder);
     this.add(new KeyOrderCheck({ userAgentId }, { path }, keys));
   }
 
-  private addFlagChecks(path: string, object) {
+  private addFlagChecks(path: string, object: IDomDescriptor) {
     const { userAgentId } = this;
 
     if (object._$flags) {
@@ -82,21 +83,21 @@ export default class CheckGenerator {
     }
   }
 
-  private addPrototypeChecks(path: string, object) {
+  private addPrototypeChecks(path: string, object: IDomDescriptor) {
     if (!['prototype', 'object', 'constructor', 'array'].includes(object._$type)) return;
 
     const { userAgentId } = this;
     this.add(new PrototypeCheck({ userAgentId }, { path }, object._$protos));
   }
 
-  private addNumberChecks(path: string, object): IChecks {
+  private addNumberChecks(path: string, object: IDomDescriptor): IChecks {
     if (object._$type !== EndpointType.number) return;
 
     const { userAgentId } = this;
     if (Config.shouldIgnorePathValue(path)) {
       this.add(new TypeCheck({ userAgentId }, { path }, EndpointType.number));
     } else if (object._$value === null || object._$value === undefined) {
-      this.add(new NumberCheck({ userAgentId }, { path }, object._$value));
+      this.add(new NumberCheck({ userAgentId }, { path }, object._$value as number));
     } else if (String(object._$value).includes('.')) {
       const decimalStr = String(object._$value).split('.')[1];
       this.add(new DecimalLengthCheck({ userAgentId }, { path }, decimalStr.length));
@@ -105,7 +106,7 @@ export default class CheckGenerator {
     }
   }
 
-  private addFunctionChecks(path: string, object) {
+  private addFunctionChecks(path: string, object: IDomDescriptor) {
     if (!object._$function) return;
     if (!['function', 'class', 'prototype'].includes(object._$type)) {
       throw new Error(`Unknown function type: ${object._$type}`);
@@ -131,7 +132,7 @@ export default class CheckGenerator {
     this.add(functionCheck);
   }
 
-  private addStringChecks(path: string, object): IChecks {
+  private addStringChecks(path: string, object: IDomDescriptor): IChecks {
     if (object._$type !== EndpointType.string) return;
 
     const { userAgentId } = this;
@@ -139,13 +140,13 @@ export default class CheckGenerator {
       this.add(new TypeCheck({ userAgentId }, { path }, EndpointType.string));
     } else if (path.endsWith('.stack')) {
       // is stack trace
-      this.add(new StacktraceCheck({ userAgentId }, { path }, object._$value));
+      this.add(new StacktraceCheck({ userAgentId }, { path }, object._$value as string));
     } else {
-      this.add(new StringCheck({ userAgentId }, { path }, object._$value));
+      this.add(new StringCheck({ userAgentId }, { path }, object._$value as string));
     }
   }
 
-  private addGetterChecks(path: string, object) {
+  private addGetterChecks(path: string, object: IDomDescriptor) {
     if (!object._$get) return;
 
     const { userAgentId } = this;
@@ -165,7 +166,7 @@ export default class CheckGenerator {
     }
   }
 
-  private addSetterChecks(path: string, object) {
+  private addSetterChecks(path: string, object: IDomDescriptor) {
     if (!object._$set) return;
 
     const { userAgentId } = this;
@@ -179,14 +180,14 @@ export default class CheckGenerator {
     );
   }
 
-  private addRefChecks(path: string, object) {
+  private addRefChecks(path: string, object: IDomDescriptor) {
     if (object._$type !== EndpointType.ref) return;
 
     const { userAgentId } = this;
     this.add(new RefCheck({ userAgentId }, { path }, object._$ref));
   }
 
-  private addClassChecks(path: string, object) {
+  private addClassChecks(path: string, object: IDomDescriptor) {
     if (object._$type !== EndpointType.class) return;
 
     const { userAgentId } = this;
@@ -201,18 +202,18 @@ export default class CheckGenerator {
     }
   }
 
-  private addBooleanChecks(path: string, object) {
+  private addBooleanChecks(path: string, object: IDomDescriptor) {
     if (object._$type !== EndpointType.boolean) return;
 
     const { userAgentId } = this;
     if (Config.shouldIgnorePathValue(path)) {
       this.add(new TypeCheck({ userAgentId }, { path }, EndpointType.boolean));
     } else {
-      this.add(new BooleanCheck({ userAgentId }, { path }, object._$value));
+      this.add(new BooleanCheck({ userAgentId }, { path }, object._$value as boolean));
     }
   }
 
-  private addArrayChecks(path: string, object) {
+  private addArrayChecks(path: string, object: IDomDescriptor) {
     if (object._$type !== EndpointType.array) return;
 
     const { userAgentId } = this;
@@ -220,25 +221,39 @@ export default class CheckGenerator {
     this.add(new ArrayCheck({ userAgentId }, { path }, hasLengthProperty));
   }
 
-  private addSymbolChecks(path: string, object) {
+  private addSymbolChecks(path: string, object: IDomDescriptor) {
     if (object._$type !== EndpointType.symbol) return;
 
     const { userAgentId } = this;
-    this.add(new SymbolCheck({ userAgentId }, { path }, object._$value));
+    this.add(new SymbolCheck({ userAgentId }, { path }, object._$value as string));
   }
 
-  private addTypeChecks(path: string, object) {
+  private addTypeChecks(path: string, object: IDomDescriptor) {
     if (!['object', 'constructor', 'dom'].includes(object._$type)) return;
 
     const { userAgentId } = this;
     this.add(new TypeCheck({ userAgentId }, { path }, object._$type));
   }
 
-  private addAutomationChecks(path: string) {
-    if (!Config.isAutomationPath(path)) return;
-
+  private didAddAutomationChecks(path: string, _: IDomDescriptor): boolean {
+    const devtoolsIndicators = Config.getDevtoolsIndicators();
+    const profilerIndicators = Config.getProfilerIndicators();
     const { userAgentId } = this;
-    this.add(new AutomationCheck({ userAgentId }, { path }));
+    if (
+      devtoolsIndicators.changed.includes(path) ||
+      profilerIndicators.extraChanged.includes(path) ||
+      devtoolsIndicators.changed.includes(path) ||
+      devtoolsIndicators.extraChanged.includes(path)
+    ) {
+      // TODO: include expected value in the devtools-indicators export so we know what to check for
+      this.add(new TypeCheck({ userAgentId }, { path }, EndpointType.boolean));
+      return true;
+    }
+    if (isAutomationAddedPath(path)) {
+      this.add(new AutomationCheck({ userAgentId }, { path }));
+      return true;
+    }
+    return false;
   }
 
   private add(check: BaseCheck) {
@@ -258,12 +273,24 @@ function extractInvocation(path: string, object: any) {
   return object._$invocation;
 }
 
+function isAutomationAddedPath(path: string): boolean {
+  const devtoolsIndicators = Config.getDevtoolsIndicators();
+  const profilerIndicators = Config.getProfilerIndicators();
+  return (
+    devtoolsIndicators.added.some(x => pathIsPatternMatch(path, x)) ||
+    profilerIndicators.added.some(x => pathIsPatternMatch(path, x)) ||
+    devtoolsIndicators.extraAdded.some(x => pathIsPatternMatch(path, x)) ||
+    profilerIndicators.extraAdded.some(x => pathIsPatternMatch(path, x)) ||
+    devtoolsIndicators.removed.some(x => pathIsPatternMatch(path, x)) ||
+    profilerIndicators.removed.some(x => pathIsPatternMatch(path, x))
+  );
+}
+
 function removeAutomationKeys(path: string, keys: string[]) {
   const cleanedKeys: string[] = [];
-
   for (const key of keys) {
     const keyPath = `${path}.${key}`;
-    if (!Config.isAutomationPath(keyPath)) {
+    if (!isAutomationAddedPath(keyPath)) {
       cleanedKeys.push(key);
     }
   }

@@ -3,12 +3,12 @@ import * as Fs from 'fs';
 import * as Path from 'path';
 import Config from '../index';
 
-const profilerPatternsDir = Path.join(Config.profilesDataDir, 'dom-bridges/path-patterns');
-const localPathPatternsDir = Path.join(Config.dataDir, 'path-patterns');
-
 export default function updatePathPatterns(): void {
-  if (!Fs.existsSync(localPathPatternsDir)) Fs.mkdirSync(localPathPatternsDir, { recursive: true });
+  const profilerPatternsDir = Path.join(Config.profilesDataDir, 'dom-bridges/path-patterns');
+  if (!Fs.existsSync(profilerPatternsDir)) return;
 
+  const localPathPatternsDir = Path.join(Config.dataDir, 'path-patterns');
+  if (!Fs.existsSync(localPathPatternsDir)) Fs.mkdirSync(localPathPatternsDir, { recursive: true });
   for (const fileName of Fs.readdirSync(profilerPatternsDir)) {
     const fromFilePath = Path.join(profilerPatternsDir, fileName);
     const toFilePath = Path.join(localPathPatternsDir, fileName);

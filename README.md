@@ -87,7 +87,7 @@ Probe ids for that pattern look like: `http:GET:headers:none:Document:host:Array
 
 ## Updating the Probe "Sources"
 
-Probes are generated from a baseline of browsers. Double Agent comes with some built-in profiles in [probe-data](./probe-data) base on the browsers [here](stacks/data/external/userAgentConfig.json). Double Agent is built to allow testing a single browser, or to generate a massive data set to see how well scrapers can emulate many browsers. As this is very time consuming, we tend to limit the tested browsers to the last couple versions of Chrome, which is what Unblocked Agent can currently emulate.
+Probes are generated from a baseline of browsers. Double Agent comes with some built-in profiles in [probe-data](./probe-data) based on the browsers [here](stacks/data/external/userAgentConfig.json). Double Agent is built to allow testing a single browser, or to generate a massive data set to see how well scrapers can emulate many browsers. As this is very time consuming, we tend to limit the tested browsers to the last couple versions of Chrome, which is what Unblocked Agent can currently emulate.
 
 If you wish to generate probes for different data browsers (or a wider set), you can follow these steps to update the data:
 

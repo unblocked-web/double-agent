@@ -72,10 +72,10 @@ export default class Probe {
 // HELPERS //////
 
 function generateId(check: BaseCheck, pluginId: string): string {
-  Config.probeIdsMap[pluginId] = Config.probeIdsMap[pluginId] || {};
+  Config.probeIdsMap[pluginId] ??= {};
   let id = Config.probeIdsMap[pluginId][check.signature];
   if (!id) {
-    counterByPrefix[check.prefix] = counterByPrefix[check.prefix] || COUNTER_START;
+    counterByPrefix[check.prefix] ??= COUNTER_START;
     counterByPrefix[check.prefix] += 1;
     id = `${check.prefix}-${convertToAlpha(counterByPrefix[check.prefix])}`.toLowerCase();
   }

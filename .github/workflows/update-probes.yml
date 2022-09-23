@@ -1,0 +1,55 @@
+name: 'Update Probes'
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * *'
+
+jobs:
+  profiler:
+    name: 'Update Probes Data'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.PAT }}
+          submodules: 'true'
+
+      - name: Clone RealUserAgents
+        run:  git clone https://github.com/unblocked-web/real-user-agents.git
+        working-directory: ..
+
+      - name: Install RealUserAgents
+        run: yarn && yarn build
+        working-directory: ../real-user-agents
+
+      - name: Clone Profile Data
+        run: git clone https://github.com/unblocked-web/browser-profile-data.git
+        working-directory: ../../..
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Yarn build
+        run: yarn build:all
+
+      - name: Sync Latest User Agents
+        run: yarn workspace @double-agent/config sync
+
+      - name: Import Profiles
+        run: yarn workspace @double-agent/stacks 0
+
+      - name: Create Probes
+        run: yarn workspace @double-agent/stacks 1
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: probe-data
+          commit_message: "chore: automatic probe data"
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore(double-agent): point at new probe data"
