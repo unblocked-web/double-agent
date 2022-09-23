@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "syncUserAgentConfig": "node scripts/syncUserAgentConfig.js",
+    "sync-config": "node scripts/syncLatestAgentIds.js",
+    "manual": "node scripts/manualProfile.js",
     "0": "node scripts/0-importFoundationalProfiles.js",
     "1": "node --max-old-space-size=10000 scripts/1-extractFoundationalProbes.js",
     "2": "node scripts/2-collectUserAgentsToTest.js",

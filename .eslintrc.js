@@ -27,4 +27,4 @@ module.exports.overrides.push(
   },
 );
 
-exports.ignorePatterns.push('probe-data');
+module.exports.ignorePatterns.push('probe-data');

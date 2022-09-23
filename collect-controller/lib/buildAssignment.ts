@@ -1,5 +1,5 @@
 import { IUserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
-import RealUserAgents from '@unblocked-web/real-user-agents';
+import RealUserAgents, { IUserAgentMeta } from '@unblocked-web/real-user-agents';
 import IAssignment, { AssignmentType, IAssignmentType } from '../interfaces/IAssignment';
 
 export default function buildAssignment(
@@ -11,16 +11,21 @@ export default function buildAssignment(
   pickType: IUserAgentToTestPickType = null,
   usagePercent: number = null,
 ): IAssignment {
-  const userAgentMeta = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
-  userAgentMeta.browserVersion.replace('-', '.');
-  userAgentMeta.operatingSystemVersion.replace('-', '.');
+  let browserMeta: IUserAgentMeta;
+
+  try {
+    // can't load browser meta for a regular user
+    browserMeta = RealUserAgents.extractMetaFromUserAgentId(userAgentId);
+    browserMeta.browserVersion.replace('-', '.');
+    browserMeta.operatingSystemVersion.replace('-', '.');
+  } catch (error) {}
 
   return {
     id,
     num,
     type,
     userAgentId,
-    browserMeta: userAgentMeta,
+    browserMeta,
     userAgentString,
     pickType,
     usagePercent,
