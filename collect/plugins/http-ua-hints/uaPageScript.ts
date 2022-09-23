@@ -13,14 +13,22 @@ export default function uaPageScript(ctx: IRequestContext) {
     'platformVersion',
     'fullVersionList',
   ];
-  const promise = navigator.userAgentData.getHighEntropyValues(keys).then(values => 
+  try {
+    const promise = navigator.userAgentData.getHighEntropyValues(keys).then(values => 
+      fetch('${ctx.buildUrl('/save')}', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(values),
+      })
+    );
+    window.pageQueue.push(promise);
+  } catch(err) {
     fetch('${ctx.buildUrl('/save')}', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(values),
+      body: null,
     })
-  );
-  window.pageQueue.push(promise);
+  }
 })();
 </script>`;
 }
