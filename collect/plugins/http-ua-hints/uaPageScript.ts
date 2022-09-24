@@ -26,7 +26,7 @@ export default function uaPageScript(ctx: IRequestContext) {
     fetch('${ctx.buildUrl('/save')}', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: null,
+      body: 'null',
     })
   }
 })();
