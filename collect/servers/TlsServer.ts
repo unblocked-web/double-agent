@@ -17,7 +17,7 @@ export default class TlsServer extends BaseServer {
     const tlsRequestHandler = createTlsRequestHandler(this, context);
 
     this.internalServer = await new Promise<TlsServerBase>((resolve) => {
-      const server = new TlsServerBase(tlsCerts, tlsRequestHandler);
+      const server = new TlsServerBase(tlsCerts(), tlsRequestHandler);
       server.listen(this.port, () => resolve(server));
     });
     this.internalServer.on('error', (error) => {

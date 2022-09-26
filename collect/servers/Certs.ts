@@ -20,21 +20,41 @@ export const CertsMessage = `
 127.0.0.1      ${TlsDomain}
   `;
 
-if (!Fs.existsSync(`${certPath}/privkey.pem`)) {
-  throw new Error(
-    `You haven't completed setup. You'll need SSL Certificates to run the servers!!\n\n${CertsMessage}`,
-  );
+const certsCache: {
+  default?: ICert;
+  tls?: ICert;
+} = {};
+
+export function checkSetup(): void {
+  if (!Fs.existsSync(`${certPath}/privkey.pem`)) {
+    throw new Error(
+      `You haven't completed setup. You'll need SSL Certificates to run the servers!!\n\n${CertsMessage}`,
+    );
+  }
 }
 
-export default {
-  key: Fs.readFileSync(`${certPath}/privkey.pem`),
-  cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
-};
+export default function certs(): ICert {
+  checkSetup();
+  certsCache.default ??= {
+    key: Fs.readFileSync(`${certPath}/privkey.pem`),
+    cert: Fs.readFileSync(`${certPath}/fullchain.pem`),
+  };
+
+  return certsCache.default;
+}
 
 const tlsCertsPath = Config.collect.enableLetsEncrypt
   ? `/etc/letsencrypt/live/${TlsDomain}`
   : `${__dirname}/../certs`;
-export const tlsCerts = {
-  key: Fs.readFileSync(`${tlsCertsPath}/privkey.pem`),
-  cert: Fs.readFileSync(`${tlsCertsPath}/fullchain.pem`),
-};
+export function tlsCerts(): ICert {
+  certsCache.tls ??= {
+    key: Fs.readFileSync(`${tlsCertsPath}/privkey.pem`),
+    cert: Fs.readFileSync(`${tlsCertsPath}/fullchain.pem`),
+  };
+  return certsCache.tls;
+}
+
+interface ICert {
+  key: Buffer;
+  cert: Buffer;
+}

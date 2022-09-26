@@ -19,7 +19,7 @@ export default class HttpServer extends BaseServer {
     const websocketHandler = createWebsocketHandler(this, context);
 
     this.httpsServer = await new Promise<https.Server>((resolve) => {
-      const server = https.createServer(Certs, httpRequestHandler);
+      const server = https.createServer(Certs(), httpRequestHandler);
       server.on('upgrade', websocketHandler);
       server.listen(this.port, () => resolve(server));
     });

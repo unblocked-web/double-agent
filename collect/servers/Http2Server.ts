@@ -29,7 +29,7 @@ export default class Http2Server extends BaseServer {
     const httpRequestHandler = createHttpRequestHandler(this, context);
     const websocketHandler = createWebsocketHandler(this, context);
     const options = <http2.SecureServerOptions>{
-      ...Certs,
+      ...Certs(),
       allowHTTP1: true, // allow http1 for older browsers
     };
 

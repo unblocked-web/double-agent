@@ -1,6 +1,7 @@
 import '@ulixee/commons/lib/SourceMapSupport';
 import '@double-agent/config/load';
 import Collect from '@double-agent/collect';
+import { checkSetup } from '@double-agent/collect/servers/Certs';
 import Config from '@double-agent/config';
 import ShutdownHandler from '@ulixee/commons/lib/ShutdownHandler';
 import Server from './lib/Server';
@@ -8,6 +9,7 @@ import Server from './lib/Server';
 const serverPort = Config.collect.port;
 
 (async function run() {
+  checkSetup();
   // this server loads all the modules in the "detections" directory and runs a bot detector
   const collect = new Collect();
 
