@@ -8,12 +8,17 @@ export default function script(ctx: IRequestContext) {
   async function getVoices() {
     let voices = [];
     if (typeof speechSynthesis !== 'undefined') {
-      if (speechSynthesis.getVoices().length === 0) {
+      if (!speechSynthesis.getVoices() || speechSynthesis.getVoices().length === 0) {
         if (speechSynthesis.onvoiceschanged !== undefined) {
           await Promise.race([
             new Promise(resolve => speechSynthesis.onvoiceschanged = resolve),
             new Promise(resolve => setTimeout(resolve, 1e3))
           ])
+        } else {
+          try {
+            speechSynthesis.cancel();
+          } catch (err){}
+          await new Promise(resolve => setTimeout(resolve, 1e3))
         }
       }
       for (const { default: de,lang,localService,name,voiceURI } of speechSynthesis.getVoices()) {
