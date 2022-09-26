@@ -72,7 +72,6 @@ export default class HttpUaHintsPlugin extends Plugin {
         route: this.routes.https['/'],
         domain: MainDomain,
         waitForReady: true,
-        clickNext: true,
       },
       {
         route: this.routes.http2['/'],
@@ -132,7 +131,7 @@ export default class HttpUaHintsPlugin extends Plugin {
     profileData.testedHeaders = HttpUaHintsPlugin.uaHintOptions;
 
     ctx.session.savePluginProfileData<IProfileData>(this, profileData, {
-      keepInMemory: true
+      keepInMemory: true,
     });
     ctx.res.end();
   }
