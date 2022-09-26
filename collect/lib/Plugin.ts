@@ -246,13 +246,12 @@ export default abstract class Plugin extends EventEmitter implements IPlugin {
       throw new Error(`Path already exists: ${protocol}:${path}`);
     }
 
-    const route: IRoute = {
+    this.routes[protocol][path] = {
       protocol,
       path,
       handlerFn: handler.bind(this),
       isAsset: true,
     };
-    this.routes[protocol][path] = route;
   }
 
   protected registerPages(...pages: IPluginPage[]): void {

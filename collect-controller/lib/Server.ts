@@ -1,12 +1,14 @@
 import * as url from 'url';
-import archiver = require('archiver');
-import { createReadStream, existsSync, promises as Fs, rmdirSync } from 'fs';
+import { createReadStream, createWriteStream, existsSync, promises as Fs, rmdirSync } from 'fs';
 import * as Path from 'path';
 import * as http from 'http';
 import { pathToRegexp } from 'path-to-regexp';
 import Collect from '@double-agent/collect';
 import Plugin from '@double-agent/collect/lib/Plugin';
 import IUserAgentToTest from '@double-agent/config/interfaces/IUserAgentToTest';
+import { createGzip } from 'zlib';
+import { PassThrough } from 'stream';
+import archiver = require('archiver');
 import IAssignment, { AssignmentType } from '../interfaces/IAssignment';
 import buildAssignment from './buildAssignment';
 import buildAllAssignments from './buildAllAssignments';
@@ -32,6 +34,7 @@ interface IActiveUser {
 
 const DOWNLOAD = 'download';
 const downloadDir = '/tmp/double-agent-download-data';
+const MB = 1028 * 1028;
 if (existsSync(downloadDir)) rmdirSync(downloadDir, { recursive: true });
 
 export default class Server {
@@ -57,7 +60,7 @@ export default class Server {
     this.httpServerPort = httpServerPort;
     this.httpServer = new http.Server(this.handleRequest.bind(this));
 
-    Object.keys(this.endpointsByRoute).forEach((route) => {
+    Object.keys(this.endpointsByRoute).forEach(route => {
       const keys = [];
       const regexp = pathToRegexp(route, keys);
       this.routeMetaByRegexp.set(regexp, { route, keys });
@@ -65,8 +68,8 @@ export default class Server {
   }
 
   public start(): Promise<void> {
-    return new Promise<void>((resolve) => {
-      this.httpServer.listen(this.httpServerPort, resolve).on('error', (err) => console.log(err));
+    return new Promise<void>(resolve => {
+      this.httpServer.listen(this.httpServerPort, resolve).on('error', err => console.log(err));
     });
   }
 
@@ -167,7 +170,7 @@ export default class Server {
     this.activeUsersById[userId] = await this.createUser(userId, dataDir, userAgentsToTest);
 
     const assignments = Object.values(this.activeUsersById[userId].assignmentsById).map(
-      (assignment) => {
+      assignment => {
         return { ...assignment, pagesByPlugin: undefined };
       },
     );
@@ -194,7 +197,11 @@ export default class Server {
     };
   }
 
-  private async activateAssignment(_, res: http.ServerResponse, params: IRequestParams): Promise<void> {
+  private async activateAssignment(
+    _,
+    res: http.ServerResponse,
+    params: IRequestParams,
+  ): Promise<void> {
     const { userId, assignmentId } = params;
     if (!userId) {
       return sendJson(res, { message: 'Please provide a userId header or query param' }, 500);
@@ -320,7 +327,18 @@ export default class Server {
       if (!(await existsAsync(dirPath))) {
         await Fs.mkdir(dirPath, { recursive: true, mode: 0o775 });
       }
-      await Fs.writeFile(`${dirPath}/${fileName}`, JSON.stringify(data, null, 2));
+      const json = JSON.stringify(data, null, 2);
+      // greater than 1mb
+      if (Buffer.byteLength(json) > 1 * MB) {
+        fileName += '.gz';
+        const content = new PassThrough().end(json);
+        const writeStream = createWriteStream(`${dirPath}/${fileName}`);
+        await new Promise(resolve =>
+          content.pipe(createGzip()).pipe(writeStream).once('finish', resolve),
+        );
+      } else {
+        await Fs.writeFile(`${dirPath}/${fileName}`, json);
+      }
       console.log(`SAVED ${dirPath}/${fileName}`);
       process.umask(prevUmask);
     } catch (error) {
@@ -374,7 +392,7 @@ async function pipeDirToStream(dirPath: string, stream: any): Promise<void> {
     }
   }
   archive.pipe(stream);
-  const isFinished = new Promise<void>((resolve) => archive.on('close', resolve));
+  const isFinished = new Promise<void>(resolve => archive.on('close', resolve));
   await archive.finalize();
   await isFinished;
 }
