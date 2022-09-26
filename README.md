@@ -23,8 +23,10 @@ The bulk of the `collect` and `analyze` logic has been organized into what we ca
 | browser-dom-environment | Collects the browser's DOM environment such as object structure, class inheritance amd key order |
 | browser-fingerprints    | Collects various browser attributes that can be used to fingerprint a given session              |
 | browser-fonts           | Collects the fonts of the current browser/os.                                                    |
+| browser-speech          | Collects browser speech synthesis voices                                                         |
 | http-assets             | Collects the headers used when loading assets such as css, js, and images in a browser           |
 | http-basic-headers      | Collects the headers sent by browser when requesting documents in various contexts               |
+| http-ua-hints           | Collects User Agent hints for a browser                                                          |
 | http-websockets         | Collects the headers used when initializing and facilitating web sockets                         |
 | http-xhr                | Collects the headers used by browsers when facilitating XHR requests                             |
 | http2-session           | Collects the settings, pings and frames sent across by a browser http2 client                    |
@@ -43,7 +45,7 @@ The bulk of the `collect` and `analyze` logic has been organized into what we ca
 | http-basic-cookies      | Analyzes whether cookies are enabled correctly, including same-site and secure                                                            |
 | http-basic-headers      | Analyzes header order, capitalization and default values                                                                                  |
 | http-websockets         | Analyzes websocket upgrade request header order, capitalization and default values                                                        |
-| http-xhr                | Analyzes header order, capitalization and default values of Xhr requests                                                                  |
+| http-xhr                | Analyzes header order, capitalization and default values of XHR requests                                                                  |
 | http2-session           | Analyzes http2 session settings and frames                                                                                                |
 | tcp                     | Analyzes tcp packet values, including window-size and time-to-live                                                                        |
 | tls-clienthello         | Analyzes clienthello handshake signatures, including ciphers, extensions and version                                                      |
@@ -127,6 +129,6 @@ To start a `collect-controller`:
 - Behind the scenes of the runner class, when you create a new Test suite, you tell the server where to point to your `userAgentsToTest.json` file that you generated during the Setup step above (eg, `stacks/data/external/2-user-agents-to-test/userAgentsToTest.json`).
 
 3. As tests run, you will see "profiles" of your raw data downloaded into `stacks/data/external/3-assignments/`.
-4. After all tests are run, you can run `yarn 4` to generate `probe-ids` from all your profiles and compare them to real browser `probe-ids`. Under the `stacks/data/external/4-assignment-results`, any entries in the `-signature` files are signatures that differed from the probeId. The corresponding file contains the test details of the failed tests. 
+4. After all tests are run, you can run `yarn 4` to generate `probe-ids` from all your profiles and compare them to real browser `probe-ids`. Under the `stacks/data/external/4-assignment-results`, any entries in the `-signature` files are signatures that differed from the probeId. The corresponding file contains the test details of the failed tests.
 
 - NOTE: currently, these results are optimized for display on version 2 of the Scraper Report website. If you would like to submit a pull request to display differences in a human readable format, it would be tremendously appreciated!!
