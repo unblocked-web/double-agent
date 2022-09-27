@@ -7,21 +7,26 @@ export default function script(ctx: IRequestContext) {
 (function uaProbe() {
   async function getVoices() {
     let voices = [];
+    await new Promise(resolve => window.addEventListener('load', resolve))
     if (typeof speechSynthesis !== 'undefined') {
-      if (!speechSynthesis.getVoices() || speechSynthesis.getVoices().length === 0) {
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-          await Promise.race([
-            new Promise(resolve => speechSynthesis.onvoiceschanged = resolve),
-            new Promise(resolve => setTimeout(resolve, 1e3))
-          ])
-        } else {
-          try {
-            speechSynthesis.cancel();
-          } catch (err){}
-          await new Promise(resolve => setTimeout(resolve, 1e3))
-        }
+      if (speechSynthesis.getVoices().filter(x=>!!x.name).length === 0) {
+        let retryInterval;
+        await Promise.race([
+          new Promise(resolve => 'addEventListener' in speechSynthesis ? speechSynthesis.addEventListener("voiceschanged", resolve) : resolve()),
+          new Promise(resolve => {
+            retryInterval = setInterval(() => {
+              if (speechSynthesis.getVoices().filter(x=>!!x.name).length) resolve();
+            }, 100);
+          }),
+          new Promise(resolve => setTimeout(resolve, 15e3))
+        ]);
+        
+        clearInterval(retryInterval);
       }
+      // wait a few seconds for other voices to come through
+      await new Promise(resolve => setTimeout(resolve, 3e3));
       for (const { default: de,lang,localService,name,voiceURI } of speechSynthesis.getVoices()) {
+        if (!name) continue;
         voices.push({ 'default': de,lang,localService,name,voiceURI })
       }
     }
@@ -32,7 +37,7 @@ export default function script(ctx: IRequestContext) {
     });
   }
   
-  window.pageQueue.push(getVoices());
+  window.pageQueue.push(getVoices().catch(console.error));
 })();
 </script>`;
 }

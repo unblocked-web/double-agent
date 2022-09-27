@@ -57,7 +57,8 @@ jobs:
           ssh -i "~/.ssh/id_rsa_ulixee_digital_ocean" "root@$REMOTE" /bin/bash << EOF
             cd double-agent
             source "\$HOME/.nvm/nvm.sh"
-            pm2 stop da  &> /dev/null
+            pm2 stop da &> /dev/null
+            pm2 delete da &> /dev/null
             rm -rf /tmp/double-agent-download-data/
             yarn
             yarn build

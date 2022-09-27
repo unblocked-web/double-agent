@@ -11,7 +11,7 @@ export default abstract class BaseRunner implements IRunner {
       console.log('--------------------------------------');
       console.log('STARTING ', assignment.id, assignment.userAgentString);
 
-      let counter = 0;
+      let counter = 1;
       // eslint-disable-next-line prefer-const
       for (let [pluginId, pages] of Object.entries(assignment.pagesByPlugin)) {
         if (filters?.onlyRunPluginIds && !filters?.onlyRunPluginIds.includes(pluginId)) {
@@ -21,7 +21,7 @@ export default abstract class BaseRunner implements IRunner {
 
         for (const page of pages) {
           this.currentPage = page;
-          const step = `[${assignment.num}.${counter}]`;
+          const step = `[${assignment.num ?? assignment.sessionId}.${counter}]`;
           await this.runPage(assignment, page, step);
           this.isFirst = false;
           counter += 1;

@@ -23,10 +23,12 @@ export default class BrowserSpeechPlugin extends Plugin {
   }
 
   private async save(ctx: IRequestContext) {
+    // TODO: voices don't always work on browserstack. can't figure out why
     const voices = (ctx.requestDetails.bodyJson as IVoice[]) ?? [];
     const profile = ctx.session.getPluginProfileData<IProfileData>(this, {});
     profile[ctx.server.protocol] = voices;
     ctx.session.savePluginProfileData(this, profile);
-    ctx.res.end();
+    ctx.res.setHeader('content-type', 'text/plain')
+    ctx.res.end('ok');
   }
 }
