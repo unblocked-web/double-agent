@@ -15,7 +15,8 @@ export default class HttpUaHintsPlugin extends Plugin {
   public static uaHintOptions = [
     'sec-ch-ua',
     'ua',
-    'sec-ch-ua-platformua-platform',
+    'sec-ch-ua-platform',
+    'ua-platform',
     'sec-ch-ua-mobile',
     'ua-mobile',
     'sec-ch-ua-full-version',
