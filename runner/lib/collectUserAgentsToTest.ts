@@ -5,6 +5,7 @@ import IUserAgentToTest, {
   UserAgentToTestPickType,
 } from '@double-agent/config/interfaces/IUserAgentToTest';
 import Config from '@double-agent/config/index';
+import UserAgent from '@unblocked-web/real-user-agents/lib/UserAgent';
 import IUserAgentConfig from '../interfaces/IUserAgentConfig';
 
 const FsPromises = Fs.promises;
@@ -48,6 +49,13 @@ async function collectUserAgentsToTest(
       throw new Error(`${userAgentId} not supported by RealUserAgents`);
     }
 
+    let string = userAgent.pattern;
+    if (userAgent.stablePatchVersions) {
+      const patch = userAgent.stablePatchVersions[0];
+      const os = userAgent.uaClientHintsPlatformVersions[0];
+      string = UserAgent.parse(userAgent, patch, os);
+    }
+
     const userAgentToTest = {
       browserId: userAgent.browserId,
       operatingSystemId: userAgent.operatingSystemId,
@@ -56,7 +64,7 @@ async function collectUserAgentsToTest(
         [UserAgentToTestPickType.popular]: 0,
         [UserAgentToTestPickType.random]: 0,
       },
-      string: userAgent.strings[0],
+      string,
     };
 
     userAgentsToTest.push(userAgentToTest);

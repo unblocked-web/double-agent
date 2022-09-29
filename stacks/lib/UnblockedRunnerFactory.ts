@@ -7,7 +7,7 @@ import UnblockedRunner from './UnblockedRunner';
 
 export default class UnblockedRunnerFactory implements IRunnerFactory {
   private pool = new Pool({
-    plugins: [DefaultBrowserEmulator, DefaultHumanEmulator],
+    plugins: [DefaultBrowserEmulator as any, DefaultHumanEmulator as any],
   });
 
   public runnerId(): string {
