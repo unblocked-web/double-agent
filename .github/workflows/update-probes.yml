@@ -26,7 +26,7 @@ jobs:
 
       - name: Clone Profile Data
         run: git clone https://github.com/unblocked-web/browser-profile-data.git
-        working-directory: ../../..
+        working-directory: ../..
 
       - uses: actions/setup-node@v2
         with:
@@ -34,7 +34,7 @@ jobs:
           cache: 'yarn'
 
       - name: Yarn build
-        run: yarn build:all
+        run: yarn && yarn build
 
       - name: Sync Latest User Agents
         run: yarn workspace @double-agent/config sync
@@ -48,6 +48,7 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: probe-data
+          branch: main
           commit_message: "chore: automatic probe data"
 
       - uses: stefanzweifel/git-auto-commit-action@v4
