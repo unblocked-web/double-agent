@@ -1,10 +1,11 @@
-import { promises as Fs } from 'fs';
+import { createReadStream, createWriteStream, promises as Fs } from 'fs';
 import * as Path from 'path';
 import Analyze from '@double-agent/analyze';
 import { IResultFlag } from '@double-agent/analyze/lib/Plugin';
 import { probesDataDir } from '@double-agent/config/paths';
 import { UserAgentToTestPickType } from '@double-agent/config/interfaces/IUserAgentToTest';
 import { createOverTimeSessionKey } from '@double-agent/collect-controller/lib/buildAllAssignments';
+import { createGunzip } from 'zlib';
 
 export default async function analyzeAssignmentResults(
   assignmentsDataDir: string,
@@ -12,6 +13,19 @@ export default async function analyzeAssignmentResults(
 ): Promise<void> {
   const userAgentIds = await Fs.readdir(`${assignmentsDataDir}/individual`);
   const analyze = new Analyze(userAgentIds.length, probesDataDir);
+
+  for (const userAgentId of userAgentIds) {
+    const dir = `${assignmentsDataDir}/individual/${userAgentId}/raw-data`;
+    const files = await Fs.readdir(dir);
+    for (const compressed of files.filter(x => x.endsWith('.gz'))) {
+      await new Promise(resolve =>
+        createReadStream(Path.join(dir, compressed))
+          .pipe(createGunzip())
+          .pipe(createWriteStream(`${dir}/${compressed.replace('.gz', '')}`))
+          .on('finish', resolve),
+      );
+    }
+  }
 
   for (const userAgentId of userAgentIds) {
     const flags = analyze.addIndividual(`${assignmentsDataDir}/individual`, userAgentId);
@@ -44,7 +58,7 @@ export default async function analyzeAssignmentResults(
 
 async function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]): Promise<void> {
   const flagsByPluginId: { [pluginId: string]: IResultFlag[] } = {};
-  flags.forEach((flag) => {
+  flags.forEach(flag => {
     flagsByPluginId[flag.pluginId] = flagsByPluginId[flag.pluginId] || [];
     flagsByPluginId[flag.pluginId].push(flag);
   });
@@ -58,7 +72,7 @@ async function saveFlagsToPluginFiles(saveToDir: string, flags: IResultFlag[]): 
     await Fs.writeFile(
       signaturesFilePath,
       JSON.stringify(
-        flagsByPluginId[pluginId].map((x) => x.checkSignature),
+        flagsByPluginId[pluginId].map(x => x.checkSignature),
         null,
         2,
       ),

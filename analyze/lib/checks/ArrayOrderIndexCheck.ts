@@ -1,6 +1,6 @@
 import BaseCheck, { CheckType, ICheckIdentity, ICheckMeta } from './BaseCheck';
 
-type IOrderIndex = [string[], string[]];
+type IOrderIndex = [prevOrder: string[], postOrder: string[]];
 
 export default class ArrayOrderIndexCheck extends BaseCheck {
   public readonly prefix = 'AORD';
@@ -14,7 +14,7 @@ export default class ArrayOrderIndexCheck extends BaseCheck {
   }
 
   public get signature(): string {
-    const index = this.orderIndex.map((i) => i.join(',')).join(';');
+    const index = this.orderIndex.map(i => i.join(',')).join(';');
     return `${this.id}:${index}`;
   }
 

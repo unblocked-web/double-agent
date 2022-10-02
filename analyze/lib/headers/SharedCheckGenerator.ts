@@ -76,9 +76,7 @@ export default class SharedCheckGenerator {
     const headerKeysMap: {
       [protocol: string]: {
         [httpMethod: string]: {
-          [resourceType_redirect: string]: {
-            [originType: string]: string[][];
-          };
+          [origin_resourceType_redirect_cookie: string]: string[][];
         };
       };
     } = {};
@@ -86,39 +84,39 @@ export default class SharedCheckGenerator {
     for (const page of this.data) {
       const { protocol, method: httpMethod, originType, resourceType, isRedirect } = page;
 
-      const resourceKey = `${resourceType}_${isRedirect ? 'redirect' : 'direct'}`;
       const keys = page.rawHeaders
         .map(x => x[0].toLowerCase())
         .filter(isOfficialHeader)
         .filter(x => !excludeHeaders.includes(x));
       if (!keys.length) continue;
+      const withCookie = keys.includes('cookie') ? 'cookie' : 'nocookie';
 
+      const resourceKey = `${originType}:${resourceType}:${
+        isRedirect ? 'redirect' : 'direct'
+      }:${withCookie}`;
       headerKeysMap[protocol] ??= {};
       headerKeysMap[protocol][httpMethod] ??= {};
-      headerKeysMap[protocol][httpMethod][resourceKey] ??= {};
-      headerKeysMap[protocol][httpMethod][resourceKey][originType] ??= [];
-      const entries = headerKeysMap[protocol][httpMethod][resourceKey][originType];
+      headerKeysMap[protocol][httpMethod][resourceKey] ??= [];
+      const entries = headerKeysMap[protocol][httpMethod][resourceKey];
       if (!entries.some(x => x.toString() === keys.toString())) {
         entries.push(keys);
       }
     }
 
     for (const protocol of Object.keys(headerKeysMap)) {
-      for (const [httpMethod, resourceTypes] of Object.entries(headerKeysMap[protocol])) {
-        for (const [resourceType, origins] of Object.entries(resourceTypes)) {
-          for (const [originType, headerKeys] of Object.entries(origins)) {
-            const orderIndexMap = extractOrderIndexMapFromArrays(headerKeys);
-            for (const key of Object.keys(orderIndexMap)) {
-              const orderIndex = orderIndexMap[key];
-              const path = `headers:${originType}:${resourceType}:${key}`;
-              const meta = <ICheckMeta>{ path, protocol, httpMethod };
-              const check = new ArrayOrderIndexCheck(
-                { userAgentId: this.userAgentId },
-                meta,
-                orderIndex,
-              );
-              checks.push(check);
-            }
+      for (const [httpMethod, resourceKeys] of Object.entries(headerKeysMap[protocol])) {
+        for (const [resourceKey, headerKeys] of Object.entries(resourceKeys)) {
+          const orderIndexMap = extractOrderIndexMapFromArrays(headerKeys);
+          for (const key of Object.keys(orderIndexMap)) {
+            const orderIndex = orderIndexMap[key];
+            const path = `headers:${resourceKey}:${key}`;
+            const meta = <ICheckMeta>{ path, protocol, httpMethod };
+            const check = new ArrayOrderIndexCheck(
+              { userAgentId: this.userAgentId },
+              meta,
+              orderIndex,
+            );
+            checks.push(check);
           }
         }
       }
@@ -127,7 +125,7 @@ export default class SharedCheckGenerator {
   }
 }
 
-function extractOrderIndexMapFromArrays(arrays: string[][]): {
+export function extractOrderIndexMapFromArrays(arrays: string[][]): {
   [key: string]: [string[], string[]];
 } {
   const tmpIndex: { [key: string]: { prev: Set<string>; next: Set<string> } } = {};

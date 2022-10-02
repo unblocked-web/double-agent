@@ -3,6 +3,7 @@ import ITlsClienthelloProfile from '@double-agent/collect-tls-clienthello/interf
 import IClientHello from '@double-agent/tls-server/interfaces/IClientHello';
 import NumberCheck from '@double-agent/analyze/lib/checks/NumberCheck';
 import BooleanCheck from '@double-agent/analyze/lib/checks/BooleanCheck';
+import ArrayOrderIndexCheck from '@double-agent/analyze/lib/checks/ArrayOrderIndexCheck';
 
 export const extensionTypes: Set<string> = new Set();
 export const usedExtensionTypes: Set<string> = new Set();
@@ -41,13 +42,28 @@ export default class CheckGenerator {
   private createCipherChecks() {
     const { userAgentId, clientHello } = this;
 
-    for (const cipher of clientHello.ciphers) {
+    const path = 'clientHello.ciphers';
+    const ciphers = clientHello.ciphers.map(cipher => {
       const matches = cipher.match(/^\{(.+)\}\s(.+)$/);
       const valueInt = parseInt(matches[1].replace(/0x/g, '').replace(', ', ''), 16);
       const valueStr = matches[2];
+      return { valueInt, valueStr };
+    });
+
+    for (let i = 0; i < ciphers.length; i += 1) {
+      const { valueInt, valueStr } = ciphers[i];
       if (this.isGreased(valueInt)) continue;
       this.checks.push(
         new NumberCheck({ userAgentId }, { path: 'clientHello.ciphers' }, valueInt, valueStr),
+      );
+      const preOrder = ciphers.slice(0, i).map(x => x.valueStr);
+      const postOrder = ciphers.slice(i + 1).map(x => x.valueStr);
+      this.checks.push(
+        new ArrayOrderIndexCheck(
+          { userAgentId },
+          { path: `${path}.order:${ciphers[i].valueStr}` },
+          [preOrder, postOrder],
+        ),
       );
     }
   }
@@ -56,12 +72,23 @@ export default class CheckGenerator {
     const { userAgentId, clientHello } = this;
     if (!clientHello.extensions) return;
 
-    const path = 'clientHello.extensions.decimal';
-    for (const extension of clientHello.extensions) {
-      if (this.isGreased(extension.decimal)) continue;
-      extensionTypes.add(extension.type);
+    const path = 'clientHello.extensions';
+    const values = clientHello.extensions;
+
+    for (let i = 0; i < values.length; i += 1) {
+      const value = values[i];
+      if (this.isGreased(value.decimal)) continue;
+      extensionTypes.add(value.type);
       this.checks.push(
-        new NumberCheck({ userAgentId }, { path }, extension.decimal, extension.type),
+        new NumberCheck({ userAgentId }, { path: `${path}.decimal` }, value.decimal, value.type),
+      );
+      const preOrder = values.slice(0, i).map(x => x.type);
+      const postOrder = values.slice(i + 1).map(x => x.type);
+      this.checks.push(
+        new ArrayOrderIndexCheck({ userAgentId }, { path: `${path}.order:${values[i].type}` }, [
+          preOrder,
+          postOrder,
+        ]),
       );
     }
   }
@@ -74,13 +101,23 @@ export default class CheckGenerator {
     const path = 'clientHello.extensions.supported_groups';
     const extension = clientHello.extensions.find(x => x.type === 'supported_groups');
     const values: string[] = extension?.values || [];
+    const valueNames = values.map(x => x.split('(').shift().trim());
 
-    for (const value of values) {
+    for (let i = 0; i < values.length; i += 1) {
+      const value = values[i];
       const matches = value.match(/^([^\s]+).*\((\d+)\)/);
       const valueStr = matches[1];
       const valueInt = Number(matches[2]);
       if (this.isGreased(valueInt)) continue;
       this.checks.push(new NumberCheck({ userAgentId }, { path }, valueInt, valueStr));
+      const preOrder = valueNames.slice(0, i);
+      const postOrder = valueNames.slice(i + 1);
+      this.checks.push(
+        new ArrayOrderIndexCheck({ userAgentId }, { path: `${path}.order:${valueNames[i]}` }, [
+          preOrder,
+          postOrder,
+        ]),
+      );
     }
   }
 
@@ -92,11 +129,21 @@ export default class CheckGenerator {
     const path = 'clientHello.extensions.ec_point_formats';
     const extension = clientHello.extensions.find(x => x.type === 'ec_point_formats');
     const values: string[] = extension?.values || [];
+    const valueNames = values.map(x => x.split('(').shift().trim());
 
-    for (const value of values) {
+    for (let i = 0; i < values.length; i += 1) {
+      const value = values[i];
       const valueInt = Number(value.match(/\((\d+)\)/)[1]);
       if (this.isGreased(valueInt)) continue;
       this.checks.push(new StringCheck({ userAgentId }, { path }, value));
+      const preOrder = valueNames.slice(0, i);
+      const postOrder = valueNames.slice(i + 1);
+      this.checks.push(
+        new ArrayOrderIndexCheck({ userAgentId }, { path: `${path}.order:${valueNames[i]}` }, [
+          preOrder,
+          postOrder,
+        ]),
+      );
     }
   }
 
@@ -108,11 +155,21 @@ export default class CheckGenerator {
     const path = 'clientHello.extensions.supported_versions';
     const extension = clientHello.extensions.find(x => x.type === 'supported_versions');
     const values: string[] = extension?.values || [];
+    const valueNames = values.map(x => x.split('(').shift().trim());
 
-    for (const value of values) {
+    for (let i = 0; i < values.length; i += 1) {
+      const value = values[i];
       const valueInt = Number(value.match(/\((\d+)\)/)[1]);
       if (this.isGreased(valueInt)) continue;
       this.checks.push(new StringCheck({ userAgentId }, { path }, value));
+      const preOrder = valueNames.slice(0, i);
+      const postOrder = valueNames.slice(i + 1);
+      this.checks.push(
+        new ArrayOrderIndexCheck({ userAgentId }, { path: `${path}.order:${valueNames[i]}` }, [
+          preOrder,
+          postOrder,
+        ]),
+      );
     }
   }
 
@@ -124,11 +181,21 @@ export default class CheckGenerator {
     const path = 'clientHello.extensions.signature_algorithms';
     const extension = clientHello.extensions.find(x => x.type === 'signature_algorithms');
     const values: string[] = extension?.values || [];
+    const valueNames = values.map(x => x.split('(').shift().trim());
 
-    for (const value of values) {
+    for (let i = 0; i < values.length; i += 1) {
+      const value = values[i];
       const valueInt = Number(value.split('(').pop().replace(')', ''));
       if (this.isGreased(valueInt)) continue;
       this.checks.push(new StringCheck({ userAgentId }, { path }, value));
+      const preOrder = valueNames.slice(0, i);
+      const postOrder = valueNames.slice(i + 1);
+      this.checks.push(
+        new ArrayOrderIndexCheck({ userAgentId }, { path: `${path}.order:${valueNames[i]}` }, [
+          preOrder,
+          postOrder,
+        ]),
+      );
     }
   }
 
@@ -143,8 +210,17 @@ export default class CheckGenerator {
     );
     const values: string[] = extension?.values || [];
 
-    for (const value of values) {
+    for (let i = 0; i < values.length; i += 1) {
+      const value = values[i];
       this.checks.push(new StringCheck({ userAgentId }, { path }, value));
+      const preOrder = values.slice(0, i);
+      const postOrder = values.slice(i + 1);
+      this.checks.push(
+        new ArrayOrderIndexCheck({ userAgentId }, { path: `${path}.order:${values[i]}` }, [
+          preOrder,
+          postOrder,
+        ]),
+      );
     }
   }
 
