@@ -9,8 +9,8 @@ Double Agent has a large cache of data representing profiles of known browsers, 
 ## Automation
 We would like to automate the updating of DoubleAgent profiles and statistics.
 [x] Automate Statistics Refresh
-- Test New Profiles as Available
-- Automatic PRs to Data Projects
+[x] Test New Profiles as Available
+[x] Automatic Commits to Data Projects
 
 # UNVERSIONED
 
@@ -29,5 +29,5 @@ Double Agent has many more layers of collect and analysis to perform.
 - VM Detection
 - User Interaction
 - Javascript Evasion Detection (JS Proxies, etc)
-- UA Hints
+[x] UA Hints
 - UDP/Quic
