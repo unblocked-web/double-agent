@@ -1,0 +1,324 @@
+0 silly argv {
+0 silly argv   _: [ 'version' ],
+0 silly argv   'conventional-commits': true,
+0 silly argv   conventionalCommits: true,
+0 silly argv   push: false,
+0 silly argv   exact: true,
+0 silly argv   'force-publish': true,
+0 silly argv   forcePublish: true,
+0 silly argv   lernaVersion: '4.0.0',
+0 silly argv   '$0': '/usr/local/bin/lerna',
+0 silly argv   bump: '2.0.0-alpha.11'
+0 silly argv }
+1 notice cli v4.0.0
+2 verbose rootPath /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent
+3 info current version 2.0.0-alpha.11
+4 silly isAnythingCommitted
+5 verbose isAnythingCommitted 1
+6 silly getCurrentBranch
+7 verbose currentBranch master
+8 silly hasTags
+9 verbose hasTags true
+10 silly git-describe.sync "v2.0.0-alpha.11-1-gfb9507f-dirty" => {"lastTagName":"v2.0.0-alpha.11","lastVersion":"v2.0.0-alpha.11","refCount":"1","sha":"fb9507f","isDirty":true}
+11 warn force-publish all packages
+12 info Assuming all packages changed
+13 verbose updated @double-agent/analyze
+14 verbose updated @double-agent/analyze-browser-codecs
+15 verbose updated @double-agent/analyze-browser-dom-environment
+16 verbose updated @double-agent/analyze-browser-fingerprints
+17 verbose updated @double-agent/analyze-http-assets
+18 verbose updated @double-agent/analyze-http-basic-cookies
+19 verbose updated @double-agent/analyze-http-basic-headers
+20 verbose updated @double-agent/analyze-http-websockets
+21 verbose updated @double-agent/analyze-http-xhr
+22 verbose updated @double-agent/analyze-http2-session
+23 verbose updated @double-agent/analyze-tcp-ttl
+24 verbose updated @double-agent/analyze-tls-clienthello
+25 verbose updated @double-agent/collect
+26 verbose updated @double-agent/collect-controller
+27 verbose updated @double-agent/collect-browser-codecs
+28 verbose updated @double-agent/collect-browser-dom-environment
+29 verbose updated @double-agent/collect-browser-fingerprints
+30 verbose updated @double-agent/collect-browser-fonts
+31 verbose updated @double-agent/collect-browser-speech
+32 verbose updated @double-agent/collect-http-assets
+33 verbose updated @double-agent/collect-http-basic-cookies
+34 verbose updated @double-agent/collect-http-basic-headers
+35 verbose updated @double-agent/collect-http-ua-hints
+36 verbose updated @double-agent/collect-http-websockets
+37 verbose updated @double-agent/collect-http-xhr
+38 verbose updated @double-agent/collect-http2-session
+39 verbose updated @double-agent/collect-tcp
+40 verbose updated @double-agent/collect-tls-clienthello
+41 verbose updated @double-agent/config
+42 verbose updated @double-agent/docs
+43 verbose updated @double-agent/runner
+44 verbose updated @double-agent/tls-server
+45 info execute Skipping git push
+46 info execute Skipping releases
+47 silly lifecycle No script for "preversion" in "double-agent", continuing
+48 warn ECYCLE Dependency cycles detected, you should fix these!
+48 warn ECYCLE @double-agent/analyze -> @double-agent/config -> @double-agent/analyze
+48 warn ECYCLE @double-agent/collect -> (nested cycle: @double-agent/analyze -> @double-agent/config -> @double-agent/analyze) -> @double-agent/collect
+48 warn ECYCLE @double-agent/collect-controller -> (nested cycle: @double-agent/collect -> (nested cycle: @double-agent/analyze -> @double-agent/config -> @double-agent/analyze) -> @double-agent/collect) -> @double-agent/collect-controller
+48 warn ECYCLE @double-agent/tls-server -> (nested cycle: @double-agent/collect-controller -> (nested cycle: @double-agent/collect -> (nested cycle: @double-agent/analyze -> @double-agent/config -> @double-agent/analyze) -> @double-agent/collect) -> @double-agent/collect-controller) -> @double-agent/tls-server
+48 warn ECYCLE (nested cycle: @double-agent/tls-server -> (nested cycle: @double-agent/collect-controller -> (nested cycle: @double-agent/collect -> (nested cycle: @double-agent/analyze -> @double-agent/config -> @double-agent/analyze) -> @double-agent/collect) -> @double-agent/collect-controller) -> @double-agent/tls-server) -> (nested cycle: @double-agent/tls-server -> (nested cycle: @double-agent/collect-controller -> (nested cycle: @double-agent/collect -> (nested cycle: @double-agent/analyze -> @double-agent/config -> @double-agent/analyze) -> @double-agent/collect) -> @double-agent/collect-controller) -> @double-agent/tls-server)
+49 silly lifecycle No script for "preversion" in "@double-agent/tls-server", continuing
+50 silly lifecycle No script for "preversion" in "@double-agent/collect-controller", continuing
+51 silly lifecycle No script for "preversion" in "@double-agent/collect", continuing
+52 silly lifecycle No script for "preversion" in "@double-agent/analyze", continuing
+53 silly lifecycle No script for "preversion" in "@double-agent/config", continuing
+54 silly lifecycle No script for "version" in "@double-agent/collect", continuing
+55 silly fixed for @double-agent/collect at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect
+56 verbose getChangelogConfig using preset "conventional-changelog-angular"
+57 silly npa Result {
+57 silly npa   type: 'tag',
+57 silly npa   registry: true,
+57 silly npa   where: undefined,
+57 silly npa   raw: 'conventional-changelog-angular',
+57 silly npa   name: 'conventional-changelog-angular',
+57 silly npa   escapedName: 'conventional-changelog-angular',
+57 silly npa   scope: undefined,
+57 silly npa   rawSpec: '',
+57 silly npa   saveSpec: null,
+57 silly npa   fetchSpec: 'latest',
+57 silly npa   gitRange: undefined,
+57 silly npa   gitCommittish: undefined,
+57 silly npa   hosted: undefined
+57 silly npa }
+58 verbose getChangelogConfig Attempting to resolve preset "conventional-changelog-angular"
+59 info getChangelogConfig Successfully resolved preset "conventional-changelog-angular"
+60 silly lifecycle No script for "version" in "@double-agent/config", continuing
+61 silly fixed for @double-agent/config at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/config
+62 silly lifecycle No script for "version" in "@double-agent/analyze", continuing
+63 silly fixed for @double-agent/analyze at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze
+64 silly lifecycle No script for "version" in "@double-agent/tls-server", continuing
+65 silly fixed for @double-agent/tls-server at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/tls-server
+66 silly lifecycle No script for "version" in "@double-agent/collect-controller", continuing
+67 silly fixed for @double-agent/collect-controller at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect-controller
+68 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/config\n\n\n\n"
+69 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze\n\n\n\n"
+70 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-controller\n\n\n\n"
+71 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect\n\n\n\n"
+72 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/CHANGELOG.md
+73 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/config/CHANGELOG.md
+74 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect-controller/CHANGELOG.md
+75 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/CHANGELOG.md
+76 silly lifecycle No script for "preversion" in "@double-agent/collect-browser-codecs", continuing
+77 silly lifecycle No script for "preversion" in "@double-agent/collect-browser-dom-environment", continuing
+78 silly lifecycle No script for "preversion" in "@double-agent/collect-browser-fingerprints", continuing
+79 silly lifecycle No script for "preversion" in "@double-agent/collect-browser-fonts", continuing
+80 silly lifecycle No script for "preversion" in "@double-agent/collect-browser-speech", continuing
+81 silly lifecycle No script for "preversion" in "@double-agent/collect-http-assets", continuing
+82 silly lifecycle No script for "preversion" in "@double-agent/collect-http-basic-cookies", continuing
+83 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/tls-server\n\n\n\n"
+84 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/tls-server/CHANGELOG.md
+85 silly lifecycle No script for "preversion" in "@double-agent/collect-http-basic-headers", continuing
+86 silly lifecycle No script for "version" in "@double-agent/collect-browser-codecs", continuing
+87 silly fixed for @double-agent/collect-browser-codecs at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-codecs
+88 silly lifecycle No script for "version" in "@double-agent/collect-browser-speech", continuing
+89 silly fixed for @double-agent/collect-browser-speech at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-speech
+90 silly lifecycle No script for "version" in "@double-agent/collect-browser-dom-environment", continuing
+91 silly fixed for @double-agent/collect-browser-dom-environment at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-dom-environment
+92 silly lifecycle No script for "version" in "@double-agent/collect-http-assets", continuing
+93 silly fixed for @double-agent/collect-http-assets at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-assets
+94 silly lifecycle No script for "version" in "@double-agent/collect-http-basic-cookies", continuing
+95 silly fixed for @double-agent/collect-http-basic-cookies at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-basic-cookies
+96 silly lifecycle No script for "version" in "@double-agent/collect-browser-fingerprints", continuing
+97 silly fixed for @double-agent/collect-browser-fingerprints at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-fingerprints
+98 silly lifecycle No script for "version" in "@double-agent/collect-browser-fonts", continuing
+99 silly fixed for @double-agent/collect-browser-fonts at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-fonts
+100 silly lifecycle No script for "version" in "@double-agent/collect-http-basic-headers", continuing
+101 silly fixed for @double-agent/collect-http-basic-headers at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-basic-headers
+102 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-browser-codecs\n\n\n\n"
+103 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-browser-speech\n\n\n\n"
+104 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-http-assets\n\n\n\n"
+105 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-codecs/CHANGELOG.md
+106 silly lifecycle No script for "preversion" in "@double-agent/collect-http-ua-hints", continuing
+107 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-browser-dom-environment\n\n\n\n"
+108 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-speech/CHANGELOG.md
+109 silly lifecycle No script for "preversion" in "@double-agent/collect-http-websockets", continuing
+110 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-assets/CHANGELOG.md
+111 silly lifecycle No script for "preversion" in "@double-agent/collect-http-xhr", continuing
+112 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-http-basic-cookies\n\n\n\n"
+113 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-browser-fonts\n\n\n\n"
+114 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-browser-fingerprints\n\n\n\n"
+115 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-dom-environment/CHANGELOG.md
+116 silly lifecycle No script for "preversion" in "@double-agent/collect-http2-session", continuing
+117 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-basic-cookies/CHANGELOG.md
+118 silly lifecycle No script for "preversion" in "@double-agent/collect-tcp", continuing
+119 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-fonts/CHANGELOG.md
+120 silly lifecycle No script for "preversion" in "@double-agent/docs", continuing
+121 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/browser-fingerprints/CHANGELOG.md
+122 silly lifecycle No script for "preversion" in "@double-agent/runner", continuing
+123 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-http-basic-headers\n\n\n\n"
+124 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-basic-headers/CHANGELOG.md
+125 silly lifecycle No script for "preversion" in "@double-agent/collect-tls-clienthello", continuing
+126 silly lifecycle No script for "version" in "@double-agent/collect-http-ua-hints", continuing
+127 silly fixed for @double-agent/collect-http-ua-hints at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-ua-hints
+128 silly lifecycle No script for "version" in "@double-agent/collect-http-xhr", continuing
+129 silly fixed for @double-agent/collect-http-xhr at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-xhr
+130 silly lifecycle No script for "version" in "@double-agent/collect-http-websockets", continuing
+131 silly fixed for @double-agent/collect-http-websockets at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-websockets
+132 silly lifecycle No script for "version" in "@double-agent/collect-http2-session", continuing
+133 silly fixed for @double-agent/collect-http2-session at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http2-session
+134 silly lifecycle No script for "version" in "@double-agent/docs", continuing
+135 silly fixed for @double-agent/docs at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/docs
+136 silly lifecycle No script for "version" in "@double-agent/collect-tcp", continuing
+137 silly fixed for @double-agent/collect-tcp at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/tcp
+138 silly lifecycle No script for "version" in "@double-agent/runner", continuing
+139 silly fixed for @double-agent/runner at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/runner
+140 silly lifecycle No script for "version" in "@double-agent/collect-tls-clienthello", continuing
+141 silly fixed for @double-agent/collect-tls-clienthello at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/tls-clienthello
+142 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-http-ua-hints\n\n\n\n"
+143 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-http-websockets\n\n\n\n"
+144 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-http-xhr\n\n\n\n"
+145 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-websockets/CHANGELOG.md
+146 silly lifecycle No script for "preversion" in "@double-agent/analyze-browser-codecs", continuing
+147 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-ua-hints/CHANGELOG.md
+148 silly lifecycle No script for "preversion" in "@double-agent/analyze-http-assets", continuing
+149 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-http2-session\n\n\n\n"
+150 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http-xhr/CHANGELOG.md
+151 silly lifecycle No script for "preversion" in "@double-agent/analyze-browser-dom-environment", continuing
+152 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/docs\n\n\n\n"
+153 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-tls-clienthello\n\n\n\n"
+154 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/collect-tcp\n\n\n\n"
+155 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/docs/CHANGELOG.md
+156 silly lifecycle No script for "preversion" in "@double-agent/analyze-http-basic-cookies", continuing
+157 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/http2-session/CHANGELOG.md
+158 silly lifecycle No script for "preversion" in "@double-agent/analyze-browser-fingerprints", continuing
+159 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/tls-clienthello/CHANGELOG.md
+160 silly lifecycle No script for "preversion" in "@double-agent/analyze-http-basic-headers", continuing
+161 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/collect/plugins/tcp/CHANGELOG.md
+162 silly lifecycle No script for "preversion" in "@double-agent/analyze-http-xhr", continuing
+163 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/runner\n\n\n\n"
+164 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/runner/CHANGELOG.md
+165 silly lifecycle No script for "preversion" in "@double-agent/analyze-http-websockets", continuing
+166 silly lifecycle No script for "version" in "@double-agent/analyze-browser-codecs", continuing
+167 silly fixed for @double-agent/analyze-browser-codecs at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/browser-codecs
+168 silly lifecycle No script for "version" in "@double-agent/analyze-browser-dom-environment", continuing
+169 silly fixed for @double-agent/analyze-browser-dom-environment at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/browser-dom-environment
+170 silly lifecycle No script for "version" in "@double-agent/analyze-http-assets", continuing
+171 silly fixed for @double-agent/analyze-http-assets at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-assets
+172 silly lifecycle No script for "version" in "@double-agent/analyze-browser-fingerprints", continuing
+173 silly fixed for @double-agent/analyze-browser-fingerprints at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/browser-fingerprints
+174 silly lifecycle No script for "version" in "@double-agent/analyze-http-basic-cookies", continuing
+175 silly fixed for @double-agent/analyze-http-basic-cookies at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-basic-cookies
+176 silly lifecycle No script for "version" in "@double-agent/analyze-http-basic-headers", continuing
+177 silly fixed for @double-agent/analyze-http-basic-headers at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-basic-headers
+178 silly lifecycle No script for "version" in "@double-agent/analyze-http-xhr", continuing
+179 silly fixed for @double-agent/analyze-http-xhr at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-xhr
+180 silly lifecycle No script for "version" in "@double-agent/analyze-http-websockets", continuing
+181 silly fixed for @double-agent/analyze-http-websockets at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-websockets
+182 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-browser-codecs\n\n\n\n"
+183 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-browser-dom-environment\n\n\n\n"
+184 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-http-assets\n\n\n\n"
+185 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/browser-dom-environment/CHANGELOG.md
+186 silly lifecycle No script for "preversion" in "@double-agent/analyze-http2-session", continuing
+187 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/browser-codecs/CHANGELOG.md
+188 silly lifecycle No script for "preversion" in "@double-agent/analyze-tls-clienthello", continuing
+189 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-browser-fingerprints\n\n\n\n"
+190 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-assets/CHANGELOG.md
+191 silly lifecycle No script for "preversion" in "@double-agent/analyze-tcp-ttl", continuing
+192 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-http-basic-cookies\n\n\n\n"
+193 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-http-xhr\n\n\n\n"
+194 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/browser-fingerprints/CHANGELOG.md
+195 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-xhr/CHANGELOG.md
+196 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-basic-cookies/CHANGELOG.md
+197 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-http-basic-headers\n\n\n\n"
+198 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-basic-headers/CHANGELOG.md
+199 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-http-websockets\n\n\n\n"
+200 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http-websockets/CHANGELOG.md
+201 silly lifecycle No script for "version" in "@double-agent/analyze-tls-clienthello", continuing
+202 silly fixed for @double-agent/analyze-tls-clienthello at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/tls-clienthello
+203 silly lifecycle No script for "version" in "@double-agent/analyze-http2-session", continuing
+204 silly fixed for @double-agent/analyze-http2-session at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http2-session
+205 silly lifecycle No script for "version" in "@double-agent/analyze-tcp-ttl", continuing
+206 silly fixed for @double-agent/analyze-tcp-ttl at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/tcp
+207 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-tls-clienthello\n\n\n\n"
+208 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/tls-clienthello/CHANGELOG.md
+209 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-http2-session\n\n\n\n"
+210 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/http2-session/CHANGELOG.md
+211 silly fixed writing new entry: "\n\n**Note:** Version bump only for package @double-agent/analyze-tcp-ttl\n\n\n\n"
+212 verbose fixed wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/analyze/plugins/tcp/CHANGELOG.md
+213 silly root for double-agent at /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent
+214 silly root writing new entry: "\n\n**Note:** Version bump only for package double-agent\n\n\n\n"
+215 verbose root wrote /Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/double-agent/CHANGELOG.md
+216 silly lifecycle No script for "version" in "double-agent", continuing
+217 silly gitAdd [
+217 silly gitAdd   'collect/package.json',
+217 silly gitAdd   'config/package.json',
+217 silly gitAdd   'analyze/package.json',
+217 silly gitAdd   'tls-server/package.json',
+217 silly gitAdd   'collect-controller/package.json',
+217 silly gitAdd   'analyze/CHANGELOG.md',
+217 silly gitAdd   'config/CHANGELOG.md',
+217 silly gitAdd   'collect-controller/CHANGELOG.md',
+217 silly gitAdd   'collect/CHANGELOG.md',
+217 silly gitAdd   'tls-server/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/browser-codecs/package.json',
+217 silly gitAdd   'collect/plugins/browser-speech/package.json',
+217 silly gitAdd   'collect/plugins/browser-dom-environment/package.json',
+217 silly gitAdd   'collect/plugins/http-assets/package.json',
+217 silly gitAdd   'collect/plugins/http-basic-cookies/package.json',
+217 silly gitAdd   'collect/plugins/browser-fingerprints/package.json',
+217 silly gitAdd   'collect/plugins/browser-fonts/package.json',
+217 silly gitAdd   'collect/plugins/http-basic-headers/package.json',
+217 silly gitAdd   'collect/plugins/browser-codecs/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/browser-speech/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/http-assets/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/browser-dom-environment/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/http-basic-cookies/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/browser-fonts/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/browser-fingerprints/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/http-basic-headers/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/http-ua-hints/package.json',
+217 silly gitAdd   'collect/plugins/http-xhr/package.json',
+217 silly gitAdd   'collect/plugins/http-websockets/package.json',
+217 silly gitAdd   'collect/plugins/http2-session/package.json',
+217 silly gitAdd   'docs/package.json',
+217 silly gitAdd   'collect/plugins/tcp/package.json',
+217 silly gitAdd   'runner/package.json',
+217 silly gitAdd   'collect/plugins/tls-clienthello/package.json',
+217 silly gitAdd   'collect/plugins/http-websockets/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/http-ua-hints/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/http-xhr/CHANGELOG.md',
+217 silly gitAdd   'docs/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/http2-session/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/tls-clienthello/CHANGELOG.md',
+217 silly gitAdd   'collect/plugins/tcp/CHANGELOG.md',
+217 silly gitAdd   'runner/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/browser-codecs/package.json',
+217 silly gitAdd   'analyze/plugins/browser-dom-environment/package.json',
+217 silly gitAdd   'analyze/plugins/http-assets/package.json',
+217 silly gitAdd   'analyze/plugins/browser-fingerprints/package.json',
+217 silly gitAdd   'analyze/plugins/http-basic-cookies/package.json',
+217 silly gitAdd   'analyze/plugins/http-basic-headers/package.json',
+217 silly gitAdd   'analyze/plugins/http-xhr/package.json',
+217 silly gitAdd   'analyze/plugins/http-websockets/package.json',
+217 silly gitAdd   'analyze/plugins/browser-dom-environment/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/browser-codecs/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/http-assets/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/browser-fingerprints/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/http-xhr/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/http-basic-cookies/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/http-basic-headers/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/http-websockets/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/tls-clienthello/package.json',
+217 silly gitAdd   'analyze/plugins/http2-session/package.json',
+217 silly gitAdd   'analyze/plugins/tcp/package.json',
+217 silly gitAdd   'analyze/plugins/tls-clienthello/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/http2-session/CHANGELOG.md',
+217 silly gitAdd   'analyze/plugins/tcp/CHANGELOG.md',
+217 silly gitAdd   'CHANGELOG.md',
+217 silly gitAdd   'lerna.json'
+217 silly gitAdd ]
+218 silly gitCommit v2.0.0-alpha.11
+219 verbose git [ 'commit', '-m', 'v2.0.0-alpha.11' ]
+220 silly gitTag v2.0.0-alpha.11
+221 verbose git [ 'tag', 'v2.0.0-alpha.11', '-m', 'v2.0.0-alpha.11' ]
+222 error Error: Command failed with exit code 128: git tag v2.0.0-alpha.11 -m v2.0.0-alpha.11
+222 error fatal: tag 'v2.0.0-alpha.11' already exists
+222 error     at makeError (/Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/node_modules/execa/lib/error.js:60:11)
+222 error     at handlePromise (/Users/blakebyrnes/Projects/DataLiberationFoundation/unblocked/node_modules/execa/index.js:118:26)
+222 error     at runMicrotasks (<anonymous>)
