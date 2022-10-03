@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.head_ref }}
+          ref: main
           token: ${{ secrets.PAT }}
           submodules: 'true'
 
@@ -46,11 +46,13 @@ jobs:
         run: yarn workspace @double-agent/stacks 1
 
       - uses: stefanzweifel/git-auto-commit-action@v4
+        id: probe-data-checkin
         with:
           repository: probe-data
           branch: main
           commit_message: "chore: automatic probe data"
 
       - uses: stefanzweifel/git-auto-commit-action@v4
+        if: steps.probe-data-checkin.outputs.changes_detected == 'true'
         with:
           commit_message: "chore(double-agent): point at new probe data"
