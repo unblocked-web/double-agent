@@ -16,12 +16,13 @@ export default class TlsServer extends BaseServer {
     await super.start(context);
     const tlsRequestHandler = createTlsRequestHandler(this, context);
 
-    this.internalServer = await new Promise<TlsServerBase>((resolve) => {
-      const server = new TlsServerBase(tlsCerts(), tlsRequestHandler);
-      server.listen(this.port, () => resolve(server));
-    });
-    this.internalServer.on('error', (error) => {
+    this.internalServer = new TlsServerBase(tlsCerts(), tlsRequestHandler);
+    await new Promise<void>(resolve => this.internalServer.listen(this.port, resolve));
+    this.internalServer.on('error', error => {
       console.log('TlsServer ERROR: ', error);
+      if (error.toString().includes('ENOMEM')) {
+        process.exit(1);
+      }
     });
     return this;
   }
