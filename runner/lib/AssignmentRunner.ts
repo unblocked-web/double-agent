@@ -61,7 +61,7 @@ export default class AssignmentRunner {
 
         console.log(
           '[%s._] RUNNING %s assignment (%s)',
-          assignment.num,
+          assignment.sessionId,
           assignment.type,
           assignment.id,
         );
