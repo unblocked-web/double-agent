@@ -1,3 +1,9 @@
+---
+**NOTICE**
+📝 This module is merged into the unblocked monorepo for future development!
+
+---
+
 Double Agent is a suite of tools written to allow a scraper engine to test if it is detectable when trying to blend into the most common web traffic.
 
 ## Structure:
